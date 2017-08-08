@@ -1,0 +1,19 @@
+.glyphicon-remove,
+.glyphicon-pencil,
+.glyphicon-asterisk,
+.glyphicon-plus{
+  margin-left: 15px;
+}
+.glyphicon-menu-hamburger{
+  margin-right: 20px;
+}
+#organizationList>ul>li>p{
+  background: #337ab7!important;
+  color: #FFF;
+  margin-top: 0px!important;
+}
+#organizationList .list-group,
+#organizationList .list-group-item{
+  padding: 0;
+  margin: 0;
+}
