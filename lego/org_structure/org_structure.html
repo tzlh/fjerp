@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset = "utf-8" />
+<link rel = "stylesheet" type = "text/css" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.css"/>
+<link rel="stylesheet" type="text/css" href="org_structure.css"/>
+<script src = "../../plugin/jquery/1.12.4/jquery.min.js" type = "text/javascript" charset = "utf-8"></script>
+<script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.js" type = "text/javascript" charset = "utf-8"></script>
+<title>1111111111111</title>
+</head>
+<body>
+    <div class = "container-fluid">
+      <div class = "row">
+        <div class = "col-md-12" id="org_structure_list">
+          <ul class = "list-group">
+            <li class = "list-group-item org_structure_lh40">
+              <p>
+                <span class = "glyphicon glyphicon-menu-hamburger pull-left"></span>
+                <span>部门</span>
+                <span class = "glyphicon glyphicon-remove pull-right deleteDepartment" title = "删除部门" aria-hidden = "true" data-toggle = "modal" data-target = "#deleteDepartment"></span>
+                <span class = "glyphicon glyphicon-pencil pull-right editDepartment" title = "修改部门" aria-hidden = "true" data-toggle = "modal" data-target = "#editDepartment"></span>
+                <span class = "glyphicon glyphicon-asterisk pull-right addPosition" title = "添加岗位" aria-hidden = "true" data-toggle = "modal" data-target = "#addPosition"></span>
+                <span class = "glyphicon glyphicon-plus pull-right addDepartment" title = "添加子部门" aria-hidden = "true" data-toggle = "modal" data-target = "#addDepartment"></span>
+              </p>
+              <ul class = "list-group">
+                <li class = "list-group-item">
+                  <p class = "clearfix" style = "font-weight:bold;">
+                    <span class = "glyphicon glyphicon-menu-hamburger pull-left" aria-hidden = "true"></span>
+                    <span>岗位</span>
+                    <span class = "glyphicon glyphicon-remove pull-right deletePosition" title = "删除岗位" aria-hidden = "true" data-toggle = "modal" data-target = "#deletePosition"></span>
+                    <span class = "glyphicon glyphicon-pencil pull-right editPosition" title = "修改岗位" aria-hidden = "true" data-toggle = "modal" data-target = "#editPosition"></span>
+                    <span class = "glyphicon glyphicon-user pull-right addEmployee" title = "添加员工" aria-hidden = "true" data-toggle = "modal" data-target = "#addEmployee"></span>
+                  </p>
+                  <ul class = "list-group">
+                    <li class = "list-group-item">
+                      <p class = "clearfix">
+                        <span>人</span>
+                        <span class = "glyphicon glyphicon-remove pull-right deleteEmployee" title = "删除员工" aria-hidden = "true" data-toggle = "modal" data-target = "#deleteEmployee"></span>
+                        <span class = "glyphicon glyphicon-pencil pull-right editEmployee" title = "修改员工" aria-hidden = "true" data-toggle = "modal" data-target = "#editEmployee"></span>
+                      </p>
+                    </li>
+                  </ul>
+                </li>
+                <li class = "list-group-item">
+                  <p class = "oli clearfix org_structure_bgd8d8d8" style = "margin-top:2px;">
+                    <span class = "glyphicon glyphicon-menu-hamburger pull-left" aria-hidden = "true"></span>
+                    <span>部门2</span>
+                    <span class = "glyphicon glyphicon-remove pull-right deleteDepartment" title = "删除部门" aria-hidden = "true" data-toggle = "modal" data-target = "#deleteDepartment"></span>
+                    <span class = "glyphicon glyphicon-pencil pull-right editDepartment" title = "修改部门" aria-hidden = "true" data-toggle = "modal" data-target = "#editDepartment"></span>
+                    <span class = "glyphicon glyphicon-asterisk pull-right addPosition" title = "添加岗位" aria-hidden = "true" data-toggle = "modal" data-target = "#addPosition"></span>
+                    <span class = "glyphicon glyphicon-plus pull-right addDepartment" title = "添加子部门" aria-hidden = "true" data-toggle = "modal" data-target = "#addDepartment"></span>
+                  </p>
+                  <ul class = "list-group">
+                    <li class = "list-group-item">
+                      <p class = "oli clearfix" style = "font-weight:bold;">
+                        <span class = "glyphicon glyphicon-menu-hamburger pull-left" aria-hidden = "true"></span>
+                        <span>岗位</span>
+                        <span class = "glyphicon glyphicon-remove pull-right deletePosition" title = "删除岗位" aria-hidden = "true" data-toggle = "modal" data-target = "#deletePosition"></span>
+                        <span class = "glyphicon glyphicon-pencil pull-right editPosition" title = "修改岗位" aria-hidden = "true" data-toggle = "modal" data-target = "#editPosition"></span>
+                        <span class = "glyphicon glyphicon-user pull-right addEmployee" title = "添加员工" aria-hidden = "true" data-toggle = "modal" data-target = "#addEmployee"></span>
+                      </p>
+                      <ul class = "list-group">
+                        <li class = "list-group-item">
+                          <p class = "oli clearfix">
+                            <span>人</span>
+                            <span class = "glyphicon glyphicon-remove pull-right deleteEmployee" title = "删除员工" aria-hidden = "true" data-toggle = "modal" data-target = "#deleteEmployee"></span>
+                            <span class = "glyphicon glyphicon-pencil pull-right editEmployee" title = "修改员工" aria-hidden = "true" data-toggle = "modal" data-target = "#editEmployee"></span>
+                          </p>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li class = "list-group-item">
+                  <p class = "oli clearfix org_structure_bgd8d8d8" style = "margin-top:2px;">
+                    <span class = "glyphicon glyphicon-menu-hamburger pull-left" aria-hidden = "true"></span>
+                    <span>部门</span>
+                    <span class = "glyphicon glyphicon-remove pull-right deleteDepartment" title = "删除部门" aria-hidden = "true" data-toggle = "modal" data-target = "#deleteDepartment"></span>
+                    <span class = "glyphicon glyphicon-pencil pull-right editDepartment" title = "修改部门" aria-hidden = "true" data-toggle = "modal" data-target = "#editDepartment"></span>
+                    <span class = "glyphicon glyphicon-asterisk pull-right addPosition" title = "添加岗位" aria-hidden = "true" data-toggle = "modal" data-target = "#addPosition"></span>
+                    <span class = "glyphicon glyphicon-plus pull-right addDepartment" title = "添加子部门" aria-hidden = "true" data-toggle = "modal" data-target = "#addDepartment"></span>
+                  </p>
+                  <ul class = "list-group">
+                    <li class = "list-group-item">
+                      <p class = "oli clearfix" style = "font-weight:bold;">
+                        <span class = "glyphicon glyphicon-menu-hamburger pull-left" aria-hidden = "true"></span>
+                        <span>岗位</span>
+                        <span class = "glyphicon glyphicon-remove pull-right deletePosition" title = "删除岗位" aria-hidden = "true" data-toggle = "modal" data-target = "#deletePosition"></span>
+                        <span class = "glyphicon glyphicon-pencil pull-right editPosition" title = "修改岗位" aria-hidden = "true" data-toggle = "modal" data-target = "#editPosition"></span>
+                        <span class = "glyphicon glyphicon-user pull-right addEmployee" title = "添加员工" aria-hidden = "true" data-toggle = "modal" data-target = "#addEmployee"></span>
+                      </p>
+                      <ul class = "list-group">
+                        <li class = "list-group-item">
+                          <p class = "oli clearfix">
+                            <span>人</span>
+                            <span class = "glyphicon glyphicon-remove pull-right deleteEmployee" title = "删除员工" aria-hidden = "true" data-toggle = "modal" data-target = "#deleteEmployee"></span>
+                            <span class = "glyphicon glyphicon-pencil pull-right editEmployee" title = "修改员工" aria-hidden = "true" data-toggle = "modal" data-target = "#editEmployee"></span>
+                          </p>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li class = "list-group-item">
+                  <p class = "oli clearfix org_structure_bgd8d8d8" style = "margin-top:2px;">
+                    <span class = "glyphicon glyphicon-menu-hamburger pull-left" aria-hidden = "true"></span>
+                    <span>部门</span>
+                    <span class = "glyphicon glyphicon-remove pull-right deleteDepartment" title = "删除部门" aria-hidden = "true" data-toggle = "modal" data-target = "#deleteDepartment"></span>
+                    <span class = "glyphicon glyphicon-pencil pull-right editDepartment" title = "修改部门" aria-hidden = "true" data-toggle = "modal" data-target = "#editDepartment"></span>
+                    <span class = "glyphicon glyphicon-asterisk pull-right addPosition" title = "添加岗位" aria-hidden = "true" data-toggle = "modal" data-target = "#addPosition"></span>
+                    <span class = "glyphicon glyphicon-plus pull-right addDepartment" title = "添加子部门" aria-hidden = "true" data-toggle = "modal" data-target = "#addDepartment"></span>
+                  </p>
+                </li>
+                <li class = "list-group-item">
+                  <p class = "oli clearfix org_structure_bgd8d8d8" style = "margin-top:2px;">
+                    <span class = "glyphicon glyphicon-menu-hamburger pull-left" aria-hidden = "true"></span>
+                    <span>部门</span>
+                    <span class = "glyphicon glyphicon-remove pull-right deleteDepartment" title = "删除部门" aria-hidden = "true" data-toggle = "modal" data-target = "#deleteDepartment"></span>
+                    <span class = "glyphicon glyphicon-pencil pull-right editDepartment" title = "修改部门" aria-hidden = "true" data-toggle = "modal" data-target = "#editDepartment"></span>
+                    <span class = "glyphicon glyphicon-asterisk pull-right addPosition" title = "添加岗位" aria-hidden = "true" data-toggle = "modal" data-target = "#addPosition"></span>
+                    <span class = "glyphicon glyphicon-plus pull-right addDepartment" title = "添加子部门" aria-hidden = "true" data-toggle = "modal" data-target = "#addDepartment"></span>
+                  </p>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+</body>
+</html>
+

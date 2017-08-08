@@ -1,0 +1,36 @@
+#org_structure_list .glyphicon-remove,
+#org_structure_list .glyphicon-pencil,
+#org_structure_list .glyphicon-asterisk,
+#org_structure_list .glyphicon-plus{
+  margin-left: 15px;
+}
+#org_structure_list .glyphicon-menu-hamburger{
+  margin-right: 20px;
+}
+.org_structure_lh40 span{
+  line-height: 40px;
+}
+#org_structure_list>ul>li>p{
+  background: #337ab7!important;
+  color: #FFF;
+  margin-top: 0px!important;
+}
+#org_structure_list .list-group-item{
+  margin: 0;
+  border: none;
+  padding: 0;
+}
+#org_structure_list .list-group-item p{
+  line-height: 40px;
+  margin-bottom: 0;
+  padding: 0 15px;
+}
+#org_structure_list .list-group{
+  margin: 0;
+}
+.org_structure_bgd8d8d8{
+  background: #d8d8d8;
+}
+#org_structure_list{
+  padding: 0;
+}
