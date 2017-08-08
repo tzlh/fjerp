@@ -1,4 +1,7 @@
 /*@charset "utf-8";*/
 .header_mr15{margin-right: 15px;}
 .header_menu{right: 0;left: inherit;}
-.header_row{margin-right: 0 !important;}
+.header_row{margin: 0 !important;}
+.header_col{padding-left:0 ;padding-right: 0;}
+.header_radius{border-radius: 0 !important;}
+.header_line{line-height: 34px;}
