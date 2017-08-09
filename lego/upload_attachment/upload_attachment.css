@@ -51,25 +51,7 @@
   height: 100%;
 }
 
-#mybtns {
-  width: 1100px;
-  height: 42px;
-  margin: 10px 0px;
-  display: block;
-}
-#mybtns a {
-  width: 42px;
-  height: 42px;
-  display: block;
-  float: right;
-  margin-right: 1px;
-  background-color: #c1c1c1;
-  margin-left:10px;
-}
-#mybtns a:hover {
-  background-color: #347fdc;
-}
-#mybtns a:hover, #upload_attachment_content, #mybtns a, #upload_attachment_content a:hover .intro, #upload_attachment_content a .intro, #upload_attachment_content #upload_attachment_box {
+#upload_attachment_content, #upload_attachment_content a:hover, #upload_attachment_content a, #upload_attachment_content, #upload_attachment_box {
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   -ms-transition: all 0.5s ease;
