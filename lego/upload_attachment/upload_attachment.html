@@ -16,7 +16,7 @@
     var i = 0;
     $("#upload_attachment_btn_right").click(function() {
       i++;
-      if(i < length) {
+      if (i < length) {
           $("#upload_attachment_box").css("left", -(box_li_width * i));
       } else {
         i = length;
@@ -37,130 +37,100 @@
 <title></title>
 </head>
 <body>
-  <!-- <div id = "upload_attachment_content">
-    <input id = "upload_attachment_choose_file_btn" type = "file" />
-    <label class = "upload_attachment_attment_label" id = "upload_attachment_choose_file_label" for = "upload_attachment_choose_file_btn">
-      <img class = "upload_attachment_choose_file_img" src = "../../img/add_attachment.png" />
-    </label>
-    <label class = "upload_attachment_attment_label">
-      <img class = "upload_attachment_choose_file_img" src = "../../img/add_attachment.png" />
-    </label>
-    <label class = "upload_attachment_attment_label">
-      <img class = "upload_attachment_choose_file_img" src = "../../img/add_attachment.png" />
-    </label>
-    <label class = "upload_attachment_attment_label">
-      <img class = "upload_attachment_choose_file_img" src = "../../img/add_attachment.png" />
-    </label>
-    <label class = "upload_attachment_attment_label">
-      <img class = "upload_attachment_choose_file_img" src = "../../img/add_attachment.png" />
-    </label>
-    <label class = "upload_attachment_attment_label">
-      <img class = "upload_attachment_choose_file_img" src = "../../img/add_attachment.png" />
-    </label>
-    <label class = "upload_attachment_attment_label">
-      <img class = "upload_attachment_choose_file_img" src = "../../img/add_attachment.png" />
-    </label>
-    <label class = "upload_attachment_attment_label">
-      <img class = "upload_attachment_choose_file_img" src = "../../img/add_attachment.png" />
-    </label>
-    <label class = "upload_attachment_attment_label">
-      <img class = "upload_attachment_choose_file_img" src = "../../img/add_attachment.png" />
-    </label>
-  </div> -->
-  <div id="mybtns">
-    <a href="javascript:;" id = "upload_attachment_btn_right"></a>
-    <a href="javascript:;" id="upload_attachment_btn_left"></a>
-  </div>
-  <div id = "upload_attachment_content">
-    <div id = "upload_attachment_box" style = "left: 0px;">
-      <ul>
-        <li>
-          <a href = "#">
-            <img src = "../../img/file_type/accdb.png">
-          </a>
-        </li>
-        <li>
-          <a href = "#">
-            <img src = "../../img/file_type/accdb.png">
-          </a>
-        </li>
-        <li>
-          <a href = "#">
-            <img src = "../../img/file_type/accdb.png">
-          </a>
-        </li>
-        <li>
-          <a href = "#">
-            <img src = "../../img/file_type/accdb.png">
-          </a>
-        </li>
-        <li>
-          <a href = "#">
-            <img src = "../../img/file_type/accdb.png">
-          </a>
-        </li>
-        <li>
-          <a href = "#">
-            <img src = "../../img/file_type/accdb.png">
-          </a>
-        </li>
-        <li>
-          <a href = "#">
-            <img src = "../../img/file_type/accdb.png">
-          </a>
-        </li>
-        <li>
-          <a href = "#">
-            <img src = "../../img/file_type/accdb.png">
-          </a>
-        </li>
-        <li>
-          <a href = "#">
-            <img src = "../../img/file_type/accdb.png">
-          </a>
-        </li>
-        <li>
-          <a href = "#">
-            <img src = "../../img/file_type/accdb.png">
-          </a>
-        </li>
-        <li>
-          <a href = "#">
-            <img src = "../../img/file_type/accdb.png">
-          </a>
-        </li>
-        <li>
-          <a href = "#">
-            <img src = "../../img/file_type/accdb.png">
-          </a>
-        </li>
-        <li>
-          <a href = "#">
-            <img src = "../../img/file_type/accdb.png">
-          </a>
-        </li>
-        <li>
-          <a href = "#">
-            <img src = "../../img/file_type/accdb.png">
-          </a>
-        </li>
-        <li>
-          <a href = "#">
-            <img src = "../../img/file_type/accdb.png">
-          </a>
-        </li>
-        <li>
-          <a href = "#">
-            <img src = "../../img/file_type/accdb.png">
-          </a>
-        </li>
-        <li>
-          <a href = "#">
-            <img src = "../../img/file_type/accdb.png">
-          </a>
-        </li>
-      </ul>
+  <div id = "upload_attachment_area">
+    <div class = "upload_attachment_btn" id = "upload_attachment_btn_left"><span class = "glyphicon glyphicon-chevron-left"></span></div>
+    <div id = "upload_attachment_content">
+      <div id = "upload_attachment_box" style = "left: 0px;">
+        <ul>
+          <li>
+            <a href = "#">
+              <img src = "../../img/file_type/accdb.png">
+            </a>
+          </li>
+          <li>
+            <a href = "#">
+              <img src = "../../img/file_type/accdb.png">
+            </a>
+          </li>
+          <li>
+            <a href = "#">
+              <img src = "../../img/file_type/accdb.png">
+            </a>
+          </li>
+          <li>
+            <a href = "#">
+              <img src = "../../img/file_type/accdb.png">
+            </a>
+          </li>
+          <li>
+            <a href = "#">
+              <img src = "../../img/file_type/accdb.png">
+            </a>
+          </li>
+          <li>
+            <a href = "#">
+              <img src = "../../img/file_type/accdb.png">
+            </a>
+          </li>
+          <li>
+            <a href = "#">
+              <img src = "../../img/file_type/accdb.png">
+            </a>
+          </li>
+          <li>
+            <a href = "#">
+              <img src = "../../img/file_type/accdb.png">
+            </a>
+          </li>
+          <li>
+            <a href = "#">
+              <img src = "../../img/file_type/accdb.png">
+            </a>
+          </li>
+          <li>
+            <a href = "#">
+              <img src = "../../img/file_type/accdb.png">
+            </a>
+          </li>
+          <li>
+            <a href = "#">
+              <img src = "../../img/file_type/accdb.png">
+            </a>
+          </li>
+          <li>
+            <a href = "#">
+              <img src = "../../img/file_type/accdb.png">
+            </a>
+          </li>
+          <li>
+            <a href = "#">
+              <img src = "../../img/file_type/accdb.png">
+            </a>
+          </li>
+          <li>
+            <a href = "#">
+              <img src = "../../img/file_type/accdb.png">
+            </a>
+          </li>
+          <li>
+            <a href = "#">
+              <img src = "../../img/file_type/accdb.png">
+            </a>
+          </li>
+          <li>
+            <a href = "#">
+              <img src = "../../img/file_type/accdb.png">
+            </a>
+          </li>
+          <li>
+            <a href = "#">
+              <img src = "../../img/file_type/accdb.png">
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
+    <div class = "upload_attachment_btn" id = "upload_attachment_btn_right"><span class = "glyphicon glyphicon-chevron-right"></span></div>
   </div>
 </body>
 </html>
