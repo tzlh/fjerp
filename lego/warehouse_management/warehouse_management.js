@@ -63,14 +63,14 @@ function fill_variable_data() {
 };
 
 function warehouse_management_add_warehouse_modal() {
-  var warehouse_management_html  =  '<div class = "modal fade" id = "warehouse_management_prop" tabindex = "-1" role = "dialog" aria-labelledby = "myModalLabel">'+
+  var warehouse_management_html  =  '<div class = "modal fade custom_modal custom_modal" id = "warehouse_management_prop" tabindex = "-1" role = "dialog" aria-labelledby = "myModalLabel">'+
                                     '<div class = "modal-dialog modal-sm" role = "document">'+
                                       '<div class = "modal-content">'+
                                         '<div class = "modal-header bg-primary">'+
                                           '<button type = "button" class = "close"  data-dismiss = "modal" aria-label = "Close"><span aria-hidden = "true">&times;</span></button>'+
                                           '<h4 class = "modal-title" id = "myModalLabel">添加库区</h4>'+
                                         '</div>'+
-                                        '<div class = "modal-body">'+
+                                        '<div class = "modal-body nopadding-bottom">'+
                                           '<div class = "form-group">'+
                                             '<label>库区名称</label>'+
                                             '<input type = "text" class = "form-control warehouse_name" value = "">'+
@@ -97,6 +97,7 @@ function warehouse_management_add_warehouse_data() {
       $(this).remove();
     });
 }
+
 function warehouse_management_edit_warehouse_modal() {
   var warehouse_uuid = $(this).attr("uuid");
   var warehouse_name = "";
@@ -105,14 +106,14 @@ function warehouse_management_edit_warehouse_modal() {
           warehouse_name = warehouse_data.data[i].warehouse_name;
         };
       };
-  var warehouse_management_html = '<div class = "modal fade" id = "warehouse_management_prop_edit" tabindex = "-1" role = "dialog" aria-labelledby = "myModalLabel">'+
+  var warehouse_management_html = '<div class = "modal fade custom_modal custom_modal" id = "warehouse_management_prop_edit" tabindex = "-1" role = "dialog" aria-labelledby = "myModalLabel">'+
             '<div class = "modal-dialog modal-sm" role = "document">'+
               '<div class = "modal-content">'+
                 '<div class = "modal-header bg-primary">'+
                   '<button type = "button" class = "close"data-dismiss = "modal" aria-label = "Close"><span aria-hidden = "true">&times;</span></button>'+
                   '<h4 class = "modal-title" id = "myModalLabel">修改库区</h4>'+
                 '</div>'+
-                '<div class = "modal-body">'+
+                '<div class = "modal-body nopadding-bottom">'+
                   '<div class = "form-group">'+
                     '<label>库区名称</label>'+
                     '<input type = "text" class = "form-control warehouse_name" value = "' + warehouse_name + '">'+
@@ -140,14 +141,14 @@ function warehouse_management_edit_warehouse_data() {
 }
 function warehouse_management_delet_warehouse_modal() {
   var uuid=$(this).attr("uuid");
-  var warehouse_management_html = '<div class = "modal fade bs-example-modal-sm" id = "warehouse_management_delet" tabindex = "-1" role = "dialog" aria-labelledby = "myModalLabel">'+
+  var warehouse_management_html = '<div class = "modal fade bs-example-modal-sm custom_modal" id = "warehouse_management_delet" tabindex = "-1" role = "dialog" aria-labelledby = "myModalLabel">'+
                                     '<div class = "modal-dialog  modal-sm" role = "document">'+
                                       '<div class = "modal-content">'+
                                         '<div class = "modal-header bg-primary">'+
                                           '<button type = "button" class = "close" data-dismiss = "modal" aria-label="Close"><span aria-hidden = "true">&times;</span></button>'+
                                           '<h4 class = "modal-title" id="myModalLabel">删除库区确认</h4>'+
                                         '</div>'+
-                                        '<div class = "modal-body text-center">确定要删除库区吗？</div>'+
+                                        '<div class = "modal-body text-center nopadding-bottom">确定要删除库区吗？</div>'+
                                         '<div class = "modal-footer" style = "text-align: center;">'+
                                           '<button type = "button" class = "btn btn-danger warehouse_management_delet_data" uuid = "' + uuid + '">删除</button>'+
                                           '<button type = "button" class = "btn btn-default" data-dismiss = "modal">取消</button>'+
@@ -169,19 +170,20 @@ function warehouse_management_delete_warehouse_data() {
   });
 };
 function warehouse_management_add_warehouse_pot_modal() {
-  var warehouse_management_html = '<div class = "modal fade" id = "warehouse_management_tank_prop" tabindex = "-1" role = "dialog" aria-labelledby = "myModalLabel">'+
+  var warehouse_management_html = '<div class = "modal fade custom_modal" id = "warehouse_management_tank_prop" tabindex = "-1" role = "dialog" aria-labelledby = "myModalLabel">'+
                                     '<div class = "modal-dialog" role = "document">'+
                                       '<div class = "modal-content">'+
                                         '<div class = "modal-header bg-primary">'+
                                           '<button type = "button" class = "close" data-dismiss = "modal" aria-label = "Close"><span aria-hidden = "true">&times;</span></button>'+
                                           '<h4 class = "modal-title" id="myModalLabel">添加储罐</h4>'+
                                         '</div>'+
-                                        '<div class = "modal-body">'+
+                                        '<div class = "modal-body nopadding-bottom">'+
                                           '<div class = "row">'+
                                             '<div class = "col-lg-6">'+
                                               '<div class = "form-group">'+
                                                 '<label>储罐类型</label>'+
                                                 '<select class = "form-control storage_tank_style" value = "">'+
+                                                  '<option value = "">--请选择--</option>'+
                                                   '<option value = "0">原料罐</option>'+
                                                   '<option value = "1">生产罐</option>'+
                                                 '</select>'+
@@ -234,14 +236,14 @@ function warehouse_management_add_warehouse_pot_data() {
 }
 function warehouse_management_edit_warehouse_pot_modal() {
   var warehouse_tank_uuid = $(this).attr("uuid");
-    var warehouse_management_html = '<div class = "modal fade" id = "warehouse_management_tank_prop_edit" tabindex = "-1" role = "dialog" aria-labelledby = "myModalLabel">'+
+    var warehouse_management_html = '<div class = "modal fade custom_modal" id = "warehouse_management_tank_prop_edit" tabindex = "-1" role = "dialog" aria-labelledby = "myModalLabel">'+
               '<div class = "modal-dialog" role = "document">'+
                 '<div class = "modal-content">'+
                   '<div class = "modal-header bg-primary">'+
                     '<button type = "button" class = "close" data-dismiss = "modal" aria-label="Close"><span aria-hidden = "true">&times;</span></button>'+
                     '<h4 class = "modal-title" id = "myModalLabel">修改储罐</h4>'+
                   '</div>'+
-                  '<div class = "modal-body">'+
+                  '<div class = "modal-body nopadding-bottom">'+
                     '<div class = "row">'+
                       '<div class = "col-lg-6">'+
                         '<div class = "form-group">'+
@@ -299,14 +301,14 @@ function warehouse_management_edit_warehouse_pot_data() {
 };
 function warehouse_management_delete_warehouse_pot_modal() {
   var uuid = $(this).attr("uuid");
-  var warehouse_management_html = '<div class = "modal fade bs-example-modal-sm" id = "warehouse_management_tank_delet" tabindex = "-1" role = "dialog" aria-labelledby = "myModalLabel">'+
+  var warehouse_management_html = '<div class = "modal fade bs-example-modal-sm custom_modal" id = "warehouse_management_tank_delet" tabindex = "-1" role = "dialog" aria-labelledby = "myModalLabel">'+
                                   '<div class = "modal-dialog  modal-sm" role = "document">'+
                                     '<div class = "modal-content">'+
                                       '<div class = "modal-header bg-primary">'+
                                         '<button type = "button" class = "close" data-dismiss = "modal" aria-label="Close"><span aria-hidden = "true">&times;</span></button>'+
                                         '<h4 class = "modal-title" id = "myModalLabel">删除储罐确认</h4>'+
                                       '</div>'+
-                                      '<div class = "modal-body text-center">确定要删除储罐吗？</div>'+
+                                      '<div class = "modal-body text-center nopadding-bottom">确定要删除储罐吗？</div>'+
                                       '<div class = "modal-footer" style = "text-align: center;">'+
                                         '<button type = "button" class = "btn btn-danger warehouse_management_tank_remove_data" uuid="'+uuid+'">删除</button>'+
                                         '<button type = "button" class = "btn btn-default" data-dismiss = "modal">取消</button>'+
