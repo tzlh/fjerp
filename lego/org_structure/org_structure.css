@@ -38,22 +38,3 @@
 #org_structure_list{
   padding: 0;
 }
-.popup_style .nopadding-bottom{
-  padding-bottom: 0;);
-}
-.popup_style .modal-footer{
-  border-top: 0;
-  text-align: center;
-}
-.popup_style .modal-header{
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
-  padding: 10px 15px;
-}
-.popup_style .modal-header .close{
-  opacity: 1;
-  color: #fff;
-}
-.popup_style h4{
-  font-size: 16px;
-}
