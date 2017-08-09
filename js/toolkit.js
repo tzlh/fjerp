@@ -35,11 +35,9 @@ function ajax_assistant(url, param_data, is_async, is_with_credentials, is_multi
     is_cross_domain = true;
   }
   var content_type = "application/x-www-form-urlencoded";
-  if (is_multipart_upload) {
-    content_type = "multipart/form-data";
-  }
   var process_data = true;
   if (is_multipart_upload) {
+    content_type = false;
     process_data = false;
   }
   $.ajax({
