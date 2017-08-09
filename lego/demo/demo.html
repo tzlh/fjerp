@@ -5,13 +5,20 @@
     <title>Demo</title>
     <link rel = "stylesheet" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel = "stylesheet" href = "../../plugin/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-    <link rel = "stylesheet/less" href = "demo.css">
+    <link rel = "stylesheet" href = "demo.css">
     <script src = "../../plugin/jquery/1.12.4/jquery.min.js"></script>
     <script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src = "../../plugin/less/2.7.1/less.min.js"></script>
+    <script src = " ../../js/toolkit.js"></script>
     <script>
     $(document).ready(function() {
-        // ...
+      var url = "http://192.168.1.131:8080/lego/lego/lego_user";
+      var param_data = {};
+      param_data["servletName"] = "loginWithNamePassword";
+      param_data["name"] = "admin";
+      param_data["password"] = "123";
+      var result = ajax_assistant(url, param_data, false, true, false);
+      console.log(result);
     });
     </script>
   </head>
