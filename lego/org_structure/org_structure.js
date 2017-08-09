@@ -39,6 +39,26 @@ var employee_data = {"data": [
   {"employee_name": "赵四","uuid": "2211","position_uuid": "221"},
   {"employee_name": "张二","uuid": "2221","position_uuid": "222"},
 ]};
+var current_employee_detail_data = {
+  "uuid": "asdfadsf",
+  "name": "zhangsan",
+  "sex": "男",
+  "password": "!@#$%^&*()",
+  "telphone_number": "13133333333",
+  "real_name": "张三",
+  "email": "zhangsan@163.com",
+  "wechat": "3s222222",
+  "work_area_uuid": "3",
+};
+var work_area_data = {"data": [
+  {"work_area_name": "库区1","work_area_uuid": "1"},
+  {"work_area_name": "库区2","work_area_uuid": "2"},
+  {"work_area_name": "库区3","work_area_uuid": "3"},
+  {"work_area_name": "库区4","work_area_uuid": "4"},
+  {"work_area_name": "库区5","work_area_uuid": "5"},
+  {"work_area_name": "库区6","work_area_uuid": "6"},
+  {"work_area_name": "库区7","work_area_uuid": "7"},
+]};
 function fill_variable_data() {
   var content  = "";
   //debugger;
@@ -49,10 +69,10 @@ function fill_variable_data() {
                         '<p class="oli clearfix bgd8d8d8" style="margin-top:2px;">'+
                           '<span class="glyphicon glyphicon-menu-hamburger pull-left mr20" aria-hidden="true"></span>'+
                           '<span>' + root_department.data[i].name + '</span>'+
-                          '<span class="glyphicon glyphicon-remove pull-right deleteDepartment" title="删除部门" aria-hidden="true" data-toggle="modal" data-target="#deleteDepartment"></span>'+
-                          '<span class="glyphicon glyphicon-pencil pull-right mr20 editDepartment" title="修改部门" aria-hidden="true" data-toggle="modal" data-target="#editDepartment"></span>'+
-                          '<span class="glyphicon glyphicon-asterisk pull-right mr20 addPosition" title="添加岗位" aria-hidden="true" data-toggle="modal" data-target="#addPosition"></span>'+
-                          '<span class="glyphicon glyphicon-plus pull-right mr20 addDepartment" title="添加子部门" aria-hidden="true" data-toggle="modal" data-target="#org_structure_add_department"></span>'+
+                          '<span class="glyphicon glyphicon-remove pull-right deleteDepartment" title="删除部门" aria-hidden="true" data-toggle="modal" data-target="#org_structure_delete_department"></span>'+
+                          '<span class="glyphicon glyphicon-pencil pull-right mr20 org_structure_department_edit" title="修改部门" aria-hidden="true" data-toggle="modal" data-target="#org_structure_edit_department"></span>'+
+                          '<span class="glyphicon glyphicon-asterisk pull-right mr20 org_structure_position_add" title="添加岗位" aria-hidden="true" data-toggle="modal" data-target="#org_structure_add_position"></span>'+
+                          '<span class="glyphicon glyphicon-plus pull-right mr20 org_structure_department_add" title="添加子部门" aria-hidden="true" data-toggle="modal" data-target="#org_structure_add_department"></span>'+
                         '</p>'+
                       '</li>'+
                     '</ul>';
@@ -64,10 +84,10 @@ function fill_variable_data() {
                         '<p class="oli clearfix org_structure_bgd8d8d8" style="margin-top:2px;">'+
                           '<span class="glyphicon glyphicon-menu-hamburger pull-left mr20" aria-hidden="true"></span>'+
                           '<span>' + department_data.data[i].department_name + '</span>'+
-                          '<span class="glyphicon glyphicon-remove pull-right deleteDepartment" title="删除部门" aria-hidden="true" data-toggle="modal" data-target="#deleteDepartment"></span>'+
-                          '<span class="glyphicon glyphicon-pencil pull-right mr20 editDepartment" title="修改部门" aria-hidden="true" data-toggle="modal" data-target="#editDepartment"></span>'+
-                          '<span class="glyphicon glyphicon-asterisk pull-right mr20 addPosition" title="添加岗位" aria-hidden="true" data-toggle="modal" data-target="#addPosition"></span>'+
-                          '<span class="glyphicon glyphicon-plus pull-right mr20 addDepartment" title="添加子部门" aria-hidden="true" data-toggle="modal" data-target="#org_structure_add_department"></span>'+
+                          '<span class="glyphicon glyphicon-remove pull-right org_structure_department_delete" title="删除部门" aria-hidden="true" data-toggle="modal" data-target="#org_structure_delete_department"></span>'+
+                          '<span class="glyphicon glyphicon-pencil pull-right mr20 org_structure_department_edit" title="修改部门" aria-hidden="true" data-toggle="modal" data-target="#org_structure_edit_department"></span>'+
+                          '<span class="glyphicon glyphicon-asterisk pull-right mr20 org_structure_position_add" title="添加岗位" aria-hidden="true" data-toggle="modal" data-target="#org_structure_add_position"></span>'+
+                          '<span class="glyphicon glyphicon-plus pull-right mr20 org_structure_department_add" title="添加子部门" aria-hidden="true" data-toggle="modal" data-target="#org_structure_add_department"></span>'+
                         '</p>'+
                       '</li>'+
                     '</ul>';
@@ -81,9 +101,9 @@ function fill_variable_data() {
                         '<p class="oli clearfix" style="margin-top:2px;">'+
                           '<span class="glyphicon glyphicon-menu-hamburger pull-left mr20" aria-hidden="true"></span>'+
                           '<span>' + position_data.data[i].position_name + '</span>'+
-                          '<span class="glyphicon glyphicon-remove pull-right deleteDepartment" title="删除部门" aria-hidden="true" data-toggle="modal" data-target="#deleteDepartment"></span>'+
-                          '<span class="glyphicon glyphicon-pencil pull-right mr20 editDepartment" title="修改部门" aria-hidden="true" data-toggle="modal" data-target="#editDepartment"></span>'+
-                          '<span class="glyphicon glyphicon-user pull-right mr20 addEmployee" title="添加员工" aria-hidden="true" data-toggle="modal" data-target="#addEmployee"></span>'+
+                          '<span class="glyphicon glyphicon-remove pull-right org_structure_position_delete" title="删除岗位" aria-hidden="true" data-toggle="modal" data-target="#org_structure_delete_position"></span>'+
+                          '<span class="glyphicon glyphicon-pencil pull-right mr20 org_structure_position_edit" title="修改岗位" aria-hidden="true" data-toggle="modal" data-target="#org_structure_edit_position"></span>'+
+                          '<span class="glyphicon glyphicon-user pull-right mr20 org_structure_employee_add" title="添加员工" aria-hidden="true" data-toggle="modal" data-target="#org_structure_add_employee"></span>'+
                         '</p>'+
                       '</li>'+
                     '</ul>';
@@ -95,8 +115,8 @@ function fill_variable_data() {
                         '<p class="oli clearfix" style="margin-top:2px;">'+
                           '<span class="glyphicon glyphicon-menu-hamburger pull-left mr20" aria-hidden="true"></span>'+
                           '<span>' + employee_data.data[i].employee_name + '</span>'+
-                          '<span class="glyphicon glyphicon-remove pull-right deleteDepartment" title="删除部门" aria-hidden="true" data-toggle="modal" data-target="#deleteDepartment"></span>'+
-                          '<span class="glyphicon glyphicon-pencil pull-right mr20 editDepartment" title="修改部门" aria-hidden="true" data-toggle="modal" data-target="#editDepartment"></span>'+
+                          '<span class="glyphicon glyphicon-remove pull-right org_structure_employee_delete" title="删除员工" aria-hidden="true" data-toggle="modal" data-target="#org_structure_delete_employee"></span>'+
+                          '<span class="glyphicon glyphicon-pencil pull-right mr20 org_structure_employee_edit" title="修改员工" aria-hidden="true" data-toggle="modal" data-target="#org_structure_edit_employee"></span>'+
                         '</p>'+
                       '</li>'+
                     '</ul>';
@@ -114,4 +134,363 @@ function fill_variable_data() {
                     '</ul>';
     $("#org_structure_list").append(content);  
   }
-};
+};   
+//添加部门弹窗
+var org_structure_add_department = '<div class="modal fade bs-example-modal-sm popup_style" id="org_structure_add_department" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'+
+        '<div class="modal-dialog modal-sm" role="document">'+
+        '<div class="modal-content">'+
+        '<div class="modal-header bg-primary">'+
+        '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+        '<h4 class="modal-title" id="myModalLabel">添加部门</h4>'+
+        '</div>'+
+        '<div class="modal-body nopadding-bottom">'+
+        '<div class="form-group">'+
+        '<label>部门名称</label>'+
+        '<input type="text" class="form-control department_name">'+
+        '</div>'+
+        '</div>'+
+        '<div class="modal-footer">'+
+        '<button type="button" class="btn btn-primary add_btn">添加</button>'+
+        '<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>'+
+        '</div>'+
+        '</div>'+
+        '</div>'+
+        '</div>';
+$("body").append(org_structure_add_department);
+//修改部门弹窗
+var org_structure_edit_department = '<div class="modal fade bs-example-modal-sm popup_style" id="org_structure_edit_department" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'+
+        '<div class="modal-dialog modal-sm" role="document">'+
+        '<div class="modal-content">'+
+        '<div class="modal-header bg-primary">'+
+        '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+        '<h4 class="modal-title" id="myModalLabel">修改部门</h4>'+
+        '</div>'+
+        '<div class="modal-body nopadding-bottom">'+
+        '<div class="form-group">'+
+        '<label>部门名称</label>'+
+        '<input type="text" class="form-control department_name">'+
+        '</div>'+
+        '</div>'+
+        '<div class="modal-footer">'+
+        '<button type="button" class="btn btn-warning add_btn">修改</button>'+
+        '<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>'+
+        '</div>'+
+        '</div>'+
+        '</div>'+
+        '</div>';
+$("body").append(org_structure_edit_department);
+//删除部门弹窗
+var org_structure_delete_department = '<div class="modal fade bs-example-modal-sm popup_style" id="org_structure_delete_department" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'+
+        '<div class="modal-dialog modal-sm" role="document">'+
+        '<div class="modal-content">'+
+        '<div class="modal-header bg-primary">'+
+        '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+        '<h4 class="modal-title" id="myModalLabel">删除部门确认</h4>'+
+        '</div>'+
+        '<div class="modal-body nopadding-bottom" style="text-align: center;margin-bottom: 15px;">'+
+        '确认要删除部门吗？'+
+        '</div>'+
+        '<div class="modal-footer">'+
+        '<button type="button" class="btn btn-danger remove">删除</button>'+
+        '<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>'+
+        '</div>'+
+        '</div>'+
+        '</div>'+
+        '</div>';
+$("body").append(org_structure_delete_department);
+//添加岗位
+var org_structure_add_position = '<div class="modal fade bs-example-modal-sm popup_style" id="org_structure_add_position" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'+
+        '<div class="modal-dialog modal-sm" role="document">'+
+        '<div class="modal-content">'+
+        '<div class="modal-header bg-primary">'+
+        '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+        '<h4 class="modal-title" id="myModalLabel">添加岗位</h4>'+
+        '</div>'+
+        '<div class="modal-body nopadding-bottom">'+
+        '<div class="form-group">'+
+        '<label>岗位名称</label>'+
+        '<input type="text" class="form-control position_name">'+
+        '</div>'+
+        '</div>'+
+        '<div class="modal-footer">'+
+        '<button type="button" class="btn btn-primary add_btn">添加</button>'+
+        '<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>'+
+        '</div>'+
+        '</div>'+
+        '</div>'+
+        '</div>';
+$("body").append(org_structure_add_position);
+//修改岗位
+var org_structure_edit_position = '<div class="modal fade bs-example-modal-sm popup_style" id="org_structure_edit_position" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'+
+        '<div class="modal-dialog modal-sm" role="document">'+
+        '<div class="modal-content">'+
+        '<div class="modal-header bg-primary">'+
+        '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+        '<h4 class="modal-title" id="myModalLabel">修改岗位</h4>'+
+        '</div>'+
+        '<div class="modal-body nopadding-bottom">'+
+        '<div class="form-group">'+
+        '<label>岗位名称</label>'+
+        '<input type="text" class="form-control position_name">'+
+        '</div>'+
+        '</div>'+
+        '<div class="modal-footer">'+
+        '<button type="button" class="btn btn-warning add_btn">修改</button>'+
+        '<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>'+
+        '</div>'+
+        '</div>'+
+        '</div>'+
+        '</div>';
+$("body").append(org_structure_edit_position);
+//删除岗位弹窗
+var org_structure_delete_position = '<div class="modal fade bs-example-modal-sm popup_style" id="org_structure_delete_position" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'+
+        '<div class="modal-dialog modal-sm" role="document">'+
+        '<div class="modal-content">'+
+        '<div class="modal-header bg-primary">'+
+        '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+        '<h4 class="modal-title" id="myModalLabel">删除岗位确认</h4>'+
+        '</div>'+
+        '<div class="modal-body nopadding-bottom" style="text-align: center;margin-bottom: 15px;">'+
+        '确认要删除岗位吗？'+
+        '</div>'+
+        '<div class="modal-footer">'+
+        '<button type="button" class="btn btn-danger remove">删除</button>'+
+        '<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>'+
+        '</div>'+
+        '</div>'+
+        '</div>'+
+        '</div>';
+$("body").append(org_structure_delete_position);
+//添加员工
+var org_structure_add_employee = '<div class="modal fade popup_style" id="org_structure_add_employee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">'+
+        '<div class="modal-dialog" role="document">'+
+        '<div class="modal-content">'+
+        '<div class="modal-header bg-primary">'+
+        '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+        '<h4 class="modal-title" id="myModalLabel">添加用户</h4>'+
+        '</div>'+
+        '<div class="modal-body">'+
+        '<div class="row">'+
+        '<div class="col-md-6">'+
+        '<form>'+
+        '<div class="form-group">'+
+        '<label for="">用户名</label>'+
+        '<input type="text" class="form-control name" />'+
+        '</div>'+
+        '</form>'+
+        '</div>'+
+        '<div class="col-md-6">'+
+        '<form>'+
+        '<div class="form-group sex" style="margin-top: 30px;">'+
+        '<label>'+
+        '<input id="check_men" type="radio" style="height: 22px;width: 22px;" name="flat-radio" value="男">'+
+        '<span>男</span>'+
+        '</label>'+
+        '<label>'+
+        '<input id="check_women" type="radio" style="height: 22px;width: 22px;" name="flat-radio"  value="女">'+
+        '<span>女</span>'+
+        '</label>'+
+        '</div>'+
+        '</form>'+
+        '</div>'+
+        '</div>'+
+        '<div class="row">'+
+        '<div class="col-md-6">'+
+        '<form>'+
+        '<div class="form-group">'+
+        '<label for="">密码</label>'+
+        '<input type="password" class="form-control password" />'+
+        '</div>'+
+        '</form>'+
+        '</div>'+
+        '<div class="col-md-6">'+
+        '<form>'+
+        '<div class="form-group">'+
+        '<label for="">联系电话</label>'+
+        '<input type="text" class="form-control telephone_number" />'+
+        '</div>'+
+        '</form>'+
+        '</div>'+
+        '</div>'+
+        '<div class="row">'+
+        '<div class="col-md-6">'+
+        '<form>'+
+        '<div class="form-group">'+
+        '<label for="">姓名</label>'+
+        '<input type="text" class="form-control employee_name" />'+
+        '</div>'+
+        '</form>'+
+        '</div>'+
+        '<div class="col-md-6">'+
+        '<form>'+
+        '<div class="form-group">'+
+        '<label for="">Email</label>'+
+        '<input type="text" class="form-control email" />'+
+        '</div>'+
+        '</form>'+
+        '</div>'+
+        '</div>'+
+        '<div class="row">'+
+        '<div class="col-md-6">'+
+        '<form>'+
+        '<div class="form-group">'+
+        '<label for="">微信编号</label>'+
+        '<input type="text" class="form-control wechat_openid" />'+
+        '</div>'+
+        '</form>'+
+        '</div>'+
+        '<div class="col-md-6">'+
+        '<form>'+
+        '<div class="form-group">'+
+        '<label for="">所在库区</label>'+
+        '<select class="form-control work_area_uuid">'+
+        '<option>--请选择--</option>'+
+        '</select>'+
+        '</div>'+
+        '</form>'+
+        '</div>'+
+        '</div>'+
+        '</div>'+
+        '<div class="modal-footer">'+
+        '<button type="button" class="btn btn-primary add_btn">保存</button>'+
+        '<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>'+
+        '</div>'+
+        '</div>'+
+        '</div>'+
+        '</div>';
+$("body").append(org_structure_add_employee);
+//修改员工
+var org_structure_edit_employee = '<div class="modal fade popup_style" id="org_structure_edit_employee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">'+
+        '<div class="modal-dialog" role="document">'+
+        '<div class="modal-content">'+
+        '<div class="modal-header bg-primary">'+
+        '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+        '<h4 class="modal-title" id="myModalLabel">修改用户</h4>'+
+        '</div>'+
+        '<div class="modal-body">'+
+        '<div class="row">'+
+        '<div class="col-md-6">'+
+        '<form>'+
+        '<div class="form-group">'+
+        '<label for="">用户名</label>'+
+        '<input type="text" class="form-control name" value = "' + current_employee_detail_data.name + '" />'+
+        '</div>'+
+        '</form>'+
+        '</div>'+
+        '<div class="col-md-6">'+
+        '<form>'+
+        '<div class="form-group sex" style="margin-top: 30px;">'+
+        '<label>'+
+        '<input id="check_men" type="radio" style="height: 22px;width: 22px;" name="flat-radio" value="男">'+
+        '<span>男</span>'+
+        '</label>'+
+        '<label>'+
+        '<input id="check_women" type="radio" style="height: 22px;width: 22px;" name="flat-radio"  value="女">'+
+        '<span>女</span>'+
+        '</label>'+
+        '</div>'+
+        '</form>'+
+        '</div>'+
+        '</div>'+
+        '<div class="row">'+
+        '<div class="col-md-6">'+
+        '<form>'+
+        '<div class="form-group">'+
+        '<label for="">密码</label>'+
+        '<input type="password" class="form-control password" value = "' + current_employee_detail_data.password + '" />'+
+        '</div>'+
+        '</form>'+
+        '</div>'+
+        '<div class="col-md-6">'+
+        '<form>'+
+        '<div class="form-group">'+
+        '<label for="">联系电话</label>'+
+        '<input type="text" class="form-control telephone_number" value = "' + current_employee_detail_data.telphone_number + '" />'+
+        '</div>'+
+        '</form>'+
+        '</div>'+
+        '</div>'+
+        '<div class="row">'+
+        '<div class="col-md-6">'+
+        '<form>'+
+        '<div class="form-group">'+
+        '<label for="">姓名</label>'+
+        '<input type="text" class="form-control employee_name" value = "' + current_employee_detail_data.real_name + '" />'+
+        '</div>'+
+        '</form>'+
+        '</div>'+
+        '<div class="col-md-6">'+
+        '<form>'+
+        '<div class="form-group">'+
+        '<label for="">Email</label>'+
+        '<input type="text" class="form-control email" value = "' + current_employee_detail_data.email + '" />'+
+        '</div>'+
+        '</form>'+
+        '</div>'+
+        '</div>'+
+        '<div class="row">'+
+        '<div class="col-md-6">'+
+        '<form>'+
+        '<div class="form-group">'+
+        '<label for="">微信编号</label>'+
+        '<input type="text" class="form-control wechat_openid" value = "' + current_employee_detail_data.wechat + '" />'+
+        '</div>'+
+        '</form>'+
+        '</div>'+
+        '<div class="col-md-6">'+
+        '<form>'+
+        '<div class="form-group">'+
+        '<label for="">所在库区</label>'+
+        '<select class="form-control work_area_uuid">'+
+        '<option>--请选择--</option>'+
+        '</select>'+
+        '</div>'+
+        '</form>'+
+        '</div>'+
+        '</div>'+
+        '</div>'+
+        '<div class="modal-footer">'+
+        '<button type="button" class="btn btn-warning add_btn" data-work_area_uuid = "' + current_employee_detail_data.work_area_uuid + '">修改</button>'+
+        '<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>'+
+        '</div>'+
+        '</div>'+
+        '</div>'+
+        '</div>';
+$("body").append(org_structure_edit_employee);
+$(document).on("click", ".org_structure_employee_edit", function() {
+  var work_area_select = "<option>--请选择--</option>";
+  for(var i = 0; i < work_area_data.data.length; i++) {
+    work_area_select += '<option value = "' + work_area_data.data[i].work_area_uuid + '">' + work_area_data.data[i].work_area_name + '</option>'
+    $("#org_structure_add_employee select").html(work_area_select);
+    $("#org_structure_edit_employee select").html(work_area_select);
+  }
+  for(var i = 0; i < $("#org_structure_edit_employee select option").length; i++){
+    var work_area_uuid = current_employee_detail_data.work_area_uuid;
+    var value = $("#org_structure_edit_employee select option").eq(i).val();
+    console.log(work_area_uuid);
+    if($("#org_structure_edit_employee select option").eq(i).val() == work_area_uuid) {
+      $("#org_structure_edit_employee select option").eq(i).prop('selected','selected');
+      break;
+    }
+  }
+})
+
+//删除员工弹窗
+var org_structure_delete_employee = '<div class="modal fade bs-example-modal-sm popup_style" id="org_structure_delete_employee" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'+
+        '<div class="modal-dialog modal-sm" role="document">'+
+        '<div class="modal-content">'+
+        '<div class="modal-header bg-primary">'+
+        '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+        '<h4 class="modal-title" id="myModalLabel">删除员工确认</h4>'+
+        '</div>'+
+        '<div class="modal-body nopadding-bottom" style="text-align: center;margin-bottom: 15px;">'+
+        '确认要删除员工吗？'+
+        '</div>'+
+        '<div class="modal-footer">'+
+        '<button type="button" class="btn btn-danger remove">删除</button>'+
+        '<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>'+
+        '</div>'+
+        '</div>'+
+        '</div>'+
+        '</div>';
+$("body").append(org_structure_delete_employee);
