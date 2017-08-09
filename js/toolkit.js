@@ -68,3 +68,15 @@ function ajax_assistant(url, param_data, is_async, is_with_credentials, is_multi
   });
   return result;
 }
+
+/**
+ * 判断json的对象是否含有数据
+ * @param obj json对象
+ * return true:有数据 false:无数据
+ */
+function isJsonObjectHasData(obj) {
+  for (var key in obj) {
+    return true;
+  }
+  return false;
+}
