@@ -6,13 +6,71 @@
   <meta name = "viewport" content = "width=device-width, initial-scale=1">
   <link rel = "stylesheet" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.css">
   <link rel = "stylesheet" href = "warehouse_management.css">
+  <link rel = "stylesheet" href = "warehouse_management.css">
   <script src = "../../plugin/jquery/1.12.4/jquery.min.js"></script>
   <script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.js"></script>
+  <script src = "../../js/toolkit.js"></script>
   <script src = "warehouse_management.js"></script>
+  <script>
+    $(document).ready(function() {
+      //清空原始数据
+      clear_raw_data();
+      //加载数据
+      fill_variable_data();
+      //添加仓库模态框
+      $("#warehouse_management_plus").click(function() {
+        warehouse_management_add_warehouse_modal();
+      });
+      //添加仓库数据
+      $(document).on("click", ".warehouse_management_prop_data", function() {
+        warehouse_management_add_warehouse_data();
+      });
+      //修改仓库模态框
+      $(document).on("click", ".warehouse_management_edit_pencil", function() {
+        warehouse_management_edit_warehouse_modal();
+      });
+      //修改仓库保存数据
+      $(document).on("click", ".warehouse_management_prop_edit_data", function() {
+        warehouse_management_edit_warehouse_data();
+      });
+      //删除仓库模态框
+      $(document).on("click", ".warehouse_management_remove", function() {
+        warehouse_management_delet_warehouse_modal();
+      });
+      //删除仓库数据
+      $(document).on("click", ".warehouse_management_delet_data", function() {
+        warehouse_management_delete_warehouse_data();
+      });
+      //添加储罐模态框
+      $(document).on("click", ".warehouse_management_add_tank", function() {
+        warehouse_management_add_warehouse_pot_modal();
+      });
+      // 添加储罐数据
+      $(document).on("click", ".warehouse_management_add_tank_data", function() {
+        warehouse_management_add_warehouse_pot_data();
+      });
+      //修改储罐模态框
+      $(document).on("click", ".warehouse_management_tank_pencil", function() {
+        warehouse_management_edit_warehouse_pot_modal();
+      });
+      //储罐修改保存数据
+      $(document).on("click", ".warehouse_management_tank_pencil_data", function() {
+        warehouse_management_edit_warehouse_pot_data();
+      });
+      //删除储罐模态框
+      $(document).on("click", ".warehouse_management_tank_remove", function() {
+        warehouse_management_delete_warehouse_pot_modal();
+      });
+      //删除储罐数据
+      $(document).on("click", ".warehouse_management_tank_remove_data", function() {
+        warehouse_management_delete_warehouse_pot_data();
+      });
+    });
+  </script>
 </head>
 <body>
-   <div class  =  "row warehouse_management_row">
-    <div class  =  "col-lg-12 warehouse_management_col">
+   <div class = "row warehouse_management_row">
+    <div class = "col-lg-12 warehouse_management_col">
       <div class = "list-group">
         <p href = "#" class = "list-group-item clearfix active warehouse_management_radius">库区管理<span class = "glyphicon glyphicon-plus pull-right " id = "warehouse_management_plus"></span></p>
         <div id="warehouse_management_box">
