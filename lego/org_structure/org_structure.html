@@ -4,7 +4,8 @@
 <meta charset = "utf-8" />
 <link rel = "stylesheet" type = "text/css" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.css"/>
 <link rel="stylesheet" type="text/css" href="org_structure.css"/>
-<link rel="stylesheet" type="text/css" href="../../plugin/icheck/1.x/skins/all.css"/>
+<link rel="stylesheet" type="text/css" href=" ../../plugin/icheck/1.x/skins/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/custom_modal.css"/>
 <script src = "../../plugin/jquery/1.12.4/jquery.min.js" type = "text/javascript" charset = "utf-8"></script>
 <script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.js" type = "text/javascript" charset = "utf-8"></script>
 <script src="../../plugin/icheck/1.x/icheck.min.js" type="text/javascript" charset="utf-8"></script>
@@ -13,6 +14,50 @@
 $(document).ready(function() {
   clear_raw_data();
   fill_variable_data();
+//添加根部门弹窗  
+  $(document).on("click", ".org_structure_enterprise_add", function() {
+    org_structure_add_enterprise_func();
+  });
+//添加部门弹窗 
+  $(document).on("click", ".org_structure_department_add", function() {
+    org_structure_add_department_func();
+  });
+//修改根部门弹窗
+  $(document).on("click", ".org_structure_root_department_edit", function() {
+    org_structure_edit_department_func();
+  });
+//修改部门弹窗
+  $(document).on("click", ".org_structure_department_edit", function() {
+    org_structure_edit_department_func();
+  });
+//删除部门弹窗
+  $(document).on("click", ".org_structure_department_delete", function() {
+    org_structure_delete_department_func();
+  });
+//添加岗位
+  $(document).on("click", ".org_structure_position_add", function() {
+    org_structure_add_position_func()
+  });
+//修改岗位
+  $(document).on("click", ".org_structure_position_edit", function() {
+    org_structure_edit_position_func();
+  });
+//删除岗位弹窗
+  $(document).on("click", ".org_structure_position_delete", function() {
+    org_structure_delete_position_func();
+  });
+//添加员工
+  $(document).on("click", ".org_structure_employee_add", function() {
+    org_structure_add_employee_func();
+  });
+//修改员工
+  $(document).on("click", ".org_structure_employee_edit", function() {
+    org_structure_edit_employee_func()
+  });
+//删除员工弹窗
+  $(document).on("click", ".org_structure_employee_delete", function() {
+    org_structure_delete_employee_func();
+  });
 })
 </script>
 <title></title>

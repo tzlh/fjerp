@@ -2,7 +2,7 @@ function clear_raw_data() {
   $("#org_structure_list").html("");
 };
 var root_department = {"data": [
-{"name": "腾智联合","uuid": "0","parent_uuid": "00"},
+  {"name": "腾智联合","uuid": "0","parent_uuid": "00"},
 ]};
 var department_data = {"data": [
   {"department_name": "技术部","uuid": "1","parent_uuid": "0"},
@@ -42,7 +42,7 @@ var employee_data = {"data": [
 var current_employee_detail_data = {
   "uuid": "asdfadsf",
   "name": "zhangsan",
-  "sex": "男",
+  "sex": "女",
   "password": "!@#$%^&*()",
   "telphone_number": "13133333333",
   "real_name": "张三",
@@ -59,85 +59,121 @@ var work_area_data = {"data": [
   {"work_area_name": "库区6","work_area_uuid": "6"},
   {"work_area_name": "库区7","work_area_uuid": "7"},
 ]};
+var current_root_department_data = {
+  "uuid": "asdfadsf",
+  "name": "腾智联合",
+  "parent_uuid": "00"
+};
+
+
+
+
+
+
 function fill_variable_data() {
   var content  = "";
-  //debugger;
-  if(0 < root_department.data.length){
-    for(var i = 0; i < root_department.data.length; i++) {
+  if (0 < root_department.data.length) {
+    for (var i = 0; i < root_department.data.length; i++) {
       content = '<ul class="list-group">'+
                       '<li class="list-group-item org_structure_lh40 cuuid_' + root_department.data[i].uuid + '">'+
                         '<p class="oli clearfix bgd8d8d8" style="margin-top:2px;">'+
                           '<span class="glyphicon glyphicon-menu-hamburger pull-left mr20" aria-hidden="true"></span>'+
                           '<span>' + root_department.data[i].name + '</span>'+
-                          '<span class="glyphicon glyphicon-remove pull-right org_structure_department_delete" data_parent_uuid = "' + root_department.data[i].uuid + '" title="删除部门" aria-hidden="true"></span>'+
-                          '<span class="glyphicon glyphicon-pencil pull-right mr20 org_structure_root_department_edit" data_parent_uuid = "' + root_department.data[i].uuid + '" data_parent_uuid = "' + root_department.data[i].parent_uuid + '" title="修改部门" aria-hidden="true"></span>'+
-                          '<span class="glyphicon glyphicon-asterisk pull-right mr20 org_structure_position_add" data_parent_uuid = "' + root_department.data[i].uuid + '" title="添加岗位" aria-hidden="true"></span>'+
-                          '<span class="glyphicon glyphicon-plus pull-right mr20 org_structure_department_add" data_parent_uuid = "' + root_department.data[i].uuid + '" title="添加子部门" aria-hidden="true"></span>'+
+                          '<span class="glyphicon glyphicon-remove pull-right org_structure_department_delete" data-uuid = "' + root_department.data[i].uuid + '" title="删除部门" aria-hidden="true"></span>'+
+                          '<span class="glyphicon glyphicon-pencil pull-right mr20 org_structure_root_department_edit" data-uuid = "' + root_department.data[i].uuid + '" data-parent_uuid = "' + root_department.data[i].parent_uuid + '" title="修改部门" aria-hidden="true"></span>'+
+                          '<span class="glyphicon glyphicon-asterisk pull-right mr20 org_structure_position_add" data-uuid = "' + root_department.data[i].uuid + '" title="添加岗位" aria-hidden="true"></span>'+
+                          '<span class="glyphicon glyphicon-plus pull-right mr20 org_structure_department_add" data-_uuid = "' + root_department.data[i].uuid + '" title="添加子部门" aria-hidden="true"></span>'+
                         '</p>'+
                       '</li>'+
                     '</ul>';
       $("#org_structure_list").append(content);  
     }
-    for(var i = 0; i < department_data.data.length; i++) {
+    for (var i = 0; i < department_data.data.length; i++) {
       content = '<ul class="list-group">'+
                       '<li class="list-group-item org_structure_lh40 cuuid_' + department_data.data[i].uuid + '">'+
                         '<p class="oli clearfix org_structure_bgd8d8d8" style="margin-top:2px;">'+
                           '<span class="glyphicon glyphicon-menu-hamburger pull-left mr20" aria-hidden="true"></span>'+
                           '<span>' + department_data.data[i].department_name + '</span>'+
-                          '<span class="glyphicon glyphicon-remove pull-right org_structure_department_delete" data_parent_uuid = "' + department_data.data[i].uuid + '" title="删除部门" aria-hidden="true"></span>'+
-                          '<span class="glyphicon glyphicon-pencil pull-right mr20 org_structure_department_edit" data_parent_uuid = "' + department_data.data[i].uuid + '" data_parent_uuid = "' + department_data.data[i].parent_uuid + '" title="修改部门" aria-hidden="true"></span>'+
-                          '<span class="glyphicon glyphicon-asterisk pull-right mr20 org_structure_position_add" data_parent_uuid = "' + department_data.data[i].uuid + '" title="添加岗位" aria-hidden="true"></span>'+
-                          '<span class="glyphicon glyphicon-plus pull-right mr20 org_structure_department_add" data_parent_uuid = "' + department_data.data[i].uuid + '" title="添加子部门" aria-hidden="true"></span>'+
+                          '<span class="glyphicon glyphicon-remove pull-right org_structure_department_delete" data-t_uuid = "' + department_data.data[i].uuid + '" title="删除部门" aria-hidden="true"></span>'+
+                          '<span class="glyphicon glyphicon-pencil pull-right mr20 org_structure_department_edit" data-uuid = "' + department_data.data[i].uuid + '" data_parent_uuid = "' + department_data.data[i].parent_uuid + '" title="修改部门" aria-hidden="true"></span>'+
+                          '<span class="glyphicon glyphicon-asterisk pull-right mr20 org_structure_position_add" data-uuid = "' + department_data.data[i].uuid + '" title="添加岗位" aria-hidden="true"></span>'+
+                          '<span class="glyphicon glyphicon-plus pull-right mr20 org_structure_department_add" data-uuid = "' + department_data.data[i].uuid + '" title="添加子部门" aria-hidden="true"></span>'+
                         '</p>'+
                       '</li>'+
                     '</ul>';
       $("#org_structure_list .cuuid_"+ department_data.data[i].parent_uuid).append(content);
     }
-    //for(var i = 0; i < position_data.data.length; i++) {
-  //debugger;
-    for(var i = position_data.data.length - 1; i >= 0; i--) {
+    for (var i = position_data.data.length - 1; i >= 0; i--) {
       content = '<ul class="list-group">'+
                       '<li class="list-group-item org_structure_lh40 cuuid_' + position_data.data[i].uuid + '">'+
                         '<p class="oli clearfix" style="margin-top:2px;">'+
                           '<span class="glyphicon glyphicon-menu-hamburger pull-left mr20" aria-hidden="true"></span>'+
                           '<span>' + position_data.data[i].position_name + '</span>'+
-                          '<span class="glyphicon glyphicon-remove pull-right org_structure_position_delete" data_parent_uuid = "' + position_data.data[i].uuid + '" title="删除岗位" aria-hidden="true"></span>'+
-                          '<span class="glyphicon glyphicon-pencil pull-right mr20 org_structure_position_edit" data_parent_uuid = "' + position_data.data[i].uuid + '" title="修改岗位" aria-hidden="true"></span>'+
-                          '<span class="glyphicon glyphicon-user pull-right mr20 org_structure_employee_add" title="添加员工" aria-hidden="true"></span>'+
+                          '<span class="glyphicon glyphicon-remove pull-right org_structure_position_delete" data-uuid = "' + position_data.data[i].uuid + '" title="删除岗位" aria-hidden="true"></span>'+
+                          '<span class="glyphicon glyphicon-pencil pull-right mr20 org_structure_position_edit" data-uuid = "' + position_data.data[i].uuid + '"  data-parent_uuid = "' + position_data.data[i].parent_uuid + '" title="修改岗位" aria-hidden="true"></span>'+
+                          '<span class="glyphicon glyphicon-user pull-right mr20 org_structure_employee_add" data-uuid = "' + position_data.data[i].uuid + '" title="添加员工" aria-hidden="true"></span>'+
                         '</p>'+
                       '</li>'+
                     '</ul>';
       $("#org_structure_list .cuuid_" + position_data.data[i].department_uuid + " >p").after(content);
     }
-    for(var i = position_data.data.length - 1; i >= 0; i--) {
+    for (var i = position_data.data.length - 1; i >= 0; i--) {
       content = '<ul class="list-group">'+
                       '<li class="list-group-item org_structure_lh40 cuuid_' + employee_data.data[i].uuid + '">'+
                         '<p class="oli clearfix" style="margin-top:2px;">'+
                           '<span class="glyphicon glyphicon-menu-hamburger pull-left mr20" aria-hidden="true"></span>'+
                           '<span>' + employee_data.data[i].employee_name + '</span>'+
-                          '<span class="glyphicon glyphicon-remove pull-right org_structure_employee_delete" title="删除员工" aria-hidden="true"></span>'+
-                          '<span class="glyphicon glyphicon-pencil pull-right mr20 org_structure_employee_edit" title="修改员工" aria-hidden="true"></span>'+
+                          '<span class="glyphicon glyphicon-remove pull-right org_structure_employee_delete" data-uuid = "' + employee_data.data[i].uuid + '" title="删除员工" aria-hidden="true"></span>'+
+                          '<span class="glyphicon glyphicon-pencil pull-right mr20 org_structure_employee_edit" data-uuid = "' + employee_data.data[i].uuid + '" data-parent_uuid = "' + employee_data.data[i].position_uuid + '" title="修改员工" aria-hidden="true"></span>'+
                         '</p>'+
                       '</li>'+
                     '</ul>';
       $("#org_structure_list .cuuid_" + employee_data.data[i].position_uuid + " >p").after(content);
     }
-  } else{
+  } else {
     content = '<ul class="list-group">'+
                       '<li class="list-group-item org_structure_lh40">'+
                         '<p class="oli clearfix bgd8d8d8" style="margin-top:2px;">'+
                           '<span class="glyphicon glyphicon-menu-hamburger pull-left mr20" aria-hidden="true"></span>'+
                           '<span>请先添加企业</span>'+
-                          '<span class="glyphicon glyphicon-plus pull-right mr20 addDepartment" title="添加子部门" aria-hidden="true"></span>'+
+                          '<span class="glyphicon glyphicon-plus pull-right mr20 org_structure_enterprise_add" title="添加企业" aria-hidden="true"></span>'+
                         '</p>'+
                       '</li>'+
                     '</ul>';
     $("#org_structure_list").append(content);  
   }
-};   
+};
+//添加根部门弹窗
+function org_structure_add_enterprise_func() {
+  var org_structure_add_enterprise = '<div class="modal fade bs-example-modal-sm custom_modal" id="org_structure_add_enterprise" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'+
+          '<div class="modal-dialog modal-sm" role="document">'+
+          '<div class="modal-content">'+
+          '<div class="modal-header bg-primary">'+
+          '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+          '<h4 class="modal-title" id="myModalLabel">添加部门</h4>'+
+          '</div>'+
+          '<div class="modal-body nopadding-bottom">'+
+          '<div class="form-group">'+
+          '<label>部门名称</label>'+
+          '<input type="text" class="form-control department_name">'+
+          '</div>'+
+          '</div>'+
+          '<div class="modal-footer">'+
+          '<button type="button" class="btn btn-primary add_btn">添加</button>'+
+          '<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>'+
+          '</div>'+
+          '</div>'+
+          '</div>'+
+          '</div>';
+  $("body").append(org_structure_add_enterprise);
+  $("#org_structure_add_enterprise").modal("show");
+  $("#org_structure_add_enterprise").on("hidden.bs.modal", function (e) {
+    $(this).remove();
+  });
+};
 //添加部门弹窗
-$(document).on("click", ".org_structure_department_add", function() {
-  var org_structure_add_department = '<div class="modal fade bs-example-modal-sm popup_style" id="org_structure_add_department" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'+
+function org_structure_add_department_func() {
+  var org_structure_add_department = '<div class="modal fade bs-example-modal-sm custom_modal" id="org_structure_add_department" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'+
           '<div class="modal-dialog modal-sm" role="document">'+
           '<div class="modal-content">'+
           '<div class="modal-header bg-primary">'+
@@ -159,10 +195,13 @@ $(document).on("click", ".org_structure_department_add", function() {
           '</div>';
   $("body").append(org_structure_add_department);
   $("#org_structure_add_department").modal("show");
-});
+  $("#org_structure_add_department").on("hidden.bs.modal", function (e) {
+     $(this).remove();
+  });
+};
 //修改根部门弹窗
-$(document).on("click", ".org_structure_root_department_edit", function() {
-  var org_structure_edit_department = '<div class="modal fade bs-example-modal-sm popup_style" id="org_structure_edit_root_department" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'+
+function org_structure_edit_department_func() {
+  var org_structure_edit_department = '<div class="modal fade bs-example-modal-sm custom_modal" id="org_structure_edit_root_department" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'+
           '<div class="modal-dialog modal-sm" role="document">'+
           '<div class="modal-content">'+
           '<div class="modal-header bg-primary">'+
@@ -184,10 +223,13 @@ $(document).on("click", ".org_structure_root_department_edit", function() {
           '</div>';
   $("body").append(org_structure_edit_department);
   $("#org_structure_edit_root_department").modal("show");
-});
+  $("#org_structure_edit_root_department").on("hidden.bs.modal", function (e) {
+    $(this).remove();
+  });
+};
 //修改部门弹窗
-$(document).on("click", ".org_structure_department_edit", function() {
-  var org_structure_edit_department = '<div class="modal fade bs-example-modal-sm popup_style" id="org_structure_edit_department" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'+
+function org_structure_edit_department_func() {
+  var org_structure_edit_department = '<div class="modal fade bs-example-modal-sm custom_modal" id="org_structure_edit_department" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'+
           '<div class="modal-dialog modal-sm" role="document">'+
           '<div class="modal-content">'+
           '<div class="modal-header bg-primary">'+
@@ -209,10 +251,13 @@ $(document).on("click", ".org_structure_department_edit", function() {
           '</div>';
   $("body").append(org_structure_edit_department);
   $("#org_structure_edit_department").modal("show");
-});
+  $("#org_structure_edit_department").on("hidden.bs.modal", function (e) {
+    $(this).remove();
+  });
+};
 //删除部门弹窗
-$(document).on("click", ".org_structure_department_delete", function() {
-  var org_structure_delete_department = '<div class="modal fade bs-example-modal-sm popup_style" id="org_structure_delete_department" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'+
+function org_structure_delete_department_func() {
+  var org_structure_delete_department = '<div class="modal fade bs-example-modal-sm custom_modal" id="org_structure_delete_department" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'+
           '<div class="modal-dialog modal-sm" role="document">'+
           '<div class="modal-content">'+
           '<div class="modal-header bg-primary">'+
@@ -231,10 +276,13 @@ $(document).on("click", ".org_structure_department_delete", function() {
           '</div>';
   $("body").append(org_structure_delete_department);
   $("#org_structure_delete_department").modal("show");
-});
+  $("#org_structure_delete_department").on("hidden.bs.modal", function (e) {
+    $(this).remove();
+  });
+};
 //添加岗位
-$(document).on("click", ".org_structure_position_add", function() {
-  var org_structure_add_position = '<div class="modal fade bs-example-modal-sm popup_style" id="org_structure_add_position" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'+
+function org_structure_add_position_func() {
+  var org_structure_add_position = '<div class="modal fade bs-example-modal-sm custom_modal" id="org_structure_add_position" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'+
           '<div class="modal-dialog modal-sm" role="document">'+
           '<div class="modal-content">'+
           '<div class="modal-header bg-primary">'+
@@ -256,10 +304,13 @@ $(document).on("click", ".org_structure_position_add", function() {
           '</div>';
   $("body").append(org_structure_add_position);
   $("#org_structure_add_position").modal("show");
-});
+  $("#org_structure_add_position").on("hidden.bs.modal", function (e) {
+    $(this).remove();
+  });
+};
 //修改岗位
-$(document).on("click", ".org_structure_position_edit", function() {
-  var org_structure_edit_position = '<div class="modal fade bs-example-modal-sm popup_style" id="org_structure_edit_position" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'+
+function org_structure_edit_position_func() {
+  var org_structure_edit_position = '<div class="modal fade bs-example-modal-sm custom_modal" id="org_structure_edit_position" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'+
           '<div class="modal-dialog modal-sm" role="document">'+
           '<div class="modal-content">'+
           '<div class="modal-header bg-primary">'+
@@ -281,10 +332,13 @@ $(document).on("click", ".org_structure_position_edit", function() {
           '</div>';
   $("body").append(org_structure_edit_position);
   $("#org_structure_edit_position").modal("show");
-});
+  $("#org_structure_edit_position").on("hidden.bs.modal", function (e) {
+    $(this).remove();
+  });
+};
 //删除岗位弹窗
-$(document).on("click", ".org_structure_position_delete", function() {
-  var org_structure_delete_position = '<div class="modal fade bs-example-modal-sm popup_style" id="org_structure_delete_position" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'+
+function org_structure_delete_position_func() {
+  var org_structure_delete_position = '<div class="modal fade bs-example-modal-sm custom_modal" id="org_structure_delete_position" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'+
           '<div class="modal-dialog modal-sm" role="document">'+
           '<div class="modal-content">'+
           '<div class="modal-header bg-primary">'+
@@ -303,10 +357,13 @@ $(document).on("click", ".org_structure_position_delete", function() {
           '</div>';
   $("body").append(org_structure_delete_position);
   $("#org_structure_delete_position").modal("show");
-});
+  $("#org_structure_delete_position").on("hidden.bs.modal", function (e) {
+    $(this).remove();
+  });
+};
 //添加员工
-$(document).on("click", ".org_structure_employee_add", function() {
-  var org_structure_add_employee = '<div class="modal fade popup_style" id="org_structure_add_employee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">'+
+function org_structure_add_employee_func() {
+  var org_structure_add_employee = '<div class="modal fade custom_modal" id="org_structure_add_employee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">'+
           '<div class="modal-dialog" role="document">'+
           '<div class="modal-content">'+
           '<div class="modal-header bg-primary">'+
@@ -401,13 +458,22 @@ $(document).on("click", ".org_structure_employee_add", function() {
           '</div>'+
           '</div>'+
           '</div>'+
-          '</div>';
+          '</div>'+
+          '<script>'+
+          '  $("input").iCheck({'+
+          '    radioClass: "iradio_square-blue"'+
+          '  });'+
+          '</script>';
   $("body").append(org_structure_add_employee);
   $("#org_structure_add_employee").modal("show");
-});
+  $(document).find("#check_men").iCheck('check');
+  $("#org_structure_add_employee").on("hidden.bs.modal", function (e) {
+    $(this).remove();
+  });
+};
 //修改员工
-$(document).on("click", ".org_structure_employee_edit", function() {
-  var org_structure_edit_employee = '<div class="modal fade popup_style" id="org_structure_edit_employee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">'+
+function org_structure_edit_employee_func() {
+  var org_structure_edit_employee = '<div class="modal fade custom_modal" id="org_structure_edit_employee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">'+
           '<div class="modal-dialog" role="document">'+
           '<div class="modal-content">'+
           '<div class="modal-header bg-primary">'+
@@ -428,11 +494,11 @@ $(document).on("click", ".org_structure_employee_edit", function() {
           '<form>'+
           '<div class="form-group sex" style="margin-top: 30px;">'+
           '<label>'+
-          '<input id="check_men" type="radio" style="height: 22px;width: 22px;" name="flat-radio" value="男">'+
+          '<input id="edit_check_men" type="radio" style="height: 22px;width: 22px;" name="flat-radio" value="男">'+
           '<span>男</span>'+
           '</label>'+
           '<label>'+
-          '<input id="check_women" type="radio" style="height: 22px;width: 22px;" name="flat-radio"  value="女">'+
+          '<input id="edit_check_women" type="radio" style="height: 22px;width: 22px;" name="flat-radio"  value="女">'+
           '<span>女</span>'+
           '</label>'+
           '</div>'+
@@ -502,11 +568,21 @@ $(document).on("click", ".org_structure_employee_edit", function() {
           '</div>'+
           '</div>'+
           '</div>'+
-          '</div>';
+          '</div>'+
+          '<script>'+
+          '  $("input").iCheck({'+
+          '    radioClass: "iradio_square-blue"'+
+          '  });'+
+          '</script>';
   $("body").append(org_structure_edit_employee);
   $("#org_structure_edit_employee").modal("show");
-});
-$(document).on("click", ".org_structure_employee_edit", function() {
+  var sex = current_employee_detail_data.sex;
+  if("男" == sex){
+    $(document).find("#edit_check_men").iCheck('check');
+  } else if("女" == sex){
+    $(document).find("#edit_check_women").iCheck('check');
+  }
+
   var work_area_select = "<option>--请选择--</option>";
   for(var i = 0; i < work_area_data.data.length; i++) {
     work_area_select += '<option value = "' + work_area_data.data[i].work_area_uuid + '">' + work_area_data.data[i].work_area_name + '</option>'
@@ -522,11 +598,13 @@ $(document).on("click", ".org_structure_employee_edit", function() {
       break;
     }
   }
-})
-
+  $("#org_structure_edit_employee").on("hidden.bs.modal", function (e) {
+    $(this).remove();
+  });
+};
 //删除员工弹窗
-$(document).on("click", ".org_structure_employee_delete", function() {
-  var org_structure_delete_employee = '<div class="modal fade bs-example-modal-sm popup_style" id="org_structure_delete_employee" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'+
+function org_structure_delete_employee_func() {
+  var org_structure_delete_employee = '<div class="modal fade bs-example-modal-sm custom_modal" id="org_structure_delete_employee" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'+
           '<div class="modal-dialog modal-sm" role="document">'+
           '<div class="modal-content">'+
           '<div class="modal-header bg-primary">'+
@@ -545,4 +623,8 @@ $(document).on("click", ".org_structure_employee_delete", function() {
           '</div>';
   $("body").append(org_structure_delete_employee);
   $("#org_structure_delete_employee").modal("show");
-});
+  $("#org_structure_delete_employee").on("hidden.bs.modal", function (e) {
+    $(this).remove();
+  });
+};
+

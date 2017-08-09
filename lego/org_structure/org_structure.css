@@ -38,3 +38,7 @@
 #org_structure_list{
   padding: 0;
 }
+#org_structure_add_employee .sex span,
+#org_structure_edit_employee .sex span{
+  margin: 0 15px;
+}
