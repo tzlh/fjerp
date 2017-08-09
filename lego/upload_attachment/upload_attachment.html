@@ -1,0 +1,281 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset = "utf-8" />
+<link rel = "stylesheet" type = "text/css" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.css"/>
+<link rel = "stylesheet" type = "text/css" href = "upload_attachment.css"/>
+<script src = "../../plugin/jquery/1.12.4/jquery.min.js" type = "text/javascript" charset = "utf-8"></script>
+<script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.js" type = "text/javascript" charset = "utf-8"></script>
+<script>
+  $(document).ready(function() {
+        var blw=$("#myscrollbox li").width();
+    //获取单个子元素所需宽度
+    var liArr = $("#myscrollbox ul").children("li");
+    //获取子元素数量
+    var mysw = $("#myscroll").width();
+    //获取子元素所在区域宽度
+    var mus = parseInt(mysw/blw);
+    //计算出需要显示的子元素的数量
+    var length = liArr.length-mus;
+    //计算子元素可移动次数（被隐藏的子元素数量）
+    var i=0
+    $("#right").click(function(){
+      i++
+      //点击i加1
+      if(i<length){
+          $("#myscrollbox").css("left",-(blw*i));
+        //子元素集合向左移动，距离为子元素的宽度乘以i。
+      }else{
+        i=length;
+        $("#myscrollbox").css("left",-(blw*length));
+        //超出可移动范围后点击不再移动。最后几个隐藏的元素显示时i数值固定位已经移走的子元素数量。
+        }
+      });
+    $("#left").click(function(){
+      i--
+      //点击i减1
+      if(i>=0){
+         $("#myscrollbox").css("left",-(blw*i));
+       //子元素集合向右移动，距离为子元素的宽度乘以i。
+      }else{
+       i=0;
+       $("#myscrollbox").css("left",0);
+       //超出可移动范围后点击不再移动。最前几个子元素被显示时i为0。
+        }
+      });
+  });
+</script>
+<title></title>
+<style>
+.scrollpic {
+  width: 1100px;
+  margin:40px auto 0 auto;
+}
+#myscroll {
+  display: block;
+  width: 100%;
+  position: relative;
+  height: 240px;
+  overflow: hidden;
+}
+#myscroll #myscrollbox {
+  display: block;
+  float: left;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1000000px;
+}
+#myscroll ul {
+  display: block;
+  float: left;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+#myscroll ul li {
+  display: block;
+  float: left;
+  padding: 0;
+  width:280px;
+}
+#myscroll ul li a {
+  display: block;
+  float: left;
+  width: 260px;
+  padding: 0;
+  position: relative;
+  height: 240px;
+  color: #333;
+}
+#myscroll a .intro {
+  position: absolute;
+  left: 0;
+  z-index: 10;
+  background-color: #0057c4;
+  filter: alpha(opacity=70);
+  width: 260px;
+  color: #fff;
+  -moz-opacity: 0.7;
+  -khtml-opacity: 0.7;
+  opacity: 0.7;
+  text-align: center;
+}
+#myscroll a .intro h5 {
+  padding: 0;
+  margin: 0;
+  font-size: 16px;
+  height: 40px;
+  width: 260px;
+  line-height: 30px;
+  border-bottom: 1px solid #347fdc;
+  font-weight:100;
+}
+#myscroll a .intro p {
+  font-size: 13px;
+  line-height: 20px;
+  margin: 65px 70px;
+  height: 70px;
+  overflow: hidden;
+}
+#myscroll a .intro {
+  bottom: -211px;
+}
+#myscroll a:hover .intro {
+  bottom: 0px;
+}
+#mybtns {
+  margin: 10px 0;
+  width: 1100px;
+  display: block;
+  height: 42px;
+}
+#mybtns a {
+  width: 42px;
+  height: 42px;
+  display: block;
+  float: right;
+  margin-right: 1px;
+  background-color: #c1c1c1;
+  margin-left:10px;
+}
+#mybtns a:hover {
+  background-color: #347fdc;
+}
+#mybtns a:hover, #myscroll, #mybtns a, #myscroll a:hover .intro, #myscroll a .intro, #myscroll #myscrollbox {
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+#mybtns #left {
+  background-image: url(../images/jt_l.png);
+}
+#mybtns #right {
+  background-image: url(../images/jt_r.png);
+}
+
+#kinMaxShow {
+  visibility: hidden;
+  width: 100%;
+  height: 500px;
+  overflow: hidden;
+}
+</style>
+</head>
+<body>
+  <div id = "upload_attachment_content">
+    <input id = "upload_attachment_choose_file_btn" type = "file" />
+    <label class = "upload_attachment_attment_label" id = "upload_attachment_choose_file_label" for = "upload_attachment_choose_file_btn">
+      <img class = "upload_attachment_choose_file_img" src = "../../img/add_attachment.png" />
+    </label>
+    <label class = "upload_attachment_attment_label">
+      <img class = "upload_attachment_choose_file_img" src = "../../img/add_attachment.png" />
+    </label>
+    <label class = "upload_attachment_attment_label">
+      <img class = "upload_attachment_choose_file_img" src = "../../img/add_attachment.png" />
+    </label>
+    <label class = "upload_attachment_attment_label">
+      <img class = "upload_attachment_choose_file_img" src = "../../img/add_attachment.png" />
+    </label>
+    <label class = "upload_attachment_attment_label">
+      <img class = "upload_attachment_choose_file_img" src = "../../img/add_attachment.png" />
+    </label>
+    <label class = "upload_attachment_attment_label">
+      <img class = "upload_attachment_choose_file_img" src = "../../img/add_attachment.png" />
+    </label>
+    <label class = "upload_attachment_attment_label">
+      <img class = "upload_attachment_choose_file_img" src = "../../img/add_attachment.png" />
+    </label>
+    <label class = "upload_attachment_attment_label">
+      <img class = "upload_attachment_choose_file_img" src = "../../img/add_attachment.png" />
+    </label>
+    <label class = "upload_attachment_attment_label">
+      <img class = "upload_attachment_choose_file_img" src = "../../img/add_attachment.png" />
+    </label>
+  </div>
+    <div id="mybtns"> <a href="javascript:;" id="right"></a><a href="javascript:;" id="left"></a>  </div>
+  <div id="myscroll">
+    <div id="myscrollbox" style="left: 0px;">
+      <ul>
+        <li>
+          <a href="#">
+            <img src="../../img/file_type/accdb.png" width="260" height="240">
+            <span class="intro">
+              <h5>P60305-140720</h5>
+              <p><img src="../../img/file_type/accdb.png" width="70" height="70"></p>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <img src="../../img/file_type/accdb.png" width="260" height="240">
+            <span class="intro">
+              <h5>P60305-140720</h5>
+              <p><img src="../../img/file_type/accdb.png" width="70" height="70"></p>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <img src="../../img/file_type/accdb.png" width="260" height="240">
+            <span class="intro">
+              <h5>P60305-140606</h5>
+              <p><img src="../../img/file_type/accdb.png" width="70" height="70"></p>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <img src="../../img/file_type/accdb.png" width="260" height="240">
+            <span class="intro">
+              <h5>P60305-140631</h5>
+              <p><img src="../../img/file_type/accdb.png" width="70" height="70"></p>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <img src="../../img/file_type/accdb.png" width="260" height="240">
+            <span class="intro">
+              <h5>P60305-140542</h5>
+              <p><img src="../../img/file_type/accdb.png" width="70" height="70"></p>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <img src="../../img/file_type/accdb.png" width="260" height="240">
+            <span class="intro">
+              <h5>P60305-140720</h5>
+              <p><img src="../../img/file_type/accdb.png" width="70" height="70"></p>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <img src="../../img/file_type/accdb.png" width="260" height="240">
+            <span class="intro">
+              <h5>P60305-140631</h5>
+              <p><img src="../../img/file_type/accdb.png" width="70" height="70"></p>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <img src="../../img/file_type/accdb.png" width="260" height="240">
+            <span class="intro">
+              <h5>P60305-140542</h5>
+              <p><img src="../../img/file_type/accdb.png" width="70" height="70"></p>
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+  <button id = "btn_left">&lt;&lt;</button>
+  <button id = "btn_right">&gt;&gt;</button>
+</body>
+</html>
