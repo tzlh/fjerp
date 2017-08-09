@@ -12,13 +12,13 @@
     <script src = " ../../js/toolkit.js"></script>
     <script>
     $(document).ready(function() {
-      var url = "http://192.168.1.131:8080/lego/lego/lego_user";
       var param_data = {};
-      param_data["servletName"] = "loginWithNamePassword";
-      param_data["name"] = "admin";
-      param_data["password"] = "123";
-      var result = ajax_assistant(url, param_data, false, true, false);
-      console.log(result);
+      // param_data["name"] = "yuanhang";
+      if (isJsonObjectHasData(param_data)) {
+        alert("有数据");
+      } else {
+        alert("无数据");
+      }
     });
     </script>
   </head>
