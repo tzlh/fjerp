@@ -23,7 +23,7 @@ function getQueryFromUrl(paramName) {
  * @param param_data 参数数据
  * @param is_async true:异步 false:同步
  * @param is_with_credentials true:自带证书 false:不带证书
- * @param is_multipart_upload 是否分块上传（针对附件上传） true:附件模式 false:文本模式
+ * @param is_multipart_upload true:附件模式 false:文本模式
  */
 function ajax_assistant(url, param_data, is_async, is_with_credentials, is_multipart_upload) {
   var result;
@@ -35,6 +35,9 @@ function ajax_assistant(url, param_data, is_async, is_with_credentials, is_multi
     is_cross_domain = true;
   }
   var content_type = "application/x-www-form-urlencoded";
+  if (is_multipart_upload) {
+    content_type = "multipart/form-data";
+  }
   var process_data = true;
   if (is_multipart_upload) {
     process_data = false;
@@ -54,6 +57,8 @@ function ajax_assistant(url, param_data, is_async, is_with_credentials, is_multi
     xhrFields: {
         withCredentials: is_with_credentials
     },
+    // 内容类型
+    contentType: content_type,
     // 是否以contentType的默认值传递数据
     processData: process_data,
     // 是否跨域
