@@ -15,6 +15,8 @@
     $(document).ready(function() {
       //清空原始数据
       clear_raw_data();
+      //服务器数据
+      new_server_data_fill();
       //加载数据
       fill_variable_data();
       //添加仓库模态框
@@ -23,47 +25,59 @@
       });
       //添加仓库数据
       $(document).on("click", ".warehouse_management_prop_data", function() {
-        warehouse_management_add_warehouse_data();
+        var warehouse_management_prop_data_this = $(this);
+        warehouse_management_add_warehouse_data( warehouse_management_prop_data_this );
       });
       //修改仓库模态框
       $(document).on("click", ".warehouse_management_edit_pencil", function() {
-        warehouse_management_edit_warehouse_modal();
+        var warehouse_management_pencil_data_this = $(this);
+        warehouse_management_edit_warehouse_modal( warehouse_management_pencil_data_this );
       });
       //修改仓库保存数据
       $(document).on("click", ".warehouse_management_prop_edit_data", function() {
-        warehouse_management_edit_warehouse_data();
+        var warehouse_management_remove_data_this = $(this);
+        warehouse_management_edit_warehouse_data( warehouse_management_remove_data_this );
       });
       //删除仓库模态框
       $(document).on("click", ".warehouse_management_remove", function() {
-        warehouse_management_delet_warehouse_modal();
+        var warehouse_management_remove_this = $(this);
+        warehouse_management_delet_warehouse_modal( warehouse_management_remove_this );
       });
       //删除仓库数据
       $(document).on("click", ".warehouse_management_delet_data", function() {
-        warehouse_management_delete_warehouse_data();
+        var warehouse_management_delete_this = $(this);
+        warehouse_management_delete_warehouse_data( warehouse_management_delete_this );
       });
       //添加储罐模态框
       $(document).on("click", ".warehouse_management_add_tank", function() {
-        warehouse_management_add_warehouse_pot_modal();
+        var warehouse_management_add_tank_this = $(this);
+        warehouse_management_add_warehouse_pot_modal( warehouse_management_add_tank_this );
       });
       // 添加储罐数据
       $(document).on("click", ".warehouse_management_add_tank_data", function() {
-        warehouse_management_add_warehouse_pot_data();
+        var warehouse_management_add_tank_this = $(this);
+        warehouse_management_add_warehouse_pot_data( warehouse_management_add_tank_this );
       });
       //修改储罐模态框
       $(document).on("click", ".warehouse_management_tank_pencil", function() {
-        warehouse_management_edit_warehouse_pot_modal();
+        var warehouse_management_tank_pencil_this = $(this);
+        var warehouse_uuid = $(this).parent().parent().prev().attr("warehouse_uuid");
+        warehouse_management_edit_warehouse_pot_modal( warehouse_management_tank_pencil_this, warehouse_uuid);
       });
       //储罐修改保存数据
       $(document).on("click", ".warehouse_management_tank_pencil_data", function() {
-        warehouse_management_edit_warehouse_pot_data();
+        var warehouse_tank_pencil_this = $(this);
+        warehouse_management_edit_warehouse_pot_data( warehouse_tank_pencil_this );
       });
       //删除储罐模态框
       $(document).on("click", ".warehouse_management_tank_remove", function() {
-        warehouse_management_delete_warehouse_pot_modal();
+        var warehouse_tank_remove_this = $(this);
+        warehouse_management_delete_warehouse_pot_modal( warehouse_tank_remove_this );
       });
       //删除储罐数据
       $(document).on("click", ".warehouse_management_tank_remove_data", function() {
-        warehouse_management_delete_warehouse_pot_data();
+        var warehouse_tank_remove_data_this = $(this);
+        warehouse_management_delete_warehouse_pot_data( warehouse_tank_remove_data_this );
       });
     });
   </script>
