@@ -202,4 +202,5 @@ function contract_warehouse_edit_modle(_this) {
   var data = {
     "uuid":uuid
   };
+  
 }
