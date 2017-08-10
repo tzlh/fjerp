@@ -10,9 +10,11 @@
   <script src = "../../plugin/jquery/1.12.4/jquery.min.js"></script>
   <script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.js"></script>
   <script src = "../../js/toolkit.js"></script>
+  <!--<script src = "../../js/widget.js"></script>-->
   <script src = "contract_warehouse.js"></script>
   <script>
     $(document).ready(function() {
+//    widget_datepicker_init();
       //清空原始数据
       clear_raw_data();
       //加载数据
@@ -25,7 +27,12 @@
       $(document).on("click", "#contract_warehouse_add_btn", function() {
         var contract_warehouse_this = $(this);
         contract_warehouse_add_data( contract_warehouse_this );
-      })
+      });
+      //修改储罐合同模态框
+      $(document).on("click", "", function() {
+        var contract_warehouse_this = $(this);
+        contract_warehouse_edit_modle( contract_warehouse_this );
+      });
     });
   </script>
 </head>
@@ -75,7 +82,7 @@
                   <div class = "form-group has-feedback">
                     <div class = "input-group">
                       <span class = "input-group-addon">租赁时间（起）</span>
-                      <input  type = "text" class = "form-control data_cha"  value = "">
+                      <input  type = "text" class = "form-control widget_datepicker"  value = "">
                     </div>
                     <span class = "glyphicon glyphicon-calendar form-control-feedback" aria-hidden = "true"></span>
                   </div>
@@ -86,7 +93,7 @@
                     <div class = "form-group has-feedback">
                     <div class = "input-group">
                       <span class = "input-group-addon">租赁时间（止）</span>
-                      <input type = "text" class = "form-control data_cha" value = "" >
+                      <input type = "text" class = "form-control widget_datepicker" value = "" >
                     </div>
                     <span class = "glyphicon glyphicon-calendar form-control-feedback" aria-hidden = "true"></span>
                   </div>

@@ -128,9 +128,7 @@ function contract_warehouse_add_modle() {
     $("#contract_warehouse_add_modle").modal("show");
     $("#contract_warehouse_add_modle").on("hidden.bs.modal", function (e) {
       $(this).remove();
-    });
-                
-                
+    });      
 }
 
 function contract_warehouse_add_data(_this) {
@@ -187,8 +185,7 @@ function contract_warehouse_add_data(_this) {
       {"contract_code":"KL-IO-1110", "lessor_uuid":"0005", "leaser_uuid":"0005", "start_datetime":"2017-05-06 00:00:00", "end_datetime":"2017-05-08 00:00:00", "uuid":"00004", "culster_list":"123,456"},
       {"contract_code":"XC-EC-10", "lessor_uuid":"0006", "leaser_uuid":"0006", "start_datetime":"2017-05-06 00:00:00", "end_datetime":"2017-05-08 00:00:00", "uuid":"00005", "culster_list":"123,456"},
       {"contract_code":"FT-UH-1", "lessor_uuid":"0006", "leaser_uuid":"0004", "start_datetime":"2017-05-06 00:00:00", "end_datetime":"2017-05-08 00:00:00", "uuid":"00006", "culster_list":"123,456"},
-      {"contract_code":"wwwwwwwww", "lessor_uuid":"0006", "leaser_uuid":"0004", "start_datetime":"2017-05-06 00:00:00", "end_datetime":"2017-05-08 00:00:00", "uuid":"00007", "culster_list":"123,456"}
-    ]
+      {"contract_code":"wwwwwwwww", "lessor_uuid":"0006", "leaser_uuid":"0004", "start_datetime":"2017-05-06 00:00:00", "end_datetime":"2017-05-08 00:00:00", "uuid":"00007", "culster_list":"123,456"}]
     };
     fill_variable_data(); 
     $("#contract_warehouse_add_modle").modal("hide");
@@ -198,5 +195,11 @@ function contract_warehouse_add_data(_this) {
   } else {
     alert("添加储罐合同失败");
   }
-  
+}
+
+function contract_warehouse_edit_modle(_this) {
+  var uuid = _this.attr("uuid");
+  var data = {
+    "uuid":uuid
+  };
 }
