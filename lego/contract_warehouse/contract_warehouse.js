@@ -1,4 +1,3 @@
-
 //企业
 var enterprise_data={"data":[
   {"short_name":"腾智联合", "uuid":"77777777777777777777777777777771"},
@@ -8,6 +7,8 @@ var enterprise_data={"data":[
   {"short_name":"金莲", "uuid":"77777777777777777777777777777775"},
   {"short_name":"云谷", "uuid":"77777777777777777777777777777776"}]  
 };
+
+
 //储罐租赁合同
 /*
  *contract_code:合同编号
