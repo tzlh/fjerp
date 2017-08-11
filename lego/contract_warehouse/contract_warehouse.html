@@ -15,6 +15,7 @@
   <script src="../../plugin/jquery_timepicker_addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>  
   <script src = "../../plugin/jquery_timepicker_addon/1.6.3/init.js"></script>
   <script src = "../../js/toolkit.js"></script>
+  <script src = "../../js/configure.js"></script>
   <script src="upload_file.js"></script>
   <script src="page.js"></script>
   <script src = "contract_warehouse.js"></script>
@@ -40,6 +41,7 @@
   </style>
   <script>
     $(document).ready(function() {
+      contract_warehouse_output("#contract_warehouse_content");
       //日历插件
       widget_datepicker_init();
       //清空原始数据
@@ -103,134 +105,7 @@
   </script>
 </head>
 <body>
-  <div class = "panel panel-primary">
-    <div class = "panel-heading clearfix">查询储罐租赁合同<span class = "glyphicon glyphicon-plus pull-right" id = "contract_warehouse_plus"></span></div>
-    <div class = "container-fluid">
-      <div class = "row contract_warehouse_mt20">
-          <div class = "col-lg-2">
-            <div class = "form-inline">
-              <div class = "form-group">
-                <div class = "input-group">
-                  <div class = "input-group-addon">合同编号</div>
-                  <input type = "text" class = "form-control" id = "contract_warehouse_search_input">
-                  <span class = "input-group-btn" id = "contract_warehouse_search_btn">
-                    <button class = "btn btn-primary" type = "button"><span class = "glyphicon glyphicon-search"></span></button>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class = "col-lg-2">
-            <div class = "input-group">
-              <div class = "input-group-addon">出租方</div>
-                <select class = "form-control" id = "contract_warehouse_lessor" value = "">
-                  <option selected = "selected">全部</option>
-                  <option>2</option>
-                  <option>3</option>
-                </select>
-            </div>
-          </div>
-          <div class = "col-lg-2">
-            <div class = "input-group">
-              <div class = "input-group-addon">承租方</div>
-                <select class = "form-control" value = "" id = "contract_warehouse_leaser">
-                  <option selected = "selected">全部</option>
-                  <option>2</option>
-                  <option>3</option>
-                </select>
-              </div>
-          </div>
-          <div class = "col-lg-6 clearfix">
-            <div class = "row">
-              <div class = "col-lg-5">
-                <div class = "input-group">
-                  <div class = "form-group has-feedback">
-                    <div class = "input-group">
-                      <span class = "input-group-addon">租赁时间（起）</span>
-                      <input  type = "text" class = "form-control widget_datepicker" id = "contract_warehouse_start"  value = "">
-                    </div>
-                    <span class = "glyphicon glyphicon-calendar form-control-feedback" aria-hidden = "true"></span>
-                  </div>
-                </div>
-              </div>
-              <div class = "col-lg-5">
-                <div class = "input-group">
-                    <div class = "form-group has-feedback">
-                    <div class = "input-group">
-                      <span class = "input-group-addon">租赁时间（止）</span>
-                      <input type = "text" class = "form-control widget_datepicker" id = "contract_warehouse_end" value = "" >
-                    </div>
-                    <span class = "glyphicon glyphicon-calendar form-control-feedback" aria-hidden = "true"></span>
-                  </div>
-                </div>
-              </div>
-              <div class = "col-lg-2">
-                <button type = "button" class = "btn btn-primary" id = "contract_warehouse_fuzzy">搜索</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class = "row">
-          <div class = "col-lg-12">
-            <table cellpadding = "0" cellspacing = "0" border = "0" width = "100%" class = "table" style = "border-bottom: 1px solid #ddd;">
-              <thead>
-                  <tr>
-                    <th>合同编号</th>
-                    <th>出租方</th>
-                    <th>承租方</th>
-                    <th>租赁开始时间</th>
-                    <th>租赁结束时间</th>
-                    <th>&nbsp;</th>
-                  </tr>
-              </thead>
-              <tbody id = "contract_warehouse_box">
-                <tr>
-                  <td>fj-xy-170604</td>
-                  <td>福记</td>
-                  <td>细语</td>
-                  <td>2017-06-04</td>
-                  <td>2017-06-04</td>
-                  <td><span class="glyphicon glyphicon-pencil"></span><span class="glyphicon glyphicon-remove contract_warehouse_ml15"></span></td>
-                </tr>
-                <tr>
-                  <td>fj-xy-170604</td>
-                  <td>福记</td>
-                  <td>细语</td>
-                  <td>2017-06-04</td>
-                  <td>2017-06-04</td>
-                  <td><span class="glyphicon glyphicon-pencil"></span><span class="glyphicon glyphicon-remove contract_warehouse_ml15"></span></td>
-                </tr>
-                <tr>
-                  <td>fj-xy-170604</td>
-                  <td>福记</td>
-                  <td>细语</td>
-                  <td>2017-06-04</td>
-                  <td>2017-06-04</td>
-                  <td><span class="glyphicon glyphicon-pencil"></span><span class="glyphicon glyphicon-remove contract_warehouse_ml15"></span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div id = "contract_warehouse_pages">
-          <nav aria-label="Page navigation" style="text-align: right;">
-            <ul class="pagination">
-                <li>
-                  <a href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                  </a>
-                </li>
-                <li class="active"><span href="#">1</span></li>
-                <li>
-                  <a href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                  </a>
-                </li>
-            </ul>
-          </nav>
-        </div>
-    </div>  
-  </div>
+  <div id = "contract_warehouse_content"></div>
 </body>
 </html>
 
