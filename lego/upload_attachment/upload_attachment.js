@@ -30,7 +30,7 @@ function upload_attachment_output(output_id) {
 
 /**
  * 绑定上传附件按钮事件
- * @param {Object} output_id
+ * @param output_id 内容输出id
  */
 function upload_attachment_btn_event_bind(output_id) {
   // 绑定左右按钮事件
@@ -70,9 +70,7 @@ function upload_attachment_btn_event_bind(output_id) {
     current_path += $(this).attr("data-url");
     window.open(current_path);
   });
-  $(document).on("change", $(output_id).find(".upload_attachment_file_choose"), function() {
-    // alert("aa");
-    debugger;
+  $(document).on("change", output_id + " .upload_attachment_file_choose", function() {
     for (var i = 0; i < $(this)[0].files.length; i++) {
       var form_data = new FormData();
       form_data.append("file", $(this)[0].files[i]);
