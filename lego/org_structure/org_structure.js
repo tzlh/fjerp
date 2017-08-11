@@ -64,12 +64,6 @@ var current_root_department_data = {
   "name": "腾智联合",
   "parent_uuid": "00"
 };
-
-
-
-
-
-
 function fill_variable_data() {
   var content  = "";
   if (0 < root_department.data.length) {
