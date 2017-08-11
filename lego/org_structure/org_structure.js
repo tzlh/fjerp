@@ -1,9 +1,9 @@
 function clear_raw_data() {
-  $("#org_structure_list").html("");
+  $("#org_structure_list .content").html("");
 }
-var root_department = {"data": [
+/*var root_department = {"data": [
   {"name": "腾智联合","uuid": "0","parent_uuid": "00"}
-]};
+]};*/
 var department_data = {"data": [
   {"department_name": "技术部","uuid": "1","parent_uuid": "0"},
   {"department_name": "财务部","uuid": "2","parent_uuid": "0"},
@@ -64,27 +64,39 @@ var current_root_department_data = {
   "name": "腾智联合",
   "parent_uuid": "00"
 };
+function new_server_data_fill() {
+  department_data = {};
+  position_data = {};
+  employee_data = {};
+//获取部门
+
+  var department_url = PROJECT_PATH + "lego/lego_workflow?servletName=getDepartment";
+  var org_structure_get_departmnt = ajax_assistant(department_url, "", false, true, false);
+  console.log(org_structure_get_departmnt);
+  if (1 == org_structure_get_departmnt.status) {
+    if (0 == org_structure_get_departmnt.count) {
+      root_department = {};
+    } else {
+      
+      var department_arr = new Array();
+      var result = JSON.parse(org_structure_get_departmnt.result); 
+      console.log(result);
+      for (var i = 0; i < result.length; i++) {
+        // name id uuid
+        department_arr[i] = {"department_name":result[i].name, "uuid":result[i].uuid, "parent_uuid": result[i].parent_uuid};
+      }
+      department_data["data"] = department_arr;
+    }
+  } else {
+    alert("获取企业失败");
+  } 
+}
 function fill_variable_data() {
   var content  = "";
-  if (isJsonObjectHasData(root_department)) {
-    for (var i = 0; i < root_department.data.length; i++) {
-      content = 
-        '<ul class="list-group">'+
-          '<li class="list-group-item org_structure_lh40 cuuid_' + root_department.data[i].uuid + '">'+
-            '<p class="oli clearfix bgd8d8d8" style="margin-top:2px;">'+
-              '<span class="glyphicon glyphicon-menu-hamburger pull-left mr20" aria-hidden="true"></span>'+
-              '<span>' + root_department.data[i].name + '</span>'+
-              '<span class="glyphicon glyphicon-remove pull-right org_structure_department_delete" data-uuid = "' + root_department.data[i].uuid + '" title="删除部门" aria-hidden="true"></span>'+
-              '<span class="glyphicon glyphicon-pencil pull-right mr20 org_structure_root_department_edit" data-name = "' + root_department.data[i].name + '" data-uuid = "' + root_department.data[i].uuid + '" data-parent_uuid = "' + root_department.data[i].parent_uuid + '" title="修改部门" aria-hidden="true"></span>'+
-              '<span class="glyphicon glyphicon-asterisk pull-right mr20 org_structure_position_add" data-uuid = "' + root_department.data[i].uuid + '" title="添加岗位" aria-hidden="true"></span>'+
-              '<span class="glyphicon glyphicon-plus pull-right mr20 org_structure_department_add" data-uuid = "' + root_department.data[i].uuid + '" title="添加子部门" aria-hidden="true"></span>'+
-            '</p>'+
-          '</li>'+
-        '</ul>';
-      $("#org_structure_list").html(content);  
-    }
-    if (isJsonObjectHasData(department_data)) {
+  if (isJsonObjectHasData(department_data)) {
       for (var i = 0; i < department_data.data.length; i++) {
+        var name = department_data.data[i].department_name;
+        var uuid = department_data.data[i].parent_uuid;
         content = 
           '<ul class="list-group">'+
             '<li class="list-group-item org_structure_lh40 cuuid_' + department_data.data[i].uuid + '">'+
@@ -100,7 +112,7 @@ function fill_variable_data() {
           '</ul>';
         $("#org_structure_list .cuuid_"+ department_data.data[i].parent_uuid).append(content);
       }
-    }
+    
     if (isJsonObjectHasData(position_data)) {
       for (var i = position_data.data.length - 1; i >= 0; i--) {
         content = 
