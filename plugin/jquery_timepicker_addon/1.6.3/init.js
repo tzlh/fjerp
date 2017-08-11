@@ -34,7 +34,7 @@ $.datepicker.regional['zh-CN'] = {
 
 function widget_datepicker_init() {
   $.datepicker.setDefaults($.datepicker.regional['zh-CN']);
-  $(document).on("focus",".data_cha",function() {
+  $(document).on("focus",".widget_datepicker",function() {
     $(this).datepicker({
       altFormat: "yy-mm-dd"
     });
