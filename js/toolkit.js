@@ -60,7 +60,7 @@ function ajax_assistant(url, param_data, is_async, is_with_credentials, is_multi
     // 是否以contentType的默认值传递数据
     processData: process_data,
     // 是否跨域
-    crossDomain: is_cross_domain,
+//  crossDomain: is_cross_domain,
     // 操作成功后的返回结果
     success:function(r){
         result = r;

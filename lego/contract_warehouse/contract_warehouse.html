@@ -95,11 +95,13 @@
       });
       //合同号搜索
       $(document).on("click", "#contract_warehouse_search_btn", function() {
-        contract_warehouse_search();
+        var contract_warehouse_search_btn_this = $(this);
+        contract_warehouse_search(contract_warehouse_search_btn_this);
       });
       //合同号模糊搜索
       $(document).on("click", "#contract_warehouse_fuzzy", function() {
-        contract_warehouse_search_fuzzy();
+        var contract_warehouse_fuzzy_this = $(this);
+        contract_warehouse_search_fuzzy(contract_warehouse_fuzzy_this);
       });
     });
   </script>
