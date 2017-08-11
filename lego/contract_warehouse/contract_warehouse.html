@@ -40,21 +40,22 @@
   </style>
   <script>
     $(document).ready(function() {
-      
-      
       //日历插件
       widget_datepicker_init();
       //清空原始数据
       clear_raw_data();
       //服务器数据
       new_server_data_fill();
+      //分页
+      pages('', current_page);
       //加载数据
       fill_variable_data();
       //搜索获取出租方和承租方
       contract_warehouse_enterprise_data();
       //分页
       $(document).on("click", "#contract_warehouse_pages li", function() {
-        
+        var contract_warehouse_pages = $(this);
+        contract_warehouse_pages_fun(contract_warehouse_pages);
       });
       //添加储罐合同模态框
       $(document).on("click", "#contract_warehouse_plus", function() {
