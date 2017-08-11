@@ -1,22 +1,26 @@
 function clear_raw_data() {
-  $("#org_structure_list .content").html("");
+  $("#org_structure_list").html("");
 }
-/*var root_department = {"data": [
+var root_department = {"data": [
   {"name": "腾智联合","uuid": "0","parent_uuid": "00"}
-]};*/
+]};
+
 var department_data = {"data": [
-  {"department_name": "技术部","uuid": "1","parent_uuid": "0"},
   {"department_name": "财务部","uuid": "2","parent_uuid": "0"},
   {"department_name": "总裁办","uuid": "3","parent_uuid": "0"},
   {"department_name": "市场部","uuid": "4","parent_uuid": "0"},
   {"department_name": "商务支持部","uuid": "5","parent_uuid": "0"},
   {"department_name": "技术1部","uuid": "11","parent_uuid": "1"},
   {"department_name": "技术2部","uuid": "12","parent_uuid": "1"},
+  {"department_name": "技术部","uuid": "1","parent_uuid": "0"},
   {"department_name": "财务1部","uuid": "21","parent_uuid": "2"},
+  {"department_name": "财务1a","uuid": "98","parent_uuid": "21"},
+  {"department_name": "财务aa","uuid": "99","parent_uuid": "98"},
   {"department_name": "财务2部","uuid": "22","parent_uuid": "2"},
   {"department_name": "市场1部","uuid": "41","parent_uuid": "4"},
   {"department_name": "市场2部","uuid": "42","parent_uuid": "4"},
 ]};
+
 var position_data = {"data": [
   {"position_name": "董事长","uuid": "000","department_uuid": "0"},
   {"position_name": "总经理","uuid": "111","department_uuid": "1"},
@@ -40,6 +44,7 @@ var employee_data = {"data": [
   {"employee_name": "张二","uuid": "2221","position_uuid": "222"},
 ]};
 var current_employee_detail_data = {
+  "user_uuid": "4564546",
   "uuid": "asdfadsf",
   "name": "zhangsan",
   "sex": "女",
@@ -64,65 +69,187 @@ var current_root_department_data = {
   "name": "腾智联合",
   "parent_uuid": "00"
 };
-function new_server_data_fill() {
-  department_data = {};
-  position_data = {};
-  employee_data = {};
-//获取部门
+//服务器数据
+//获取根部门
+var root_department_uuid = "";
+function get_root_department_data_fill() {  
+  var root_department_url = PROJECT_PATH + "lego/lego_workflow?servletName=getDepartment";
+  var root_department_param_data = {};
+  root_department_param_data["parent_uuid"] = "00000000000000000000000000000000";
+  var org_structure_get_root_departmnt = ajax_assistant(root_department_url, root_department_param_data, false, true, false);
+  console.log(org_structure_get_root_departmnt);
+  if (1 == org_structure_get_root_departmnt.status) {
+    if (0 == org_structure_get_root_departmnt.count) {
+      root_department = {};
+    } else {
+      var root_departmnt_arr = new Array();
+      var result = JSON.parse(org_structure_get_root_departmnt.result); 
+      for (var i = 0; i < result.length; i++) {
+        // name id uuid
+        root_departmnt_arr[i] = {"name":result[i].name, "uuid":result[i].uuid, "parent_uuid": result[i].parent_uuid};
+        root_department_uuid = result[i].uuid;
+      }
+      root_department["data"] = root_departmnt_arr;
+    }
+  } else {
+    alert("获取企业失败");
+    return;
+  } 
+}
 
+function new_server_data_fill() {  
+//获取部门
   var department_url = PROJECT_PATH + "lego/lego_workflow?servletName=getDepartment";
-  var org_structure_get_departmnt = ajax_assistant(department_url, "", false, true, false);
+  var departmnt_param_data = {};
+  var org_structure_get_departmnt = ajax_assistant(department_url, departmnt_param_data, false, true, false);
   console.log(org_structure_get_departmnt);
   if (1 == org_structure_get_departmnt.status) {
     if (0 == org_structure_get_departmnt.count) {
       root_department = {};
     } else {
-      
       var department_arr = new Array();
       var result = JSON.parse(org_structure_get_departmnt.result); 
-      console.log(result);
-      for (var i = 0; i < result.length; i++) {
-        // name id uuid
-        department_arr[i] = {"department_name":result[i].name, "uuid":result[i].uuid, "parent_uuid": result[i].parent_uuid};
+      for (var i = 0, j =0; i < result.length; i++) {
+        if ("00000000000000000000000000000000" == result[i].parent_uuid) {
+          continue;
+        }
+        department_arr[j] = {"department_name":result[i].name, "uuid":result[i].uuid, "parent_uuid": result[i].parent_uuid};
+        j++;
+//      root_department_uuid = result[i].uuid;
       }
+      console.log(department_data["data"]);
       department_data["data"] = department_arr;
+//    console.log(department_data["data"]);
     }
   } else {
-    alert("获取企业失败");
+    alert("获取部门失败");
+    return;
   } 
-}
-function fill_variable_data() {
-  var content  = "";
-  if (isJsonObjectHasData(department_data)) {
-      for (var i = 0; i < department_data.data.length; i++) {
-        var name = department_data.data[i].department_name;
-        var uuid = department_data.data[i].parent_uuid;
-        content = 
-          '<ul class="list-group">'+
-            '<li class="list-group-item org_structure_lh40 cuuid_' + department_data.data[i].uuid + '">'+
-              '<p class="oli clearfix org_structure_bgd8d8d8" style="margin-top:2px;">'+
-                '<span class="glyphicon glyphicon-menu-hamburger pull-left mr20" aria-hidden="true"></span>'+
-                '<span>' + department_data.data[i].department_name + '</span>'+
-                '<span class="glyphicon glyphicon-remove pull-right org_structure_department_delete" data-uuid = "' + department_data.data[i].uuid + '" title="删除部门" aria-hidden="true"></span>'+
-                '<span class="glyphicon glyphicon-pencil pull-right mr20 org_structure_department_edit" data-name = "' + department_data.data[i].department_name + '" data-uuid = "' + department_data.data[i].uuid + '" data-parent_uuid = "' + department_data.data[i].parent_uuid + '" title="修改部门" aria-hidden="true"></span>'+
-                '<span class="glyphicon glyphicon-asterisk pull-right mr20 org_structure_position_add" data-uuid = "' + department_data.data[i].uuid + '" title="添加岗位" aria-hidden="true"></span>'+
-                '<span class="glyphicon glyphicon-plus pull-right mr20 org_structure_department_add" data-uuid = "' + department_data.data[i].uuid + '" title="添加子部门" aria-hidden="true"></span>'+
-              '</p>'+
-            '</li>'+
-          '</ul>';
-        $("#org_structure_list .cuuid_"+ department_data.data[i].parent_uuid).append(content);
+//获取岗位
+  var position_url = PROJECT_PATH + "lego/lego_workflow?servletName=getPosition";
+  var position_param_data = {};
+  var org_structure_get_position = ajax_assistant(position_url, position_param_data, false, true, false);
+  console.log(org_structure_get_position);
+  if (1 == org_structure_get_position.status) {
+    if (0 == org_structure_get_position.count) {
+      position_data = {};
+    } else {
+      var positiont_arr = new Array();
+      var result = JSON.parse(org_structure_get_position.result); 
+      for (var i = 0; i < result.length; i++) {
+        positiont_arr[i] = {"position_name":result[i].name, "uuid":result[i].uuid, "department_uuid": result[i].department_uuid};
       }
-    
+      position_data["data"] = positiont_arr;
+      console.log(position_data["data"]);
+    }
+  } else {
+    alert("获取岗位失败");
+    return;
+  } 
+//获取员工
+  var employee_url = PROJECT_PATH + "lego/lego_workflow?servletName=getEmployeeByManager";
+  var employee_param_data = {};
+  var org_structure_get_employee = ajax_assistant(employee_url, employee_param_data, false, true, false);
+  console.log(org_structure_get_employee);
+  if (1 == org_structure_get_employee.status) {
+    if (0 == org_structure_get_employee.count) {
+      employee_data = {};
+    } else {
+      var employee_arr = new Array();
+      var result = JSON.parse(org_structure_get_employee.result);
+      console.log(result);
+      for (var i = 0; i < result.length; i++) {
+        employee_arr[i] = {"employee_name":result[i].name, "uuid":result[i].uuid, "position_uuid": result[i].position_uuid, "user_uuid": result[i].user_uuid};
+      }
+      employee_data["data"] = employee_arr;
+      console.log(employee_data["data"]);
+    }
+  } else {
+    alert("获取岗位失败");
+    return;
+  }  
+}
+
+function each_department(pid, index) {
+  var result = "";
+  for (var i = 0; i < department_data.data.length; i++) {
+    if (department_data.data[i].parent_uuid == pid) {
+      var count = (30 + (30 * index++));
+       result += 
+        '<ul class="list-group">'+
+          '<li class="list-group-item org_structure_lh40 cuuid_' + department_data.data[i].uuid + '" style = " padding-left: ' + count + 'px;">'+
+            '<p class="oli clearfix org_structure_bgd8d8d8" style="margin-top:2px;">'+
+              '<span class="glyphicon glyphicon-menu-hamburger pull-left mr20" aria-hidden="true"></span>'+
+              '<span>' + department_data.data[i].department_name + '</span>'+
+              '<span class="glyphicon glyphicon-remove pull-right org_structure_department_delete" data-uuid = "' + department_data.data[i].uuid + '" title="删除部门" aria-hidden="true"></span>'+
+              '<span class="glyphicon glyphicon-pencil pull-right mr20 org_structure_department_edit" data-name = "' + department_data.data[i].department_name + '" data-uuid = "' + department_data.data[i].uuid + '" data-parent_uuid = "' + department_data.data[i].parent_uuid + '" title="修改部门" aria-hidden="true"></span>'+
+              '<span class="glyphicon glyphicon-asterisk pull-right mr20 org_structure_position_add" data-uuid = "' + department_data.data[i].uuid + '" title="添加岗位" aria-hidden="true"></span>'+
+              '<span class="glyphicon glyphicon-plus pull-right mr20 org_structure_department_add" data-uuid = "' + department_data.data[i].uuid + '" title="添加子部门" aria-hidden="true"></span>'+
+            '</p>'+
+          '</li>'+
+        '</ul>';     
+        result += each_department(department_data.data[i].uuid, index);
+        index--;
+    }
+  }
+  return result;
+}
+
+function fill_variable_data() {
+  //root_department = {};
+  var content  = "";
+  if (isJsonObjectHasData(root_department)) {
+    for (var i = 0; i < root_department.data.length; i++) {
+      content = 
+        '<ul class="list-group">'+
+          '<li class="list-group-item org_structure_lh40 cuuid_' + root_department.data[i].uuid + '">'+
+            '<p class="oli clearfix bg-primary" style="margin-top: 2px;">'+
+              '<span class="glyphicon glyphicon-menu-hamburger pull-left mr20" aria-hidden="true"></span>'+
+              '<span>' + root_department.data[i].name + '</span>'+
+              '<span class="glyphicon glyphicon-remove pull-right org_structure_department_delete" data-uuid = "' + root_department.data[i].uuid + '" title="删除部门" aria-hidden="true"></span>'+
+              '<span class="glyphicon glyphicon-pencil pull-right mr20 org_structure_root_department_edit" data-name = "' + root_department.data[i].name + '" data-uuid = "' + root_department.data[i].uuid + '" data-parent_uuid = "' + root_department.data[i].parent_uuid + '" title="修改部门" aria-hidden="true"></span>'+
+              '<span class="glyphicon glyphicon-asterisk pull-right mr20 org_structure_position_add" data-uuid = "' + root_department.data[i].uuid + '" title="添加岗位" aria-hidden="true"></span>'+
+              '<span class="glyphicon glyphicon-plus pull-right mr20 org_structure_department_add" data-uuid = "' + root_department.data[i].uuid + '" title="添加子部门" aria-hidden="true"></span>'+
+            '</p>'+
+          '</li>'+
+        '</ul>';
+      $("#org_structure_list").html(content);  
+    }
+    if (isJsonObjectHasData(department_data)) {
+    var kkk = each_department(root_department_uuid, -1);
+    // console.log(kkk);
+    $("#org_structure_list").append(kkk);       
+
+      // for (var i = 0; i < department_data.data.length; i++) {
+      //   // var kkk = department_data.data[i];
+      //   // debugger;
+      //   console.log(department_data.data[i].uuid);
+      //   content = 
+      //     '<ul class="list-group">'+
+      //       '<li class="list-group-item org_structure_lh40 cuuid_' + department_data.data[i].uuid + '">'+
+      //         '<p class="oli clearfix org_structure_bgd8d8d8" style="margin-top:2px;">'+
+      //           '<span class="glyphicon glyphicon-menu-hamburger pull-left mr20" aria-hidden="true"></span>'+
+      //           '<span>' + department_data.data[i].department_name + '</span>'+
+      //           '<span class="glyphicon glyphicon-remove pull-right org_structure_department_delete" data-uuid = "' + department_data.data[i].uuid + '" title="删除部门" aria-hidden="true"></span>'+
+      //           '<span class="glyphicon glyphicon-pencil pull-right mr20 org_structure_department_edit" data-name = "' + department_data.data[i].department_name + '" data-uuid = "' + department_data.data[i].uuid + '" data-parent_uuid = "' + department_data.data[i].parent_uuid + '" title="修改部门" aria-hidden="true"></span>'+
+      //           '<span class="glyphicon glyphicon-asterisk pull-right mr20 org_structure_position_add" data-uuid = "' + department_data.data[i].uuid + '" title="添加岗位" aria-hidden="true"></span>'+
+      //           '<span class="glyphicon glyphicon-plus pull-right mr20 org_structure_department_add" data-uuid = "' + department_data.data[i].uuid + '" title="添加子部门" aria-hidden="true"></span>'+
+      //         '</p>'+
+      //       '</li>'+
+      //     '</ul>';
+      //   $("#org_structure_list .cuuid_"+ department_data.data[i].parent_uuid).append(content);
+      // }
+    }
     if (isJsonObjectHasData(position_data)) {
       for (var i = position_data.data.length - 1; i >= 0; i--) {
         content = 
           '<ul class="list-group">'+
             '<li class="list-group-item org_structure_lh40 cuuid_' + position_data.data[i].uuid + '">'+
-              '<p class="oli clearfix" style="margin-top:2px;">'+
+              '<p class="oli clearfix" style="margin-top:2px;padding-left: 45px;">'+
                 '<span class="glyphicon glyphicon-menu-hamburger pull-left mr20" aria-hidden="true"></span>'+
                 '<span>' + position_data.data[i].position_name + '</span>'+
                 '<span class="glyphicon glyphicon-remove pull-right org_structure_position_delete" data-uuid = "' + position_data.data[i].uuid + '" title="删除岗位" aria-hidden="true"></span>'+
-                '<span class="glyphicon glyphicon-pencil pull-right mr20 org_structure_position_edit" data-name = "' + position_data.data[i].position_name + '" data-uuid = "' + position_data.data[i].uuid + '"  data-parent_uuid = "' + position_data.data[i].parent_uuid + '" title="修改岗位" aria-hidden="true"></span>'+
+                '<span class="glyphicon glyphicon-pencil pull-right mr20 org_structure_position_edit" data-name = "' + position_data.data[i].position_name + '" data-uuid = "' + position_data.data[i].uuid + '"  data-parent_uuid = "' + position_data.data[i].department_uuid + '" title="修改岗位" aria-hidden="true"></span>'+
                 '<span class="glyphicon glyphicon-user pull-right mr20 org_structure_employee_add" data-uuid = "' + position_data.data[i].uuid + '" title="添加员工" aria-hidden="true"></span>'+
               '</p>'+
             '</li>'+
@@ -135,11 +262,10 @@ function fill_variable_data() {
         content = 
           '<ul class="list-group">'+
             '<li class="list-group-item org_structure_lh40 cuuid_' + employee_data.data[i].uuid + '">'+
-              '<p class="oli clearfix" style="margin-top:2px;">'+
-                '<span class="glyphicon glyphicon-menu-hamburger pull-left mr20" aria-hidden="true"></span>'+
+              '<p class="oli clearfix" style="margin-top:2px;padding-left: 48px;">'+
                 '<span>' + employee_data.data[i].employee_name + '</span>'+
-                '<span class="glyphicon glyphicon-remove pull-right org_structure_employee_delete" data-uuid = "' + employee_data.data[i].uuid + '" title="删除员工" aria-hidden="true"></span>'+
-                '<span class="glyphicon glyphicon-pencil pull-right mr20 org_structure_employee_edit" data-uuid = "' + employee_data.data[i].uuid + '" data-parent_uuid = "' + employee_data.data[i].position_uuid + '" title="修改员工" aria-hidden="true"></span>'+
+                '<span class="glyphicon glyphicon-remove pull-right org_structure_employee_delete" data-uuid = "' + employee_data.data[i].uuid + '" data-user_uuid = "' + employee_data.data[i].user_uuid + '" title="删除员工" aria-hidden="true"></span>'+
+                '<span class="glyphicon glyphicon-pencil pull-right mr20 org_structure_employee_edit" data-uuid = "' + employee_data.data[i].uuid + '" data-parent_uuid = "' + employee_data.data[i].position_uuid + '"  data-user_uuid = "' + employee_data.data[i].user_uuid + '" title="修改员工" aria-hidden="true"></span>'+
               '</p>'+
             '</li>'+
           '</ul>';
@@ -150,7 +276,7 @@ function fill_variable_data() {
     content = 
       '<ul class="list-group">'+
         '<li class="list-group-item org_structure_lh40">'+
-          '<p class="oli clearfix bgd8d8d8" style="margin-top:2px;">'+
+          '<p class="oli clearfix  bg-primary" style="margin-top:2px;">'+
             '<span class="glyphicon glyphicon-menu-hamburger pull-left mr20" aria-hidden="true"></span>'+
             '<span>请先添加企业</span>'+
             '<span class="glyphicon glyphicon-plus pull-right mr20 org_structure_enterprise_add" title="添加企业" aria-hidden="true"></span>'+
@@ -195,15 +321,20 @@ function org_structure_add_enterprise_data_func() {
     alert("部门名称格式错误！");
     return;
   }
-  if ("123" == enterprise_name) {
-    root_department = {"data": [
-      {"name": "fffffff","uuid": "0","parent_uuid": "00"}
-    ]};
+  var add_root_department_url = PROJECT_PATH + "lego/lego_workflow?servletName=addRootDepartment";
+  var add_root_department_param_data = {};
+  add_root_department_param_data["name"] = enterprise_name;
+  add_root_department_param_data["parent_uuid"] = "00000000000000000000000000000000";
+  var org_structure_add_root_department = ajax_assistant(add_root_department_url, add_root_department_param_data, false, true, false);
+  console.log(org_structure_add_root_department);
+  if (1 == org_structure_add_root_department.status) {
     $("#org_structure_add_enterprise").modal("hide");
+    get_root_department_data_fill();
+    new_server_data_fill();
+    fill_variable_data();
   } else {
     alert("添加失败");
   }
-  fill_variable_data();
 }
 //添加部门弹窗
 function org_structure_add_department_func(parent_uuid) {
@@ -240,19 +371,24 @@ function org_structure_add_department_data_func(parent_uuid) {
     alert("部门名称格式错误！");
     return;
   }
-  if ("123" == department_name) {
-    department_data = {"data": [
-      {"department_name": "技术部","uuid": "1","parent_uuid": "0"}
-    ]};
+  var add_department_url = PROJECT_PATH + "lego/lego_workflow?servletName=addDepartment";
+  var add_department_param_data = {};
+  add_department_param_data["name"] = department_name;
+  add_department_param_data["parent_uuid"] = parent_uuid;
+  var org_structure_add_department = ajax_assistant(add_department_url, add_department_param_data, false, true, false);
+  console.log(org_structure_add_department);
+  if (1 == org_structure_add_department.status) {
     $("#org_structure_add_department").modal("hide");
+    get_root_department_data_fill();
+    new_server_data_fill();
+    fill_variable_data();
   } else {
     alert("添加失败");
   }
-  fill_variable_data();
 }
 //修改根部门弹窗
 function org_structure_edit_enterprise_func(name, uuid) {
-  var org_structure_edit_department = 
+  var org_structure_edit_root_department = 
   '<div class="modal fade bs-example-modal-sm custom_modal" id="org_structure_edit_root_department" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'+
     '<div class="modal-dialog modal-sm" role="document">'+
       '<div class="modal-content">'+
@@ -273,7 +409,7 @@ function org_structure_edit_enterprise_func(name, uuid) {
       '</div>'+
     '</div>'+
   '</div>';
-  $("body").append(org_structure_edit_department);
+  $("body").append(org_structure_edit_root_department);
   $("#org_structure_edit_root_department").modal("show");
   $("#org_structure_edit_root_department").on("hidden.bs.modal", function (e) {
     $(this).remove();
@@ -285,16 +421,21 @@ function org_structure_edit_enterprise_data_func(uuid) {
     alert("企业名称格式错误！");
     return;
   }
-  if ("123" == enterprise_name) {
-    //........
-    root_department = {"data": [
-      {"name": "腾智联合","uuid": "0","parent_uuid": "00"}
-    ]};
+  var edit_root_department_url = PROJECT_PATH + "lego/lego_workflow?servletName=modifyRootDepartment";
+  var edit_root_department_param_data = {};
+  edit_root_department_param_data["name"] = enterprise_name;
+  edit_root_department_param_data["parent_uuid"] = "00000000000000000000000000000000";
+  edit_root_department_param_data["uuid"] = uuid;
+  var org_structure_edit_root_department = ajax_assistant(edit_root_department_url, edit_root_department_param_data, false, true, false);
+  console.log(org_structure_edit_root_department);
+  if (1 == org_structure_edit_root_department.status) {
     $("#org_structure_edit_root_department").modal("hide");
+    get_root_department_data_fill();
+    new_server_data_fill();
+    fill_variable_data();
   } else {
     alert("修改失败");
   }
-  fill_variable_data();
 }
 //修改部门弹窗
 function org_structure_edit_department_func(name, uuid, parent_uuid) {
@@ -331,15 +472,21 @@ function org_structure_edit_department_data_func(uuid, parent_uuid) {
     alert("企业名称格式错误！");
     return;
   }
-  if ("123" == department_name) {
-    department_data = {"data": [
-      {"department_name": "财务部","uuid": "1","parent_uuid": "0"}
-    ]};
+  var edit_department_url = PROJECT_PATH + "lego/lego_workflow?servletName=modifyDepartment";
+  var edit_department_param_data = {};
+  edit_department_param_data["name"] = department_name;
+  edit_department_param_data["parent_uuid"] = parent_uuid;
+  edit_department_param_data["uuid"] = uuid;
+  var org_structure_edit_department = ajax_assistant(edit_department_url, edit_department_param_data, false, true, false);
+  console.log(org_structure_edit_department);
+  if (1 == org_structure_edit_department.status) {
     $("#org_structure_edit_department").modal("hide");
+    get_root_department_data_fill();
+    new_server_data_fill();
+    fill_variable_data();
   } else {
     alert("修改失败");
   }
-  fill_variable_data();
 }
 //删除部门弹窗
 function org_structure_delete_department_func(uuid) {
@@ -366,7 +513,19 @@ function org_structure_delete_department_func(uuid) {
   });
 }
 function org_structure_delete_department_data_func(uuid) {
-  alert("删除失败");
+  var delete_department_url = PROJECT_PATH + "lego/lego_workflow?servletName=removeDepartment";
+  var delete_department_param_data = {};
+  delete_department_param_data["uuid"] = uuid;
+  var org_structure_delete_department = ajax_assistant(delete_department_url, delete_department_param_data, false, true, false);
+  console.log(org_structure_delete_department);
+  if (1 == org_structure_delete_department.status) {
+    $("#org_structure_delete_department").modal("hide");
+    get_root_department_data_fill();
+    new_server_data_fill();
+    fill_variable_data();
+  } else {
+    alert("删除失败");
+  }
 }
 //添加岗位
 function org_structure_add_position_func(department_uuid) {
@@ -403,16 +562,20 @@ function org_structure_add_position_data_func(department_uuid) {
     alert("岗位名称格式错误！");
     return;
   }
-  if ("123" == position_name) {
-    //........
-    position_data = {"data": [
-      {"position_name": "董事长","uuid": "000","department_uuid": "0"}
-    ]};
+  var add_position_url = PROJECT_PATH + "lego/lego_workflow?servletName=addPosition";
+  var add_position_param_data = {};
+  add_position_param_data["name"] = position_name;
+  add_position_param_data["department_uuid"] = department_uuid;
+  var org_structure_add_position = ajax_assistant(add_position_url, add_position_param_data, false, true, false);
+  console.log(org_structure_add_position);
+  if (1 == org_structure_add_position.status) {
     $("#org_structure_add_position").modal("hide");
+    get_root_department_data_fill();
+    new_server_data_fill();
+    fill_variable_data();
   } else {
     alert("添加失败");
   }
-  fill_variable_data();
 }
 //修改岗位
 function org_structure_edit_position_func(name, uuid, department_uuid) {
@@ -431,7 +594,7 @@ function org_structure_edit_position_func(name, uuid, department_uuid) {
             '</div>'+
           '</div>'+
           '<div class="modal-footer">'+
-            '<button type="button" class="btn btn-warning edit_btn" data-uuid = "' + uuid + '" data-departmeent_uuid = "' + department_uuid + '">修改</button>'+
+            '<button type="button" class="btn btn-warning edit_btn" data-uuid = "' + uuid + '" data-department_uuid = "' + department_uuid + '">修改</button>'+
             '<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>'+
           '</div>'+
         '</div>'+
@@ -449,16 +612,21 @@ function org_structure_edit_position_data_func(uuid, department_uuid) {
     alert("岗位名称格式错误！");
     return;
   }
-  if ("123" == position_name) {
-    //........
-    position_data = {"data": [
-      {"position_name": "总经理","uuid": "000","department_uuid": "0"}
-    ]};
+  var edit_position_url = PROJECT_PATH + "lego/lego_workflow?servletName=modifyPosition";
+  var edit_position_param_data = {};
+  edit_position_param_data["name"] = position_name;
+  edit_position_param_data["uuid"] = uuid;
+  edit_position_param_data["department_uuid"] = department_uuid;
+  var org_structure_edit_position = ajax_assistant(edit_position_url, edit_position_param_data, false, true, false);
+  console.log(org_structure_edit_position);
+  if (1 == org_structure_edit_position.status) {
     $("#org_structure_edit_position").modal("hide");
+    get_root_department_data_fill();
+    new_server_data_fill();
+    fill_variable_data();
   } else {
     alert("修改失败");
   }
-  fill_variable_data();
 }
 //删除岗位弹窗
 function org_structure_delete_position_func(uuid) {
@@ -485,10 +653,45 @@ function org_structure_delete_position_func(uuid) {
   });
 }
 function org_structure_delete_position_data_func(uuid) {
-  alert("删除失败");
+  var delete_position_url = PROJECT_PATH + "lego/lego_workflow?servletName=removePosition";
+  var delete_position_param_data = {};
+  delete_position_param_data["uuid"] = uuid;
+  var org_structure_delete_position = ajax_assistant(delete_position_url, delete_position_param_data, false, true, false);
+  console.log(org_structure_delete_position);
+  if (1 == org_structure_delete_position.status) {
+    $("#org_structure_delete_position").modal("hide");
+    get_root_department_data_fill();
+    new_server_data_fill();
+    fill_variable_data();
+  } else {
+    alert("删除失败");
+  }
+}
+//获取库区
+function get_warehouse() {
+  var get_warehouse_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getWarehouse";
+  var get_warehouse_param_data = {};
+  var org_structure_get_warehouse = ajax_assistant(get_warehouse_url, get_warehouse_param_data, false, true, false);
+  console.log(org_structure_get_warehouse);
+  if (1 == org_structure_get_warehouse.status) {
+    if (0 == org_structure_get_warehouse.count) {
+      work_area_data = {};
+    } else {
+      var warehouse_arr = new Array();
+      var result = JSON.parse(org_structure_get_warehouse.result); 
+      for (var i = 0; i < result.length; i++) {
+        warehouse_arr[i] = {"work_area_name":result[i].name, "work_area_uuid":result[i].uuid};
+      }
+      work_area_data["data"] = warehouse_arr;
+      console.log(work_area_data["data"]);
+    }
+  } else {
+    alert("获取库区失败");
+    return;
+  } 
 }
 //添加员工
-function org_structure_add_employee_func(uuid, position_uuid) {
+function org_structure_add_employee_func(position_uuid) {
   var org_structure_add_employee = 
     '<div class="modal fade custom_modal" id="org_structure_add_employee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">'+
       '<div class="modal-dialog" role="document">'+
@@ -580,7 +783,7 @@ function org_structure_add_employee_func(uuid, position_uuid) {
               '</div>'+
             '</div>'+
             '<div class="modal-footer">'+
-              '<button type="button" class="btn btn-primary add_btn" data-uuid = " ' + uuid + '" data-position_uuid = "' + position_uuid + '">保存</button>'+
+              '<button type="button" class="btn btn-primary add_btn" data-position_uuid = "' + position_uuid + '">保存</button>'+
               '<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>'+
             '</div>'+
           '</div>'+
@@ -593,6 +796,7 @@ function org_structure_add_employee_func(uuid, position_uuid) {
     '</script>';
   $("body").append(org_structure_add_employee);
   $("#org_structure_add_employee").modal("show");
+  get_warehouse();
 //库区
   var work_area_select = "<option>--请选择--</option>";
   for(var i = 0; i < work_area_data.data.length; i++) {
@@ -604,7 +808,7 @@ function org_structure_add_employee_func(uuid, position_uuid) {
     $(this).remove();
   });
 }
-function org_structure_add_employee_data_func(uuid, position_uuid) {
+function org_structure_add_employee_data_func(position_uuid) {
   var name = $("#org_structure_add_employee .name").val();
   var password = $("#org_structure_add_employee .password").val();
   var wechat_openid = $("#org_structure_add_employee .wechat_openid").val();
@@ -635,43 +839,88 @@ function org_structure_add_employee_data_func(uuid, position_uuid) {
     alert("姓名输入错误！");
     return;
   }
+  var add_employee_url = PROJECT_PATH + "lego/lego_workflow?servletName=addUserEmployee";
+  var add_employee_param_data = {};
+  add_employee_param_data["name"] = name;
+  add_employee_param_data["password"] = password;
+  add_employee_param_data["sex"] = sex;
+  add_employee_param_data["position_uuid"] = position_uuid;
+  add_employee_param_data["employee_name"] = employee_name;
   if("" != wechat_openid){
     if(null == wechat_openid.match(/^[0-9a-zA-Z_-]{12,32}$/)){
       alert("微信编号输入错误！");
       return;
     }
+    add_employee_param_data["wechat_openid"] = wechat_openid;
   }
   if("" != telephone_number){
     if(null == telephone_number.match(/^[0-9]{6,15}$/)){
       alert("联系方式输入错误！");
       return;
     }
+    add_employee_param_data["telephone_number"] = telephone_number;
   }
   if("" != email){
     if(null == email.match(/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/)){
       alert("Email输入错误！");
       return;
     }
+    add_employee_param_data["email"] = email;
   }
   if("--请选择--" != work_area_uuid){
     if(null == work_area_uuid.match(/^[0-9a-zA-Z]{32}$/)){
       alert("库区输入错误！");
       return;
     }
+    add_employee_param_data["work_area_uuid"] = work_area_uuid;
   }
-  if ("1234" == name) {
-    //........
-    employee_data = {"data": [
-      {"employee_name": "张三","uuid": "0000","position_uuid": "000"}
-    ]};
+  var org_structure_add_employee = ajax_assistant(add_employee_url, add_employee_param_data, false, true, false);
+  console.log(org_structure_add_employee);
+  if (1 == org_structure_add_employee.status) {
     $("#org_structure_add_employee").modal("hide");
+    get_root_department_data_fill();
+    new_server_data_fill();
+    fill_variable_data();
   } else {
     alert("添加失败");
   }
-  fill_variable_data();
 }
+function get_employee_detail(user_uuid) {
+  var employee_url = PROJECT_PATH + "lego/lego_workflow?servletName=getEmployeeByManager";
+  var employee_param_data = {};
+  employee_param_data["user_uuid"] = user_uuid;
+  var org_structure_get_employee = ajax_assistant(employee_url, employee_param_data, false, true, false);
+  console.log(org_structure_get_employee);
+//获取用户
+  var user_url = PROJECT_PATH + "lego/lego_user?servletName=getUserSecurityByManager";
+  var user_param_data = {};
+  user_param_data["uuid"] = user_uuid;
+  var org_structure_get_user= ajax_assistant(user_url, user_param_data, false, true, false);
+  console.log(org_structure_get_user);
+  if (1 == org_structure_get_employee.status) {
+    var result = JSON.parse(org_structure_get_employee.result);
+    var result_user = JSON.parse(org_structure_get_user.result);
+    console.log(result_user);
+    current_employee_detail_data = {
+      "user_uuid": result[0].user_uuid,
+      "uuid": result[0].uuid,
+      "name": result_user[0].name,
+      "sex": result[0].sex,
+      "password": result_user[0].password,
+      "telphone_number": result[0].telephone_number,
+      "real_name": result[0].name,
+      "email": result[0].email,
+      "wechat": result_user[0].wechat_openid,
+      "work_area_uuid": result[0].work_area_uuid,
+    };
+  } else {
+    alert("获取员工失败");
+    return;
+  }  
+};
 //修改员工
-function org_structure_edit_employee_func() {
+function org_structure_edit_employee_func(position_uuid, user_uuid) {
+  get_employee_detail(user_uuid);
   var org_structure_edit_employee = 
     '<div class="modal fade custom_modal" id="org_structure_edit_employee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">'+
       '<div class="modal-dialog" role="document">'+
@@ -686,7 +935,7 @@ function org_structure_edit_employee_func() {
                 '<form>'+
                   '<div class="form-group">'+
                     '<label for="">用户名</label>'+
-                    '<input type="text" class="form-control name" value = "' + current_employee_detail_data.name + '" />'+
+                    '<input type="text" class="form-control name" readonly="readonly" value = "' + current_employee_detail_data.name + '" />'+
                   '</div>'+
                 '</form>'+
               '</div>'+
@@ -710,7 +959,7 @@ function org_structure_edit_employee_func() {
                 '<form>'+
                   '<div class="form-group">'+
                     '<label for="">密码</label>'+
-                    '<input type="password" class="form-control password" value = "' + current_employee_detail_data.password + '" />'+
+                    '<input type="password" class="form-control password" placeholder = "password" />'+
                   '</div>'+
                 '</form>'+
               '</div>'+
@@ -746,7 +995,7 @@ function org_structure_edit_employee_func() {
                 '<form>'+
                   '<div class="form-group">'+
                     '<label for="">微信编号</label>'+
-                    '<input type="text" class="form-control wechat_openid" value = "' + current_employee_detail_data.wechat + '" />'+
+                    '<input type="text" class="form-control wechat_openid" readonly="readonly" value = "' + current_employee_detail_data.wechat + '" />'+
                   '</div>'+
                 '</form>'+
               '</div>'+
@@ -763,7 +1012,7 @@ function org_structure_edit_employee_func() {
             '</div>'+
           '</div>'+
           '<div class="modal-footer">'+
-            '<button type="button" class="btn btn-warning edit_btn" data-work_area_uuid = "' + current_employee_detail_data.work_area_uuid + '">修改</button>'+
+            '<button type="button" class="btn btn-warning edit_btn" data-user_uuid = "' + user_uuid + '" data-position_uuid = "' + position_uuid + '">修改</button>'+
             '<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>'+
           '</div>'+
         '</div>'+
@@ -783,6 +1032,7 @@ function org_structure_edit_employee_func() {
     $(document).find("#edit_check_women").iCheck('check');
   }
 //库区
+  get_warehouse()
   var work_area_select = "<option>--请选择--</option>";
   for(var i = 0; i < work_area_data.data.length; i++) {
     work_area_select += '<option value = "' + work_area_data.data[i].work_area_uuid + '">' + work_area_data.data[i].work_area_name + '</option>'
@@ -801,7 +1051,7 @@ function org_structure_edit_employee_func() {
     $(this).remove();
   });
 }
-function org_structure_edit_employee_data_func() {
+function org_structure_edit_employee_data_func(user_uuid, position_uuid) {
   var name = $("#org_structure_edit_employee .name").val();
   var password = $("#org_structure_edit_employee .password").val();
   var wechat_openid = $("#org_structure_edit_employee .wechat_openid").val();
@@ -838,37 +1088,69 @@ function org_structure_edit_employee_data_func() {
       return;
     }
   }
+  var edit_employee_url = PROJECT_PATH + "lego/lego_workflow?servletName=modifyEmployee";
+  var edit_employee_param_data = {};
+  edit_employee_param_data["user_uuid"] = user_uuid;
+  edit_employee_param_data["employee_name"] = employee_name;
+  edit_employee_param_data["sex"] = sex;
+  edit_employee_param_data["position_uuid"] = position_uuid;
   if("" != telephone_number){
     if(null == telephone_number.match(/^[0-9]{6,15}$/)){
       alert("联系方式输入错误！");
       return;
     }
+    edit_employee_param_data["telephone_number"] = telephone_number;
+  } else{
+    edit_employee_param_data["sn_telephone_number"] = "set_null";
   }
+  
   if("" != email){
     if(null == email.match(/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/)){
       alert("Email输入错误！");
       return;
     }
+    edit_employee_param_data["email"] = email;
+  } else{
+    edit_employee_param_data["sn_email"] = "set_null";
   }
-  if("--请选择--" != work_area_uuid){
+  if("" != work_area_uuid){
     if(null == work_area_uuid.match(/^[0-9a-zA-Z]{32}$/)){
       alert("库区输入错误！");
       return;
     }
+    edit_employee_param_data["work_area_uuid"] = work_area_uuid;
+  } else{
+    edit_employee_param_data["sn_work_area_uuid"] = "set_null";
   }
-   if ("1234" == name) {
-    //........
-    employee_data = {"data": [
-      {"employee_name": "李四","uuid": "0000","position_uuid": "000"}
-    ]};
+  var org_structure_edit_employee = ajax_assistant(edit_employee_url, edit_employee_param_data, false, true, false);
+  console.log(org_structure_edit_employee);
+//修改用户密码
+  if("" != password){
+    debugger;
+    var password = $("#org_structure_edit_employee .password").val();
+    console.log(password);
+    if(null == password.match(/^\S{1,16}$/)){
+      alert("密码输入格式错误！");
+      return;
+    }
+    var edit_password_url = PROJECT_PATH + "lego/lego_user?servletName=modifyUserSecurityWithPasswordByManager";
+    var edit_password = {};
+    edit_password["uuid"] = user_uuid;
+    edit_password["password"] = password;
+    var org_structure_edit_password = ajax_assistant(edit_password_url, edit_password, false, true, false);
+    console.log(org_structure_edit_password);
+   }
+  if (1 == org_structure_edit_employee.status) {
     $("#org_structure_edit_employee").modal("hide");
+    get_root_department_data_fill();
+    new_server_data_fill();
+    fill_variable_data();
   } else {
     alert("修改失败");
   }
-  fill_variable_data();
 }
 //删除员工弹窗
-function org_structure_delete_employee_func(uuid) {
+function org_structure_delete_employee_func(user_uuid) {
   var org_structure_delete_employee = 
     '<div class="modal fade bs-example-modal-sm custom_modal" id="org_structure_delete_employee" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'+
       '<div class="modal-dialog modal-sm" role="document">'+
@@ -879,7 +1161,7 @@ function org_structure_delete_employee_func(uuid) {
           '</div>'+
           '<div class="modal-body nopadding-bottom" style="text-align: center;margin-bottom: 15px;">确认要删除员工吗？</div>'+
           '<div class="modal-footer">'+
-            '<button type="button" class="btn btn-danger remove" data-uuid = "' + uuid + '">删除</button>'+
+            '<button type="button" class="btn btn-danger remove" data-user_uuid = "' + user_uuid + '">删除</button>'+
             '<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>'+
           '</div>'+
         '</div>'+
@@ -891,9 +1173,18 @@ function org_structure_delete_employee_func(uuid) {
     $(this).remove();
   });
 }
-function org_structure_delete_employee_data_func(uuid) {
-  employee_data = {
-  };
-  $("#org_structure_delete_employee").modal("hide");
-  fill_variable_data();
+function org_structure_delete_employee_data_func(user_uuid) {
+  var delete_employee_url = PROJECT_PATH + "lego/lego_workflow?servletName=removeUserEmployee";
+  var delete_employee_param_data = {};
+  delete_employee_param_data["user_uuid"] = user_uuid;
+  var org_structure_delete_employee= ajax_assistant(delete_employee_url, delete_employee_param_data, false, true, false);
+  console.log(org_structure_delete_employee);
+  if (1 == org_structure_delete_employee.status) {
+    $("#org_structure_delete_employee").modal("hide");
+    get_root_department_data_fill();
+    new_server_data_fill();
+    fill_variable_data();
+  } else {
+    alert("删除失败");
+  }
 }

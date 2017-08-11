@@ -10,11 +10,7 @@
 .org_structure_lh40 span{
   line-height: 40px;
 }
-#org_structure_list>ul>li>p{
-  background: #337ab7!important;
-  color: #FFF;
-  margin-top: 0px!important;
-}
+
 #org_structure_list>ul>.list-group-item>ul>.list-group-item,
 #org_structure_list>ul>.list-group-item{
   padding: 0;
