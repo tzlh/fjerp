@@ -5,14 +5,16 @@
   <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
   <meta name = "viewport" content = "width=device-width, initial-scale=1">
   <link rel = "stylesheet" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.css">
-  <link rel = "stylesheet" href = "warehouse_management.css">
   <link rel = "stylesheet" href = "../../css/custom_modal.css">
+  <link rel = "stylesheet" href = "warehouse_management.css">
   <script src = "../../plugin/jquery/1.12.4/jquery.min.js"></script>
   <script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.js"></script>
   <script src = "../../js/toolkit.js"></script>
+  <script src = "../../js/configure.js"></script>
   <script src = "warehouse_management.js"></script>
   <script>
-    $(document).ready(function() {
+    $(document).ready(function() {      
+      warehouse_management_output("#warehouse_management_area");
       //清空原始数据
       clear_raw_data();
       //服务器数据
@@ -83,32 +85,6 @@
   </script>
 </head>
 <body>
-   <div class = "row warehouse_management_row">
-    <div class = "col-lg-12 warehouse_management_col">
-      <div class = "list-group">
-        <p href = "#" class = "list-group-item clearfix active warehouse_management_radius">库区管理<span class = "glyphicon glyphicon-plus pull-right " id = "warehouse_management_plus"></span></p>
-        <div id="warehouse_management_box">
-          <div>
-            <p href = "#" class = "list-group-item clearfix warehouse_management_pl30 warehouse_management_bgddd">舟山纳海<span class = "glyphicon glyphicon-remove pull-right warehouse_management_ml15 warehouse_management_colorfff"></span><span class = "glyphicon glyphicon-pencil pull-right warehouse_management_ml15 warehouse_management_colorfff"></span><span class = "glyphicon glyphicon-plus pull-right warehouse_management_colorfff"></span></p>
-            <div>
-              <p href = "#" class = "list-group-item clearfix warehouse_management_pl30"><span class = "glyphicon glyphicon-cd  warehouse_management_mr15"></span>E01<span class = "glyphicon glyphicon-remove pull-right warehouse_management_ml15"></span><span class = "glyphicon glyphicon-pencil pull-right warehouse_management_ml15"></span></p>
-              <p href = "#" class = "list-group-item clearfix warehouse_management_pl30"><span class = "glyphicon glyphicon-cd  warehouse_management_mr15"></span>E01<span class = "glyphicon glyphicon-remove pull-right warehouse_management_ml15"></span><span class = "glyphicon glyphicon-pencil pull-right warehouse_management_ml15"></span></p>
-              <p href = "#" class = "list-group-item clearfix warehouse_management_pl30"><span class = "glyphicon glyphicon-record  warehouse_management_mr15"></span>E01<span class = "glyphicon glyphicon-remove pull-right warehouse_management_ml15"></span><span class = "glyphicon glyphicon-pencil pull-right warehouse_management_ml15"></span></p>
-              <p href = "#" class = "list-group-item clearfix warehouse_management_pl30"><span class = "glyphicon glyphicon-record  warehouse_management_mr15"></span>E01<span class = "glyphicon glyphicon-remove pull-right warehouse_management_ml15"></span><span class = "glyphicon glyphicon-pencil pull-right warehouse_management_ml15"></span></p>
-            </div>
-          </div>
-          <div>
-            <p href = "#" class = "list-group-item clearfix warehouse_management_pl30 warehouse_management_bgddd">舟山纳海<span class = "glyphicon glyphicon-remove pull-right warehouse_management_ml15 warehouse_management_colorfff"></span><span class = "glyphicon glyphicon-pencil pull-right warehouse_management_ml15 warehouse_management_colorfff"></span><span class = "glyphicon glyphicon-plus pull-right warehouse_management_colorfff"></span></p>
-            <div>
-              <p href = "#" class = "list-group-item clearfix warehouse_management_pl30"><span class = "glyphicon glyphicon-cd  warehouse_management_mr15"></span>E01<span class = "glyphicon glyphicon-remove pull-right warehouse_management_ml15"></span><span class = "glyphicon glyphicon-pencil pull-right warehouse_management_ml15"></span></p>
-              <p href = "#" class = "list-group-item clearfix warehouse_management_pl30"><span class = "glyphicon glyphicon-cd  warehouse_management_mr15"></span>E01<span class = "glyphicon glyphicon-remove pull-right warehouse_management_ml15"></span><span class = "glyphicon glyphicon-pencil pull-right warehouse_management_ml15"></span></p>
-              <p href = "#" class = "list-group-item clearfix warehouse_management_pl30"><span class = "glyphicon glyphicon-record  warehouse_management_mr15"></span>E01<span class = "glyphicon glyphicon-remove pull-right warehouse_management_ml15"></span><span class = "glyphicon glyphicon-pencil pull-right warehouse_management_ml15"></span></p>
-              <p href = "#" class = "list-group-item clearfix warehouse_management_pl30"><span class = "glyphicon glyphicon-record  warehouse_management_mr15"></span>E01<span class = "glyphicon glyphicon-remove pull-right warehouse_management_ml15"></span><span class = "glyphicon glyphicon-pencil pull-right warehouse_management_ml15"></span></p>
-            </div>
-          </div>
-        </div>        
-      </div>
-    </div>
-  </div>
+  <div id = "warehouse_management_area"></div>
 </body>
 </html>
