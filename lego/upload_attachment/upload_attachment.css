@@ -1,101 +1,92 @@
-// #upload_attachment_content {
-//   // width: 100%;
-//   width: 200px;
-//   height: 80px;
-//   background-color: red;
-//   overflow: hidden;
-//   white-space: nowrap;
-// }
-// 
-// #upload_attachment_choose_file_label {
-//   cursor: pointer;
-// }
-// 
-// #upload_attachment_choose_file_btn {
-//   display: none;
-// }
-// 
-// .upload_attachment_choose_file_img {
-//   width: 40px;
-//   height: 40px;
-// }
-// 
-// .upload_attachment_attment_label {
-//   width: 60px;
-//   height: 60px;
-//   text-align: center;
-//   line-height: 60px;
-//   margin: 10px 0px 0px 10px;
-//   background: pink;
-//   // float: left;
-// }
-
-
-#upload_attachment_content {
-  width: 100%;
-  height: 240px;
+.upload_attachment_content {
+  width: 300px;
+  height: 80px;
+  float: left;
   display: block;
   position: relative;
   overflow: hidden;
+  background-color: #f9f9f9;
 }
-#upload_attachment_box {
-  width: 1000000px;
+
+.upload_attachment_box {
+  width: 99999999px;
+  height: 60px;
+  margin-top: 10px;
   display: block;
   float: left;
   top: 0px;
   left: 0px;
   position: absolute;
 }
-#upload_attachment_content ul {
+
+.upload_attachment_content ul {
   display: block;
   float: left;
   padding: 0px;
   margin: 0px;
   list-style-type: none;
 }
-#upload_attachment_content ul li {
-  width: 280px;
+
+.upload_attachment_content ul li {
+  width: 60px;
+  height: 60px;
   display: block;
   float: left;
   padding: 0px;
+  margin-right: 10px;
 }
-#upload_attachment_content ul li a {
+
+.upload_attachment_content ul li a {
   display: block;
   float: left;
-  width: 260px;
-  padding: 0;
+  padding: 0px;
   position: relative;
-  height: 240px;
-  color: #333;
 }
-#mybtns {
-  margin: 10px 0;
-  width: 1100px;
-  display: block;
-  height: 42px;
+
+.upload_attachment_content ul li a img {
+  width: 100%;
+  height: 100%;
 }
-#mybtns a {
-  width: 42px;
-  height: 42px;
-  display: block;
-  float: right;
-  margin-right: 1px;
-  background-color: #c1c1c1;
-  margin-left:10px;
-}
-#mybtns a:hover {
-  background-color: #347fdc;
-}
-#mybtns a:hover, #upload_attachment_content, #mybtns a, #upload_attachment_content a:hover .intro, #upload_attachment_content a .intro, #upload_attachment_content #upload_attachment_box {
+
+.upload_attachment_content, .upload_attachment_content a:hover, .upload_attachment_content a, .upload_attachment_content, #upload_attachment_box {
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   -ms-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
   transition: all 0.5s ease;
 }
-#mybtns #upload_attachment_btn_left {
-  background-image: url(../images/jt_l.png);
+
+.upload_attachment_btn {
+  width: 20px;
+  height: 80px;
+  color: #555555;
+  text-align: center;
+  line-height: 80px;
+  float: left;
+  border: 1px solid #cccccc;
+  background-color: #eeeeee;
 }
-#mybtns #upload_attachment_btn_right {
-  background-image: url(../images/jt_r.png);
+
+.upload_attachment_file_choose {
+  display: none !important;
+}
+
+.upload_attachment_btn_left {
+   border-top-left-radius: 4px;
+   border-bottom-left-radius: 4px;
+}
+
+.upload_attachment_btn_right {
+   border-top-right-radius: 4px;
+   border-bottom-right-radius: 4px;
+}
+
+.upload_attachment_add {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.upload_attachment_add > img {
+  width: 40px !important;
+  height: 40px !important;
 }

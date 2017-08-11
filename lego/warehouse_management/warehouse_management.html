@@ -6,16 +6,88 @@
   <meta name = "viewport" content = "width=device-width, initial-scale=1">
   <link rel = "stylesheet" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.css">
   <link rel = "stylesheet" href = "warehouse_management.css">
+  <link rel = "stylesheet" href = "../../css/custom_modal.css">
   <script src = "../../plugin/jquery/1.12.4/jquery.min.js"></script>
   <script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.js"></script>
+  <script src = "../../js/toolkit.js"></script>
   <script src = "warehouse_management.js"></script>
+  <script>
+    $(document).ready(function() {
+      //清空原始数据
+      clear_raw_data();
+      //服务器数据
+      new_server_data_fill();
+      //加载数据
+      fill_variable_data();
+      //添加仓库模态框
+      $("#warehouse_management_plus").click(function() {
+        warehouse_management_add_warehouse_modal();
+      });
+      //添加仓库数据
+      $(document).on("click", ".warehouse_management_prop_data", function() {
+        var warehouse_management_prop_data_this = $(this);
+        warehouse_management_add_warehouse_data( warehouse_management_prop_data_this );
+      });
+      //修改仓库模态框
+      $(document).on("click", ".warehouse_management_edit_pencil", function() {
+        var warehouse_management_pencil_data_this = $(this);
+        warehouse_management_edit_warehouse_modal( warehouse_management_pencil_data_this );
+      });
+      //修改仓库保存数据
+      $(document).on("click", ".warehouse_management_prop_edit_data", function() {
+        var warehouse_management_remove_data_this = $(this);
+        warehouse_management_edit_warehouse_data( warehouse_management_remove_data_this );
+      });
+      //删除仓库模态框
+      $(document).on("click", ".warehouse_management_remove", function() {
+        var warehouse_management_remove_this = $(this);
+        warehouse_management_delet_warehouse_modal( warehouse_management_remove_this );
+      });
+      //删除仓库数据
+      $(document).on("click", ".warehouse_management_delet_data", function() {
+        var warehouse_management_delete_this = $(this);
+        warehouse_management_delete_warehouse_data( warehouse_management_delete_this );
+      });
+      //添加储罐模态框
+      $(document).on("click", ".warehouse_management_add_tank", function() {
+        var warehouse_management_add_tank_this = $(this);
+        warehouse_management_add_warehouse_pot_modal( warehouse_management_add_tank_this );
+      });
+      // 添加储罐数据
+      $(document).on("click", ".warehouse_management_add_tank_data", function() {
+        var warehouse_management_add_tank_this = $(this);
+        warehouse_management_add_warehouse_pot_data( warehouse_management_add_tank_this );
+      });
+      //修改储罐模态框
+      $(document).on("click", ".warehouse_management_tank_pencil", function() {
+        var warehouse_management_tank_pencil_this = $(this);
+        var warehouse_uuid = $(this).parent().parent().prev().attr("warehouse_uuid");
+        warehouse_management_edit_warehouse_pot_modal( warehouse_management_tank_pencil_this, warehouse_uuid);
+      });
+      //储罐修改保存数据
+      $(document).on("click", ".warehouse_management_tank_pencil_data", function() {
+        var warehouse_tank_pencil_this = $(this);
+        warehouse_management_edit_warehouse_pot_data( warehouse_tank_pencil_this );
+      });
+      //删除储罐模态框
+      $(document).on("click", ".warehouse_management_tank_remove", function() {
+        var warehouse_tank_remove_this = $(this);
+        warehouse_management_delete_warehouse_pot_modal( warehouse_tank_remove_this );
+      });
+      //删除储罐数据
+      $(document).on("click", ".warehouse_management_tank_remove_data", function() {
+        var warehouse_tank_remove_data_this = $(this);
+        warehouse_management_delete_warehouse_pot_data( warehouse_tank_remove_data_this );
+      });
+    });
+  </script>
 </head>
 <body>
-   <div class  =  "row warehouse_management_row">
-    <div class  =  "col-lg-12 warehouse_management_col">
+   <div class = "row warehouse_management_row">
+    <div class = "col-lg-12 warehouse_management_col">
       <div class = "list-group">
-        <p href = "#" class = "list-group-item clearfix active warehouse_management_radius">库区管理<span class = "glyphicon glyphicon-plus pull-right " id = "add_warehouse"></span></p>
-        <div id="warehouse_box">
+        <p href = "#" class = "list-group-item clearfix active warehouse_management_radius">库区管理<span class = "glyphicon glyphicon-plus pull-right " id = "warehouse_management_plus"></span></p>
+        <div id="warehouse_management_box">
           <div>
             <p href = "#" class = "list-group-item clearfix warehouse_management_pl30 warehouse_management_bgddd">舟山纳海<span class = "glyphicon glyphicon-remove pull-right warehouse_management_ml15 warehouse_management_colorfff"></span><span class = "glyphicon glyphicon-pencil pull-right warehouse_management_ml15 warehouse_management_colorfff"></span><span class = "glyphicon glyphicon-plus pull-right warehouse_management_colorfff"></span></p>
             <div>
@@ -34,188 +106,9 @@
               <p href = "#" class = "list-group-item clearfix warehouse_management_pl30"><span class = "glyphicon glyphicon-record  warehouse_management_mr15"></span>E01<span class = "glyphicon glyphicon-remove pull-right warehouse_management_ml15"></span><span class = "glyphicon glyphicon-pencil pull-right warehouse_management_ml15"></span></p>
             </div>
           </div>
-        </div>
-        
-      </div>
-    </div>
-  </div>
-  <!--添加仓库-->
-  <div class="modal fade" id="warehouse_prop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header bg-primary">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">添加库区</h4>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label>库区名称</label>
-            <input type="text" class="form-control warehouse_name">
-          </div>
-        </div>
-        <div class="modal-footer" style="text-align: center;">
-          <button type="button" class="btn btn-primary">添加</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!--修改仓库-->
-  <div class="modal fade" id="warehouse_prop_edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <!--<div class="modal-header bg-primary">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">添加库区</h4>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label>库区名称</label>
-            <input type="text" class="form-control warehouse_name">
-          </div>
-        </div>
-        <div class="modal-footer" style="text-align: center;">
-          <button type="button" class="btn btn-primary">添加</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        </div>-->
-      </div>
-    </div>
-  </div>
-  <!--删除仓库-->
-  <div class="modal fade bs-example-modal-sm" id="warehouse_delet" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog  modal-sm" role="document">
-      <div class="modal-content">
-        <div class="modal-header bg-primary">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">删除库区确认</h4>
-        </div>
-        <div class="modal-body text-center">确定要删除库区吗？</div>
-        <div class="modal-footer" style="text-align: center;">
-          <button type="button" class="btn btn-danger">删除</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!--添加储罐-->
-  <div class="modal fade" id="tank_prop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header bg-primary">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">添加储罐</h4>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label>库区名称</label>
-                <select class="form-control">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label>储罐名称</label>
-                <input type="text" class="form-control">
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label>有效容量(吨)</label>
-                <input type="text" class="form-control">
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label>计费容量(吨)</label>
-                <input type="text" class="form-control">
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer" style="text-align: center;">
-          <button type="button" class="btn btn-primary">添加</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!--修改储罐-->
-  <div class="modal fade" id="tank_prop_edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <!--<div class="modal-header bg-primary">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">添加储罐</h4>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label>库区名称</label>
-                <select class="form-control">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label>储罐名称</label>
-                <input type="text" class="form-control">
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label>有效容量(吨)</label>
-                <input type="text" class="form-control">
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label>计费容量(吨)</label>
-                <input type="text" class="form-control">
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer" style="text-align: center;">
-          <button type="button" class="btn btn-primary">添加</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        </div>-->
-      </div>
-    </div>
-  </div>
-  <!--删除储罐-->
-  <div class="modal fade bs-example-modal-sm" id="warehouse_tank_delet" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog  modal-sm" role="document">
-      <div class="modal-content">
-        <div class="modal-header bg-primary">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">删除储罐确认</h4>
-        </div>
-        <div class="modal-body text-center">确定要删除储罐吗？</div>
-        <div class="modal-footer" style="text-align: center;">
-          <button type="button" class="btn btn-danger">删除</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        </div>
+        </div>        
       </div>
     </div>
   </div>
 </body>
 </html>
-
-
