@@ -28,7 +28,6 @@ function getQueryFromUrl(paramName) {
 function ajax_assistant(url, param_data, is_async, is_with_credentials, is_multipart_upload) {
   var result;
   var is_cross_domain;
-  // debugger;
   if (-1 != window.location.protocol.indexOf("http")) {
     is_cross_domain = false;
   } else {
