@@ -3,20 +3,6 @@
  */
 
 /**
- * 复选框 icheck
- */
-function enterprise_management_checkbox() {
-  $("input").iCheck({
-    checkboxClass: 'icheckbox_square-blue',
-  });
-}
-
-function enterprise_management_clear_raw_data() {
-  $("#enterprise_management_list thead").html("");
-  $("#enterprise_management_list tbody").html("");
-}
-
-/**
  * 企业信息列表变量
  */
 var company_data = {"data": [
@@ -41,6 +27,32 @@ var current_company_detail_data = {
   "uuid": "11111111111",
   "type": "1"
 };
+
+/**
+ * 分页变量
+ */
+var rows = 2;
+var current_offset = 0;
+
+/**
+ * 全局搜索条件
+ */
+var enterprise_management_search_condition = {};
+
+/**
+ * 复选框 icheck
+ */
+function enterprise_management_checkbox() {
+  $("input").iCheck({
+    checkboxClass: 'icheckbox_square-blue',
+  });
+}
+
+function enterprise_management_clear_raw_data() {
+  $("#enterprise_management_list thead").html("");
+  $("#enterprise_management_list tbody").html("");
+  $("#enterprise_management_pages").html("");
+}
 
 function enterprise_management_fill_variable_data() {
   var header = 
@@ -146,18 +158,94 @@ function enterprise_management_show_or_hide() {
 }
 
 /**
+ * 获取企业信息
+ */
+function enterprise_management_server_data_cover() {
+  var totalRows = 0;
+  var enterprise_management_url = PROJECT_PATH + "lego/lego_crm?servletName=getEnterpriseInformation";
+  delete enterprise_management_search_condition["rows"];
+  delete enterprise_management_search_condition["offset"];  
+  var enterprise_management_get_enterprise = ajax_assistant(enterprise_management_url, enterprise_management_search_condition, false, true, false);
+  if(1 == enterprise_management_get_enterprise.status) {
+    if (0 == enterprise_management_get_enterprise.count) {
+      $("#enterprise_management_pages").html("");
+    } else {
+      var result = JSON.parse(enterprise_management_get_enterprise.result);
+      console.log(result);
+      totalRows = result.length;
+      generate_bootstrap_pagination_ctrl("#enterprise_management_pages", current_offset, rows, 3, totalRows);
+      enterprise_management_search_condition["rows"] = rows;
+      enterprise_management_search_condition["offset"] = current_offset;
+    }
+  } else {
+    alert("企业信息获取失败");
+  }
+  //获取企业信息
+  var enterprise_management_url = PROJECT_PATH + "lego/lego_crm?servletName=getEnterpriseInformation";
+  var enterprise_management_get_enterprise = ajax_assistant(enterprise_management_url, enterprise_management_search_condition, false, true, false);
+  console.log(enterprise_management_get_enterprise);
+  if (1 == enterprise_management_get_enterprise.status) {
+    if (0 == enterprise_management_get_enterprise.count) {
+      company_data = {};
+    } else {
+      var result = JSON.parse(enterprise_management_get_enterprise.result);
+      console.log(result);
+      var company_data_arr = new Array();
+      for (var i = 0; i < result.length; i++) {
+        //获取开票信息
+        var enterprise_management_get_invoice_url = PROJECT_PATH + "lego/lego_certificate?servletName=getInvoiceInformation";
+        var uuid = result[i].uuid;
+        var enterprise_management_get_invoice_param_data = {};
+        enterprise_management_get_invoice_param_data["parent_uuid"] = uuid;
+        var enterprise_management_get_invoice = ajax_assistant(enterprise_management_get_invoice_url, enterprise_management_get_invoice_param_data, false, true, false);
+        console.log(enterprise_management_get_invoice);
+        var result_invoice = "";
+        if (1 == enterprise_management_get_invoice.status) {
+          result_invoice = JSON.parse(enterprise_management_get_invoice.result);
+          console.log(result_invoice);
+        }
+        var establish_datetime = result[i].establish_datetime.substring(0,result[i].establish_datetime.indexOf(" "));
+        company_data_arr[i] = {"name": result[i].name,"short_name": result[i].short_name,"registered_capital": result[i].registered_capital,"establish_datetime": establish_datetime,"tax_identification_number": result_invoice[0].tax_identification_number,"bank_name": result_invoice[0].bank_name,"account": result_invoice[0].account,"telephone_number": result_invoice[0].telephone_number,"address": result_invoice[0].address,"uuid": result[i].uuid};
+      }
+      company_data["data"] = company_data_arr;
+      console.log(company_data);
+    }
+  } else {
+    alert("企业信息获取失败");
+  }
+}
+
+/**
+ * 点击分页函数
+ */
+function enterprise_management_pages_fun(obj) {
+  current_offset = obj.attr("data-offset");
+  enterprise_management_search_condition["offset"] = current_offset;
+  enterprise_management_server_data_cover();
+  enterprise_management_fill_variable_data();
+}
+
+/**
  * 企业名称搜索
  */
 function enterprise_management_search_name() {
   var name = $("#enterprise_management_search .name").val();
   var short_name = $("#enterprise_management_search .short_name").val("");
   if("" == name){
-    alert("请输入企业名称")
+    alert("请输入企业名称");
+    return;
   } else {
     if(null == name.match(/^[\u4e00-\u9fffa（）\(\)]{8,32}$/)){
-      alert("企业名称格式错误！")
+      alert("企业名称格式错误！");
+      return;
     }
-  } 
+  }
+  current_offset = 0;
+  enterprise_management_search_condition = {};
+  enterprise_management_search_condition["name"] = name;
+  enterprise_management_server_data_cover();
+  enterprise_management_fill_variable_data();
+  enterprise_management_show_or_hide();
 }
 
 /**
@@ -173,6 +261,25 @@ function enterprise_management_search_short_name() {
       alert("企业简称格式错误！")
     }
   }
+  current_offset = 0;
+  enterprise_management_search_condition = {};
+  enterprise_management_search_condition["short_name"] = short_name;
+  enterprise_management_server_data_cover();
+  enterprise_management_fill_variable_data();
+  enterprise_management_show_or_hide();
+}
+
+/**
+ * 全部列出
+ */
+function enterprise_management_search_all() {
+  var short_name = $("#enterprise_management_search .short_name").val("");
+  var name = $("#enterprise_management_search .name").val("");
+  current_offset = 0;
+  enterprise_management_search_condition = {};
+  enterprise_management_server_data_cover();
+  enterprise_management_fill_variable_data();
+  enterprise_management_show_or_hide();
 }
 
 /**
@@ -534,8 +641,22 @@ function enterprise_management_add_info() {
       return;
     }
   }
+  var enterprise_management_add_info_url = PROJECT_PATH + "lego/lego_crm?servletName=addEnterpriseAndInvoiceInformation";
   
-  if ("腾智联合互联网科技有限公司" == enterprise_name) {
+  var enterprise_management_add_info_param_data = {};
+  enterprise_management_add_info_param_data["name"] = enterprise_name;
+  enterprise_management_add_info_param_data["type"] = enterprise_type;
+  enterprise_management_add_info_param_data["short_name"] = enterprise_short_name;
+  enterprise_management_add_info_param_data["registered_capital"] = registered_capital;
+  enterprise_management_add_info_param_data["establish_datetime"] = establish_datetime;
+  enterprise_management_add_info_param_data["tax_identification_number"] = tax_identification_number;
+  enterprise_management_add_info_param_data["address"] = address;
+  enterprise_management_add_info_param_data["bank_name"] = bank_name;
+  enterprise_management_add_info_param_data["account"] = account;
+  enterprise_management_add_info_param_data["enterprise_name"] = enterprise_name;
+  var enterprise_management_add_info = ajax_assistant(enterprise_management_add_info_url, enterprise_management_add_info_param_data, false, true, false);
+  console.log(enterprise_management_add_info);
+  if (1 == enterprise_management_add_info.status) {
     $("#enterprise_management_add_modal").modal("hide");
   } else {
     alert("添加失败！")
