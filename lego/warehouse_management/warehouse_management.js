@@ -26,11 +26,11 @@ var warehouse_pot_data = {
     {"storage_tank_name":"E05", "uuid":"105", "type":"2", "warehouse_uuid":"003", "effective_capacity":"66", "charge_capacity":"666"}]
 };
 
-function clear_raw_data() {
+function warehouse_management_clear_raw_data() {
   $("#warehouse_management_box").html("");
 }
 //服务器数据
-function new_server_data_fill() {
+function warehouse_management_server_data_cover() {
   warehouse_data = {};
   warehouse_pot_data = {};
   //获取仓库
@@ -76,7 +76,7 @@ function new_server_data_fill() {
   }
 }
 
-function fill_variable_data() {
+function warehouse_management_fill_variable_data() {
   //查询仓库
   var warehouse_html = "";
   if(isJsonObjectHasData(warehouse_data)) {
@@ -160,9 +160,9 @@ function warehouse_management_add_warehouse_data(obj) {
   } else {
   // 更新页面数据
   //clear getNewData fill
-    clear_raw_data();
-    new_server_data_fill();
-    fill_variable_data(); 
+    warehouse_management_clear_raw_data();
+    warehouse_management_server_data_cover();
+    warehouse_management_fill_variable_data(); 
     $("#warehouse_management_prop").modal("hide");
     $("#warehouse_management_prop").on("hidden.bs.modal", function (e) {
       $(this).remove();
@@ -232,9 +232,9 @@ function warehouse_management_edit_warehouse_data(obj) {
   } else {    
   // 更新页面数据
   //clear getNewData fill
-    clear_raw_data();
-    new_server_data_fill();
-    fill_variable_data();
+    warehouse_management_clear_raw_data();
+    warehouse_management_server_data_cover();
+    warehouse_management_fill_variable_data();
     $("#warehouse_management_prop_edit").modal("hide");
     $("#warehouse_management_prop_edit").on("hidden.bs.modal", function (e) {
       $(this).remove();
@@ -279,9 +279,9 @@ function warehouse_management_delete_warehouse_data(obj) {
   } else {    
   // 更新页面数据
   //clear getNewData fill
-    clear_raw_data();
-    new_server_data_fill();
-    fill_variable_data();
+    warehouse_management_clear_raw_data();
+    warehouse_management_server_data_cover();
+    warehouse_management_fill_variable_data();
   }
   $("#warehouse_management_delet").modal("hide");
   $("#warehouse_management_delet").on("hidden.bs.modal", function (e) {
@@ -386,9 +386,9 @@ function warehouse_management_add_warehouse_pot_data(obj) {
   } else {    
     // 更新页面数据
     //clear getNewData fill
-    clear_raw_data();
-    new_server_data_fill();
-    fill_variable_data();
+    warehouse_management_clear_raw_data();
+    warehouse_management_server_data_cover();
+    warehouse_management_fill_variable_data();
     $("#warehouse_management_tank_prop").modal("hide");
     $("#warehouse_management_tank_prop").on("hidden.bs.modal", function (e) {
       $(this).remove();
@@ -520,9 +520,9 @@ function warehouse_management_edit_warehouse_pot_data(obj) {
     alert("修改储罐失败");
   } else {    
   // 更新页面数据
-    clear_raw_data();
-    new_server_data_fill();
-    fill_variable_data();  
+    warehouse_management_clear_raw_data();
+    warehouse_management_server_data_cover();
+    warehouse_management_fill_variable_data();  
     $("#warehouse_management_tank_prop_edit").modal("hide");
     $("#warehouse_management_tank_prop_edit").on("hidden.bs.modal", function (e) {
       $(this).remove();
@@ -568,9 +568,9 @@ function warehouse_management_delete_warehouse_pot_data(obj) {
   } else {    
   // 更新页面数据
   //clear getNewData fill
-    clear_raw_data();
-    new_server_data_fill();
-    fill_variable_data();
+    warehouse_management_clear_raw_data();
+    warehouse_management_server_data_cover();
+    warehouse_management_fill_variable_data();
   }
   $("#warehouse_management_tank_delet").modal("hide");
   $("#warehouse_management_tank_delet").on("hidden.bs.modal", function (e) {

@@ -17,7 +17,7 @@ var enterprise_data={"data":[
   {"short_name":"腾智", "uuid":"77777777777777777777777777777773"},
   {"short_name":"腾智联合有限公司", "uuid":"77777777777777777777777777777774"},
   {"short_name":"金莲", "uuid":"77777777777777777777777777777775"},
-  {"short_name":"云谷", "uuid":"77777777777777777777777777777776"}]  
+  {"short_name":"云谷", "uuid":"77777777777777777777777777777776"}]
 };
 
 /**
@@ -42,7 +42,7 @@ var contract_warehouse_data = {"data":[
  */
 var search_condition = {};
 
-function clear_raw_data() {
+function contract_warehouse_clear_raw_data() {
   $("#contract_warehouse_pages").html("");
   $("#contract_warehouse_box").html('<tr><td colspan="6" align="center">没数据</td></tr>');
 }
@@ -50,7 +50,7 @@ function clear_raw_data() {
 /**
  * 服务器数据
  */
-function new_server_data_fill() {
+function contract_warehouse_server_data_cover() {
   var totalRows = 0;
   var contract_warehouse_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getContractWarehousePot";
   delete search_condition["rows"];
@@ -83,7 +83,7 @@ function new_server_data_fill() {
     } else {
       var tmp_arr = new Array();
       var result = JSON.parse(warehouse_pot_get_contract.result);  
-      console.log(result);
+//    console.log(result);
       for (var i = 0; i < result.length; i++) {
         tmp_arr[i] = {"contract_code":result[i].contract_code, "lessor_uuid":result[i].lessor_uuid, "leaser_uuid":result[i].leaser_uuid, "start_datetime":result[i].start_datetime, "end_datetime":result[i].end_datetime, "uuid":result[i].uuid};
       }
@@ -100,7 +100,7 @@ function new_server_data_fill() {
       } else {
         var tmp_arr_pot = new Array();
         var result_enterprise = JSON.parse(warehouse_pot_get_contract_enterprise.result);  
-       console.log(result_enterprise);
+//     console.log(result_enterprise);
         for (var i = 0; i < result_enterprise.length; i++) {
           // name id uuid
           tmp_arr_pot[i] = {"short_name":result_enterprise[i].short_name, "uuid":result_enterprise[i].uuid};
@@ -115,11 +115,11 @@ function new_server_data_fill() {
 function contract_warehouse_pages_fun(obj) {
   current_offset = obj.attr("data-offset");
   search_condition["offset"] = current_offset;
-  new_server_data_fill();
-  fill_variable_data();
+  contract_warehouse_server_data_cover();
+  contract_warehouse_fill_variable_data();
 }
 
-function fill_variable_data() {
+function contract_warehouse_fill_variable_data() {
   //查询储罐合同
   if(isJsonObjectHasData(contract_warehouse_data)) {
     var contract_warehouse_html = "";
@@ -287,9 +287,9 @@ function contract_warehouse_add_data(obj) {
   var contract_warehouse_add_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=addContractWarehousePot";
   var contract_warehouse_add_get_warehouse = ajax_assistant(contract_warehouse_add_url, contract_warehouse_add, false, true, false);
   if(1 == contract_warehouse_add_get_warehouse.status) {
-    clear_raw_data();
-    new_server_data_fill();
-    fill_variable_data(); 
+    contract_warehouse_clear_raw_data();
+    contract_warehouse_server_data_cover();
+    contract_warehouse_fill_variable_data(); 
     $("#contract_warehouse_add_modle").modal("hide");
     $("#contract_warehouse_add_modle").on("hidden.bs.modal", function (e) {
       $(this).remove();
@@ -402,7 +402,7 @@ function contract_warehouse_edit_modle(obj) {
                       '</div>';
                       if(0 < contract_warehouse_culster_list.length) {
                         contract_warehouse_culster_list = contract_warehouse_culster_list.substring(0, contract_warehouse_culster_list.length - 1).split(';');
-                        console.log(contract_warehouse_culster_list);
+//                      console.log(contract_warehouse_culster_list);
                         for(var i=0;i<contract_warehouse_culster_list.length;i++) {
                           var data = {
                             "cluster_name":contract_warehouse_culster_list[i]
@@ -485,9 +485,9 @@ function contract_warehouse_edit_data(obj) {
   var warehouse_edit_data_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=modifyContractWarehousePot";
   var warehouse_edit_data_warehouse = ajax_assistant(warehouse_edit_data_url, data, false, true, false);
   if(1 == warehouse_edit_data_warehouse.status){
-    clear_raw_data();
-    new_server_data_fill();
-    fill_variable_data();
+    contract_warehouse_clear_raw_data();
+    contract_warehouse_server_data_cover();
+    contract_warehouse_fill_variable_data();
     $("#contract_warehouse_edit_modle").modal("hide");
     $("#contract_warehouse_edit_modle").on("hidden.bs.modal", function (e) {
       $(this).remove();
@@ -534,10 +534,10 @@ function contract_warehouse_delete_data(obj) {
     alert("删除储罐失败");
   } else {    
   // 更新页面数据
-    clear_raw_data();
-    new_server_data_fill();
+    contract_warehouse_clear_raw_data();
+    contract_warehouse_server_data_cover();
+    contract_warehouse_fill_variable_data();
   }
-  fill_variable_data();
   $("#contract_warehouse_delete_modle").modal("hide");
   $("#contract_warehouse_delete_modle").on("hidden.bs.modal", function (e) {
     $(this).remove();
@@ -594,7 +594,7 @@ function contract_warehouse_info_modle(obj) {
                 '<label for="basic-url">出租方</label>'+
                 '<select class="form-control contract_warehouse_lessor_uuid" value="' + ontract_warehouse_lessor_uuid + '"  disabled="disabled">';
                   for(var i = 0; i < enterprise_data.data.length; i++) {
-                    console.log(ontract_warehouse_lessor_uuid+';'+enterprise_data.data[i].uuid);
+//                  console.log(ontract_warehouse_lessor_uuid+';'+enterprise_data.data[i].uuid);
                     if(ontract_warehouse_lessor_uuid == enterprise_data.data[i].uuid) {
                       contract_warehouse_edit_html += '<option value="' + enterprise_data.data[i].uuid + '" selected = "selected">'+ enterprise_data.data[i].short_name +'</option>';
                     }
@@ -687,8 +687,8 @@ function contract_warehouse_search(obj) {
     "rows":rows,
     "offset":current_offset,
   };
-  new_server_data_fill();
-  fill_variable_data(); 
+  contract_warehouse_server_data_cover();
+  contract_warehouse_fill_variable_data(); 
 }
 
 function contract_warehouse_enterprise_data() {
@@ -747,8 +747,8 @@ function contract_warehouse_search_fuzzy() {
   }
   search_condition["rows"] = rows;
   search_condition["offset"] = current_offset;
-  new_server_data_fill();
-  fill_variable_data();
+  contract_warehouse_server_data_cover();
+  contract_warehouse_fill_variable_data();
 }
 
 /**
