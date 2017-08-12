@@ -156,7 +156,7 @@ function upload_attachment_btn_event_bind(output_id) {
         }
         $(output_id).find("ul").append(
           '<li>'+
-          '  <a class = "upload_attachment_file" href = "#" data-url = "' + PROJECT_PATH + 'upload/' + result.file_name + '">'+
+          '  <a class = "upload_attachment_file" href = "#" data-cluster = "' + result.cluster_name + '" data-url = "' + PROJECT_PATH + 'upload/' + result.file_name + '">'+
           '    <button class="btn btn-danger"><span class="glyphicon glyphicon-remove  btn-danger"></span></button>'+
           '    <img src = "' + img_src + '">'+
           '  </a>'+
