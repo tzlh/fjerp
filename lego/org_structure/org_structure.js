@@ -75,11 +75,11 @@ var current_root_department_data = {
   "parent_uuid": "00"
 };
 
-function clear_raw_data() {
+function org_structure_clear_raw_data() {
   $("#org_structure_list").html("");
 }
 
-function fill_variable_data() {
+function org_structure_fill_variable_data() {
   var content  = "";
   if (isJsonObjectHasData(root_department)) {
     for (var i = 0; i < root_department.data.length; i++) {
@@ -179,7 +179,7 @@ function get_root_department_data_fill() {
   } 
 }
 
-function server_data_cover() {  
+function org_structure_server_data_cover() {  
   //获取部门
   var department_url = PROJECT_PATH + "lego/lego_workflow?servletName=getDepartment";
   var departmnt_param_data = {};
@@ -295,16 +295,21 @@ function org_structure_add_enterprise_func() {
     '</div>';
   $("body").append(org_structure_add_enterprise);
   $("#org_structure_add_enterprise").modal("show");
-  $("#org_structure_add_enterprise").on("hidden.bs.modal", function (e) {
+  $("#org_structure_add_enterprise").on("hidden.bs.modal", function(e) {
     $(this).remove();
   });
 }
 
 function org_structure_add_enterprise_data_func() {
   var enterprise_name = $("#org_structure_add_enterprise .enterprise_name").val();
-  if(null == enterprise_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)){
-    alert("部门名称格式错误！");
+  if("" == enterprise_name){
+    alert("请输入企业名称！");
     return;
+  } else {
+    if(null == enterprise_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)){
+      alert("企业名称格式错误！");
+      return;
+    }
   }
   var add_root_department_url = PROJECT_PATH + "lego/lego_workflow?servletName=addRootDepartment";
   var add_root_department_param_data = {};
@@ -355,9 +360,14 @@ function org_structure_add_department_func(parent_uuid) {
 }
 function org_structure_add_department_data_func(parent_uuid) {
   var department_name = $("#org_structure_add_department .department_name").val();
-  if (null == department_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)) {
-    alert("部门名称格式错误！");
+  if("" == department_name){
+    alert("请输入部门名称！");
     return;
+  } else {
+    if(null == department_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)){
+      alert("部门名称格式错误！");
+      return;
+    }
   }
   //判断是否重名
   var check_department_name_exist_url = PROJECT_PATH + "lego/lego_workflow?servletName=checkDepartmentNameExist";
@@ -419,9 +429,14 @@ function org_structure_edit_enterprise_func(name, uuid) {
 }
 function org_structure_edit_enterprise_data_func(uuid) {
   var enterprise_name = $("#org_structure_edit_root_department .enterprise_name").val();
-  if (null == enterprise_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)) {
-    alert("企业名称格式错误！");
+  if("" == enterprise_name){
+    alert("请输入企业名称！");
     return;
+  } else {
+    if(null == enterprise_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)){
+      alert("企业名称格式错误！");
+      return;
+    }
   }
   var edit_root_department_url = PROJECT_PATH + "lego/lego_workflow?servletName=modifyRootDepartment";
   var edit_root_department_param_data = {};
@@ -477,9 +492,14 @@ function org_structure_edit_department_func(name, uuid, parent_uuid) {
 
 function org_structure_edit_department_data_func(uuid, parent_uuid) {
   var department_name = $("#org_structure_edit_department .department_name").val();
-  if(null == department_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)){
-    alert("企业名称格式错误！");
+  if("" == department_name){
+    alert("请输入部门名称！");
     return;
+  } else {
+    if(null == department_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)){
+      alert("部门名称格式错误！");
+      return;
+    }
   }
   //判断是否重名
   var check_department_name_exist_url = PROJECT_PATH + "lego/lego_workflow?servletName=checkDepartmentNameExist";
@@ -588,9 +608,14 @@ function org_structure_add_position_func(department_uuid) {
 
 function org_structure_add_position_data_func(department_uuid) {
   var position_name = $("#org_structure_add_position .position_name").val();
-  if(null == position_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)){
-    alert("岗位名称格式错误！");
+  if("" == position_name){
+    alert("请输入部门名称！");
     return;
+  } else {
+    if(null == position_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)){
+      alert("部门名称格式错误！");
+      return;
+    }
   }
   //判断是否重名
   var check_position_name_exist_url = PROJECT_PATH + "lego/lego_workflow?servletName=checkPositionNameExist";
@@ -656,9 +681,14 @@ function org_structure_edit_position_func(name, uuid, department_uuid) {
 
 function org_structure_edit_position_data_func(uuid, department_uuid) {
   var position_name = $("#org_structure_edit_position .position_name").val();
-  if(null == position_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)){
-    alert("岗位名称格式错误！");
+  if("" == position_name){
+    alert("请输入部门名称！");
     return;
+  } else {
+    if(null == position_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)){
+      alert("部门名称格式错误！");
+      return;
+    }
   }
   //判断是否重名
   var check_position_name_exist_url = PROJECT_PATH + "lego/lego_workflow?servletName=checkPositionNameExist";
@@ -895,21 +925,36 @@ function org_structure_add_employee_data_func(position_uuid) {
       break;
     }
   }
-  if(null == name.match(/^[0-9a-zA-Z_-]{4,16}$/)){
-    alert("用户名输入错误！");
+  if("" == name){
+    alert("请输入用户名！");
     return;
+  } else {
+    if(null == name.match(/^[0-9a-zA-Z_-]{4,16}$/)){
+      alert("用户名格式错误！");
+      return;
+    }
   }
   if(null == sex.match(/^[男女]$/)){
     alert("请选择性别！");
     return;
   }
-  if(null == password.match(/^\S{1,16}$/)){
-    alert("密码输入格式错误！");
+  if("" == password){
+    alert("请输入密码！");
     return;
+  } else {
+    if(null == password.match(/^\S{1,16}$/)){
+      alert("密码输入格式错误！");
+      return;
+    }
   }
-  if(null == employee_name.match(/^[\u4e00-\u9fffaa-zA-Z]{2,16}$/)){
-    alert("姓名输入错误！");
+  if("" == employee_name){
+    alert("请输入姓名！");
     return;
+  } else {
+    if(null == employee_name.match(/^[\u4e00-\u9fffaa-zA-Z]{2,16}$/)){
+      alert("姓名输入错误！");
+      return;
+    }
   }
   var add_employee_url = PROJECT_PATH + "lego/lego_workflow?servletName=addUserEmployee";
   var add_employee_param_data = {};
@@ -1164,9 +1209,14 @@ function org_structure_edit_employee_data_func(user_uuid, position_uuid) {
     alert("请选择性别！");
     return;
   }
-  if(null == employee_name.match(/^[\u4e00-\u9fffaa-zA-Z]{2,16}$/)){
-    alert("姓名输入错误！");
+  if("" == employee_name){
+    alert("请输入姓名！");
     return;
+  } else {
+    if(null == employee_name.match(/^[\u4e00-\u9fffaa-zA-Z]{2,16}$/)){
+      alert("姓名输入错误！");
+      return;
+    }
   }
   var edit_employee_url = PROJECT_PATH + "lego/lego_workflow?servletName=modifyEmployee";
   var edit_employee_param_data = {};

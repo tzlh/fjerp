@@ -3,21 +3,89 @@
 <head>
 <meta charset = "utf-8" />
 <link rel = "stylesheet" type = "text/css" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.css"/>
-<link rel="stylesheet" type="text/css" href="company_management.css"/>
+<link rel="stylesheet" type="text/css" href="enterprise_management.css"/>
 <link rel="stylesheet" type="text/css" href=" ../../plugin/icheck/1.x/skins/all.css"/>
 <link rel="stylesheet" type="text/css" href="../../css/custom_modal.css"/>
 <script src = "../../plugin/jquery/1.12.4/jquery.min.js" type = "text/javascript" charset = "utf-8"></script>
 <script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.js" type = "text/javascript" charset = "utf-8"></script>
 <script src="../../plugin/icheck/1.x/icheck.min.js" type="text/javascript" charset="utf-8"></script>
 <script src = "../../js/toolkit.js" type = "text/javascript" charset = "utf-8"></script>
-<script src = "company_management.js" type = "text/javascript" charset = "utf-8"></script>
+<script src = "enterprise_management.js" type = "text/javascript" charset = "utf-8"></script>
 <script src="../../js/configure.js" type="text/javascript" charset="utf-8"></script>
+<style>
+  .file_style {
+      display: block;
+      width: 60px;
+      height: 60px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
+  }
+  .file_name{width: 60px;margin-bottom: 15px !important;}
+  .delet_file_btn{
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    padding: 0 !important;
+  }
+</style>
 <script type = "text/javascript">
 $(document).ready(function() {
-//复选框
-  checkbox();
-//初始化
-  clear_raw_data();
+  // 复选框
+  enterprise_management_checkbox();
+  // 初始化
+  enterprise_management_clear_raw_data();
+  // 赋值
+  enterprise_management_fill_variable_data();
+  // 企业信息展示和隐藏
+  enterprise_management_show_or_hide();
+  // 点击时企业信息展示和隐藏
+  $(document).on('ifChanged','#enterprise_management_condition input',function(){
+    enterprise_management_show_or_hide();
+  })
+  // 添加企业信息模态框
+  $(document).on("click", "#enterprise_management_add_info", function() {
+    enterprise_management_add_modal();
+  });
+  // 添加企业信息
+  $(document).on("click", "#enterprise_management_add_modal .add_btn", function() {
+    enterprise_management_add_info();
+  });
+  // 修改企业信息模态框
+  $(document).on("click", "#enterprise_management_edit_info", function() {
+    var uuid = $(this).data("uuid");
+    enterprise_management_edit_modal(uuid);
+  });
+  // 修改企业信息
+  $(document).on("click", "#enterprise_management_edit_modal .edit_btn", function() {
+    var uuid = $(this).data("uuid");
+    enterprise_management_edit_info(uuid);
+  });
+  // 企业详情模态框
+  $(document).on("click", "#enterprise_management_detail_info", function() {
+    enterprise_management_detail_modal();
+  });
+  // 删除企业信息模态框
+  $(document).on("click", "#enterprise_management_delete_info", function() {
+    var uuid = $(this).data("uuid");
+    enterprise_management_delete_modal(uuid);
+  });
+  // 删除企业信息
+  $(document).on("click", "#enterprise_management_delete_modal .remove", function() {
+    var uuid = $(this).data("uuid");
+    enterprise_management_delete_info(uuid);
+  });
+  // 企业名称搜索
+  $(document).on("click", "#enterprise_management_search_name", function() {
+    enterprise_management_search_name();
+  });
+  // 企业简称搜索
+  $(document).on("click", "#enterprise_management_search_short_name", function() {
+    enterprise_management_search_short_name();
+  });
 }); 
 </script>
 <title></title>
@@ -28,15 +96,15 @@ $(document).ready(function() {
       <div class = "panel panel-primary">
         <div class = "panel-heading clearfix">
           <h3 class = "panel-title pull-left">企业信息管理</h3>
-          <span title = "添加企业信息" class="glyphicon glyphicon-plus pull-right" id = "add_company_info"></span>
+          <span title = "添加企业信息" class="glyphicon glyphicon-plus pull-right" id = "enterprise_management_add_info"></span>
         </div>
         <div class = "panel-body">
-          <div class = "row search">
+          <div class = "row" id = "enterprise_management_search">
             <div class = "col-md-4">
               <div class = "input-group">
                   <span class = "input-group-addon">企业名称</span>
                   <input type = "text" class = "form-control name" aria-label = "Amount (to the nearest dollar)">
-                  <span class = "input-group-btn" id = "search_name">
+                  <span class = "input-group-btn" id = "enterprise_management_search_name">
                     <button class = "btn btn-primary" type = "button">
                       <span class = "glyphicon glyphicon-search"></span>
                     </button>
@@ -47,7 +115,7 @@ $(document).ready(function() {
               <div class = "input-group">
                   <span class = "input-group-addon">企业简称</span>
                   <input type = "text" class = "form-control short_name" aria-label = "Amount (to the nearest dollar)">
-                  <span class = "input-group-btn" id = "search_short_name">
+                  <span class = "input-group-btn" id = "enterprise_management_search_short_name">
                     <button class = "btn btn-primary" type = "button">
                       <span class = "glyphicon glyphicon-search"></span>
                     </button>
@@ -58,44 +126,44 @@ $(document).ready(function() {
               <button class = "btn btn-primary" id = "" type = "button">全部列出</button>
             </div>
           </div>
-          <div class = "panel panel-primary company_management_mt20 company_management_condition">
+          <div class = "panel panel-primary enterprise_management_mt20" id = "enterprise_management_condition">
             <div class = "panel-heading clearfix">
               <h3 class = "panel-title pull-left">数据显示筛选</h3>
             </div>
             <div class = "panel-body">
               <div class = "row companyInfo">
                 <div class = "col-md-2">
-                  <label class = "name">
+                  <label class = "name change">
                     <input type = "checkbox" style = "height: 22px;width: 22px;">
                                             企业名称
                   </label>
                 </div>
                 <div class = "col-md-2">
-                  <label class = "short_name">
+                  <label class = "short_name change">
                     <input type = "checkbox" style = "height: 22px;width: 22px;" checked = "checked">
                                             企业简称
                   </label>
                 </div>
                 <div class = "col-md-2">
-                  <label class = "registered_capital">
+                  <label class = "registered_capital change">
                     <input type = "checkbox" style = "height: 22px;width: 22px;" checked = "checked">
                                             注册资金
                   </label>
                 </div>
                 <div class = "col-md-2">
-                  <label class = "establish_datetime">
+                  <label class = "establish_datetime change">
                     <input type = "checkbox" style = "height: 22px;width: 22px;" checked = "checked">
                                             成立时间
                   </label>
                 </div>
                 <div class = "col-md-2">
-                  <label class = "tax_identification_number">
+                  <label class = "tax_identification_number change">
                     <input type = "checkbox" style = "height: 22px;width: 22px;">
                                             纳税识别号
                   </label>
                 </div>
                 <div class = "col-md-2">
-                  <label class = "bank_name">
+                  <label class = "bank_name change">
                     <input type = "checkbox" style = "height: 22px;width: 22px;">
                                             开户银行
                   </label>
@@ -103,19 +171,19 @@ $(document).ready(function() {
               </div>
               <div class = "row margintop15 companyInfo">
                 <div class = "col-md-2">
-                  <label class = "account">
+                  <label class = "account change">
                     <input type = "checkbox" style="height: 22px;width: 22px;">
                                             银行账号
                   </label>
                 </div>
                 <div class = "col-md-2">
-                  <label class = "telephone_number">
+                  <label class = "telephone_number change">
                     <input type = "checkbox" style = "height: 22px;width: 22px;" checked = "checked">
                                             联系电话
                   </label>
                 </div>
                 <div class = "col-md-2">
-                  <label class = "address">
+                  <label class = "address change">
                     <input type = "checkbox" style = "height: 22px;width: 22px;" checked = "checked">
                                             地址
                   </label>
@@ -123,13 +191,13 @@ $(document).ready(function() {
               </div>
             </div>
           </div>
-          <div class = "panel panel-default panel-primary companyInfoList" style = "margin-bottom: 0;">
+          <div class = "panel panel-default panel-primary" style = "margin-bottom: 0;">
               <div class = "panel-heading" role = "tab" id = "headingOne">
                   <h4 class="panel-title">搜索结果</h4>
               </div>
               <div id = "collapsetwo" class = "panel-collapse collapse in" role = "tabpanel" aria-labelledby = "headingOne">
                   <div class = "panel-body">
-                    <table class = "table tablea" id = "company_management_list">
+                    <table class = "table tablea" id = "enterprise_management_list">
                       <thead>
                         <tr>
                           <th class = "name">企业名称</th>

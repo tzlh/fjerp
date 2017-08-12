@@ -15,10 +15,10 @@
 <script type = "text/javascript">
 $(document).ready(function() {
   org_structure_output("#org_structure_content");
-  clear_raw_data();
+  org_structure_clear_raw_data();
   get_root_department_data_fill();
-  server_data_cover();
-  fill_variable_data();
+  org_structure_server_data_cover();
+  org_structure_fill_variable_data();
   //添加根部门弹窗  
   $(document).on("click", ".org_structure_enterprise_add", function() {
     org_structure_add_enterprise_func();
