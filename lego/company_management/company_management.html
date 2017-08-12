@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset = "utf-8" />
+<link rel = "stylesheet" type = "text/css" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.css"/>
+<link rel="stylesheet" type="text/css" href="company_management.css"/>
+<link rel="stylesheet" type="text/css" href=" ../../plugin/icheck/1.x/skins/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/custom_modal.css"/>
+<script src = "../../plugin/jquery/1.12.4/jquery.min.js" type = "text/javascript" charset = "utf-8"></script>
+<script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.js" type = "text/javascript" charset = "utf-8"></script>
+<script src="../../plugin/icheck/1.x/icheck.min.js" type="text/javascript" charset="utf-8"></script>
+<script src = "../../js/toolkit.js" type = "text/javascript" charset = "utf-8"></script>
+<script src = "company_management.js" type = "text/javascript" charset = "utf-8"></script>
+<script src="../../js/configure.js" type="text/javascript" charset="utf-8"></script>
+<script type = "text/javascript">
+$(document).ready(function() {
+//复选框
+  checkbox();
+//初始化
+  clear_raw_data();
+}); 
+</script>
+<title></title>
+</head>
+<body>
+  <div class = "row">
+    <div class = "col-md-12">
+      <div class = "panel panel-primary">
+        <div class = "panel-heading clearfix">
+          <h3 class = "panel-title pull-left">企业信息管理</h3>
+          <span title = "添加企业信息" class="glyphicon glyphicon-plus pull-right" id = "add_company_info"></span>
+        </div>
+        <div class = "panel-body">
+          <div class = "row search">
+            <div class = "col-md-4">
+              <div class = "input-group">
+                  <span class = "input-group-addon">企业名称</span>
+                  <input type = "text" class = "form-control name" aria-label = "Amount (to the nearest dollar)">
+                  <span class = "input-group-btn" id = "search_name">
+                    <button class = "btn btn-primary" type = "button">
+                      <span class = "glyphicon glyphicon-search"></span>
+                    </button>
+                  </span>
+              </div>
+            </div>
+            <div class = "col-md-3">
+              <div class = "input-group">
+                  <span class = "input-group-addon">企业简称</span>
+                  <input type = "text" class = "form-control short_name" aria-label = "Amount (to the nearest dollar)">
+                  <span class = "input-group-btn" id = "search_short_name">
+                    <button class = "btn btn-primary" type = "button">
+                      <span class = "glyphicon glyphicon-search"></span>
+                    </button>
+                  </span>
+              </div>
+            </div>
+            <div class = "col-md-3">
+              <button class = "btn btn-primary" id = "" type = "button">全部列出</button>
+            </div>
+          </div>
+          <div class = "panel panel-primary company_management_mt20 company_management_condition">
+            <div class = "panel-heading clearfix">
+              <h3 class = "panel-title pull-left">数据显示筛选</h3>
+            </div>
+            <div class = "panel-body">
+              <div class = "row companyInfo">
+                <div class = "col-md-2">
+                  <label class = "name">
+                    <input type = "checkbox" style = "height: 22px;width: 22px;">
+                                            企业名称
+                  </label>
+                </div>
+                <div class = "col-md-2">
+                  <label class = "short_name">
+                    <input type = "checkbox" style = "height: 22px;width: 22px;" checked = "checked">
+                                            企业简称
+                  </label>
+                </div>
+                <div class = "col-md-2">
+                  <label class = "registered_capital">
+                    <input type = "checkbox" style = "height: 22px;width: 22px;" checked = "checked">
+                                            注册资金
+                  </label>
+                </div>
+                <div class = "col-md-2">
+                  <label class = "establish_datetime">
+                    <input type = "checkbox" style = "height: 22px;width: 22px;" checked = "checked">
+                                            成立时间
+                  </label>
+                </div>
+                <div class = "col-md-2">
+                  <label class = "tax_identification_number">
+                    <input type = "checkbox" style = "height: 22px;width: 22px;">
+                                            纳税识别号
+                  </label>
+                </div>
+                <div class = "col-md-2">
+                  <label class = "bank_name">
+                    <input type = "checkbox" style = "height: 22px;width: 22px;">
+                                            开户银行
+                  </label>
+                </div>
+              </div>
+              <div class = "row margintop15 companyInfo">
+                <div class = "col-md-2">
+                  <label class = "account">
+                    <input type = "checkbox" style="height: 22px;width: 22px;">
+                                            银行账号
+                  </label>
+                </div>
+                <div class = "col-md-2">
+                  <label class = "telephone_number">
+                    <input type = "checkbox" style = "height: 22px;width: 22px;" checked = "checked">
+                                            联系电话
+                  </label>
+                </div>
+                <div class = "col-md-2">
+                  <label class = "address">
+                    <input type = "checkbox" style = "height: 22px;width: 22px;" checked = "checked">
+                                            地址
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class = "panel panel-default panel-primary companyInfoList" style = "margin-bottom: 0;">
+              <div class = "panel-heading" role = "tab" id = "headingOne">
+                  <h4 class="panel-title">搜索结果</h4>
+              </div>
+              <div id = "collapsetwo" class = "panel-collapse collapse in" role = "tabpanel" aria-labelledby = "headingOne">
+                  <div class = "panel-body">
+                    <table class = "table tablea" id = "company_management_list">
+                      <thead>
+                        <tr>
+                          <th class = "name">企业名称</th>
+                          <th class = "short_name">企业简称</th>
+                          <th class = "registered_capital">注册资金（元）</th>
+                          <th class = "establish_datetime">成立时间</th>
+                          <th class = "tax_identification_number">纳税识别号</th>
+                          <th class = "bank_name">开户银行</th>
+                          <th class = "account">银行账号</th>
+                          <th class = "telephone_number">联系电话</th>
+                          <th class = "address">地址</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>福记能源科技上海有限公司</td>
+                          <td>5000.0000</td>
+                          <td>2016-03-02</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td>
+                            <span class = "glyphicon glyphicon-info-sign"></span>
+                            <span class = "glyphicon glyphicon-pencil" id = "editCompanyBtn" data-toggle = "modal" data-target = "#editCompanyInfo"></span>
+                            <span class = "glyphicon glyphicon-remove"></span>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>福记能源科技上海有限公司</td>
+                          <td>5000.0000</td>
+                          <td>2016-03-02</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td>
+                            <span class = "glyphicon glyphicon-info-sign"></span>
+                            <span class = "glyphicon glyphicon-pencil" id = "editCompanyBtn" data-toggle = "modal" data-target = "#editCompanyInfo"></span>
+                            <span class = "glyphicon glyphicon-remove"></span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div id = "pages" class = "clearfix"></div>
+                  </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
