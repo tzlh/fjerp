@@ -3,10 +3,10 @@
  */
 
 /**
- * 输出上传附件
+ * 输出上传附件（编辑）
  * @param output_id 输出内容id
  */
-function upload_attachment_output(output_id) {
+function upload_attachment_edit_output(output_id) {
   var content = 
     '<div class = "upload_attachment_area">'+
     '  <div class = "upload_attachment_btn upload_attachment_btn_left"><span class = "glyphicon glyphicon-chevron-left"></span></div>'+
@@ -21,6 +21,35 @@ function upload_attachment_output(output_id) {
     '        </li>'+
     '      </ul>'+
     '    </div>'+
+    '  </div>'+
+    '  <div class = "upload_attachment_btn upload_attachment_btn_right"><span class = "glyphicon glyphicon-chevron-right"></span></div>'+
+    '</div>';
+    $(output_id).html(content);
+}
+
+/**
+ * 输出上传附件（查看）
+ * @param output_id 输出内容id
+ * @param img_data 图片数据的json对象数据。需要两个key：file_name和src
+ *   file_name: 文件上传后的文件名，比如：a29cs8d82ka29cs8d82ka29cs8d82k22.png
+ *   src: 文件上传后的完整路径，比如：http://127.0.0.1/upload/a29cs8d82ka29cs8d82ka29cs8d82k22.png
+ */
+function upload_attachment_preview_output(output_id, img_data) {
+  var data = "<ul>";
+  for (var i = 0; i < img_data.length; i++) {
+    data += '<li>';
+    data += '  <a class = "upload_attachment_file" href = "#" data-url = "' + PROJECT_PATH + 'upload/' + img_data[i].file_name + '">';
+    data += '    <img src = "' + img_data[i].src + '">';
+    data += '  </a>';
+    data += '</li>';
+  }
+  data += '</ul>';
+  var content = 
+    '<div class = "upload_attachment_area">'+
+    '  <div class = "upload_attachment_btn upload_attachment_btn_left"><span class = "glyphicon glyphicon-chevron-left"></span></div>'+
+    '  <div class = "upload_attachment_content">'+
+    '    <input class = "upload_attachment_file_choose" type = "file" multiple = "multiple" accept = "image/png, aplication/zip, text/plain, application/pdf,  image/jpeg, image/jpeg, image/jpeg, image/jp2, image/gif" />'+
+    '    <div class = "upload_attachment_box">' + data + '</div>'+
     '  </div>'+
     '  <div class = "upload_attachment_btn upload_attachment_btn_right"><span class = "glyphicon glyphicon-chevron-right"></span></div>'+
     '</div>';
@@ -128,6 +157,7 @@ function upload_attachment_btn_event_bind(output_id) {
         $(output_id).find("ul").append(
           '<li>'+
           '  <a class = "upload_attachment_file" href = "#" data-url = "' + PROJECT_PATH + 'upload/' + result.file_name + '">'+
+          '    <button class="btn btn-danger"><span class="glyphicon glyphicon-remove  btn-danger"></span></button>'+
           '    <img src = "' + img_src + '">'+
           '  </a>'+
           '</li>'
@@ -142,6 +172,11 @@ function upload_attachment_btn_event_bind(output_id) {
     $(output_id).find(".upload_attachment_file").unbind("click");
     $(output_id).find(".upload_attachment_file").click(function() {
       window.open($(this).attr("data-url"));
+    });
+    // 绑定删除附件按钮事件
+    $(output_id).find(".upload_attachment_file button").unbind("click");
+    $(output_id).find(".upload_attachment_file button").click(function() {
+      $(this).parent().parent().remove();
     });
   });
   // 绑定左右滚动按钮事件
