@@ -217,7 +217,7 @@ function enterprise_management_add_modal() {
                   '<div class="col-md-6">'+
                     '<div class="form-group has-feedback">'+
                       '<label>成立时间</label>'+
-                      '<input type="text" class="form-control data_cha establish_datetime" value = "2017-05-17">'+
+                      '<input type="text" class="form-control widget_datepicker establish_datetime" value = "2017-05-17">'+
                       '<span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>'+
                     '</div>'+
                   '</div>'+
@@ -570,7 +570,7 @@ function enterprise_management_edit_modal(uuid) {
                   '<div class="col-md-6">'+
                     '<div class="form-group has-feedback">'+
                       '<label>成立时间</label>'+
-                      '<input type="text" class="form-control data_cha establish_datetime" value = "' + current_company_detail_data.establish_datetime + '">'+
+                      '<input type="text" class="form-control widget_datepicker establish_datetime" value = "' + current_company_detail_data.establish_datetime + '">'+
                       '<span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>'+
                     '</div>'+
                   '</div>'+
