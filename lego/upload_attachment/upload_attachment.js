@@ -54,6 +54,28 @@ function upload_attachment_preview_output(output_id, img_data) {
     '  <div class = "upload_attachment_btn upload_attachment_btn_right"><span class = "glyphicon glyphicon-chevron-right"></span></div>'+
     '</div>';
     $(output_id).html(content);
+    // 绑定新页面打开附件事件
+    $(output_id).find(".upload_attachment_file").unbind("click");
+    $(output_id).find(".upload_attachment_file").click(function() {
+      window.open($(this).attr("data-url"));
+    });
+    // 绑定左右滚动按钮事件
+    $(output_id).find(".upload_attachment_btn_left").click(function() {
+      var left_value = parseInt($(output_id).find(".upload_attachment_box").css("left"));
+      var step = left_value + $(output_id).find("a").width();
+      if (0 <= step) {
+        step = 0;
+      }
+      $(output_id).find(".upload_attachment_box").css("left", step);
+    });
+    $(output_id).find(".upload_attachment_btn_right").click(function() {
+      var li_list = $(output_id).find("ul").children("li");
+      var left_value = parseInt($(output_id).find(".upload_attachment_box").css("left"));
+      var step = left_value - $(output_id).find("a").width();
+      if ($(output_id).find("a").width() * li_list.length - $(output_id).find("a").width() > Math.abs(step)) {
+        $(output_id).find(".upload_attachment_box").css("left", step);
+      }
+    });
 }
 
 /**
