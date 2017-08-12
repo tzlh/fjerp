@@ -89,3 +89,12 @@
   width: 40px !important;
   height: 40px !important;
 }
+
+.upload_attachment_file > button {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  padding: 0px;
+}
