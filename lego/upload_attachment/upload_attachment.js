@@ -1,4 +1,8 @@
 /**
+ * @author yuanhang
+ */
+
+/**
  * 输出上传附件
  * @param output_id 输出内容id
  */
@@ -15,11 +19,6 @@ function upload_attachment_output(output_id) {
     '            <img src = "../../img/add_attachment.png">'+
     '          </a>'+
     '        </li>'+
-    '        <li>'+
-    '          <a class = "upload_attachment_file" href = "#" data-url = "../../img/file_type/accdb.png">'+
-    '            <img src = "../../img/file_type/accdb.png">'+
-    '          </a>'+
-    '        </li>'+
     '      </ul>'+
     '    </div>'+
     '  </div>'+
@@ -30,82 +29,136 @@ function upload_attachment_output(output_id) {
 
 /**
  * 绑定上传附件按钮事件
- * @param {Object} output_id
+ * @param output_id 内容输出id
  */
 function upload_attachment_btn_event_bind(output_id) {
-  // 绑定左右按钮事件
-  // var box_li_width = $("#upload_attachment_box li").width();
-  var box_li_width = $(output_id).find("li").width();
-  // var li_list = $("#upload_attachment_box ul").children("li");
-  var li_list = $(output_id).find("ul").children("li");
-  // var content_width = $(".upload_attachment_content").width();
-  var content_width = $(output_id).find(".upload_attachment_content").width();
-  var count = parseInt(content_width / box_li_width);
-  var length = li_list.length - count;
-  var i = 0;
-  $(output_id).find(".upload_attachment_btn_left").click(function() {
-    i--;
-    if(0 <= i) {
-       $(output_id).find(".upload_attachment_box").css("left", -(box_li_width * i));
-    } else {
-     i = 0;
-     $(output_id).find(".upload_attachment_box").css("left", 0);
-    }
-  });
-  $(output_id).find(".upload_attachment_btn_right").click(function() {
-    i++;
-    if (i < length) {
-        $(output_id).find(".upload_attachment_box").css("left", -(box_li_width * i));
-    } else {
-      i = length;
-    }
-  });
   // 打开“文件选择”对话框
   $(output_id).find(".upload_attachment_add").click(function() {
     $(".upload_attachment_file_choose").trigger("click");
   });
-  // 新页面打开附件
-  $(output_id).find(".upload_attachment_file").click(function() {
-    var current_path = window.document.location.href.substring(0, window.document.location.href.lastIndexOf("/") + 1);
-    current_path += $(this).attr("data-url");
-    window.open(current_path);
-  });
-  $(document).on("change", $(output_id).find(".upload_attachment_file_choose"), function() {
-    // alert("aa");
-    debugger;
+  $(document).on("change", output_id + " .upload_attachment_file_choose", function() {
     for (var i = 0; i < $(this)[0].files.length; i++) {
       var form_data = new FormData();
       form_data.append("file", $(this)[0].files[i]);
-      var result = ajax_assistant(PROJECT_PATH + "/lego/lego_storage?servletName=c_uploadTemporaryFile", form_data);
+      var result = ajax_assistant(PROJECT_PATH + "/lego/lego_storage?servletName=c_uploadTemporaryFile", form_data, false, true, true);
       if (1 == result.status) {
         // 上传成功
         result = JSON.parse(result.result);
-        var file_name = result.file_name;
-        var cluster_name = result.cluster_name;
+        var img_src = null;
+        var suffix = result.file_name.substring(result.file_name.indexOf(".") + 1).toLowerCase();
+        if ("png" == suffix) {
+          img_src = PROJECT_PATH + "upload/" + result.file_name;
+        } else if ("jpg" == suffix) {
+          img_src = PROJECT_PATH + "upload/" + result.file_name;
+        } else if ("jpeg" == suffix) {
+          img_src = PROJECT_PATH + "upload/" + result.file_name;
+        } else if ("gif" == suffix) {
+          img_src = PROJECT_PATH + "upload/" + result.file_name;
+        } else {
+          if ("accdb" == suffix) {
+            img_src = "../../img/file_type/accdb.png";
+          } else if ("avi" == suffix) {
+            img_src = "../../img/file_type/avi.png";
+          } else if ("bmp" == suffix) {
+            img_src = "../../img/file_type/bmp.png";
+          } else if ("css" == suffix) {
+            img_src = "../../img/file_type/css.png";
+          } else if ("doc" == suffix) {
+            img_src = "../../img/file_type/doc.png";
+          } else if ("docx" == suffix) {
+            img_src = "../../img/file_type/docx.png";
+          } else if ("eml" == suffix) {
+            img_src = "../../img/file_type/eml.png";
+          } else if ("eps" == suffix) {
+            img_src = "../../img/file_type/eps.png";
+          } else if ("fla" == suffix) {
+            img_src = "../../img/file_type/fla.png";
+          } else if ("ind" == suffix) {
+            img_src = "../../img/file_type/ind.png";
+          } else if ("ini" == suffix) {
+            img_src = "../../img/file_type/ini.png";
+          } else if ("jsf" == suffix) {
+            img_src = "../../img/file_type/jsf.png";
+          } else if ("midi" == suffix) {
+            img_src = "../../img/file_type/midi.png";
+          } else if ("mov" == suffix) {
+            img_src = "../../img/file_type/mov.png";
+          } else if ("mp3" == suffix) {
+            img_src = "../../img/file_type/mp3.png";
+          } else if ("mpeg" == suffix) {
+            img_src = "../../img/file_type/mpeg.png";
+          } else if ("pdf" == suffix) {
+            img_src = "../../img/file_type/pdf.png";
+          } else if ("pptx" == suffix) {
+            img_src = "../../img/file_type/pptx.png";
+          } else if ("proj" == suffix) {
+            img_src = "../../img/file_type/proj.png";
+          } else if ("psd" == suffix) {
+            img_src = "../../img/file_type/psd.png";
+          } else if ("pub" == suffix) {
+            img_src = "../../img/file_type/pub.png";
+          } else if ("rar" == suffix) {
+            img_src = "../../img/file_type/rar.png";
+          } else if ("readme" == suffix) {
+            img_src = "../../img/file_type/readme.png";
+          } else if ("settings" == suffix) {
+            img_src = "../../img/file_type/settings.png";
+          } else if ("tiff" == suffix) {
+            img_src = "../../img/file_type/tiff.png";
+          } else if ("url" == suffix) {
+            img_src = "../../img/file_type/url.png";
+          } else if ("vsd" == suffix) {
+            img_src = "../../img/file_type/vsd.png";
+          } else if ("wav" == suffix) {
+            img_src = "../../img/file_type/wav.png";
+          } else if ("wma" == suffix) {
+            img_src = "../../img/file_type/wma.png";
+          } else if ("wmv" == suffix) {
+            img_src = "../../img/file_type/wmv.png";
+          } else if ("xls" == suffix) {
+            img_src = "../../img/file_type/xls.png";
+          } else if ("xlsx" == suffix) {
+            img_src = "../../img/file_type/xlsx.png";
+          } else if ("zip" == suffix) {
+            img_src = "../../img/file_type/zip.png";
+          } else {
+            img_src = "../../img/file_type/other.png";
+          }
+        }
+        $(output_id).find("ul").append(
+          '<li>'+
+          '  <a class = "upload_attachment_file" href = "#" data-url = "' + PROJECT_PATH + 'upload/' + result.file_name + '">'+
+          '    <img src = "' + img_src + '">'+
+          '  </a>'+
+          '</li>'
+        );
       } else {
         alert("[" + $(this)[0].files[i].name + "]上传失败")
         return;
       }
-      // var url = PROJECT_PATH + "upload/" + file_name;
-      // var file_type = result.file_name.split(".")[1].toLowerCase();
-      // if("png" == file_type || "jpg" == file_type || "jpeg" == file_type || "gif" == file_type || "psd" == file_type){
-      //   var file = '<div class=" pull-left file_name has-feedback ml15">'+
-      //   '<img url="'+url+'" width="60" height="60" uuid="'+cluster_name+'" src="'+url+'" class="img-rounded"/>'+
-      //   '<button class="btn btn-danger text-center delet_file_btn">'+
-      //   '<span class="glyphicon glyphicon-remove  btn-danger fon12"></span>'+
-      //   '</button>'+
-      //   '</div>';
-      //   $(this).parents(".attch").append(file);
-      // } else {
-      //   var file = '<div class=" pull-left file_name has-feedback ml15">'+
-      //   '<img url="'+url+'" width="60" height="60"  src="img/aa.jpg" class="img-rounded"/>'+
-      //   '<button class="btn btn-danger text-center delet_file_btn">'+
-      //   '<span class="glyphicon glyphicon-remove  btn-danger fon12"></span>'+
-      //   '</button>'+
-      //   '</div>';
-      //   $(this).parents(".attch").append(file);
-      // }
     }
     $('.upload_attachment_file_choose').val("");
+    // 绑定新页面打开附件事件
+    $(output_id).find(".upload_attachment_file").unbind("click");
+    $(output_id).find(".upload_attachment_file").click(function() {
+      window.open($(this).attr("data-url"));
+    });
+  });
+  // 绑定左右滚动按钮事件
+  $(output_id).find(".upload_attachment_btn_left").click(function() {
+    var left_value = parseInt($(output_id).find(".upload_attachment_box").css("left"));
+    var step = left_value + $(output_id).find("a").width();
+    if (0 <= step) {
+      step = 0;
+    }
+    $(output_id).find(".upload_attachment_box").css("left", step);
+  });
+  $(output_id).find(".upload_attachment_btn_right").click(function() {
+    var li_list = $(output_id).find("ul").children("li");
+    var left_value = parseInt($(output_id).find(".upload_attachment_box").css("left"));
+    var step = left_value - $(output_id).find("a").width();
+    if ($(output_id).find("a").width() * li_list.length - $(output_id).find("a").width() > Math.abs(step)) {
+      $(output_id).find(".upload_attachment_box").css("left", step);
+    }
   });
 }

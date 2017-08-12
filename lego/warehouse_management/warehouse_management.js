@@ -1,3 +1,6 @@
+/**
+ * @author wangdi
+ */
 
 //库区
 var warehouse_data = {
@@ -40,14 +43,16 @@ function new_server_data_fill() {
   if (1 == warehouse_get_warehouse.status) {
     if (0 == warehouse_get_warehouse.count) {
       warehouse_data = {};
+    } else {
+      var tmp_arr = new Array();
+      var result = JSON.parse(warehouse_get_warehouse.result);    
+      for (var i = 0; i < result.length; i++) {
+        // name id uuid
+        tmp_arr[i] = {"warehouse_name":result[i].name, "warehouse_uuid":result[i].uuid};
+      }
+      warehouse_data["data"] = tmp_arr;
     }
-    var tmp_arr = new Array();
-    var result = JSON.parse(warehouse_get_warehouse.result);    
-    for (var i = 0; i < result.length; i++) {
-      // name id uuid
-      tmp_arr[i] = {"warehouse_name":result[i].name, "warehouse_uuid":result[i].uuid};
-    }
-    warehouse_data["data"] = tmp_arr;
+    
   } else {
     alert("库区数据获取失败");
   }
@@ -55,15 +60,17 @@ function new_server_data_fill() {
   if (1 == warehouse_pot_get_warehouse.status) {
     if (0 == warehouse_pot_get_warehouse.count) {
       warehouse_pot_data = {};
+    } else {
+      var tmp_arr_pot = new Array();
+      var result_pot = JSON.parse(warehouse_pot_get_warehouse.result);  
+      console.log(result_pot);
+      for (var i = 0; i < result_pot.length; i++) {
+        // name id uuid
+        tmp_arr_pot[i] = {"storage_tank_name":result_pot[i].name, "uuid":result_pot[i].uuid, "type":result_pot[i].type, "warehouse_uuid":result_pot[i].warehouse_uuid, "effective_capacity":result_pot[i].effective_capacity, "charge_capacity":result_pot[i].charge_capacity};
+      }
+      warehouse_pot_data["data"] = tmp_arr_pot;
     }
-    var tmp_arr_pot = new Array();
-    var result_pot = JSON.parse(warehouse_pot_get_warehouse.result);  
-    console.log(result_pot);
-    for (var i = 0; i < result_pot.length; i++) {
-      // name id uuid
-      tmp_arr_pot[i] = {"storage_tank_name":result_pot[i].name, "uuid":result_pot[i].uuid, "type":result_pot[i].type, "warehouse_uuid":result_pot[i].warehouse_uuid, "effective_capacity":result_pot[i].effective_capacity, "charge_capacity":result_pot[i].charge_capacity};
-    }
-    warehouse_pot_data["data"] = tmp_arr_pot;
+    
   } else {
     alert("储罐数据获取失败");
   }
@@ -348,20 +355,20 @@ function warehouse_management_add_warehouse_pot_data(obj) {
   var billing_capacity = obj.parents("#warehouse_management_tank_prop").find(".billing_capacity").val();//计费容量
   //验证
   if (null == storage_tank_style.match(/^[12]$/)) {
-        alert("请选择正确的储罐类型");
-        return;
+    alert("请选择正确的储罐类型");
+    return;
   };
   if (null == storage_tank_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)) {
-        alert("请输入正确的储罐名称");
-        return;
+    alert("请输入正确的储罐名称");
+    return;
   };
   if (null == effective_capacity.match(/^[0-9]+\.{0,1}[0-9]{0,4}$/)) {
-        alert("请输入正确的有效容量");
-        return;
+    alert("请输入正确的有效容量");
+    return;
   };
   if (null == billing_capacity.match(/^[0-9]+\.{0,1}[0-9]{0,4}$/)) {
-        alert("请输入正确的计费容量");
-        return;
+    alert("请输入正确的计费容量");
+    return;
   };
   //添加的参数
   var warehouse_m_pot_data = {

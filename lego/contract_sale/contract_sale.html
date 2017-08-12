@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv = "Content-Type" content = "text/html; charset=utf-8">
+  <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
+  <meta name = "viewport" content = "width=device-width, initial-scale=1">
+  <link rel = "stylesheet" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.css">
+  <link rel = "stylesheet" href = "../../plugin/jquery_ui/1.12.1/jquery-ui.min.css">
+  <link rel = "stylesheet" href = "../../plugin/jquery_timepicker_addon/1.6.3/jquery-ui-timepicker-addon.css" />
+  <link rel = "stylesheet" href = "../../css/custom_modal.css">
+  <link rel = "stylesheet" href = "contract_sale.css">
+  <script src = "../../plugin/jquery/1.12.4/jquery.min.js"></script>    
+  <script src = "../../plugin/jquery_ui/1.12.1/jquery-ui.min.js"></script>
+  <script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.js"></script>
+  <script src = "../../plugin/jquery_timepicker_addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>  
+  <script src = "../../plugin/jquery_timepicker_addon/1.6.3/init.js"></script>
+  <script src = "../../js/toolkit.js"></script>
+  <script src = "../../js/configure.js"></script>
+  <script src = "upload_file.js"></script>
+  <script src = "contract_sale.js"></script>
+  <style>
+    .file_style {
+        display: block;
+        width: 60px;
+        height: 60px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+    }
+    .file_name{width: 60px;margin-bottom: 15px !important;}
+    .delet_file_btn{
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 20px;
+      height: 20px;
+      padding: 0 !important;
+    }
+  </style>
+  <script>
+    $(document).ready(function() {
+      contract_sale_output("#contract_sale_content");
+      //日历插件
+      widget_datepicker_init();
+      //清空原始数据
+      clear_raw_data();
+      //服务器数据
+      new_server_data_fill();
+      //加载数据
+      fill_variable_data();
+    });
+  </script>
+</head>
+<body>
+  <div id = "contract_sale_content"></div>
+</body>
+</html>
+
