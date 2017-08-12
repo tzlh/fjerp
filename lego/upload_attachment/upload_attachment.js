@@ -85,7 +85,7 @@ function upload_attachment_preview_output(output_id, img_data) {
 function upload_attachment_btn_event_bind(output_id) {
   // 打开“文件选择”对话框
   $(output_id).find(".upload_attachment_add").click(function() {
-    $(output_id + " .upload_attachment_file_choose").trigger("click");
+    $(output_id).find(".upload_attachment_file_choose").trigger("click");
   });
   $(document).on("change", output_id + " .upload_attachment_file_choose", function() {
     for (var i = 0; i < $(this)[0].files.length; i++) {
@@ -189,7 +189,7 @@ function upload_attachment_btn_event_bind(output_id) {
         return;
       }
     }
-    $('.upload_attachment_file_choose').val("");
+    $(output_id).find(".upload_attachment_file_choose").val("");
     // 绑定新页面打开附件事件
     $(output_id).find(".upload_attachment_file").unbind("click");
     $(output_id).find(".upload_attachment_file").click(function() {
