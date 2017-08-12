@@ -85,7 +85,7 @@ function upload_attachment_preview_output(output_id, img_data) {
 function upload_attachment_btn_event_bind(output_id) {
   // 打开“文件选择”对话框
   $(output_id).find(".upload_attachment_add").click(function() {
-    $(".upload_attachment_file_choose").trigger("click");
+    $(output_id + " .upload_attachment_file_choose").trigger("click");
   });
   $(document).on("change", output_id + " .upload_attachment_file_choose", function() {
     for (var i = 0; i < $(this)[0].files.length; i++) {
