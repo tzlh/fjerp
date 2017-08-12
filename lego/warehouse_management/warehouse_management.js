@@ -1,3 +1,6 @@
+/**
+ * @author wangdi
+ */
 
 //库区
 var warehouse_data = {

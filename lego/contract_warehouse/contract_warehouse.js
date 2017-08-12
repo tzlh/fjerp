@@ -1,3 +1,7 @@
+/**
+ * @author wangdi
+ */
+
 //企业
 var enterprise_data={"data":[
   {"short_name":"腾智联合", "uuid":"77777777777777777777777777777771"},
