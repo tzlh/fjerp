@@ -1,4 +1,8 @@
 /**
+ * @author yuanhang
+ */
+
+/**
  * 根据参数名从url获取参数值
  * @param paramName 参数名
  * return 找到返回参数值，否则返回null。
@@ -78,4 +82,49 @@ function isJsonObjectHasData(obj) {
     return true;
   }
   return false;
+}
+
+/**
+ * 生成bootstrap分页控件
+ * @param output_id 输出id
+ * @param offset 当前显示数据的偏移
+ * @param limit 显示的条目数
+ * @param page_count 页签数量（不包括“向左”和“向右”）
+ * @param total_count 总页数
+ */
+function generate_bootstrap_pagination_ctrl(output_id, offset, limit, page_count, total_count) {
+  if (offset > total_count) {
+    return;
+  }
+  var current_page;
+  var code = "";
+  code += '<nav class = "pull-right">';
+  code += '<ul class = "pagination">';
+  if (0 >= offset) {
+    current_page = 1;
+  } else {
+    current_page = Math.ceil(offset / limit) + 1;
+  }
+  var count = Math.ceil(total_count / limit);
+  var display_scene_count = Math.ceil(count / page_count);
+  var current_page_scene_num = Math.ceil(current_page / page_count);
+  if (current_page_scene_num > 1) {
+    code += '<li data-offset = "' + (((current_page_scene_num - 1) * page_count * limit) - limit) + '"><a><span>«</span></a></li>';
+  }
+  for (var i = ((current_page_scene_num * page_count) - page_count + 1); i <= (current_page_scene_num * page_count); i++) {
+    if (i > count) {
+      break;
+    }
+    if (i == (current_page)) {
+      code += '<li data-offset = "' + (i * limit - limit) + '" class = "active"><a>' + i + '</a></li>';
+    } else {
+      code += '<li data-offset = "' + (i * limit - limit) + '"><a>' + i + '</a></li>';
+    }
+  }
+  if ((display_scene_count - current_page_scene_num) >= 1) {
+    code += '<li data-offset = "' + ((current_page_scene_num * page_count * limit)) + '"><a><span>»</span></a></li>';
+  }
+  code += '</ul>';
+  code += '</nav>';
+  $(output_id).html(code);
 }
