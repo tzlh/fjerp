@@ -200,12 +200,38 @@ function enterprise_management_server_data_cover() {
         var enterprise_management_get_invoice = ajax_assistant(enterprise_management_get_invoice_url, enterprise_management_get_invoice_param_data, false, true, false);
         console.log(enterprise_management_get_invoice);
         var result_invoice = "";
+        var tax_identification_number = "";
+        var address = "";
+        var telephone_number = "";
+        var bank_name = "";
+        var account = "";
         if (1 == enterprise_management_get_invoice.status) {
           result_invoice = JSON.parse(enterprise_management_get_invoice.result);
           console.log(result_invoice);
+          tax_identification_number = result_invoice[0].tax_identification_number;
+          if( null == tax_identification_number){
+            tax_identification_number = "";
+          }
+          address = result_invoice[0].address;
+          if( null == address){
+            address = "";
+          }
+          telephone_number = result_invoice[0].telephone_number;
+          if( null == telephone_number){
+            telephone_number = "";
+          }
+          bank_name = result_invoice[0].bank_name;
+          if( null == bank_name){
+            bank_name = "";
+          }
+          account = result_invoice[0].account;
+          if( null == account){
+            account = "";
+          }
         }
         var establish_datetime = result[i].establish_datetime.substring(0,result[i].establish_datetime.indexOf(" "));
-        company_data_arr[i] = {"name": result[i].name,"short_name": result[i].short_name,"registered_capital": result[i].registered_capital,"establish_datetime": establish_datetime,"tax_identification_number": result_invoice[0].tax_identification_number,"bank_name": result_invoice[0].bank_name,"account": result_invoice[0].account,"telephone_number": result_invoice[0].telephone_number,"address": result_invoice[0].address,"uuid": result[i].uuid};
+        
+        company_data_arr[i] = {"name": result[i].name,"short_name": result[i].short_name,"registered_capital": result[i].registered_capital,"establish_datetime": establish_datetime,"tax_identification_number": tax_identification_number,"bank_name": bank_name,"account": account,"telephone_number": telephone_number,"address": address,"uuid": result[i].uuid};
       }
       company_data["data"] = company_data_arr;
       console.log(company_data);
@@ -557,10 +583,17 @@ function enterprise_management_add_info() {
   var telephone_number = $("#enterprise_management_add_modal .telephone_number").val();
   var bank_name = $("#enterprise_management_add_modal .bank_name").val();
   var account = $("#enterprise_management_add_modal .account").val();
-  var invoiceCluster_list = "";
-  for(var i = 1;i < $("#enterprise_management_add_modal .invoice_attch div").length;i++){
-    invoiceCluster_list += $("#enterprise_management_add_modal .invoice_attch div").eq(i).data("id")+';';
+  var invoiceCluster_list = $("#enterprise_management_invoice_attch ul").children("li");
+  var cluster_list = "";
+  for (var i = 0; i < invoiceCluster_list.length; i++) {
+    var obj = invoiceCluster_list[i];
+    var cluster = $(obj).find("a").attr("data-cluster");
+    if (undefined != cluster) {
+     cluster_list += cluster + ";"; 
+    }    
   }
+  console.log(cluster_list);
+  console.log(invoiceCluster_list);  
   if("" == enterprise_name){
     alert("请输入企业名称");
     return;
@@ -596,64 +629,61 @@ function enterprise_management_add_info() {
     alert("请选择成立时间！");
     return;
   }
-  if("" == tax_identification_number){
-    alert("请输入纳税识别号！");
-    return;
-  } else {
+  if("" != tax_identification_number){
     if(null == tax_identification_number.match(/^[0-9a-zA-Z]{15,18}$/)){
       alert("纳税识别号格式错误！");
       return;
     }
   }
-  if("" == bank_name){
-    alert("请输入开户银行！");
-    return;
-  } else {
+  if("" != bank_name){
     if(null == bank_name.match(/^[\u4e00-\u9fffa]{8,64}$/)){
       alert("开户银行格式错误！");
       return;
     }
   }
-  if("" == account){
-    alert("请输入银行账号！");
-    return;
-  } else {
+  if("" != account){
     if(null == account.match(/^[0-9]{10,30}$/)){
       alert("开户银行格式错误！");
       return;
     }
   }
-  if("" == telephone_number){
-    alert("请输入联系方式！");
-    return;
-  } else {
+  if("" != telephone_number){
     if(null == telephone_number.match(/^[0-9]{6,15}$/)){
       alert("联系方式格式错误！");
       return;
     }
   }
-  if ("" == address) {
-    alert("请输入地址！");
-    return;
-  } else {
+  if ("" != address) {
     if (null == address.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{8,100}$/)) {
       alert("地址格式错误！");
       return;
     }
   }
   var enterprise_management_add_info_url = PROJECT_PATH + "lego/lego_crm?servletName=addEnterpriseAndInvoiceInformation";
-  
   var enterprise_management_add_info_param_data = {};
   enterprise_management_add_info_param_data["name"] = enterprise_name;
   enterprise_management_add_info_param_data["type"] = enterprise_type;
   enterprise_management_add_info_param_data["short_name"] = enterprise_short_name;
   enterprise_management_add_info_param_data["registered_capital"] = registered_capital;
   enterprise_management_add_info_param_data["establish_datetime"] = establish_datetime;
-  enterprise_management_add_info_param_data["tax_identification_number"] = tax_identification_number;
-  enterprise_management_add_info_param_data["address"] = address;
-  enterprise_management_add_info_param_data["bank_name"] = bank_name;
-  enterprise_management_add_info_param_data["account"] = account;
-  enterprise_management_add_info_param_data["enterprise_name"] = enterprise_name;
+  if ("" != telephone_number) {
+    enterprise_management_add_info_param_data["telephone_number"] = telephone_number;
+  }
+  if ("" != tax_identification_number) {
+    enterprise_management_add_info_param_data["tax_identification_number"] = tax_identification_number;
+  }
+  if ("" != address) {
+    enterprise_management_add_info_param_data["address"] = address;
+  }
+  if ("" != bank_name) {
+    enterprise_management_add_info_param_data["bank_name"] = bank_name;
+  }
+  if ("" != account) {
+    enterprise_management_add_info_param_data["account"] = account;
+  }
+  if ("" != cluster_list) {
+    enterprise_management_add_info_param_data["cluster_list"] = cluster_list;
+  }
   var enterprise_management_add_info = ajax_assistant(enterprise_management_add_info_url, enterprise_management_add_info_param_data, false, true, false);
   console.log(enterprise_management_add_info);
   if (1 == enterprise_management_add_info.status) {
