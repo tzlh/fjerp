@@ -5,19 +5,18 @@
   <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
   <meta name = "viewport" content = "width=device-width, initial-scale=1">
   <link rel = "stylesheet" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.css">
-  <link rel="stylesheet" href = "../../plugin/jquery_timepicker_addon/1.6.3/jquery-ui-timepicker-addon.css" />
   <link rel = "stylesheet" href = "../../plugin/jquery_ui/1.12.1/jquery-ui.min.css">
+  <link rel = "stylesheet" href = "../../plugin/jquery_timepicker_addon/1.6.3/jquery-ui-timepicker-addon.css" />
   <link rel = "stylesheet" href = "../../css/custom_modal.css">
   <link rel = "stylesheet" href = "contract_warehouse.css">
   <script src = "../../plugin/jquery/1.12.4/jquery.min.js"></script>    
-  <script src="../../plugin/jquery_ui/1.12.1/jquery-ui.min.js"></script>
+  <script src = "../../plugin/jquery_ui/1.12.1/jquery-ui.min.js"></script>
   <script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.js"></script>
-  <script src="../../plugin/jquery_timepicker_addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>  
+  <script src = "../../plugin/jquery_timepicker_addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>  
   <script src = "../../plugin/jquery_timepicker_addon/1.6.3/init.js"></script>
   <script src = "../../js/toolkit.js"></script>
   <script src = "../../js/configure.js"></script>
-  <script src="upload_file.js"></script>
-  <!--<script src="page.js"></script>-->
+  <script src = "upload_file.js"></script>
   <script src = "contract_warehouse.js"></script>
   <style>
     .file_style {
@@ -48,8 +47,6 @@
       clear_raw_data();
       //服务器数据
       new_server_data_fill();
-      //分页
-      pages('', current_page);
       //加载数据
       fill_variable_data();
       //搜索获取出租方和承租方
@@ -66,7 +63,7 @@
       //添加储罐合同数据
       $(document).on("click", "#contract_warehouse_add_btn", function() {
         var contract_warehouse_this = $(this);
-        contract_warehouse_add_data( contract_warehouse_this );
+        contract_warehouse_add_data(contract_warehouse_this);
       });
       //修改储罐合同模态框
       $(document).on("click", ".contract_warehouse_pencil", function() {
@@ -100,8 +97,7 @@
       });
       //合同号模糊搜索
       $(document).on("click", "#contract_warehouse_fuzzy", function() {
-        var contract_warehouse_fuzzy_this = $(this);
-        contract_warehouse_search_fuzzy(contract_warehouse_fuzzy_this);
+        contract_warehouse_search_fuzzy();
       });
     });
   </script>

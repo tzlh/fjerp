@@ -2,7 +2,15 @@
  * @author wangdi
  */
 
-//企业
+/**
+ * 分页变量
+ */
+var rows = 2;
+var current_offset = 0;
+
+/**
+ * 企业
+ */
 var enterprise_data={"data":[
   {"short_name":"腾智联合", "uuid":"77777777777777777777777777777771"},
   {"short_name":"腾智联", "uuid":"77777777777777777777777777777772"},
@@ -12,12 +20,12 @@ var enterprise_data={"data":[
   {"short_name":"云谷", "uuid":"77777777777777777777777777777776"}]  
 };
 
-//储罐租赁合同
-/*
- *contract_code:合同编号
- *lessor_uuid：出租方
- *leaser_uuid：承租方
- * */
+/**
+ * 储罐租赁合同
+ * contract_code:合同编号
+ * lessor_uuid:出租方
+ * leaser_uuid:承租方
+ */
 var contract_warehouse_data = {"data":[
   {"contract_code":"ZS-FJ-17731363", "lessor_uuid":"77777777777777777777777777777771", "leaser_uuid":"77777777777777777777777777777772", "start_datetime":"2017-05-06 00:00:00", "end_datetime":"2017-05-08 00:00:00", "uuid":"00000", "culster_list":"123;456"},
   {"contract_code":"AV-YS-111", "lessor_uuid":"77777777777777777777777777777773", "leaser_uuid":"77777777777777777777777777777774", "start_datetime":"2017-05-06 00:00:00", "end_datetime":"2017-05-08 00:00:00", "uuid":"00001", "culster_list":"123;456"},
@@ -29,22 +37,46 @@ var contract_warehouse_data = {"data":[
 ]
 };
 
+/**
+ * 全局搜索条件
+ */
+var search_condition = {};
+
 function clear_raw_data() {
   $("#contract_warehouse_pages").html("");
   $("#contract_warehouse_box").html('<tr><td colspan="6" align="center">没数据</td></tr>');
 }
 
-//服务器数据
+/**
+ * 服务器数据
+ */
 function new_server_data_fill() {
-  contract_warehouse_data = {};
-  enterprise_data = {};
+  var totalRows = 0;
+  var contract_warehouse_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getContractWarehousePot";
+  delete search_condition["rows"];
+  delete search_condition["offset"];  
+  var warehouse_pot_get_contract = ajax_assistant(contract_warehouse_url, search_condition, false, true, false);
+  if(1 == warehouse_pot_get_contract.status) {
+    if (0 == warehouse_pot_get_contract.count) {
+      $("#contract_warehouse_pages").html("");
+    } else {
+      var result = JSON.parse(warehouse_pot_get_contract.result);  
+      totalRows = result.length;
+      generate_bootstrap_pagination_ctrl("#contract_warehouse_pages", current_offset, rows, 6, totalRows);
+      search_condition["rows"] = rows;
+      search_condition["offset"] = current_offset;
+    }
+  } else {
+    alert("储罐合同数据获取失败");
+  }
+  
   //获取储罐合同
   var contract_warehouse_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getContractWarehousePot";
-  var warehouse_pot_get_contract = ajax_assistant(contract_warehouse_url, {"rows":rows,"offset":current_page}, false, true, false);
+  var warehouse_pot_get_contract = ajax_assistant(contract_warehouse_url, search_condition, false, true, false);
   //获取企业
   var contract_warehouse_enterprise_url = PROJECT_PATH + "lego/lego_crm?servletName=getEnterpriseInformation";
   var warehouse_pot_get_contract_enterprise = ajax_assistant(contract_warehouse_enterprise_url, "", false, true, false);
-  
+  contract_warehouse_data = {};
   if (1 == warehouse_pot_get_contract.status) {
     if (0 == warehouse_pot_get_contract.count) {
       contract_warehouse_data = {};
@@ -61,6 +93,7 @@ function new_server_data_fill() {
     alert("储罐合同数据获取失败");
   }
   //企业
+  enterprise_data = {};
   if (1 == warehouse_pot_get_contract_enterprise.status) {
       if (0 == warehouse_pot_get_contract_enterprise.count) {
         enterprise_data = {};
@@ -79,60 +112,11 @@ function new_server_data_fill() {
   }
 }
 
-/////////////////////////////////////////////////
-//分页
-var rows = 2;
-var current_page = 0;//当前页
-var current_offset = 0;
-function pages(getEnterpriseInfoParam,offset) {
-  var totalRows = 0;
-  var contract_warehouse_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getContractWarehousePot";
-  var warehouse_pot_get_contract = ajax_assistant(contract_warehouse_url, getEnterpriseInfoParam, false, true, false);
-  var result = JSON.parse(warehouse_pot_get_contract.result);  
-  totalRows = result.length;
-  console.log(totalRows);
-  generatePageCtrl("#contract_warehouse_pages",offset,rows,6,totalRows);
-}
-
 function contract_warehouse_pages_fun(obj) {
   current_offset = obj.attr("data-offset");
-  if("1" == $("#contract_warehouse_fuzzy").attr("is_click") || "1" == $("#contract_warehouse_search_btn").attr("is_click")) {
-    var data = {};
-    var contract_warehouse_contract_input = $("#contract_warehouse_search_input").val();
-    var contract_warehouse_lessor = $("#contract_warehouse_lessor").val();
-    var contract_warehouse_leaser = $("#contract_warehouse_leaser").val();
-    var contract_warehouse_start = $("#contract_warehouse_start").val();
-    var contract_warehouse_end = $("#contract_warehouse_end").val();
-        if("" != contract_warehouse_contract_input) {
-          data["contract_code"] = contract_warehouse_contract_input;
-        }
-        if("" != contract_warehouse_start){
-          contract_warehouse_start += " 00:00:00";
-          data["start_datetime"] = contract_warehouse_start;
-        }
-        if("" != contract_warehouse_end){
-          contract_warehouse_end += " 00:00:00";
-          data["end_datetime"] = contract_warehouse_end;
-        }
-        if("" != contract_warehouse_lessor){
-          data["lessor_uuid"] = contract_warehouse_lessor;
-        }
-        if("" != contract_warehouse_leaser){
-          data["leaser_uuid"] = contract_warehouse_leaser;
-        }
-        pages(data, obj.attr("data-offset"));
-        data["rows"] = rows;
-        data["offset"] = obj.attr("data-offset");
-        contract_warehouse_get_pot(data);
-        fill_variable_data();
-  } else {
-    var data = {};
-    pages(data, obj.attr("data-offset"));
-    data["rows"] = rows;
-    data["offset"] = obj.attr("data-offset");
-    contract_warehouse_get_pot(data);
-    fill_variable_data();
-  }
+  search_condition["offset"] = current_offset;
+  new_server_data_fill();
+  fill_variable_data();
 }
 
 function fill_variable_data() {
@@ -191,19 +175,21 @@ function contract_warehouse_add_modle() {
                 '<label for="basic-url">出租方</label>'+
                 '<select class="form-control contract_warehouse_lessor_uuid" value="">'+
                   '<option value="">--请选择--</option>';
-                  for(var i = 0; i < enterprise_data.data.length; i++) {
+                  for (var i = 0; i < enterprise_data.data.length; i++) {
                     contract_warehouse_add_modle += '<option value="' + enterprise_data.data[i].uuid + '">'+ enterprise_data.data[i].short_name +'</option>';
-                                  }
-  contract_warehouse_add_modle+='</select>'+
+                  }
+                  contract_warehouse_add_modle+=
+              '</select>'+
               '</div>'+
               '<div class="col-lg-6">'+
                 '<label for="basic-url">承租方</label>'+
                 '<select class="form-control contract_warehouse_leaser_uuid" value="">'+
                   '<option value="">--请选择--</option>';
-                  for(var i = 0; i < enterprise_data.data.length; i++) {
-                      contract_warehouse_add_modle += '<option value="' + enterprise_data.data[i].uuid + '">'+ enterprise_data.data[i].short_name +'</option>';
-                                  }
-  contract_warehouse_add_modle += '</select>'+
+                  for (var i = 0; i < enterprise_data.data.length; i++) {
+                    contract_warehouse_add_modle += '<option value="' + enterprise_data.data[i].uuid + '">'+ enterprise_data.data[i].short_name +'</option>';
+                  }
+                  contract_warehouse_add_modle += 
+                  '</select>'+
               '</div>'+
             '</div>'+
             '<div class="row contract_warehouse_mt20">'+
@@ -247,7 +233,7 @@ function contract_warehouse_add_modle() {
     '</div>';
   $("body").append(contract_warehouse_add_modle);
   $("#contract_warehouse_add_modle").modal("show");
-  $("#contract_warehouse_add_modle").on("hidden.bs.modal", function (e) {
+  $("#contract_warehouse_add_modle").on("hidden.bs.modal", function(e) {
     $(this).remove();
   });      
 }
@@ -303,15 +289,6 @@ function contract_warehouse_add_data(obj) {
   if(1 == contract_warehouse_add_get_warehouse.status) {
     clear_raw_data();
     new_server_data_fill();
-    //分页
-    $("#contract_warehouse_fuzzy,#contract_warehouse_search_btn").attr("is_click","0");
-    $("#contract_warehouse_search_input,#contract_warehouse_lessor,#contract_warehouse_leaser,#contract_warehouse_start,#contract_warehouse_end").val("");
-    pages('', current_page);
-    var data={
-      "rows":rows,
-      "offset":current_page
-    };
-    contract_warehouse_get_pot(data);
     fill_variable_data(); 
     $("#contract_warehouse_add_modle").modal("hide");
     $("#contract_warehouse_add_modle").on("hidden.bs.modal", function (e) {
@@ -510,17 +487,7 @@ function contract_warehouse_edit_data(obj) {
   if(1 == warehouse_edit_data_warehouse.status){
     clear_raw_data();
     new_server_data_fill();
-    //分页
-    if("1" == $("#contract_warehouse_fuzzy").attr("is_click") || "1" == $("#contract_warehouse_search_btn").attr("is_click")) {
-      contract_warehouse_search_t();
-    } else {
-      var data_pages = {};
-      pages(data_pages, current_offset);
-      data_pages["rows"] = rows;
-      data_pages["offset"] = current_offset;
-      contract_warehouse_get_pot(data_pages);
-      fill_variable_data();
-    }
+    fill_variable_data();
     $("#contract_warehouse_edit_modle").modal("hide");
     $("#contract_warehouse_edit_modle").on("hidden.bs.modal", function (e) {
       $(this).remove();
@@ -569,18 +536,8 @@ function contract_warehouse_delete_data(obj) {
   // 更新页面数据
     clear_raw_data();
     new_server_data_fill();
-    //分页
-    if("1" == $("#contract_warehouse_fuzzy").attr("is_click") || "1" == $("#contract_warehouse_search_btn").attr("is_click")) {
-      contract_warehouse_search_t();
-    } else {
-      var data_pages = {};
-      pages(data_pages, current_offset);
-      data_pages["rows"] = rows;
-      data_pages["offset"] = current_offset;
-      contract_warehouse_get_pot(data_pages);
-      fill_variable_data();
-    }
   }
+  fill_variable_data();
   $("#contract_warehouse_delete_modle").modal("hide");
   $("#contract_warehouse_delete_modle").on("hidden.bs.modal", function (e) {
     $(this).remove();
@@ -714,27 +671,24 @@ function contract_warehouse_info_modle(obj) {
 }
 
 function contract_warehouse_search(obj) {
-  obj.attr("is_click","1");
   current_offset = 0;
   var contract_warehouse_contract_input = $("#contract_warehouse_search_input").val();
   if("" == contract_warehouse_contract_input) {
     alert("合同号不能为空");
     return;
-  } else {
-    if(null == contract_warehouse_contract_input.match(/^[A-Z]{2,}-[A-Z]{2,}-[0-9]{5,}$/)){
-      alert("请输入正确的合同号！");
-      return;
-    };
-    var data = {
-      "contract_code":contract_warehouse_contract_input
-    };
-    pages(data,current_offset);
-    data['rows'] = rows;
-    data['offset'] = current_offset;
-    //获取储罐合同
-    contract_warehouse_get_pot(data);
-    fill_variable_data();
   }
+  if(null == contract_warehouse_contract_input.match(/^[A-Z]{2,}-[A-Z]{2,}-[0-9]{5,}$/)){
+    alert("请输入正确的合同号！");
+    return;
+  };
+  search_condition = {};    
+  search_condition = {
+    "contract_code":contract_warehouse_contract_input,
+    "rows":rows,
+    "offset":current_offset,
+  };
+  new_server_data_fill();
+  fill_variable_data(); 
 }
 
 function contract_warehouse_enterprise_data() {
@@ -745,33 +699,17 @@ function contract_warehouse_enterprise_data() {
   $("#contract_warehouse_lessor,#contract_warehouse_leaser").html(contract_warehouse_html);
 }
 
-function contract_warehouse_search_fuzzy(obj) {
-  obj.attr("is_click","1");
-  current_offset = 0;
-  contract_warehouse_search_t();
-}
-
-function contract_warehouse_search_t() {
-  var data = {};
-  var contract_warehouse_contract_input = $("#contract_warehouse_search_input").val();
+function contract_warehouse_search_fuzzy() {
   var contract_warehouse_lessor = $("#contract_warehouse_lessor").val();
   var contract_warehouse_leaser = $("#contract_warehouse_leaser").val();
   var contract_warehouse_start = $("#contract_warehouse_start").val();
   var contract_warehouse_end = $("#contract_warehouse_end").val();
-  if("" != contract_warehouse_contract_input) {
-    if(null == contract_warehouse_contract_input.match(/^[A-Z]{2,}-[A-Z]{2,}-[0-9]{5,}$/)){
-      alert("请输入正确的合同号！");
-      return;
-    };
-    data["contract_code"] = contract_warehouse_contract_input;
-  }
   if("" != contract_warehouse_start){
     contract_warehouse_start += " 00:00:00";
     if(null == contract_warehouse_start.match(/^(?:(?!0000)[0-9]{4}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[0-9]{2}(?:0[48]|[2468][048]|[13579][26])|(?:0[48]|[2468][048]|[13579][26])00)-02-29)\s+([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/)){
       alert("请选择正确的日期！");
       return;
     };
-    data["start_datetime"] = contract_warehouse_start;
   }
   if("" != contract_warehouse_end){
     contract_warehouse_end += " 00:00:00";
@@ -779,50 +717,38 @@ function contract_warehouse_search_t() {
       alert("请选择正确的日期！");
       return;
     };
-    data["end_datetime"] = contract_warehouse_end;
   }
   if("" != contract_warehouse_lessor){
     if(null == contract_warehouse_lessor.match(/^[0-9a-zA-Z]{32}$/)){
       alert("请选择正确的出租方！");
       return;
     };
-    data["lessor_uuid"] = contract_warehouse_lessor;
   }
   if("" != contract_warehouse_leaser){
     if(null == contract_warehouse_leaser.match(/^[0-9a-zA-Z]{32}$/)){
       alert("请选择正确的承租方！");
       return;
     };
-    data["leaser_uuid"] = contract_warehouse_leaser;
   }
   //分页
-  pages(data, current_offset);
-  data['rows'] = rows;
-  data['offset'] = current_offset;
-  //获取储罐合同
-  contract_warehouse_get_pot(data);
-  fill_variable_data();
-}
-
-function contract_warehouse_get_pot(data) {
-  //获取储罐合同
-  var contract_warehouse_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getContractWarehousePot";
-  var warehouse_pot_get_contract = ajax_assistant(contract_warehouse_url, data, false, true, false);
-  if (1 == warehouse_pot_get_contract.status) {
-    if (0 == warehouse_pot_get_contract.count) {
-      contract_warehouse_data = {};
-      $("#contract_warehouse_box").html('<tr><td colspan = "6" align = "center">没数据</td></tr>');
-    } else {
-      var tmp_arr = new Array();
-      var result = JSON.parse(warehouse_pot_get_contract.result);
-      for (var i = 0; i < result.length; i++) {
-        tmp_arr[i] = {"contract_code":result[i].contract_code, "lessor_uuid":result[i].lessor_uuid, "leaser_uuid":result[i].leaser_uuid, "start_datetime":result[i].start_datetime, "end_datetime":result[i].end_datetime, "uuid":result[i].uuid};
-      }
-      contract_warehouse_data["data"] = tmp_arr;
-    }
-  } else {
-    alert("储罐合同数据获取失败");
+  current_offset = 0;
+  search_condition = {};
+  if ("" != contract_warehouse_start) {
+    search_condition["start_datetime"] = contract_warehouse_start;  
   }
+  if ("" != contract_warehouse_end) {
+    search_condition["end_datetime"] = contract_warehouse_end;  
+  }
+  if ("" != contract_warehouse_lessor) {
+    search_condition["lessor_uuid"] = contract_warehouse_lessor;  
+  }
+  if ("" != contract_warehouse_leaser) {
+    search_condition["leaser_uuid"] = contract_warehouse_leaser;  
+  }
+  search_condition["rows"] = rows;
+  search_condition["offset"] = current_offset;
+  new_server_data_fill();
+  fill_variable_data();
 }
 
 /**
