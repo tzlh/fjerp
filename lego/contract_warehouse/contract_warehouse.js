@@ -8,7 +8,6 @@ var enterprise_data={"data":[
   {"short_name":"云谷", "uuid":"77777777777777777777777777777776"}]  
 };
 
-
 //储罐租赁合同
 /*
  *contract_code:合同编号
@@ -80,6 +79,7 @@ function new_server_data_fill() {
 //分页
 var rows = 2;
 var current_page = 0;//当前页
+var current_offset = 0;
 function pages(getEnterpriseInfoParam,offset) {
   var totalRows = 0;
   var contract_warehouse_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getContractWarehousePot";
@@ -91,7 +91,8 @@ function pages(getEnterpriseInfoParam,offset) {
 }
 
 function contract_warehouse_pages_fun(obj) {
-  if("1" == $("#contract_warehouse_fuzzy").attr("is_click")) {
+  current_offset = obj.attr("data-offset");
+  if("1" == $("#contract_warehouse_fuzzy").attr("is_click") || "1" == $("#contract_warehouse_search_btn").attr("is_click")) {
     var data = {};
     var contract_warehouse_contract_input = $("#contract_warehouse_search_input").val();
     var contract_warehouse_lessor = $("#contract_warehouse_lessor").val();
@@ -298,6 +299,9 @@ function contract_warehouse_add_data(obj) {
   if(1 == contract_warehouse_add_get_warehouse.status) {
     clear_raw_data();
     new_server_data_fill();
+    //分页
+    $("#contract_warehouse_fuzzy,#contract_warehouse_search_btn").attr("is_click","0");
+    $("#contract_warehouse_search_input,#contract_warehouse_lessor,#contract_warehouse_leaser,#contract_warehouse_start,#contract_warehouse_end").val("");
     pages('', current_page);
     var data={
       "rows":rows,
@@ -500,17 +504,16 @@ function contract_warehouse_edit_data(obj) {
   var warehouse_edit_data_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=modifyContractWarehousePot";
   var warehouse_edit_data_warehouse = ajax_assistant(warehouse_edit_data_url, data, false, true, false);
   if(1 == warehouse_edit_data_warehouse.status){
-
     clear_raw_data();
     new_server_data_fill();
     //分页
-    if("1" == $("#contract_warehouse_fuzzy").attr("is_click")) {
+    if("1" == $("#contract_warehouse_fuzzy").attr("is_click") || "1" == $("#contract_warehouse_search_btn").attr("is_click")) {
       contract_warehouse_search_t();
     } else {
       var data_pages = {};
-      pages(data_pages, current_page);
+      pages(data_pages, current_offset);
       data_pages["rows"] = rows;
-      data_pages["offset"] = current_page;
+      data_pages["offset"] = current_offset;
       contract_warehouse_get_pot(data_pages);
       fill_variable_data();
     }
@@ -563,13 +566,13 @@ function contract_warehouse_delete_data(obj) {
     clear_raw_data();
     new_server_data_fill();
     //分页
-    if("1" == $("#contract_warehouse_fuzzy").attr("is_click")) {
+    if("1" == $("#contract_warehouse_fuzzy").attr("is_click") || "1" == $("#contract_warehouse_search_btn").attr("is_click")) {
       contract_warehouse_search_t();
     } else {
       var data_pages = {};
-      pages(data_pages, current_page);
+      pages(data_pages, current_offset);
       data_pages["rows"] = rows;
-      data_pages["offset"] = current_page;
+      data_pages["offset"] = current_offset;
       contract_warehouse_get_pot(data_pages);
       fill_variable_data();
     }
@@ -643,7 +646,7 @@ function contract_warehouse_info_modle(obj) {
                 '<select class="form-control contract_warehouse_leaser_uuid" value="' + contract_warehouse_leaser_uuid + '" disabled="disabled">';
                   for(var i = 0; i < enterprise_data.data.length; i++) {
                     if(contract_warehouse_leaser_uuid == enterprise_data.data[i].uuid) {
-                      contract_warehouse_edit_html += '<option value="' + enterprise_data.data[i].uuid + '" selected = "selected">'+ enterprise_data.data[i].short_name +'</option>';
+                      contract_warehouse_edit_html += '<option value="' + enterprise_data.data[i].uuid + '" selected = "selected">' + enterprise_data.data[i].short_name + '</option>';
                     }
                   }
                   contract_warehouse_edit_html +=
@@ -654,14 +657,14 @@ function contract_warehouse_info_modle(obj) {
               '<div class="col-lg-6 ">'+
                 '<div class="form-group has-feedback">'+
                  '<label>租赁开始时间</label>'+
-                  '<input type="text" class="form-control contract_warehouse_start_datetime" value="'+contract_warehouse_start_datetime+'" disabled="disabled">'+
+                  '<input type="text" class="form-control contract_warehouse_start_datetime" value="' + contract_warehouse_start_datetime + '" disabled="disabled">'+
                   '<span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>'+
                 '</div>'+
               '</div>'+
               '<div class="col-lg-6">'+
                 '<div class="form-group has-feedback">'+
                   '<label>租赁结束时间</label>'+
-                  '<input type="text" class="form-control contract_warehouse_end_datetime" value="'+contract_warehouse_end_datetime+'" disabled="disabled">'+
+                  '<input type="text" class="form-control contract_warehouse_end_datetime" value="' + contract_warehouse_end_datetime + '" disabled="disabled">'+
                   '<span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>'+
                 '</div>'+
               '</div>'+
@@ -679,7 +682,7 @@ function contract_warehouse_info_modle(obj) {
                         };
                         var contract_warehouse_file_name = ajax_assistant(PROJECT_PATH+"lego/lego_storage?servletName=getFileByClusterName",data, false, true, false);//查询文件集群信息
                         var contract_warehouse_json = JSON.parse(contract_warehouse_file_name.result);
-                        if(0 != contract_warehouse_file_name.count){
+                        if(0 != contract_warehouse_file_name.count) {
                           contract_warehouse_edit_html += 
                             '<div class=" pull-left file_name has-feedback contract_warehouse_ml15">'+
                               '<img uuid="'+contract_warehouse_json[0].cluster_name+'" src="'+PROJECT_PATH+'upload/'+contract_warehouse_json[0].cluster_name+'.'+contract_warehouse_json[0].suffix+'" url="'+PROJECT_PATH+'upload/'+contract_warehouse_json[0].cluster_name+'.'+contract_warehouse_json[0].suffix+'"  width="60" height="60" class="img-rounded">'+
@@ -708,6 +711,7 @@ function contract_warehouse_info_modle(obj) {
 
 function contract_warehouse_search(obj) {
   obj.attr("is_click","1");
+  current_offset = 0;
   var contract_warehouse_contract_input = $("#contract_warehouse_search_input").val();
   if("" == contract_warehouse_contract_input) {
     alert("合同号不能为空");
@@ -717,17 +721,16 @@ function contract_warehouse_search(obj) {
       alert("请输入正确的合同号！");
       return;
     };
+    var data = {
+      "contract_code":contract_warehouse_contract_input
+    };
+    pages(data,current_offset);
+    data['rows'] = rows;
+    data['offset'] = current_offset;
+    //获取储罐合同
+    contract_warehouse_get_pot(data);
+    fill_variable_data();
   }
-  var data = {
-    "contract_code":contract_warehouse_contract_input
-  };
-  pages(data,current_page);
-  data['rows'] = rows;
-  data['offset'] = current_page;
-  //获取储罐合同
-  contract_warehouse_get_pot(data);
-  fill_variable_data();
-  
 }
 
 function contract_warehouse_enterprise_data() {
@@ -740,6 +743,7 @@ function contract_warehouse_enterprise_data() {
 
 function contract_warehouse_search_fuzzy(obj) {
   obj.attr("is_click","1");
+  current_offset = 0;
   contract_warehouse_search_t();
 }
 
@@ -787,10 +791,11 @@ function contract_warehouse_search_t() {
     };
     data["leaser_uuid"] = contract_warehouse_leaser;
   }
-  pages(data,current_page);
+  //分页
+  pages(data, current_offset);
   data['rows'] = rows;
-  data['offset'] = current_page;
-//获取储罐合同
+  data['offset'] = current_offset;
+  //获取储罐合同
   contract_warehouse_get_pot(data);
   fill_variable_data();
 }
@@ -805,8 +810,7 @@ function contract_warehouse_get_pot(data) {
       $("#contract_warehouse_box").html('<tr><td colspan = "6" align = "center">没数据</td></tr>');
     } else {
       var tmp_arr = new Array();
-      var result = JSON.parse(warehouse_pot_get_contract.result);  
-      console.log(result);
+      var result = JSON.parse(warehouse_pot_get_contract.result);
       for (var i = 0; i < result.length; i++) {
         tmp_arr[i] = {"contract_code":result[i].contract_code, "lessor_uuid":result[i].lessor_uuid, "leaser_uuid":result[i].leaser_uuid, "start_datetime":result[i].start_datetime, "end_datetime":result[i].end_datetime, "uuid":result[i].uuid};
       }
