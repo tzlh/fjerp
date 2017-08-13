@@ -43,6 +43,7 @@ function upload_attachment_edit_output(output_id, file_data) {
     $(output_id).find(".upload_attachment_file button").click(function() {
       $(this).parent().parent().remove();
     });
+    upload_attachment_btn_event_bind(output_id);
 }
 
 /**
