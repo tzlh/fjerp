@@ -1,7 +1,18 @@
 /**
  * @author wangdi
  */
-
+/**
+ * 附件
+ */
+var contract_warehouse_file_data = 
+  [{"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"}];
 /**
  * 分页变量
  */
@@ -217,15 +228,7 @@ function contract_warehouse_add_modle() {
             '<div class="row">'+
               '<div class="col-lg-12">'+
                 '<label for="basic-url">储罐租赁合同附件</label>'+
-                '<div class="panel panel-default">'+
-                  '<div class="panel-body clearfix attch">'+
-                    '<div class="pull-left has-feedback">'+
-                      '<button class="btn bg-default">'+
-                        '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
-                      '</button>'+
-                    '<input class="positionfile file_style" type="file"  value="" />'+
-                    '</div>'+
-                  '</div>'+
+                '<div class="panel panel-default" id = "contract_warehouse_add_modle_attch">'+
                 '</div>'+
               '</div>'+
             '</div>'+
@@ -238,6 +241,8 @@ function contract_warehouse_add_modle() {
       '</div>'+
     '</div>';
   $("body").append(contract_warehouse_add_modle);
+  upload_attachment_edit_output("#contract_warehouse_add_modle_attch");
+  upload_attachment_btn_event_bind("#contract_warehouse_add_modle_attch");
   $("#contract_warehouse_add_modle").modal("show");
   $("#contract_warehouse_add_modle").on("hidden.bs.modal", function(e) {
     $(this).remove();
@@ -251,9 +256,14 @@ function contract_warehouse_add_data(obj) {
   var contract_warehouse_leaser_uuid = obj.parents("#contract_warehouse_add_modle").find(".contract_warehouse_leaser_uuid").val();
   var contract_warehouse_start_datetime = obj.parents("#contract_warehouse_add_modle").find(".contract_warehouse_start_datetime").val();
   var contract_warehouse_end_datetime = obj.parents("#contract_warehouse_add_modle").find(".contract_warehouse_end_datetime").val();
+  var contract_warehouse_list = $("#contract_warehouse_add_modle_attch ul").children("li");
   var contract_warehouse_cluster_list = "";
-  for(var i = 0;i < obj.parents("#contract_warehouse_add_modle").find(".file_name").length; i++) {
-    contract_warehouse_cluster_list += obj.parents("#contract_warehouse_add_modle").find(".file_name").eq(i).find("img").attr('uuid')+';';
+  for (var i = 0; i < contract_warehouse_list.length; i++) {
+    var contract_sales_dom = contract_warehouse_list[i];
+    var cluster = $(contract_sales_dom).find("a").attr("data-cluster");
+    if (undefined != cluster) {
+     contract_warehouse_cluster_list += cluster + ";"; 
+    }    
   }
   if("" != contract_warehouse_start_datetime) {
     contract_warehouse_start_datetime += " 00:00:00";
@@ -341,7 +351,26 @@ function contract_warehouse_edit_modle(obj) {
   }
   contract_warehouse_start_datetime = contract_warehouse_start_datetime.substring(0, contract_warehouse_start_datetime.indexOf(' '));
   contract_warehouse_end_datetime = contract_warehouse_end_datetime.substring(0, contract_warehouse_end_datetime.indexOf(' '));
-  var contract_warehouse_edit_html = 
+  //附件
+  if(0 < contract_warehouse_culster_list.length){
+    var contract_warehouse_file_arr = new Array();
+    contract_warehouse_culster_list = contract_warehouse_culster_list.substring(0, contract_warehouse_culster_list.length - 1).split(';');
+    console.log(contract_warehouse_culster_list)
+    for(var i = 0; i < contract_warehouse_culster_list.length; i++){
+      var cluster_name_data = {
+        "cluster_name":contract_warehouse_culster_list[i]
+      };
+      var contract_warehouse_file_name=ajax_assistant(PROJECT_PATH+"lego/lego_storage?servletName=getFileByClusterName",cluster_name_data, false, true, false);//查询文件集群信息
+      var contract_warehouse_json=JSON.parse(contract_warehouse_file_name.result);
+      console.log(contract_warehouse_json)
+      if(0 != contract_warehouse_file_name.count) {
+        contract_warehouse_file_arr[i] = {"file_name":contract_warehouse_json[0].cluster_name+'.'+contract_warehouse_json[0].suffix};
+      }
+    }
+    contract_warehouse_file_data = contract_warehouse_file_arr;
+    console.log(contract_warehouse_file_data);
+  }
+  var contract_warehouse_edit_html =
       '<div class="modal fade custom_modal" tabindex="-1" role="dialog" id="contract_warehouse_edit_modle" aria-labelledby="myModalLabel">'+
         '<div class="modal-dialog" role="document">'+
           '<div class="modal-content">'+
@@ -402,36 +431,7 @@ function contract_warehouse_edit_modle(obj) {
               '<div class="row contract_warehouse_mt20">'+
                 '<div class="col-lg-12">'+
                   '<label for="basic-url">储罐租赁合同附件</label>'+
-                '<div class="panel panel-default">'+
-                    '<div class="panel-body clearfix attch">'+
-                      '<div class="pull-left has-feedback">'+
-                        '<button class="btn bg-default">'+
-                          '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
-                        '</button>'+
-                        '<input class="positionfile file_style" type="file"  value="" />'+
-                      '</div>';
-                      if(0 < contract_warehouse_culster_list.length) {
-                        contract_warehouse_culster_list = contract_warehouse_culster_list.substring(0, contract_warehouse_culster_list.length - 1).split(';');
-//                      console.log(contract_warehouse_culster_list);
-                        for(var i=0;i<contract_warehouse_culster_list.length;i++) {
-                          var data = {
-                            "cluster_name":contract_warehouse_culster_list[i]
-                          };
-                          var contract_warehouse_file_name=ajax_assistant(PROJECT_PATH+"lego/lego_storage?servletName=getFileByClusterName",data, false, true, false);//查询文件集群信息
-                          var contract_warehouse_json=JSON.parse(contract_warehouse_file_name.result);
-                          if(0 != contract_warehouse_file_name.count){
-                            contract_warehouse_edit_html += 
-                              '<div class=" pull-left file_name has-feedback contract_warehouse_ml15">'+
-                                  '<img uuid="'+contract_warehouse_json[0].cluster_name+'" src="'+PROJECT_PATH+'upload/'+contract_warehouse_json[0].cluster_name+'.'+contract_warehouse_json[0].suffix+'" url="'+PROJECT_PATH+'upload/'+contract_warehouse_json[0].cluster_name+'.'+contract_warehouse_json[0].suffix+'"  width="60" height="60" class="img-rounded">'+
-                                  '<button class="btn btn-danger text-center delet_file_btn">'+
-                                    '<span class="glyphicon glyphicon-remove  btn-danger fon12"></span>'+
-                                  '</button>'+
-                              '</div>';
-                          }
-                        }
-                      }
-                      contract_warehouse_edit_html += 
-                    '</div>'+
+                  '<div class="panel panel-default" id = "contract_warehouse_edit_attch">'+
                   '</div>'+
                 '</div>'+
               '</div>'+
@@ -444,6 +444,8 @@ function contract_warehouse_edit_modle(obj) {
         '</div>'+
       '</div>';
     $("body").append(contract_warehouse_edit_html);
+    upload_attachment_edit_output("#contract_warehouse_edit_attch", contract_warehouse_file_data);
+    upload_attachment_btn_event_bind("#contract_warehouse_edit_attch");
     $("#contract_warehouse_edit_modle").modal("show");
     $("#contract_warehouse_edit_modle").on("hidden.bs.modal", function (e) {
       $(this).remove();
@@ -458,9 +460,14 @@ function contract_warehouse_edit_data(obj) {
   var contract_warehouse_leaser_uuid = obj.parents("#contract_warehouse_edit_modle").find(".contract_warehouse_leaser_uuid").val();
   var contract_warehouse_start_datetime = obj.parents("#contract_warehouse_edit_modle").find(".contract_warehouse_start_datetime").val();
   var contract_warehouse_end_datetime = obj.parents("#contract_warehouse_edit_modle").find(".contract_warehouse_end_datetime").val();
+  var contract_warehouse_list = $("#contract_warehouse_edit_attch ul").children("li");
   var contract_warehouse_cluster_list = "";
-  for(var i = 0;i < obj.parents("#contract_warehouse_edit_modle").find(".file_name").length; i++){
-    contract_warehouse_cluster_list += obj.parents("#contract_warehouse_edit_modle").find(".file_name").eq(i).find("img").attr('uuid')+';';
+  for (var i = 0; i < contract_warehouse_list.length; i++) {
+    var contract_sales_dom = contract_warehouse_list[i];
+    var cluster = $(contract_sales_dom).find("a").attr("data-cluster");
+    if (undefined != cluster) {
+     contract_warehouse_cluster_list += cluster + ";"; 
+    }    
   }
   if("" != contract_warehouse_start_datetime) {
     contract_warehouse_start_datetime += " 00:00:00";
@@ -590,7 +597,25 @@ function contract_warehouse_info_modle(obj) {
   }
   contract_warehouse_start_datetime = contract_warehouse_start_datetime.substring(0, contract_warehouse_start_datetime.indexOf(' '));
   contract_warehouse_end_datetime = contract_warehouse_end_datetime.substring(0, contract_warehouse_end_datetime.indexOf(' '));
-  var contract_warehouse_edit_html = 
+  //附件
+  if(0 < contract_warehouse_culster_list.length){
+    var contract_warehouse_file_arr = new Array();
+    contract_warehouse_culster_list = contract_warehouse_culster_list.substring(0, contract_warehouse_culster_list.length - 1).split(';');
+    console.log(contract_warehouse_culster_list)
+    for(var i = 0; i < contract_warehouse_culster_list.length; i++){
+      var cluster_name_data = {
+        "cluster_name":contract_warehouse_culster_list[i]
+      };
+      var contract_warehouse_file_name=ajax_assistant(PROJECT_PATH+"lego/lego_storage?servletName=getFileByClusterName",cluster_name_data, false, true, false);//查询文件集群信息
+      var contract_warehouse_json=JSON.parse(contract_warehouse_file_name.result);
+      console.log(contract_warehouse_json)
+      if(0 != contract_warehouse_file_name.count) {
+        contract_warehouse_file_arr[i] = {"file_name":contract_warehouse_json[0].cluster_name+'.'+contract_warehouse_json[0].suffix};
+      }
+    }
+    contract_warehouse_file_data = contract_warehouse_file_arr;
+  }
+  var contract_warehouse_edit_html =
     '<div class="modal fade custom_modal" tabindex="-1" role="dialog" id="contract_warehouse_info_modle" aria-labelledby="myModalLabel">'+
       '<div class="modal-dialog" role="document">'+
         '<div class="modal-content">'+
@@ -646,26 +671,7 @@ function contract_warehouse_info_modle(obj) {
             '<div class="row contract_warehouse_mt20">'+
               '<div class="col-lg-12">'+
                 '<label for="basic-url">储罐租赁合同附件</label>'+
-                '<div class="panel panel-default">'+
-                  '<div class="panel-body clearfix attch">';
-                    if(0 < contract_warehouse_culster_list.length){
-                      contract_warehouse_culster_list = contract_warehouse_culster_list.substring(0, contract_warehouse_culster_list.length - 1).split(';');
-                      for(var i=0;i<contract_warehouse_culster_list.length;i++) {
-                        var data = {
-                          "cluster_name":contract_warehouse_culster_list[i]
-                        };
-                        var contract_warehouse_file_name = ajax_assistant(PROJECT_PATH+"lego/lego_storage?servletName=getFileByClusterName",data, false, true, false);//查询文件集群信息
-                        var contract_warehouse_json = JSON.parse(contract_warehouse_file_name.result);
-                        if(0 != contract_warehouse_file_name.count) {
-                          contract_warehouse_edit_html += 
-                            '<div class=" pull-left file_name has-feedback contract_warehouse_ml15">'+
-                              '<img uuid="'+contract_warehouse_json[0].cluster_name+'" src="'+PROJECT_PATH+'upload/'+contract_warehouse_json[0].cluster_name+'.'+contract_warehouse_json[0].suffix+'" url="'+PROJECT_PATH+'upload/'+contract_warehouse_json[0].cluster_name+'.'+contract_warehouse_json[0].suffix+'"  width="60" height="60" class="img-rounded">'+
-                            '</div>';
-                        }
-                      }
-                    }
-                    contract_warehouse_edit_html += 
-                  '</div>'+
+                '<div class="panel panel-default" id = "contract_sales_info_attch">'+
                 '</div>'+
               '</div>'+
             '</div>'+
@@ -677,6 +683,8 @@ function contract_warehouse_info_modle(obj) {
       '</div>'+
     '</div>';
     $("body").append(contract_warehouse_edit_html);
+    upload_attachment_preview_output("#contract_sales_info_attch", contract_warehouse_file_data);
+    upload_attachment_btn_event_bind("#contract_sales_info_attch");
     $("#contract_warehouse_info_modle").modal("show");
     $("#contract_warehouse_info_modle").on("hidden.bs.modal", function (e) {
       $(this).remove();
