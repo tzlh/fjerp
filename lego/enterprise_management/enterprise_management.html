@@ -62,7 +62,11 @@ $(document).ready(function() {
     var uuid = $(this).data("uuid");
     enterprise_management_get_certificate(uuid);
     enterprise_management_edit_modal(uuid);
-  });
+    enterprise_management_search_condition = {};
+    enterprise_management_server_data_cover();
+    enterprise_management_fill_variable_data();
+    enterprise_management_show_or_hide();
+ });
   // 修改企业信息
   $(document).on("click", "#enterprise_management_edit_modal .edit_btn", function() {
     var enterprise_management_edit_uuid = $(this);
@@ -72,7 +76,11 @@ $(document).ready(function() {
   $(document).on("click", "#enterprise_management_detail_info", function() {
     var uuid = $(this).data("uuid");
     enterprise_management_get_certificate(uuid);
-    enterprise_management_detail_modal(uuid);
+    enterprise_management_detail_modal();
+    enterprise_management_search_condition = {};
+    enterprise_management_server_data_cover();
+    enterprise_management_fill_variable_data();
+    enterprise_management_show_or_hide();
   });
   // 删除企业信息模态框
   $(document).on("click", "#enterprise_management_delete_info", function() {
@@ -202,7 +210,7 @@ $(document).ready(function() {
                   <h4 class="panel-title">搜索结果</h4>
               </div>
               <div id = "collapsetwo" class = "panel-collapse collapse in" role = "tabpanel" aria-labelledby = "headingOne">
-                  <div class = "panel-body">
+                  <div class = "panel-body" style="padding-bottom: 0;">
                     <table class = "table tablea" id = "enterprise_management_list">
                       <thead>
                         <tr>
@@ -254,7 +262,7 @@ $(document).ready(function() {
                       </tbody>
                     </table>
                     <div id = "enterprise_management_pages">
-                      <!--<nav aria-label="Page navigation" style="text-align: right;">
+                      <nav aria-label="Page navigation" style="text-align: right;">
                         <ul class="pagination">
                            <li>
                               <a href="#" aria-label="Previous">
@@ -268,7 +276,7 @@ $(document).ready(function() {
                               </a>
                             </li>
                         </ul>
-                      </nav>-->
+                      </nav>
                     </div>
                   </div>
               </div>
