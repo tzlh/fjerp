@@ -39,6 +39,11 @@ function upload_attachment_edit_output(output_id, file_data) {
     '  <div class = "upload_attachment_btn upload_attachment_btn_right"><span class = "glyphicon glyphicon-chevron-right"></span></div>'+
     '</div>';
     $(output_id).html(content);
+    // 绑定新页面打开附件事件
+    $(output_id).find(".upload_attachment_file").unbind("click");
+    $(output_id).find(".upload_attachment_file").click(function() {
+      window.open($(this).attr("data-url"));
+    });
     // 绑定删除附件按钮事件
     $(output_id).find(".upload_attachment_file button").unbind("click");
     $(output_id).find(".upload_attachment_file button").click(function() {
