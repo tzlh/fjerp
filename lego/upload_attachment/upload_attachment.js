@@ -11,9 +11,10 @@ function upload_attachment_edit_output(output_id, file_data) {
   var data = "";
   if (null != file_data) {
     for (var i = 0; i < file_data.length; i++) {
+      var data_cluster = file_data[i].file_name.substring(0, file_data[i].file_name.indexOf("."));
       var img_src = get_display_imgage_src(file_data[i].file_name);
       data += '<li>';
-      data += '  <a class = "upload_attachment_file" href = "#" data-url = "' + PROJECT_PATH + 'upload/' + file_data[i].file_name + '">';
+      data += '  <a class = "upload_attachment_file" href = "#" data-cluster = "' + data_cluster + '" data-url = "' + PROJECT_PATH + 'upload/' + file_data[i].file_name + '">';
       data += '    <button class="btn btn-danger"><span class="glyphicon glyphicon-remove  btn-danger"></span></button>';
       data += '    <img src = "' + img_src + '">';
       data += '  </a>';
@@ -43,6 +44,7 @@ function upload_attachment_edit_output(output_id, file_data) {
     $(output_id).find(".upload_attachment_file button").click(function() {
       $(this).parent().parent().remove();
     });
+    upload_attachment_btn_event_bind(output_id);
 }
 
 /**
