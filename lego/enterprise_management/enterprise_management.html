@@ -65,12 +65,14 @@ $(document).ready(function() {
   });
   // 修改企业信息
   $(document).on("click", "#enterprise_management_edit_modal .edit_btn", function() {
-    var uuid = $(this).data("uuid");
-    enterprise_management_edit_info(uuid);
+    var enterprise_management_edit_uuid = $(this);
+    enterprise_management_edit_info(enterprise_management_edit_uuid);
   });
   // 企业详情模态框
   $(document).on("click", "#enterprise_management_detail_info", function() {
-    enterprise_management_detail_modal();
+    var uuid = $(this).data("uuid");
+    enterprise_management_get_certificate(uuid);
+    enterprise_management_detail_modal(uuid);
   });
   // 删除企业信息模态框
   $(document).on("click", "#enterprise_management_delete_info", function() {

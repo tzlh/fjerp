@@ -27,6 +27,85 @@ var current_company_detail_data = {
   "uuid": "11111111111",
   "type": "1"
 };
+/**
+ * 附件
+ */
+var invoice_file_data = [
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"}
+]
+
+var institutional_file_data = [
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"}
+]
+
+var hazardous_file_data = [
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"}
+]
+
+var idcard_file_data = [
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"}
+]
+
+var account_file_data = [
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"}
+]
+
+var safety_file_data = [
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"}
+]
+
+var business_file_data = [
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
+  {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"}
+]
 
 /**
  * 分页变量
@@ -199,24 +278,12 @@ function enterprise_management_server_data_cover() {
         enterprise_management_get_invoice_param_data["parent_uuid"] = uuid;
         var enterprise_management_get_invoice = ajax_assistant(enterprise_management_get_invoice_url, enterprise_management_get_invoice_param_data, false, true, false);
         console.log(enterprise_management_get_invoice);
-        var result_invoice = "";
-        var tax_identification_number = "";
-        var address = "";
-        var telephone_number = "";
-        var bank_name = "";
-        var account = "";
         if (1 == enterprise_management_get_invoice.status) {
           result_invoice = JSON.parse(enterprise_management_get_invoice.result);
           console.log(result_invoice);
-          tax_identification_number = result_invoice[0].tax_identification_number;
-          address = result_invoice[0].address;
-          telephone_number = result_invoice[0].telephone_number;
-          bank_name = result_invoice[0].bank_name;
-          account = result_invoice[0].account;
         }
         var establish_datetime = result[i].establish_datetime.substring(0,result[i].establish_datetime.indexOf(" "));
-        
-        company_data_arr[i] = {"name": result[i].name,"short_name": result[i].short_name,"registered_capital": result[i].registered_capital,"establish_datetime": establish_datetime,"tax_identification_number": tax_identification_number,"bank_name": bank_name,"account": account,"telephone_number": telephone_number,"address": address,"uuid": result[i].uuid};
+        company_data_arr[i] = {"name": result[i].name,"short_name": result[i].short_name,"registered_capital": result[i].registered_capital,"establish_datetime": establish_datetime,"tax_identification_number": result_invoice[0].tax_identification_number,"bank_name": result_invoice[0].bank_name,"account": result_invoice[0].account,"telephone_number": result_invoice[0].telephone_number,"address": result_invoice[0].address,"uuid": result[i].uuid};
       }
       company_data["data"] = company_data_arr;
       console.log(company_data);
@@ -535,19 +602,12 @@ function enterprise_management_add_modal() {
     '</div>';
   $("body").append(add_modal);
   upload_attachment_edit_output("#enterprise_management_invoice_attch");
-  upload_attachment_btn_event_bind("#enterprise_management_invoice_attch");
   upload_attachment_edit_output("#enterprise_management_institutional_attch");
-  upload_attachment_btn_event_bind("#enterprise_management_institutional_attch");
   upload_attachment_edit_output("#enterprise_management_hazardous_attch");
-  upload_attachment_btn_event_bind("#enterprise_management_hazardous_attch");
   upload_attachment_edit_output("#enterprise_management_idcard_attch");
-  upload_attachment_btn_event_bind("#enterprise_management_idcard_attch");
   upload_attachment_edit_output("#enterprise_management_account_attch");
-  upload_attachment_btn_event_bind("#enterprise_management_account_attch");
   upload_attachment_edit_output("#enterprise_management_safety_attch");
-  upload_attachment_btn_event_bind("#enterprise_management_safety_attch");
   upload_attachment_edit_output("#enterprise_management_business_attch");
-  upload_attachment_btn_event_bind("#enterprise_management_business_attch");
   $("#enterprise_management_add_modal").modal("show");
   $("#enterprise_management_add_modal").on("hidden.bs.modal", function (e) {
     $(this).remove();
@@ -835,6 +895,14 @@ function enterprise_management_get_certificate(uuid) {
   if (1 == enterprise_management_get_enterprise.status) {
     var result = JSON.parse(enterprise_management_get_enterprise.result);
     var parent_uuid = result[0].uuid;
+    var establish_datetime = result[0].establish_datetime.substring(0,result[0].establish_datetime.indexOf(" "));
+    var invoice_result = "";
+    var institutional_result = "";
+    var hazardous_result = "";
+    var idcard_result = "";
+    var account_result = "";
+    var safety_result = "";
+    var bussiness_result = "";
     //获取开票信息
     var enterprise_management_get_invoice_url = PROJECT_PATH + "lego/lego_certificate?servletName=getInvoiceInformation";
     var enterprise_management_get_invoice_param_data = {};
@@ -842,33 +910,274 @@ function enterprise_management_get_certificate(uuid) {
     var enterprise_management_get_invoice = ajax_assistant(enterprise_management_get_invoice_url, enterprise_management_get_invoice_param_data, false, true, false);
     console.log(enterprise_management_get_invoice);
     if (1 == enterprise_management_get_invoice.status) {
-      var invoice_result = JSON.parse(enterprise_management_get_invoice.result);
+      invoice_result = JSON.parse(enterprise_management_get_invoice.result);
       console.log(invoice_result);
       var invoice_cluster_list  = invoice_result[0].cluster_list;
       if (null != invoice_cluster_list){
         var invoice_cluster  = invoice_cluster_list.substring(0,invoice_cluster_list.lastIndexOf(";")).split(";");
         console.log(invoice_cluster);
         var invoice_file = "";
+        var invoice_file_arr = new Array();
         for (var i = 0; i < invoice_cluster.length; i++) {
           var enterprise_management_get_invoice_file_url = PROJECT_PATH + "lego/lego_storage?servletName=getFileByClusterName";
           var enterprise_management_get_invoice_file_param_data = {};
           enterprise_management_get_invoice_file_param_data["cluster_name"] = invoice_cluster[i];
           var enterprise_management_get_invoice_file = ajax_assistant(enterprise_management_get_invoice_file_url, enterprise_management_get_invoice_file_param_data, false, true, false);
           console.log(enterprise_management_get_invoice_file);
-          var invoice_file_arr = new Array();
           if (1 == enterprise_management_get_invoice_file.status) {
             var invoice_file_result = JSON.parse(enterprise_management_get_invoice_file.result);
             console.log(invoice_file_result);
+            var invoice_cluster_name = invoice_file_result[0].cluster_name;
+            var invoice_suffix = invoice_file_result[0].suffix;
+            var file_name = invoice_cluster_name + '.' + invoice_suffix;
+            invoice_file_arr[i] = {"file_name": file_name};
           }
         }
+        invoice_file_data = invoice_file_arr;
+        console.log(invoice_file_data);
       } else {
-        
+        invoice_file_data = [];
       }
-      
-      
+    }
+    //获取机构信用代码证
+    var enterprise_management_get_institutional_url = PROJECT_PATH + "lego/lego_certificate?servletName=getInstitutionalCreditCode";
+    var enterprise_management_get_institutional_param_data = {};
+    enterprise_management_get_institutional_param_data["parent_uuid"] = parent_uuid;
+    var enterprise_management_get_institutional = ajax_assistant(enterprise_management_get_institutional_url, enterprise_management_get_institutional_param_data, false, true, false);
+    console.log(enterprise_management_get_institutional);
+    if (1 == enterprise_management_get_institutional.status) {
+      institutional_result = JSON.parse(enterprise_management_get_institutional.result);
+      console.log(institutional_result);
+      var institutional_cluster_list  = institutional_result[0].cluster_list;
+      if (null != institutional_cluster_list){
+        var institutional_cluster  = institutional_cluster_list.substring(0,institutional_cluster_list.lastIndexOf(";")).split(";");
+        console.log(institutional_cluster);
+        var institutional_file = "";
+        var institutional_file_arr = new Array();
+        for (var i = 0; i < institutional_cluster.length; i++) {
+          var enterprise_management_get_institutional_file_url = PROJECT_PATH + "lego/lego_storage?servletName=getFileByClusterName";
+          var enterprise_management_get_institutional_file_param_data = {};
+          enterprise_management_get_institutional_file_param_data["cluster_name"] = institutional_cluster[i];
+          var enterprise_management_get_institutional_file = ajax_assistant(enterprise_management_get_institutional_file_url, enterprise_management_get_institutional_file_param_data, false, true, false);
+          console.log(enterprise_management_get_institutional_file);
+          if (1 == enterprise_management_get_institutional_file.status) {
+            var institutional_file_result = JSON.parse(enterprise_management_get_institutional_file.result);
+            console.log(institutional_file_result);
+            var institutional_cluster_name = institutional_file_result[0].cluster_name;
+            var institutional_suffix = institutional_file_result[0].suffix;
+            var file_name = institutional_cluster_name + '.' + institutional_suffix;
+            institutional_file_arr[i] = {"file_name": file_name};
+          }
+        }
+        institutional_file_data = institutional_file_arr;
+        console.log(institutional_file_data);
+      } else {
+        institutional_file_data = [];
+      }
+    }
+    //获取危化品经营许可证
+    var enterprise_management_get_hazardous_url = PROJECT_PATH + "lego/lego_certificate?servletName=getHazardousChemicalsBusinessLicense";
+    var enterprise_management_get_hazardous_param_data = {};
+    enterprise_management_get_hazardous_param_data["parent_uuid"] = parent_uuid;
+    var enterprise_management_get_hazardous = ajax_assistant(enterprise_management_get_hazardous_url, enterprise_management_get_hazardous_param_data, false, true, false);
+    console.log(enterprise_management_get_hazardous);
+    if (1 == enterprise_management_get_hazardous.status) {
+      hazardous_result = JSON.parse(enterprise_management_get_hazardous.result);
+      console.log(hazardous_result);
+      var hazardous_cluster_list  = hazardous_result[0].cluster_list;
+      if (null != hazardous_cluster_list){
+        var hazardous_cluster  = hazardous_cluster_list.substring(0,hazardous_cluster_list.lastIndexOf(";")).split(";");
+        console.log(hazardous_cluster);
+        var hazardous_file = "";
+        var hazardous_file_arr = new Array();
+        for (var i = 0; i < hazardous_cluster.length; i++) {
+          var enterprise_management_get_hazardous_file_url = PROJECT_PATH + "lego/lego_storage?servletName=getFileByClusterName";
+          var enterprise_management_get_hazardous_file_param_data = {};
+          enterprise_management_get_hazardous_file_param_data["cluster_name"] = hazardous_cluster[i];
+          var enterprise_management_get_hazardous_file = ajax_assistant(enterprise_management_get_hazardous_file_url, enterprise_management_get_hazardous_file_param_data, false, true, false);
+          console.log(enterprise_management_get_hazardous_file);
+          if (1 == enterprise_management_get_hazardous_file.status) {
+            var hazardous_file_result = JSON.parse(enterprise_management_get_hazardous_file.result);
+            console.log(hazardous_file_result);
+            var hazardous_cluster_name = hazardous_file_result[0].cluster_name;
+            var hazardous_suffix = hazardous_file_result[0].suffix;
+            var file_name = hazardous_cluster_name + '.' + hazardous_suffix;
+            hazardous_file_arr[i] = {"file_name": file_name};
+          }
+        }
+        hazardous_file_data = hazardous_file_arr;
+        console.log(hazardous_file_data);
+      } else {
+        hazardous_file_data = [];
+      }
+    }
+    //获取法人身份证
+    var enterprise_management_get_idcard_url = PROJECT_PATH + "lego/lego_certificate?servletName=getIdCard";
+    var enterprise_management_get_idcard_param_data = {};
+    enterprise_management_get_idcard_param_data["parent_uuid"] = parent_uuid;
+    var enterprise_management_get_idcard = ajax_assistant(enterprise_management_get_idcard_url, enterprise_management_get_idcard_param_data, false, true, false);
+    console.log(enterprise_management_get_idcard);
+    if (1 == enterprise_management_get_idcard.status) {
+      idcard_result = JSON.parse(enterprise_management_get_idcard.result);
+      console.log(idcard_result);
+      var idcard_cluster_list  = idcard_result[0].cluster_list;
+      if (null != idcard_cluster_list){
+        var idcard_cluster  = idcard_cluster_list.substring(0,idcard_cluster_list.lastIndexOf(";")).split(";");
+        console.log(idcard_cluster);
+        var idcard_file = "";
+        var idcard_file_arr = new Array();
+        for (var i = 0; i < idcard_cluster.length; i++) {
+          var enterprise_management_get_idcard_file_url = PROJECT_PATH + "lego/lego_storage?servletName=getFileByClusterName";
+          var enterprise_management_get_idcard_file_param_data = {};
+          enterprise_management_get_idcard_file_param_data["cluster_name"] = idcard_cluster[i];
+          var enterprise_management_get_idcard_file = ajax_assistant(enterprise_management_get_idcard_file_url, enterprise_management_get_idcard_file_param_data, false, true, false);
+          console.log(enterprise_management_get_idcard_file);
+          if (1 == enterprise_management_get_idcard_file.status) {
+            var idcard_file_result = JSON.parse(enterprise_management_get_idcard_file.result);
+            console.log(idcard_file_result);
+            var idcard_cluster_name = idcard_file_result[0].cluster_name;
+            var idcard_suffix = idcard_file_result[0].suffix;
+            var file_name = idcard_cluster_name + '.' + idcard_suffix;
+            idcard_file_arr[i] = {"file_name": file_name};
+          }
+        }
+        idcard_file_data = idcard_file_arr;
+        console.log(idcard_file_data);
+      } else {
+        idcard_file_data = [];
+      }
+    }
+    //获取开户许可证
+    var enterprise_management_get_account_url = PROJECT_PATH + "lego/lego_certificate?servletName=getAccountOpeningPermit";
+    var enterprise_management_get_account_param_data = {};
+    enterprise_management_get_account_param_data["parent_uuid"] = parent_uuid;
+    var enterprise_management_get_account = ajax_assistant(enterprise_management_get_account_url, enterprise_management_get_account_param_data, false, true, false);
+    console.log(enterprise_management_get_account);
+    if (1 == enterprise_management_get_account.status) {
+      account_result = JSON.parse(enterprise_management_get_account.result);
+      console.log(account_result);
+      var account_cluster_list  = account_result[0].cluster_list;
+      if (null != account_cluster_list){
+        var account_cluster  = account_cluster_list.substring(0,account_cluster_list.lastIndexOf(";")).split(";");
+        console.log(account_cluster);
+        var account_file = "";
+        var account_file_arr = new Array();
+        for (var i = 0; i < account_cluster.length; i++) {
+          var enterprise_management_get_account_file_url = PROJECT_PATH + "lego/lego_storage?servletName=getFileByClusterName";
+          var enterprise_management_get_account_file_param_data = {};
+          enterprise_management_get_account_file_param_data["cluster_name"] = account_cluster[i];
+          var enterprise_management_get_account_file = ajax_assistant(enterprise_management_get_account_file_url, enterprise_management_get_account_file_param_data, false, true, false);
+          console.log(enterprise_management_get_account_file);
+          if (1 == enterprise_management_get_account_file.status) {
+            var account_file_result = JSON.parse(enterprise_management_get_account_file.result);
+            console.log(account_file_result);
+            var account_cluster_name = account_file_result[0].cluster_name;
+            var account_suffix = account_file_result[0].suffix;
+            var file_name = account_cluster_name + '.' + account_suffix;
+            account_file_arr[i] = {"file_name": file_name};
+          }
+        }
+        account_file_data = account_file_arr;
+        console.log(account_file_data);
+      } else {
+        account_file_data = [];
+      }
+    }
+    //获取安全生产许可证
+    var enterprise_management_get_safety_url = PROJECT_PATH + "lego/lego_certificate?servletName=getSafetyProductionLicense";
+    var enterprise_management_get_safety_param_data = {};
+    enterprise_management_get_safety_param_data["parent_uuid"] = parent_uuid;
+    var enterprise_management_get_safety = ajax_assistant(enterprise_management_get_safety_url, enterprise_management_get_safety_param_data, false, true, false);
+    console.log(enterprise_management_get_safety);
+    if (1 == enterprise_management_get_safety.status) {
+      safety_result = JSON.parse(enterprise_management_get_safety.result);
+      console.log(safety_result);
+      var safety_cluster_list  = safety_result[0].cluster_list;
+      if (null != safety_cluster_list){
+        var safety_cluster  = safety_cluster_list.substring(0,safety_cluster_list.lastIndexOf(";")).split(";");
+        console.log(safety_cluster);
+        var safety_file = "";
+        var safety_file_arr = new Array();
+        for (var i = 0; i < safety_cluster.length; i++) {
+          var enterprise_management_get_safety_file_url = PROJECT_PATH + "lego/lego_storage?servletName=getFileByClusterName";
+          var enterprise_management_get_safety_file_param_data = {};
+          enterprise_management_get_safety_file_param_data["cluster_name"] = safety_cluster[i];
+          var enterprise_management_get_safety_file = ajax_assistant(enterprise_management_get_safety_file_url, enterprise_management_get_safety_file_param_data, false, true, false);
+          console.log(enterprise_management_get_safety_file);
+          if (1 == enterprise_management_get_safety_file.status) {
+            var safety_file_result = JSON.parse(enterprise_management_get_safety_file.result);
+            console.log(safety_file_result);
+            var safety_cluster_name = safety_file_result[0].cluster_name;
+            var safety_suffix = safety_file_result[0].suffix;
+            var file_name = safety_cluster_name + '.' + safety_suffix;
+            safety_file_arr[i] = {"file_name": file_name};
+          }
+        }
+        safety_file_data = safety_file_arr;
+        console.log(safety_file_data);
+      } else {
+        safety_file_data = [];
+      }
+    }
+    //获取营业执照
+    var enterprise_management_get_business_url = PROJECT_PATH + "lego/lego_certificate?servletName=getBusinessLicense";
+    var enterprise_management_get_business_param_data = {};
+    enterprise_management_get_business_param_data["parent_uuid"] = parent_uuid;
+    var enterprise_management_get_business = ajax_assistant(enterprise_management_get_business_url, enterprise_management_get_business_param_data, false, true, false);
+    console.log(enterprise_management_get_business);
+    if (1 == enterprise_management_get_business.status) {
+      business_result = JSON.parse(enterprise_management_get_business.result);
+      console.log(business_result);
+      var business_cluster_list  = business_result[0].cluster_list;
+      if (null != business_cluster_list){
+        var business_cluster  = business_cluster_list.substring(0,business_cluster_list.lastIndexOf(";")).split(";");
+        console.log(business_cluster);
+        var business_file = "";
+        var business_file_arr = new Array();
+        for (var i = 0; i < business_cluster.length; i++) {
+          var enterprise_management_get_business_file_url = PROJECT_PATH + "lego/lego_storage?servletName=getFileByClusterName";
+          var enterprise_management_get_business_file_param_data = {};
+          enterprise_management_get_business_file_param_data["cluster_name"] = business_cluster[i];
+          var enterprise_management_get_business_file = ajax_assistant(enterprise_management_get_business_file_url, enterprise_management_get_business_file_param_data, false, true, false);
+          console.log(enterprise_management_get_business_file);
+          if (1 == enterprise_management_get_business_file.status) {
+            var business_file_result = JSON.parse(enterprise_management_get_business_file.result);
+            console.log(business_file_result);
+            var business_cluster_name = business_file_result[0].cluster_name;
+            var business_suffix = business_file_result[0].suffix;
+            var file_name = business_cluster_name + '.' + business_suffix;
+            business_file_arr[i] = {"file_name": file_name};
+          }
+        }
+        business_file_data = business_file_arr;
+        console.log(business_file_data);
+      } else {
+        business_file_data = [];
+      }
+    }
+    current_company_detail_data = {
+      "name": result[0].name,
+      "short_name": result[0].short_name,
+      "registered_capital": result[0].registered_capital,
+      "establish_datetime": establish_datetime,
+      "tax_identification_number": invoice_result[0].tax_identification_number,
+      "bank_name": invoice_result[0].bank_name,
+      "account": invoice_result[0].account,
+      "telephone_number": invoice_result[0].telephone_number,
+      "address": invoice_result[0].address,
+      "uuid": result[0].uuid,
+      "type": result[0].type,
+      "invoice_uuid": invoice_result[0].uuid,
+      "institutional_uuid": institutional_result[0].uuid,
+      "hazardous_uuid": hazardous_result[0].uuid,
+      "idcard_uuid": idcard_result[0].uuid,
+      "account_uuid": account_result[0].uuid,
+      "safety_uuid": safety_result[0].uuid,
+      "business_result": business_result[0].uuid
     }
   }
 }
+
 /**
  * 修改企业模态框
  */
@@ -888,11 +1197,11 @@ function enterprise_management_edit_modal(uuid) {
                 '<div class="row">'+
                   '<div class="form-group col-md-6">'+
                     '<label>企业名称</label>'+
-                    '<input type="text" class="form-control enterprise_name" value = "腾智联合互联网科技有限公司">'+
+                    '<input type="text" class="form-control enterprise_name" value = "' + current_company_detail_data.name + '">'+
                   '</div>'+
                   '<div class="form-group col-md-3">'+
                     '<label>企业简称</label>'+
-                    '<input type="text" class="form-control enterprise_short_name" value = "腾智">'+
+                    '<input type="text" class="form-control enterprise_short_name" value = "' + current_company_detail_data.short_name + '">'+
                   '</div>'+
                   '<div class="form-group col-md-3">'+
                     '<label>企业类型</label>'+
@@ -907,12 +1216,12 @@ function enterprise_management_edit_modal(uuid) {
                 '<div class="row">'+
                   '<div class="form-group col-md-6">'+
                     '<label>注册资金(万元)</label>'+
-                    '<input type="text" class="form-control registered_capital" value = "1000000">'+
+                    '<input type="text" class="form-control registered_capital" value = "' + current_company_detail_data.registered_capital + '">'+
                   '</div>'+
                   '<div class="col-md-6">'+
                     '<div class="form-group has-feedback">'+
                       '<label>成立时间</label>'+
-                      '<input type="text" class="form-control widget_datepicker establish_datetime" value = "2017-05-17">'+
+                      '<input type="text" class="form-control widget_datepicker establish_datetime" value = "' + current_company_detail_data.establish_datetime + '">'+
                       '<span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>'+
                     '</div>'+
                   '</div>'+
@@ -925,27 +1234,27 @@ function enterprise_management_edit_modal(uuid) {
                 '<div class="row">'+
                   '<div class="form-group col-md-6">'+
                     '<label>纳税识别号</label>'+
-                    '<input type="text" class="form-control tax_identification_number" value = "00000000000000000">'+
+                    '<input type="text" class="form-control tax_identification_number" value = "' + current_company_detail_data.tax_identification_number + '">'+
                   '</div>'+
                   '<div class="form-group col-md-6">'+
                     '<label>开户银行</label>'+
-                    '<input type="text" class="form-control bank_name" value = "山东建设银行历下支行">'+
+                    '<input type="text" class="form-control bank_name" value = "' + current_company_detail_data.bank_name + '">'+
                   '</div>'+
                 '</div>'+
                 '<div class="row">'+
                   '<div class="form-group col-md-6">'+
                     '<label>银行账号</label>'+
-                    '<input type="text" class="form-control account" value = "111111111111">'+
+                    '<input type="text" class="form-control account" value = "' + current_company_detail_data.account + '">'+
                   '</div>'+
                   '<div class="form-group col-md-6">'+
                     '<label>联系电话</label>'+
-                    '<input type="text" class="form-control telephone_number" value = "111111111">'+
+                    '<input type="text" class="form-control telephone_number" value = "' + current_company_detail_data.telephone_number + '">'+
                   '</div>'+
                 '</div>'+
                 '<div class="row">'+
                   '<div class="form-group col-md-12">'+
                     '<label>地址</label>'+
-                    '<input type="text" class="form-control address" value = "山东省济南市历下区">'+
+                    '<input type="text" class="form-control address" value = "' + current_company_detail_data.address + '">'+
                   '</div>'+
                 '</div>'+
               '<div class="row">'+
@@ -1102,7 +1411,7 @@ function enterprise_management_edit_modal(uuid) {
               '</div>'+
             '</div>'+
             '<div class="modal-footer">'+
-              '<button type="button" class="btn btn-warning edit_btn">修改</button>'+
+              '<button type="button" class="btn btn-warning edit_btn" data-uuid = "' + uuid + '" data-invoice_uuid = "' + current_company_detail_data.invoice_uuid + '" data-institutional_uuid = "' + current_company_detail_data.institutional_uuid + '"  data-hazardous_uuid = "' + current_company_detail_data.hazardous_uuid + '"  data-idcard_uuid = "' + current_company_detail_data.idcard_uuid + '"  data-account_uuid = "' + current_company_detail_data.account_uuid + '"  data-safety_uuid = "' + current_company_detail_data.safety_uuid + '" data-business_result = "' + current_company_detail_data.business_result + '">修改</button>'+
               '<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>'+
             '</div>'+
           '</div>'+
@@ -1110,20 +1419,13 @@ function enterprise_management_edit_modal(uuid) {
       '</div>'+
     '</div>';
   $("body").append(edit_modal);
-  upload_attachment_edit_output("#enterprise_management_edit_invoice_attch");
-  upload_attachment_btn_event_bind("#enterprise_management_edit_invoice_attch");
-  upload_attachment_edit_output("#enterprise_management_edit_institutional_attch");
-  upload_attachment_btn_event_bind("#enterprise_management_edit_institutional_attch");
-  upload_attachment_edit_output("#enterprise_management_edit_hazardous_attch");
-  upload_attachment_btn_event_bind("#enterprise_management_edit_hazardous_attch");
-  upload_attachment_edit_output("#enterprise_management_edit_idcard_attch");
-  upload_attachment_btn_event_bind("#enterprise_management_edit_idcard_attch");
-  upload_attachment_edit_output("#enterprise_management_edit_account_attch");
-  upload_attachment_btn_event_bind("#enterprise_management_edit_account_attch");
-  upload_attachment_edit_output("#enterprise_management_edit_safety_attch");
-  upload_attachment_btn_event_bind("#enterprise_management_edit_safety_attch");
-  upload_attachment_edit_output("#enterprise_management_edit_business_attch");
-  upload_attachment_btn_event_bind("#enterprise_management_edit_business_attch");
+  upload_attachment_edit_output("#enterprise_management_edit_invoice_attch", invoice_file_data);
+  upload_attachment_edit_output("#enterprise_management_edit_institutional_attch", institutional_file_data);
+  upload_attachment_edit_output("#enterprise_management_edit_hazardous_attch", hazardous_file_data);
+  upload_attachment_edit_output("#enterprise_management_edit_idcard_attch", idcard_file_data);
+  upload_attachment_edit_output("#enterprise_management_edit_account_attch", account_file_data);
+  upload_attachment_edit_output("#enterprise_management_edit_safety_attch", safety_file_data);
+  upload_attachment_edit_output("#enterprise_management_edit_business_attch", business_file_data);
   $("#enterprise_management_edit_modal").modal("show");
   $("#enterprise_management_edit_modal").on("hidden.bs.modal", function (e) {
     $(this).remove();
@@ -1142,7 +1444,15 @@ function enterprise_management_edit_modal(uuid) {
 /**
  * 修改企业信息
  */
-function enterprise_management_edit_info(uuid) {
+function enterprise_management_edit_info(obj) {
+  var uuid = obj.data("uuid");
+  var invoice_uuid = obj.data("invoice_uuid");
+  var institutional_uuid = obj.data("institutional_uuid");
+  var hazardous_uuid = obj.data("hazardous_uuid");
+  var idcard_uuid = obj.data("idcard_uuid");
+  var account_uuid = obj.data("account_uuid");
+  var safety_uuid = obj.data("safety_uuid");
+  var business_uuid = obj.data("business_result");
   var enterprise_name = $("#enterprise_management_edit_modal .enterprise_name").val();
   var enterprise_short_name = $("#enterprise_management_edit_modal .enterprise_short_name").val();
   var enterprise_type = $("#enterprise_management_edit_modal .enterprise_type").val();
@@ -1153,10 +1463,16 @@ function enterprise_management_edit_info(uuid) {
   var telephone_number = $("#enterprise_management_edit_modal .telephone_number").val();
   var bank_name = $("#enterprise_management_edit_modal .bank_name").val();
   var account = $("#enterprise_management_edit_modal .account").val();
-  var invoiceCluster_list = "";
-  for(var i = 1;i < $("#enterprise_management_edit_modal .invoice_attch div").length;i++){
-    invoiceCluster_list += $("#enterprise_management_edit_modal .invoice_attch div").eq(i).data("id")+';';
+  var invoice_cluster_li = $("#enterprise_management_edit_invoice_attch ul").children("li");
+  var invoice_cluster_list = "";
+  for (var i = 0; i < invoice_cluster_li.length; i++) {
+    var obj = invoice_cluster_li[i];
+    var invoice_cluster = $(obj).find("a").attr("data-cluster");
+    if (undefined != invoice_cluster) {
+     invoice_cluster_list += invoice_cluster + ";"; 
+    }    
   }
+  debugger;
   if("" == enterprise_name){
     alert("请输入企业名称");
     return;
@@ -1237,11 +1553,166 @@ function enterprise_management_edit_info(uuid) {
       return;
     }
   }
-  
-  if ("腾智联合互联网科技有限公司" == enterprise_name) {
+  var enterprise_management_edit_info_url = PROJECT_PATH + "lego/lego_crm?servletName=modifyEnterpriseAndInvoiceInformation";
+  var enterprise_management_edit_info_param_data = {};
+  enterprise_management_edit_info_param_data["enterprise_uuid"] = uuid;
+  enterprise_management_edit_info_param_data["name"] = enterprise_name;
+  enterprise_management_edit_info_param_data["type"] = enterprise_type;
+  enterprise_management_edit_info_param_data["short_name"] = enterprise_short_name;
+  enterprise_management_edit_info_param_data["registered_capital"] = registered_capital;
+  enterprise_management_edit_info_param_data["establish_datetime"] = establish_datetime;
+  enterprise_management_edit_info_param_data["idColumnValue"] = invoice_uuid;
+  enterprise_management_edit_info_param_data["telephone_number"] = telephone_number;
+  enterprise_management_edit_info_param_data["tax_identification_number"] = tax_identification_number;
+  enterprise_management_edit_info_param_data["address"] = address;
+  enterprise_management_edit_info_param_data["bank_name"] = bank_name;
+  enterprise_management_edit_info_param_data["account"] = account;
+  if ("" != invoice_cluster_list) {
+    enterprise_management_edit_info_param_data["newClusterList"] = invoice_cluster_list;
+  }
+  var enterprise_management_edit_info = ajax_assistant(enterprise_management_edit_info_url, enterprise_management_edit_info_param_data, false, true, false);
+  console.log(enterprise_management_edit_info);
+  //修改机构信用代码证
+  var institutional_cluster_li = $("#enterprise_management_edit_institutional_attch ul").children("li");
+  var institutional_cluster_list = "";
+  for (var i = 0; i < institutional_cluster_li.length; i++) {
+    var obj = institutional_cluster_li[i];
+    var institutional_cluster = $(obj).find("a").attr("data-cluster");
+    if (undefined != institutional_cluster) {
+     institutional_cluster_list += institutional_cluster + ";"; 
+    }    
+  }
+  var enterprise_management_edit_institutional_url = PROJECT_PATH + "lego/lego_certificate?servletName=modifyInstitutionalCreditCode";
+  var enterprise_management_edit_institutional_param_data = {};
+  enterprise_management_edit_institutional_param_data["parent_uuid"] = uuid;
+  enterprise_management_edit_institutional_param_data["enterprise_name"] = enterprise_name;
+  enterprise_management_edit_institutional_param_data["idColumnValue"] = institutional_uuid;
+  if ("" != institutional_cluster_list) {
+    enterprise_management_edit_institutional_param_data["newClusterList"] = institutional_cluster_list;
+  }
+  var enterprise_management_edit_institutional = ajax_assistant(enterprise_management_edit_institutional_url, enterprise_management_edit_institutional_param_data, false, true, false);
+  console.log(enterprise_management_edit_institutional);
+  if (1 != enterprise_management_edit_institutional.status) {
+    alert("机构信用代码证修改失败！")
+  }
+  //修改危化品经营许可证
+  var hazardous_cluster_li = $("#enterprise_management_edit_hazardous_attch ul").children("li");
+  var hazardous_cluster_list = "";
+  for (var i = 0; i < hazardous_cluster_li.length; i++) {
+    var obj = hazardous_cluster_li[i];
+    var hazardous_cluster = $(obj).find("a").attr("data-cluster");
+    if (undefined != hazardous_cluster) {
+     hazardous_cluster_list += hazardous_cluster + ";"; 
+    }    
+  }
+  var enterprise_management_edit_hazardous_url = PROJECT_PATH + "lego/lego_certificate?servletName=modifyHazardousChemicalsBusinessLicense";
+  var enterprise_management_edit_hazardous_param_data = {};
+  enterprise_management_edit_hazardous_param_data["parent_uuid"] = uuid;
+  enterprise_management_edit_hazardous_param_data["enterprise_name"] = enterprise_name;
+  enterprise_management_edit_hazardous_param_data["idColumnValue"] = hazardous_uuid;
+  if ("" != hazardous_cluster_list) {
+    enterprise_management_edit_hazardous_param_data["newClusterList"] = hazardous_cluster_list;
+  }
+  var enterprise_management_edit_hazardous = ajax_assistant(enterprise_management_edit_hazardous_url, enterprise_management_edit_hazardous_param_data, false, true, false);
+  console.log(enterprise_management_edit_hazardous);
+  if (1 != enterprise_management_edit_hazardous.status) {
+    alert("危化品经营许可证修改失败！")
+  }
+  //修改法人身份证
+  var idcard_cluster_li = $("#enterprise_management_edit_idcard_attch ul").children("li");
+  var idcard_cluster_list = "";
+  for (var i = 0; i < idcard_cluster_li.length; i++) {
+    var obj = idcard_cluster_li[i];
+    var idcard_cluster = $(obj).find("a").attr("data-cluster");
+    if (undefined != idcard_cluster) {
+     idcard_cluster_list += idcard_cluster + ";"; 
+    }    
+  }
+  var enterprise_management_edit_idcard_url = PROJECT_PATH + "lego/lego_certificate?servletName=modifyIdCard";
+  var enterprise_management_edit_idcard_param_data = {};
+  enterprise_management_edit_idcard_param_data["parent_uuid"] = uuid;
+  enterprise_management_edit_idcard_param_data["idColumnValue"] = idcard_uuid;
+  if ("" != idcard_cluster_list) {
+    enterprise_management_edit_idcard_param_data["newClusterList"] = idcard_cluster_list;
+  }
+  var enterprise_management_edit_idcard = ajax_assistant(enterprise_management_edit_idcard_url, enterprise_management_edit_idcard_param_data, false, true, false);
+  console.log(enterprise_management_edit_idcard);
+  if (1 != enterprise_management_edit_idcard.status) {
+    alert("法人身份证修改失败！")
+  }
+  //修改开户许可证
+  var account_cluster_li = $("#enterprise_management_edit_account_attch ul").children("li");
+  var account_cluster_list = "";
+  for (var i = 0; i < account_cluster_li.length; i++) {
+    var obj = account_cluster_li[i];
+    var account_cluster = $(obj).find("a").attr("data-cluster");
+    if (undefined != account_cluster) {
+     account_cluster_list += account_cluster + ";"; 
+    }    
+  }
+  var enterprise_management_edit_account_url = PROJECT_PATH + "lego/lego_certificate?servletName=modifyAccountOpeningPermit";
+  var enterprise_management_edit_account_param_data = {};
+  enterprise_management_edit_account_param_data["parent_uuid"] = uuid;
+  enterprise_management_edit_account_param_data["enterprise_name"] = enterprise_name;
+  enterprise_management_edit_account_param_data["idColumnValue"] = account_uuid;
+  if ("" != account_cluster_list) {
+    enterprise_management_edit_account_param_data["newClusterList"] = account_cluster_list;
+  }
+  var enterprise_management_edit_account = ajax_assistant(enterprise_management_edit_account_url, enterprise_management_edit_account_param_data, false, true, false);
+  console.log(enterprise_management_edit_account);
+  if (1 != enterprise_management_edit_account.status) {
+    alert("开户许可证修改失败！")
+  }
+  //修改安全生产许可证
+  var safety_cluster_li = $("#enterprise_management_edit_safety_attch ul").children("li");
+  var safety_cluster_list = "";
+  for (var i = 0; i < safety_cluster_li.length; i++) {
+    var obj = safety_cluster_li[i];
+    var safety_cluster = $(obj).find("a").attr("data-cluster");
+    if (undefined != safety_cluster) {
+     safety_cluster_list += safety_cluster + ";"; 
+    }    
+  }
+  var enterprise_management_edit_safety_url = PROJECT_PATH + "lego/lego_certificate?servletName=modifySafetyProductionLicense";
+  var enterprise_management_edit_safety_param_data = {};
+  enterprise_management_edit_safety_param_data["parent_uuid"] = uuid;
+  enterprise_management_edit_safety_param_data["enterprise_name"] = enterprise_name;
+  enterprise_management_edit_safety_param_data["idColumnValue"] = safety_uuid;
+  if ("" != safety_cluster_list) {
+    enterprise_management_edit_safety_param_data["newClusterList"] = safety_cluster_list;
+  }
+  var enterprise_management_edit_safety = ajax_assistant(enterprise_management_edit_safety_url, enterprise_management_edit_safety_param_data, false, true, false);
+  console.log(enterprise_management_edit_safety);
+  if (1 != enterprise_management_edit_safety.status) {
+    alert("安全生产许可证修改失败！")
+  }
+  //修改营业执照
+  var business_cluster_li = $("#enterprise_management_edit_business_attch ul").children("li");
+  var business_cluster_list = "";
+  for (var i = 0; i < business_cluster_li.length; i++) {
+    var obj = business_cluster_li[i];
+    var business_cluster = $(obj).find("a").attr("data-cluster");
+    if (undefined != business_cluster) {
+     business_cluster_list += business_cluster + ";"; 
+    }    
+  }
+  var enterprise_management_edit_business_url = PROJECT_PATH + "lego/lego_certificate?servletName=modifyBusinessLicense";
+  var enterprise_management_edit_business_param_data = {};
+  enterprise_management_edit_business_param_data["parent_uuid"] = uuid;
+  enterprise_management_edit_business_param_data["enterprise_name"] = enterprise_name;
+  enterprise_management_edit_business_param_data["idColumnValue"] = business_uuid;
+  if ("" != business_cluster_list) {
+    enterprise_management_edit_business_param_data["newClusterList"] = business_cluster_list;
+  }
+  var enterprise_management_edit_business = ajax_assistant(enterprise_management_edit_business_url, enterprise_management_edit_business_param_data, false, true, false);
+  console.log(enterprise_management_edit_business);
+  if (1 != enterprise_management_edit_business.status) {
+    alert("营业执照修改失败！")
+  }
+  if (1 == enterprise_management_edit_institutional.status) {
     $("#enterprise_management_edit_modal").modal("hide");
   } else {
-    alert("修改失败！")
+    alert("企业信息修改失败！")
   }
 }
 
