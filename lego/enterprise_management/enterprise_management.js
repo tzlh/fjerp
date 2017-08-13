@@ -209,25 +209,10 @@ function enterprise_management_server_data_cover() {
           result_invoice = JSON.parse(enterprise_management_get_invoice.result);
           console.log(result_invoice);
           tax_identification_number = result_invoice[0].tax_identification_number;
-          if( null == tax_identification_number){
-            tax_identification_number = "";
-          }
           address = result_invoice[0].address;
-          if( null == address){
-            address = "";
-          }
           telephone_number = result_invoice[0].telephone_number;
-          if( null == telephone_number){
-            telephone_number = "";
-          }
           bank_name = result_invoice[0].bank_name;
-          if( null == bank_name){
-            bank_name = "";
-          }
           account = result_invoice[0].account;
-          if( null == account){
-            account = "";
-          }
         }
         var establish_datetime = result[i].establish_datetime.substring(0,result[i].establish_datetime.indexOf(" "));
         
@@ -457,7 +442,7 @@ function enterprise_management_add_modal() {
                 '<div class="row">'+
                   '<div class="form-group col-md-12">'+
                     '<label>法人身份证</label>'+
-                    '<div class="panel panel-default" id = " id = "enterprise_management_idcard_attch">'+
+                    '<div class="panel panel-default" id = "enterprise_management_idcard_attch">'+
 //                    '<div class="panel-body attch clearfix IdCardAttch">'+
 //                      '<div class="pull-left has-feedback">'+
 //                        '<button class="btn bg-default">'+
@@ -583,17 +568,16 @@ function enterprise_management_add_info() {
   var telephone_number = $("#enterprise_management_add_modal .telephone_number").val();
   var bank_name = $("#enterprise_management_add_modal .bank_name").val();
   var account = $("#enterprise_management_add_modal .account").val();
-  var invoiceCluster_list = $("#enterprise_management_invoice_attch ul").children("li");
-  var cluster_list = "";
-  for (var i = 0; i < invoiceCluster_list.length; i++) {
-    var obj = invoiceCluster_list[i];
-    var cluster = $(obj).find("a").attr("data-cluster");
-    if (undefined != cluster) {
-     cluster_list += cluster + ";"; 
+  var invoice_cluster_li = $("#enterprise_management_invoice_attch ul").children("li");
+  var invoice_cluster_list = "";
+  for (var i = 0; i < invoice_cluster_li.length; i++) {
+    var obj = invoice_cluster_li[i];
+    var invoice_cluster = $(obj).find("a").attr("data-cluster");
+    if (undefined != invoice_cluster) {
+     invoice_cluster_list += invoice_cluster + ";"; 
     }    
   }
-  console.log(cluster_list);
-  console.log(invoiceCluster_list);  
+  console.log(invoice_cluster_list);
   if("" == enterprise_name){
     alert("请输入企业名称");
     return;
@@ -629,31 +613,46 @@ function enterprise_management_add_info() {
     alert("请选择成立时间！");
     return;
   }
-  if("" != tax_identification_number){
+  if("" == tax_identification_number){
+    alert("请输入纳税识别号！");
+    return;
+   } else {
     if(null == tax_identification_number.match(/^[0-9a-zA-Z]{15,18}$/)){
       alert("纳税识别号格式错误！");
       return;
     }
   }
-  if("" != bank_name){
+  if("" == bank_name){
+    alert("请输入开银行！");
+    return;
+  } else {
     if(null == bank_name.match(/^[\u4e00-\u9fffa]{8,64}$/)){
       alert("开户银行格式错误！");
       return;
     }
   }
-  if("" != account){
+  if("" == account){
+    alert("请输入银行账号");
+    return;
+  } else {
     if(null == account.match(/^[0-9]{10,30}$/)){
-      alert("开户银行格式错误！");
+      alert("银行账号格式错误！");
       return;
     }
   }
-  if("" != telephone_number){
+  if("" == telephone_number){
+    alert("请输入联系方式！");
+    return;
+  } else {
     if(null == telephone_number.match(/^[0-9]{6,15}$/)){
       alert("联系方式格式错误！");
       return;
     }
   }
-  if ("" != address) {
+  if ("" == address) {
+    alert("请输入地址！");
+    return;
+  } else {
     if (null == address.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{8,100}$/)) {
       alert("地址格式错误！");
       return;
@@ -666,33 +665,210 @@ function enterprise_management_add_info() {
   enterprise_management_add_info_param_data["short_name"] = enterprise_short_name;
   enterprise_management_add_info_param_data["registered_capital"] = registered_capital;
   enterprise_management_add_info_param_data["establish_datetime"] = establish_datetime;
-  if ("" != telephone_number) {
-    enterprise_management_add_info_param_data["telephone_number"] = telephone_number;
-  }
-  if ("" != tax_identification_number) {
-    enterprise_management_add_info_param_data["tax_identification_number"] = tax_identification_number;
-  }
-  if ("" != address) {
-    enterprise_management_add_info_param_data["address"] = address;
-  }
-  if ("" != bank_name) {
-    enterprise_management_add_info_param_data["bank_name"] = bank_name;
-  }
-  if ("" != account) {
-    enterprise_management_add_info_param_data["account"] = account;
-  }
-  if ("" != cluster_list) {
-    enterprise_management_add_info_param_data["cluster_list"] = cluster_list;
+  enterprise_management_add_info_param_data["telephone_number"] = telephone_number;
+  enterprise_management_add_info_param_data["tax_identification_number"] = tax_identification_number;
+  enterprise_management_add_info_param_data["address"] = address;
+  enterprise_management_add_info_param_data["bank_name"] = bank_name;
+  enterprise_management_add_info_param_data["account"] = account;
+  if ("" != invoice_cluster_list) {
+    enterprise_management_add_info_param_data["cluster_list"] = invoice_cluster_list;
   }
   var enterprise_management_add_info = ajax_assistant(enterprise_management_add_info_url, enterprise_management_add_info_param_data, false, true, false);
   console.log(enterprise_management_add_info);
   if (1 == enterprise_management_add_info.status) {
+    var result = JSON.parse(enterprise_management_add_info.result);
+    var enterprise_name = result[0].name;
+    var parent_uuid = result[0].uuid;
+    //添加机构信用代码证
+    var institutional_cluster_li = $("#enterprise_management_institutional_attch ul").children("li");
+    var institutional_cluster_list = "";
+    for (var i = 0; i < institutional_cluster_li.length; i++) {
+      var obj = institutional_cluster_li[i];
+      var institutional_cluster = $(obj).find("a").attr("data-cluster");
+      if (undefined != institutional_cluster) {
+       institutional_cluster_list += institutional_cluster + ";"; 
+      }    
+    }
+    var enterprise_management_add_institutional_url = PROJECT_PATH + "lego/lego_certificate?servletName=addInstitutionalCreditCode";
+    var enterprise_management_add_institutional_param_data = {};
+    enterprise_management_add_institutional_param_data["enterprise_name"] = enterprise_name;
+    enterprise_management_add_institutional_param_data["parent_uuid"] = parent_uuid;
+    if ("" != institutional_cluster_list) {
+      enterprise_management_add_institutional_param_data["cluster_list"] = institutional_cluster_list;
+    }
+    var enterprise_management_add_institutional = ajax_assistant(enterprise_management_add_institutional_url, enterprise_management_add_institutional_param_data, false, true, false);
+    console.log(enterprise_management_add_institutional);
+    if (1 != enterprise_management_add_institutional.status) {
+      alert("机构信用代码证添加失败！")
+    }
+    //添加危化品经营许可证
+    var hazardous_cluster_li = $("#enterprise_management_hazardous_attch ul").children("li");
+    var hazardous_cluster_list = "";
+    for (var i = 0; i < hazardous_cluster_li.length; i++) {
+      var obj = hazardous_cluster_li[i];
+      var hazardous_cluster = $(obj).find("a").attr("data-cluster");
+      if (undefined != hazardous_cluster) {
+       hazardous_cluster_list += hazardous_cluster + ";"; 
+      }    
+    }
+    var enterprise_management_add_hazardous_url = PROJECT_PATH + "lego/lego_certificate?servletName=addHazardousChemicalsBusinessLicense";
+    var enterprise_management_add_hazardous_param_data = {};
+    enterprise_management_add_hazardous_param_data["enterprise_name"] = enterprise_name;
+    enterprise_management_add_hazardous_param_data["parent_uuid"] = parent_uuid;
+    if ("" != hazardous_cluster_list) {
+      enterprise_management_add_hazardous_param_data["cluster_list"] = hazardous_cluster_list;
+    }
+    var enterprise_management_add_hazardous= ajax_assistant(enterprise_management_add_hazardous_url, enterprise_management_add_hazardous_param_data, false, true, false);
+    console.log(enterprise_management_add_hazardous);
+    if (1 != enterprise_management_add_hazardous.status) {
+      alert("危化品经营许可证添加失败！")
+    }
+    //添加法人身份证
+    var idcard_cluster_li = $("#enterprise_management_idcard_attch ul").children("li");
+    var idcard_cluster_list = "";
+    for (var i = 0; i < idcard_cluster_li.length; i++) {
+      var obj = idcard_cluster_li[i];
+      var idcard_cluster = $(obj).find("a").attr("data-cluster");
+      if (undefined != idcard_cluster) {
+       idcard_cluster_list += idcard_cluster + ";"; 
+      }    
+    }
+    var enterprise_management_add_idcard_url = PROJECT_PATH + "lego/lego_certificate?servletName=addIdCard";
+    var enterprise_management_add_idcard_param_data = {};
+    enterprise_management_add_idcard_param_data["parent_uuid"] = parent_uuid;
+    if ("" != idcard_cluster_list) {
+      enterprise_management_add_idcard_param_data["cluster_list"] = idcard_cluster_list;
+    }
+    var enterprise_management_add_idcard= ajax_assistant(enterprise_management_add_idcard_url, enterprise_management_add_idcard_param_data, false, true, false);
+    console.log(enterprise_management_add_idcard);
+    if (1 != enterprise_management_add_idcard.status) {
+      alert("法人身份证添加失败！")
+    }
+    //添加开户许可证
+    var account_cluster_li = $("#enterprise_management_account_attch ul").children("li");
+    var account_cluster_list = "";
+    for (var i = 0; i < account_cluster_li.length; i++) {
+      var obj = account_cluster_li[i];
+      var account_cluster = $(obj).find("a").attr("data-cluster");
+      if (undefined != account_cluster) {
+       account_cluster_list += account_cluster + ";"; 
+      }    
+    }
+    var enterprise_management_add_account_url = PROJECT_PATH + "lego/lego_certificate?servletName=addAccountOpeningPermit";
+    var enterprise_management_add_account_param_data = {};
+    enterprise_management_add_account_param_data["enterprise_name"] = enterprise_name;
+    enterprise_management_add_account_param_data["parent_uuid"] = parent_uuid;
+    if ("" != account_cluster_list) {
+      enterprise_management_add_account_param_data["cluster_list"] = account_cluster_list;
+    }
+    var enterprise_management_add_account= ajax_assistant(enterprise_management_add_account_url, enterprise_management_add_account_param_data, false, true, false);
+    console.log(enterprise_management_add_account);
+    if (1 != enterprise_management_add_account.status) {
+      alert("开户许可证添加失败！")
+    }
+    //添加安全生产许可证
+    var safety_cluster_li = $("#enterprise_management_safety_attch ul").children("li");
+    var safety_cluster_list = "";
+    for (var i = 0; i < safety_cluster_li.length; i++) {
+      var obj = safety_cluster_li[i];
+      var safety_cluster = $(obj).find("a").attr("data-cluster");
+      if (undefined != safety_cluster) {
+       safety_cluster_list += safety_cluster + ";"; 
+      }    
+    }
+    var enterprise_management_add_safety_url = PROJECT_PATH + "lego/lego_certificate?servletName=addSafetyProductionLicense";
+    var enterprise_management_add_safety_param_data = {};
+    enterprise_management_add_safety_param_data["enterprise_name"] = enterprise_name;
+    enterprise_management_add_safety_param_data["parent_uuid"] = parent_uuid;
+    if ("" != safety_cluster_list) {
+      enterprise_management_add_safety_param_data["cluster_list"] = safety_cluster_list;
+    }
+    var enterprise_management_add_safety= ajax_assistant(enterprise_management_add_safety_url, enterprise_management_add_safety_param_data, false, true, false);
+    console.log(enterprise_management_add_safety);
+    if (1 != enterprise_management_add_safety.status) {
+      alert("安全生产许可证添加失败！")
+    }
+    //添加营业执照
+    var business_cluster_li = $("#enterprise_management_business_attch ul").children("li");
+    var business_cluster_list = "";
+    for (var i = 0; i < business_cluster_li.length; i++) {
+      var obj = business_cluster_li[i];
+      var business_cluster = $(obj).find("a").attr("data-cluster");
+      if (undefined != business_cluster) {
+       business_cluster_list += business_cluster + ";"; 
+      }    
+    }
+    var enterprise_management_add_business_url = PROJECT_PATH + "lego/lego_certificate?servletName=addBusinessLicense";
+    var enterprise_management_add_business_param_data = {};
+    enterprise_management_add_business_param_data["enterprise_name"] = enterprise_name;
+    enterprise_management_add_business_param_data["parent_uuid"] = parent_uuid;
+    if ("" != business_cluster_list) {
+      enterprise_management_add_business_param_data["cluster_list"] = business_cluster_list;
+    }
+    var enterprise_management_add_business= ajax_assistant(enterprise_management_add_business_url, enterprise_management_add_business_param_data, false, true, false);
+    console.log(enterprise_management_add_business);
+    if (1 != enterprise_management_add_business.status) {
+      alert("营业执照添加失败！")
+    }
     $("#enterprise_management_add_modal").modal("hide");
+    current_offset = 0;
+    enterprise_management_search_condition = {};
+    enterprise_management_server_data_cover();
+    enterprise_management_fill_variable_data();
+    enterprise_management_show_or_hide();
   } else {
-    alert("添加失败！")
+    alert("企业信息添加失败！")
   }
 }
 
+/**
+ * 获取企业证件
+ */
+function enterprise_management_get_certificate(uuid) {
+  var enterprise_management_url = PROJECT_PATH + "lego/lego_crm?servletName=getEnterpriseInformation";
+  enterprise_management_search_condition = {};
+  delete enterprise_management_search_condition["rows"];
+  delete enterprise_management_search_condition["offset"];  
+  enterprise_management_search_condition["uuid"] = uuid; 
+  var enterprise_management_get_enterprise = ajax_assistant(enterprise_management_url, enterprise_management_search_condition, false, true, false);
+  console.log(enterprise_management_get_enterprise);
+  if (1 == enterprise_management_get_enterprise.status) {
+    var result = JSON.parse(enterprise_management_get_enterprise.result);
+    var parent_uuid = result[0].uuid;
+    //获取开票信息
+    var enterprise_management_get_invoice_url = PROJECT_PATH + "lego/lego_certificate?servletName=getInvoiceInformation";
+    var enterprise_management_get_invoice_param_data = {};
+    enterprise_management_get_invoice_param_data["parent_uuid"] = parent_uuid;
+    var enterprise_management_get_invoice = ajax_assistant(enterprise_management_get_invoice_url, enterprise_management_get_invoice_param_data, false, true, false);
+    console.log(enterprise_management_get_invoice);
+    if (1 == enterprise_management_get_invoice.status) {
+      var invoice_result = JSON.parse(enterprise_management_get_invoice.result);
+      console.log(invoice_result);
+      var invoice_cluster_list  = invoice_result[0].cluster_list;
+      if (null != invoice_cluster_list){
+        var invoice_cluster  = invoice_cluster_list.substring(0,invoice_cluster_list.lastIndexOf(";")).split(";");
+        console.log(invoice_cluster);
+        var invoice_file = "";
+        for (var i = 0; i < invoice_cluster.length; i++) {
+          var enterprise_management_get_invoice_file_url = PROJECT_PATH + "lego/lego_storage?servletName=getFileByClusterName";
+          var enterprise_management_get_invoice_file_param_data = {};
+          enterprise_management_get_invoice_file_param_data["cluster_name"] = invoice_cluster[i];
+          var enterprise_management_get_invoice_file = ajax_assistant(enterprise_management_get_invoice_file_url, enterprise_management_get_invoice_file_param_data, false, true, false);
+          console.log(enterprise_management_get_invoice_file);
+          var invoice_file_arr = new Array();
+          if (1 == enterprise_management_get_invoice_file.status) {
+            var invoice_file_result = JSON.parse(enterprise_management_get_invoice_file.result);
+            console.log(invoice_file_result);
+          }
+        }
+      } else {
+        
+      }
+      
+      
+    }
+  }
+}
 /**
  * 修改企业模态框
  */
@@ -703,7 +879,7 @@ function enterprise_management_edit_modal(uuid) {
         '<div class="modal-content" style="height: 700px;width:640px;">'+
           '<div class="modal-header bg-primary">'+
             '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
-            '<h4 class="modal-title" id="myModalLabel">添加企业信息</h4>'+
+            '<h4 class="modal-title" id="myModalLabel">修改企业信息</h4>'+
           '</div>'+
           '<div class="modal-body nopadding-bottom" style="overflow-y: scroll;height: 642px;">'+
             '<div class="panel panel-default">'+
@@ -712,11 +888,11 @@ function enterprise_management_edit_modal(uuid) {
                 '<div class="row">'+
                   '<div class="form-group col-md-6">'+
                     '<label>企业名称</label>'+
-                    '<input type="text" class="form-control enterprise_name" value = "' + current_company_detail_data.name + '">'+
+                    '<input type="text" class="form-control enterprise_name" value = "腾智联合互联网科技有限公司">'+
                   '</div>'+
                   '<div class="form-group col-md-3">'+
                     '<label>企业简称</label>'+
-                    '<input type="text" class="form-control enterprise_short_name" value = "' + current_company_detail_data.short_name + '">'+
+                    '<input type="text" class="form-control enterprise_short_name" value = "腾智">'+
                   '</div>'+
                   '<div class="form-group col-md-3">'+
                     '<label>企业类型</label>'+
@@ -731,12 +907,12 @@ function enterprise_management_edit_modal(uuid) {
                 '<div class="row">'+
                   '<div class="form-group col-md-6">'+
                     '<label>注册资金(万元)</label>'+
-                    '<input type="text" class="form-control registered_capital" value = "' + current_company_detail_data.registered_capital + '">'+
+                    '<input type="text" class="form-control registered_capital" value = "1000000">'+
                   '</div>'+
                   '<div class="col-md-6">'+
                     '<div class="form-group has-feedback">'+
                       '<label>成立时间</label>'+
-                      '<input type="text" class="form-control widget_datepicker establish_datetime" value = "' + current_company_detail_data.establish_datetime + '">'+
+                      '<input type="text" class="form-control widget_datepicker establish_datetime" value = "2017-05-17">'+
                       '<span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>'+
                     '</div>'+
                   '</div>'+
@@ -749,47 +925,47 @@ function enterprise_management_edit_modal(uuid) {
                 '<div class="row">'+
                   '<div class="form-group col-md-6">'+
                     '<label>纳税识别号</label>'+
-                    '<input type="text" class="form-control tax_identification_number" value = "' + current_company_detail_data.tax_identification_number + '">'+
+                    '<input type="text" class="form-control tax_identification_number" value = "00000000000000000">'+
                   '</div>'+
                   '<div class="form-group col-md-6">'+
                     '<label>开户银行</label>'+
-                    '<input type="text" class="form-control bank_name" value = "' + current_company_detail_data.bank_name + '">'+
+                    '<input type="text" class="form-control bank_name" value = "山东建设银行历下支行">'+
                   '</div>'+
                 '</div>'+
                 '<div class="row">'+
                   '<div class="form-group col-md-6">'+
                     '<label>银行账号</label>'+
-                    '<input type="text" class="form-control account" value = "' + current_company_detail_data.account + '">'+
+                    '<input type="text" class="form-control account" value = "111111111111">'+
                   '</div>'+
                   '<div class="form-group col-md-6">'+
                     '<label>联系电话</label>'+
-                    '<input type="text" class="form-control telephone_number" value = "' + current_company_detail_data.telephone_number + '">'+
+                    '<input type="text" class="form-control telephone_number" value = "111111111">'+
                   '</div>'+
                 '</div>'+
                 '<div class="row">'+
                   '<div class="form-group col-md-12">'+
                     '<label>地址</label>'+
-                    '<input type="text" class="form-control address" value = "' + current_company_detail_data.address + '">'+
+                    '<input type="text" class="form-control address" value = "山东省济南市历下区">'+
                   '</div>'+
                 '</div>'+
               '<div class="row">'+
               '<div class="form-group col-md-12">'+
                 '<label>开票信息附件</label>'+
-                '<div class="panel panel-default">'+
-                  '<div class="panel-body attch clearfix invoice_attch">'+
-                    '<div class="pull-left has-feedback">'+
-                      '<button class="btn bg-default">'+
-                        '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
-                      '</button>'+
-                      '<input class="positionfile file_style" type="file"  value="" />'+
-                    '</div>'+
-                    /*'<div class="swiper-slide btn_slider position-relative">'+
-                      '<img src="img/img2.jpg"/>'+
-                      '<button class="btn btn-danger position-absolute ab-btn text-center btn-remove">'+
-                      '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
-                      '</button>'+
-                    '</div>'+*/
-                  '</div>'+
+                '<div class="panel panel-default" id = "enterprise_management_edit_invoice_attch">'+
+                  // '<div class="panel-body attch clearfix invoice_attch">'+
+                  //   '<div class="pull-left has-feedback">'+
+                  //     '<button class="btn bg-default">'+
+                  //       '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
+                  //     '</button>'+
+                  //     '<input class="positionfile file_style" type="file"  value="" />'+
+                  //   '</div>'+
+                  //   /*'<div class="swiper-slide btn_slider position-relative">'+
+                  //     '<img src="img/img2.jpg"/>'+
+                  //     '<button class="btn btn-danger position-absolute ab-btn text-center btn-remove">'+
+                  //     '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
+                  //     '</button>'+
+                  //   '</div>'+*/
+                  // '</div>'+
                 '</div>'+
               '</div>'+
             '</div>'+
@@ -800,133 +976,133 @@ function enterprise_management_edit_modal(uuid) {
               '<div class="row">'+
                 '<div class="form-group col-md-12">'+
                   '<label>机构信用代码证</label>'+
-                  '<div class="panel panel-default">'+
-                    '<div class="panel-body attch clearfix institutionalCreditCodeAttch">'+
-                      '<div class="pull-left has-feedback">'+
-                        '<button class="btn bg-default">'+
-                          '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
-                        '</button>'+
-                        '<input class="positionfile file_style" type="file"  value="" />'+
-                      '</div>'+
-                      /*'<div class="swiper-slide btn_slider position-relative">'+
-                        '<img src="img/img2.jpg"/>'+
-                        '<button class="btn btn-danger position-absolute ab-btn text-center">'+
-                        '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
-                        '</button>'+
-                      '</div>'+*/
-                    '</div>'+
+                  '<div class="panel panel-default" id = "enterprise_management_edit_institutional_attch">'+
+//                  '<div class="panel-body attch clearfix institutionalCreditCodeAttch">'+
+//                    '<div class="pull-left has-feedback">'+
+//                      '<button class="btn bg-default">'+
+//                        '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
+//                      '</button>'+
+//                      '<input class="positionfile file_style" type="file"  value="" />'+
+//                    '</div>'+
+//                    /*'<div class="swiper-slide btn_slider position-relative">'+
+//                      '<img src="img/img2.jpg"/>'+
+//                      '<button class="btn btn-danger position-absolute ab-btn text-center">'+
+//                      '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
+//                      '</button>'+
+//                    '</div>'+*/
+//                  '</div>'+
                   '</div>'+
                 '</div>'+
               '</div>'+
                 '<div class="row">'+
                   '<div class="form-group col-md-12">'+
                     '<label>危化品经营许可证</label>'+
-                    '<div class="panel panel-default">'+
-                      '<div class="panel-body attch clearfix HazardousChemicalsAttch">'+
-                        '<div class="pull-left has-feedback">'+
-                          '<button class="btn bg-default">'+
-                            '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
-                          '</button>'+
-                          '<input class="positionfile file_style" type="file"  value="" />'+
-                        '</div>'+
-                        /*'<div class="swiper-slide btn_slider position-relative">'+
-                          '<img src="img/img2.jpg"/>'+
-                          '<button class="btn btn-danger position-absolute ab-btn text-center">'+
-                            '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
-                          '</button>'+
-                        '</div>'+*/
-                      '</div>'+
+                    '<div class="panel panel-default" id = "enterprise_management_edit_hazardous_attch">'+
+//                    '<div class="panel-body attch clearfix HazardousChemicalsAttch">'+
+//                      '<div class="pull-left has-feedback">'+
+//                        '<button class="btn bg-default">'+
+//                          '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
+//                        '</button>'+
+//                        '<input class="positionfile file_style" type="file"  value="" />'+
+//                      '</div>'+
+//                      /*'<div class="swiper-slide btn_slider position-relative">'+
+//                        '<img src="img/img2.jpg"/>'+
+//                        '<button class="btn btn-danger position-absolute ab-btn text-center">'+
+//                          '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
+//                        '</button>'+
+//                      '</div>'+*/
+//                    '</div>'+
                     '</div>'+
                   '</div>'+
                 '</div>'+
                 '<div class="row">'+
                   '<div class="form-group col-md-12">'+
                     '<label>法人身份证</label>'+
-                    '<div class="panel panel-default">'+
-                      '<div class="panel-body attch clearfix IdCardAttch">'+
-                        '<div class="pull-left has-feedback">'+
-                          '<button class="btn bg-default">'+
-                            '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
-                          '</button>'+
-                          '<input class="positionfile file_style" type="file"  value="" />'+
-                        '</div>'+
-                        /*'<div class="swiper-slide btn_slider position-relative">'+
-                          '<img src="img/img2.jpg"/>'+
-                          '<button class="btn btn-danger position-absolute ab-btn text-center">'+
-                            '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
-                          '</button>'+
-                        '</div>'+*/
-                      '</div>'+
+                    '<div class="panel panel-default" id = "enterprise_management_edit_idcard_attch">'+
+//                    '<div class="panel-body attch clearfix IdCardAttch">'+
+//                      '<div class="pull-left has-feedback">'+
+//                        '<button class="btn bg-default">'+
+//                          '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
+//                        '</button>'+
+//                        '<input class="positionfile file_style" type="file"  value="" />'+
+//                      '</div>'+
+//                      /*'<div class="swiper-slide btn_slider position-relative">'+
+//                        '<img src="img/img2.jpg"/>'+
+//                        '<button class="btn btn-danger position-absolute ab-btn text-center">'+
+//                          '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
+//                        '</button>'+
+//                      '</div>'+*/
+//                    '</div>'+
                     '</div>'+
                   '</div>'+
                 '</div>'+
                 '<div class="row">'+
                   '<div class="form-group col-md-12">'+
                     '<label>开户许可证</label>'+
-                    '<div class="panel panel-default">'+
-                      '<div class="panel-body attch clearfix AccountOpeningPermitAttch">'+
-                        '<div class="pull-left has-feedback">'+
-                          '<button class="btn bg-default">'+
-                            '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
-                          '</button>'+
-                          '<input class="positionfile file_style" type="file"  value="" />'+
-                        '</div>'+
-                        /*'<div class="swiper-slide btn_slider position-relative">'+
-                          '<img src="img/img2.jpg"/>'+
-                          '<button class="btn btn-danger position-absolute ab-btn text-center">'+
-                            '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
-                          '</button>'+
-                        '</div>'+*/
-                      '</div>'+
+                    '<div class="panel panel-default" id = "enterprise_management_edit_account_attch">'+
+//                    '<div class="panel-body attch clearfix AccountOpeningPermitAttch">'+
+//                      '<div class="pull-left has-feedback">'+
+//                        '<button class="btn bg-default">'+
+//                          '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
+//                        '</button>'+
+//                        '<input class="positionfile file_style" type="file"  value="" />'+
+//                      '</div>'+
+//                      /*'<div class="swiper-slide btn_slider position-relative">'+
+//                        '<img src="img/img2.jpg"/>'+
+//                        '<button class="btn btn-danger position-absolute ab-btn text-center">'+
+//                          '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
+//                        '</button>'+
+//                      '</div>'+*/
+//                    '</div>'+
                     '</div>'+
                   '</div>'+
                 '</div>'+
                 '<div class="row">'+
                   '<div class="form-group col-md-12">'+
                     '<label>安全生产许可证</label>'+
-                    '<div class="panel panel-default">'+
-                      '<div class="panel-body attch clearfix SafetyProductionAttch">'+
-                        '<div class="pull-left has-feedback">'+
-                          '<button class="btn bg-default">'+
-                            '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
-                          '</button>'+
-                          '<input class="positionfile file_style" type="file"  value="" />'+
-                        '</div>'+
-                        /*'<div class="swiper-slide btn_slider position-relative">'+
-                          '<img src="img/img2.jpg"/>'+
-                          '<button class="btn btn-danger position-absolute ab-btn text-center">'+
-                            '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
-                          '</button>'+
-                        ' </div>'+*/
-                      '</div>'+
+                    '<div class="panel panel-default" id = "enterprise_management_edit_safety_attch">'+
+//                    '<div class="panel-body attch clearfix SafetyProductionAttch">'+
+//                      '<div class="pull-left has-feedback">'+
+//                        '<button class="btn bg-default">'+
+//                          '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
+//                        '</button>'+
+//                        '<input class="positionfile file_style" type="file"  value="" />'+
+//                      '</div>'+
+//                      /*'<div class="swiper-slide btn_slider position-relative">'+
+//                        '<img src="img/img2.jpg"/>'+
+//                        '<button class="btn btn-danger position-absolute ab-btn text-center">'+
+//                          '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
+//                        '</button>'+
+//                      ' </div>'+*/
+//                    '</div>'+
                     '</div>'+
                   '</div>'+
                 '</div>'+
                 '<div class="row">'+
                   '<div class="form-group col-md-12">'+
                     '<label>营业执照</label>'+
-                    '<div class="panel panel-default">'+
-                      '<div class="panel-body attch clearfix BusinessLicenseAttch">'+
-                        '<div class="pull-left has-feedback">'+
-                          '<button class="btn bg-default">'+
-                            '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
-                          '</button>'+
-                          '<input class="positionfile file_style" type="file"  value="" />'+
-                        '</div>'+
-                        /*'<div class="swiper-slide btn_slider position-relative">'+
-                          '<img src="img/img2.jpg"/>'+
-                          '<button class="btn btn-danger position-absolute ab-btn text-center">'+
-                            '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
-                          '</button>'+
-                        '</div>'+*/
-                      '</div>'+
+                    '<div class="panel panel-default" id = "enterprise_management_edit_business_attch">'+
+//                    '<div class="panel-body attch clearfix BusinessLicenseAttch">'+
+//                      '<div class="pull-left has-feedback">'+
+//                        '<button class="btn bg-default">'+
+//                          '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
+//                        '</button>'+
+//                        '<input class="positionfile file_style" type="file"  value="" />'+
+//                      '</div>'+
+//                      /*'<div class="swiper-slide btn_slider position-relative">'+
+//                        '<img src="img/img2.jpg"/>'+
+//                        '<button class="btn btn-danger position-absolute ab-btn text-center">'+
+//                          '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
+//                        '</button>'+
+//                      '</div>'+*/
+//                    '</div>'+
                     '</div>'+
                   '</div>'+
                 '</div>'+
               '</div>'+
             '</div>'+
             '<div class="modal-footer">'+
-              '<button type="button" class="btn btn-warning edit_btn" data-uuid = "' + uuid + '">修改</button>'+
+              '<button type="button" class="btn btn-warning edit_btn">修改</button>'+
               '<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>'+
             '</div>'+
           '</div>'+
@@ -934,6 +1110,20 @@ function enterprise_management_edit_modal(uuid) {
       '</div>'+
     '</div>';
   $("body").append(edit_modal);
+  upload_attachment_edit_output("#enterprise_management_edit_invoice_attch");
+  upload_attachment_btn_event_bind("#enterprise_management_edit_invoice_attch");
+  upload_attachment_edit_output("#enterprise_management_edit_institutional_attch");
+  upload_attachment_btn_event_bind("#enterprise_management_edit_institutional_attch");
+  upload_attachment_edit_output("#enterprise_management_edit_hazardous_attch");
+  upload_attachment_btn_event_bind("#enterprise_management_edit_hazardous_attch");
+  upload_attachment_edit_output("#enterprise_management_edit_idcard_attch");
+  upload_attachment_btn_event_bind("#enterprise_management_edit_idcard_attch");
+  upload_attachment_edit_output("#enterprise_management_edit_account_attch");
+  upload_attachment_btn_event_bind("#enterprise_management_edit_account_attch");
+  upload_attachment_edit_output("#enterprise_management_edit_safety_attch");
+  upload_attachment_btn_event_bind("#enterprise_management_edit_safety_attch");
+  upload_attachment_edit_output("#enterprise_management_edit_business_attch");
+  upload_attachment_btn_event_bind("#enterprise_management_edit_business_attch");
   $("#enterprise_management_edit_modal").modal("show");
   $("#enterprise_management_edit_modal").on("hidden.bs.modal", function (e) {
     $(this).remove();

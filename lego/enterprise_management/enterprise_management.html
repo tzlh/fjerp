@@ -21,26 +21,6 @@
   <script src = "../../js/toolkit.js" type = "text/javascript" charset = "utf-8"></script>
   <script src = "../upload_attachment/upload_attachment.js" type = "text/javascript" charset = "utf-8"></script>
   <script src = "enterprise_management.js" type = "text/javascript" charset = "utf-8"></script>
-<style>
-  .file_style {
-      display: block;
-      width: 60px;
-      height: 60px;
-      position: absolute;
-      left: 0;
-      top: 0;
-      opacity: 0;
-  }
-  .file_name{width: 60px;margin-bottom: 15px !important;}
-  .delet_file_btn{
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 20px;
-    height: 20px;
-    padding: 0 !important;
-  }
-</style>
 <script type = "text/javascript">
 $(document).ready(function() {
   //日历插件
@@ -80,6 +60,7 @@ $(document).ready(function() {
   // 修改企业信息模态框
   $(document).on("click", "#enterprise_management_edit_info", function() {
     var uuid = $(this).data("uuid");
+    enterprise_management_get_certificate(uuid);
     enterprise_management_edit_modal(uuid);
   });
   // 修改企业信息
