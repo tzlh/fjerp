@@ -126,14 +126,16 @@ function contract_warehouse_fill_variable_data() {
     for(var i = 0; i < contract_warehouse_data.data.length; i++) {
       var lessor_uuid = "";
       var leaser_uuid = "";
-      for(var j = 0; j < enterprise_data.data.length; j++) {
-        //出租方
-        if(enterprise_data.data[j].uuid == contract_warehouse_data.data[i].lessor_uuid){
-          lessor_uuid = enterprise_data.data[j].short_name;
-        }
-        //承租方
-        if(enterprise_data.data[j].uuid == contract_warehouse_data.data[i].leaser_uuid){
-          leaser_uuid = enterprise_data.data[j].short_name;
+      if(isJsonObjectHasData(enterprise_data)) {
+        for(var j = 0; j < enterprise_data.data.length; j++) {
+          //出租方
+          if(enterprise_data.data[j].uuid == contract_warehouse_data.data[i].lessor_uuid){
+            lessor_uuid = enterprise_data.data[j].short_name;
+          }
+          //承租方
+          if(enterprise_data.data[j].uuid == contract_warehouse_data.data[i].leaser_uuid){
+            leaser_uuid = enterprise_data.data[j].short_name;
+          }
         }
       }
       var contract_warehouse_start_datetime = contract_warehouse_data.data[i].start_datetime;
@@ -175,8 +177,10 @@ function contract_warehouse_add_modle() {
                 '<label for="basic-url">出租方</label>'+
                 '<select class="form-control contract_warehouse_lessor_uuid" value="">'+
                   '<option value="">--请选择--</option>';
-                  for (var i = 0; i < enterprise_data.data.length; i++) {
-                    contract_warehouse_add_modle += '<option value="' + enterprise_data.data[i].uuid + '">'+ enterprise_data.data[i].short_name +'</option>';
+                  if(isJsonObjectHasData(enterprise_data)) {
+                    for (var i = 0; i < enterprise_data.data.length; i++) {
+                      contract_warehouse_add_modle += '<option value="' + enterprise_data.data[i].uuid + '">'+ enterprise_data.data[i].short_name +'</option>';
+                    }
                   }
                   contract_warehouse_add_modle+=
               '</select>'+
@@ -185,8 +189,10 @@ function contract_warehouse_add_modle() {
                 '<label for="basic-url">承租方</label>'+
                 '<select class="form-control contract_warehouse_leaser_uuid" value="">'+
                   '<option value="">--请选择--</option>';
-                  for (var i = 0; i < enterprise_data.data.length; i++) {
-                    contract_warehouse_add_modle += '<option value="' + enterprise_data.data[i].uuid + '">'+ enterprise_data.data[i].short_name +'</option>';
+                  if(isJsonObjectHasData(enterprise_data)) {
+                    for (var i = 0; i < enterprise_data.data.length; i++) {
+                      contract_warehouse_add_modle += '<option value="' + enterprise_data.data[i].uuid + '">'+ enterprise_data.data[i].short_name +'</option>';
+                    }
                   }
                   contract_warehouse_add_modle += 
                   '</select>'+
@@ -348,11 +354,13 @@ function contract_warehouse_edit_modle(obj) {
                 '<div class="col-lg-6">'+
                   '<label for="basic-url">出租方</label>'+
                   '<select class="form-control contract_warehouse_lessor_uuid" value="' + ontract_warehouse_lessor_uuid + '"  disabled="disabled">';
-                  for(var i = 0; i < enterprise_data.data.length; i++) {
-                    if(ontract_warehouse_lessor_uuid == enterprise_data.data[i].uuid){
-                      contract_warehouse_edit_html += '<option value="' + enterprise_data.data[i].uuid + '" selected = "selected">'+ enterprise_data.data[i].short_name +'</option>';
-                    } else {
-                      contract_warehouse_edit_html += '<option value="' + enterprise_data.data[i].uuid + '">'+ enterprise_data.data[i].short_name +'</option>';
+                  if(isJsonObjectHasData(enterprise_data)) {
+                    for(var i = 0; i < enterprise_data.data.length; i++) {
+                      if(ontract_warehouse_lessor_uuid == enterprise_data.data[i].uuid){
+                        contract_warehouse_edit_html += '<option value="' + enterprise_data.data[i].uuid + '" selected = "selected">'+ enterprise_data.data[i].short_name +'</option>';
+                      } else {
+                        contract_warehouse_edit_html += '<option value="' + enterprise_data.data[i].uuid + '">'+ enterprise_data.data[i].short_name +'</option>';
+                      }
                     }
                   }
                   contract_warehouse_edit_html += 
@@ -361,11 +369,13 @@ function contract_warehouse_edit_modle(obj) {
                 '<div class="col-lg-6">'+
                   '<label for="basic-url">承租方</label>'+
                   '<select class="form-control contract_warehouse_leaser_uuid" value="' + contract_warehouse_leaser_uuid + '" disabled="disabled">';
-                    for(var i = 0; i < enterprise_data.data.length; i++) {
-                      if(contract_warehouse_leaser_uuid == enterprise_data.data[i].uuid) {
-                        contract_warehouse_edit_html += '<option value="' + enterprise_data.data[i].uuid + '" selected = "selected">'+ enterprise_data.data[i].short_name +'</option>';
-                      } else {
-                        contract_warehouse_edit_html += '<option value="' + enterprise_data.data[i].uuid + '">'+ enterprise_data.data[i].short_name +'</option>';
+                    if(isJsonObjectHasData(enterprise_data)) {
+                      for(var i = 0; i < enterprise_data.data.length; i++) {
+                        if(contract_warehouse_leaser_uuid == enterprise_data.data[i].uuid) {
+                          contract_warehouse_edit_html += '<option value="' + enterprise_data.data[i].uuid + '" selected = "selected">'+ enterprise_data.data[i].short_name +'</option>';
+                        } else {
+                          contract_warehouse_edit_html += '<option value="' + enterprise_data.data[i].uuid + '">'+ enterprise_data.data[i].short_name +'</option>';
+                        }
                       }
                     }
                     contract_warehouse_edit_html +=
@@ -593,10 +603,11 @@ function contract_warehouse_info_modle(obj) {
               '<div class="col-lg-6">'+
                 '<label for="basic-url">出租方</label>'+
                 '<select class="form-control contract_warehouse_lessor_uuid" value="' + ontract_warehouse_lessor_uuid + '"  disabled="disabled">';
-                  for(var i = 0; i < enterprise_data.data.length; i++) {
-//                  console.log(ontract_warehouse_lessor_uuid+';'+enterprise_data.data[i].uuid);
-                    if(ontract_warehouse_lessor_uuid == enterprise_data.data[i].uuid) {
-                      contract_warehouse_edit_html += '<option value="' + enterprise_data.data[i].uuid + '" selected = "selected">'+ enterprise_data.data[i].short_name +'</option>';
+                  if(isJsonObjectHasData(enterprise_data)) {
+                    for(var i = 0; i < enterprise_data.data.length; i++) {
+                      if(ontract_warehouse_lessor_uuid == enterprise_data.data[i].uuid) {
+                        contract_warehouse_edit_html += '<option value="' + enterprise_data.data[i].uuid + '" selected = "selected">'+ enterprise_data.data[i].short_name +'</option>';
+                      }
                     }
                   }
                   contract_warehouse_edit_html += 
@@ -605,9 +616,11 @@ function contract_warehouse_info_modle(obj) {
               '<div class="col-lg-6">'+
                 '<label for="basic-url">承租方</label>'+
                 '<select class="form-control contract_warehouse_leaser_uuid" value="' + contract_warehouse_leaser_uuid + '" disabled="disabled">';
-                  for(var i = 0; i < enterprise_data.data.length; i++) {
-                    if(contract_warehouse_leaser_uuid == enterprise_data.data[i].uuid) {
-                      contract_warehouse_edit_html += '<option value="' + enterprise_data.data[i].uuid + '" selected = "selected">' + enterprise_data.data[i].short_name + '</option>';
+                  if(isJsonObjectHasData(enterprise_data)) {
+                    for(var i = 0; i < enterprise_data.data.length; i++) {
+                      if(contract_warehouse_leaser_uuid == enterprise_data.data[i].uuid) {
+                        contract_warehouse_edit_html += '<option value="' + enterprise_data.data[i].uuid + '" selected = "selected">' + enterprise_data.data[i].short_name + '</option>';
+                      }
                     }
                   }
                   contract_warehouse_edit_html +=
@@ -693,8 +706,10 @@ function contract_warehouse_search(obj) {
 
 function contract_warehouse_enterprise_data() {
   var contract_warehouse_html = '<option value="">--请选择--</option>';
-  for(var i = 0; i < enterprise_data.data.length; i++) {
+  if(isJsonObjectHasData(enterprise_data)) {
+    for(var i = 0; i < enterprise_data.data.length; i++) {
       contract_warehouse_html += '<option value="' + enterprise_data.data[i].uuid + '">'+ enterprise_data.data[i].short_name +'</option>';
+    }
   }
   $("#contract_warehouse_lessor,#contract_warehouse_leaser").html(contract_warehouse_html);
 }

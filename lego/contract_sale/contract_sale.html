@@ -47,6 +47,8 @@
       widget_datepicker_init();
       //清空原始数据
       contract_sale_clear_raw_data();
+      //服务器数据
+      contract_sale_server_data_cover();
       //加载数据
       contract_sale_fill_variable_data();
       //搜索获取购买方和销售方
@@ -97,6 +99,7 @@
       $(document).on("ifClicked", "#contract_sale_search_fuzzy_btn", function() {
         contract_sale_search_fuzzy_btn_func();
       });
+      //复选框
       $("[type='checkbox']").iCheck({
         checkboxClass: 'icheckbox_square-blue',
       });
@@ -104,7 +107,6 @@
   </script>
 </head>
 <body>
-  <div id = "contract_sale_content"></div>
   <div class = "panel panel-primary">
     <div class = "panel-heading clearfix">销售合同管理<span class = "glyphicon glyphicon-plus pull-right" id = "contract_sales_add_modle"></span></div>
     <div class = "panel-body">
@@ -156,30 +158,25 @@
         </div>
         <div class = "row contract_sale_mt20">
           <div class = "col-lg-2">
-            <div class = "input-group">
-              <div class = "form-group has-feedback">
-                <div class = "input-group">
-                  <span class = "input-group-addon">签署时间（起）</span>
-                  <input type = "text" class = "form-control" value = "" id = "contract_sale_search_end_sign_datetime">
-                </div>
-                <span class = "glyphicon glyphicon-calendar form-control-feedback" ></span>
+            <div class = "form-group has-feedback">
+              <div class = "input-group">
+                <span class = "input-group-addon">签署时间（起）</span>
+                <input type = "text" class = "form-control widget_datepicker" value = "" id = "contract_sale_search_end_sign_datetime">
               </div>
+              <span class = "glyphicon glyphicon-calendar form-control-feedback" ></span>
             </div>
           </div>
           <div class = "col-lg-2">
-            <div class = "input-group">
-              <div class = "form-group has-feedback">
-                <div class = "input-group">
-                  <span class = "input-group-addon">签署时间（止）</span>
-                  <input type = "text" class = "form-control" value = "">
-                </div>
-                <span class = "glyphicon glyphicon-calendar form-control-feedback" ></span>
+            <div class = "form-group has-feedback">
+              <div class = "input-group">
+                <span class = "input-group-addon">签署时间（止）</span>
+                <input type = "text" class = "form-control widget_datepicker" value = "">
               </div>
+              <span class = "glyphicon glyphicon-calendar form-control-feedback" ></span>
             </div>
           </div>
           <div class = "col-lg-2" id = "contract_sale_search_fuzzy_btn">
             <div class = "input-group">
-              <!--<input type="button" name="" id="" value="搜索" class = "btn btn-primary"/>-->
               <button type = "button" class = "btn btn-primary">搜索</button>
             </div>
           </div>
