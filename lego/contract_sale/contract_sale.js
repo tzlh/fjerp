@@ -50,7 +50,6 @@ var contract_sale_data = {"data":[
  */
 var rows = 2;
 var current_offset = 0;
-var contract_sale_search_condition = {};
 
 function contract_sale_clear_raw_data() {
   $("#contract_sales_pages").html("");
@@ -60,7 +59,28 @@ function contract_sale_clear_raw_data() {
 /**
  * 服务器数据
  */
+var contract_sale_search_condition = {};
 function contract_sale_server_data_cover() {
+  //分页  获取总条数
+  var totalRows = 0;
+  var contract_sale_total_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getContractTrade";
+  delete contract_sale_search_condition["rows"];
+  delete contract_sale_search_condition["offset"];
+  contract_sale_search_condition["type"] = "1";
+  var contract_sale_total_get_contract = ajax_assistant(contract_sale_total_url, contract_sale_search_condition, false, true, false);
+  if(1 == contract_sale_total_get_contract.status) {
+    if (0 == contract_sale_total_get_contract.count) {
+      $("#contract_sales_pages").html("");
+    } else {
+      var contract_sale_total_result = JSON.parse(contract_sale_total_get_contract.result);  
+      totalRows = contract_sale_total_result.length;
+      generate_bootstrap_pagination_ctrl("#contract_sales_pages", current_offset, rows, 6, totalRows);
+      contract_sale_search_condition["rows"] = rows;
+      contract_sale_search_condition["offset"] = current_offset;
+    }
+  } else {
+    alert("销售合同数据获取失败");
+  }
   //获取销售合同
   contract_sale_search_condition["type"] = "1";
   var contract_sale_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getContractTrade";
@@ -95,8 +115,7 @@ function contract_sale_server_data_cover() {
       contract_sale_enterprise_data = {};
     } else {
       var tmp_enterprise_arr = new Array();
-      var contract_sale_enterprise_result = JSON.parse(contract_sale_enterprise_get_contract.result);  
-      console.log(contract_sale_enterprise_result);
+      var contract_sale_enterprise_result = JSON.parse(contract_sale_enterprise_get_contract.result);
       for (var i = 0; i < contract_sale_enterprise_result.length; i++) {
         tmp_enterprise_arr[i] = {"short_name":contract_sale_enterprise_result[i].short_name, "uuid":contract_sale_enterprise_result[i].uuid};
       }
@@ -112,8 +131,7 @@ function contract_sale_server_data_cover() {
       contract_sale_warehouse = {};
     } else {
       var tmp_warehouse_arr = new Array();
-      var contract_sale_warehouse_result = JSON.parse(contract_sale_warehouse_get_contract.result);  
-      console.log(contract_sale_warehouse_result);
+      var contract_sale_warehouse_result = JSON.parse(contract_sale_warehouse_get_contract.result);
       for (var i = 0; i < contract_sale_warehouse_result.length; i++) {
         tmp_warehouse_arr[i] = {"name":contract_sale_warehouse_result[i].name, "uuid":contract_sale_warehouse_result[i].uuid};
       }
@@ -168,6 +186,13 @@ function contract_sale_fill_variable_data() {
   } else {
     $("#contract_sales_box").html('<tr><td colspan="11" align="center">没数据</td></tr>');
   }
+}
+
+function contract_sale_pages_fun(obj) {
+  current_offset = obj.attr("data-offset");
+  contract_sale_search_condition["offset"] = current_offset;
+  contract_sale_server_data_cover();
+  contract_sale_fill_variable_data();
 }
 
 function contract_sales_add_modle_func() {
@@ -296,15 +321,7 @@ function contract_sales_add_modle_func() {
                 '</div>'+
                 '<div class = "col-md-12">'+
                   '<label class = "margin15">采购合同附件</label>'+
-                  '<div class = "panel panel-default">'+
-                    '<div class = "panel-body clearfix attch">'+
-                      '<div class = "pull-left has-feedback">'+
-                        '<button class = "btn bg-default">'+
-                          '<span class = "glyphicon glyphicon-plus" style = "font-size:40px;margin-right:0;color:#fff;"></span>'+
-                        '</button>'+
-                        '<input class = "positionfile file_style" type = "file"  value = "" />'+
-                      '</div>'+
-                    '</div>'+
+                  '<div class="panel panel-default" id = "contract_sales_add_modle_attch">'+
                   '</div>'+
                 '</div>'+
               '</div>'+
@@ -317,6 +334,8 @@ function contract_sales_add_modle_func() {
         '</div>'+
       '</div>';
   $("body").append(contract_sales_html);
+  upload_attachment_edit_output("#contract_sales_add_modle_attch");
+  upload_attachment_btn_event_bind("#contract_sales_add_modle_attch");
   $("#contract_sales_add_modle_prop").modal("show");
   $("#contract_sales_add_modle_prop").on("hidden.bs.modal", function(e) {
     $(this).remove();
@@ -357,10 +376,15 @@ function contract_sales_add_data_func(obj) {
   //备注
   var contract_sales_remark = obj.parents("#contract_sales_add_modle_prop").find(".contract_sales_remark").val();
   //附件
+  var contract_sales_list = $("#contract_sales_add_modle_attch ul").children("li");
   var contract_sales_cluster_list = "";
-    for(var i = 0; i < obj.parents("#contract_sales_add_modle_prop").find(".file_name").length; i++){
-      contract_sales_cluster_list += obj.parents("#contract_sales_add_modle_prop").find(".file_name").eq(i).find("img").attr('uuid')+';';
-    }
+  for (var i = 0; i < contract_sales_list.length; i++) {
+    var contract_sales_dom = contract_sales_list[i];
+    var cluster = $(contract_sales_dom).find("a").attr("data-cluster");
+    if (undefined != cluster) {
+     contract_sales_cluster_list += cluster + ";"; 
+    }    
+  }
   //验证
   if(null == contract_sales_buyer_uuid.match(/^[0-9a-zA-Z]{32}$/)) {
     alert("请选择购买企业！");
@@ -406,11 +430,11 @@ function contract_sales_add_data_func(obj) {
     alert("请输选择库区！");
     return;
   }
-//if(null == contract_sales_cluster_list.match(/^([0-9a-zA-Z]{32};)+$/)) {
-//  alert("请添加采购合同附件！");
-//  return;
-//}
-  var data={
+  if(null == contract_sales_cluster_list.match(/^([0-9a-zA-Z]{32};)+$/)) {
+    alert("请添加采购合同附件！");
+    return;
+  }
+  var contract_sales_data={
     "cluster_list":contract_sales_cluster_list,
     "buyer_uuid":contract_sales_buyer_uuid,
     "seller_uuid":contract_sales_seller_uuid,
@@ -430,26 +454,22 @@ function contract_sales_add_data_func(obj) {
       alert("请输入正确的规格！");
       return;
     };
-    data["specification"] = contract_sales_specification;
+    contract_sales_data["specification"] = contract_sales_specification;
   };
   if(0 < contract_sales_remark.length) {
     if(null == contract_sales_remark.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,128}$/)) {
       alert("请输入正确的备注！");
       return;
     };
-    data["remark"] = contract_sales_remark;
+    contract_sales_data["remark"] = contract_sales_remark;
   };
   //调用接口
-  if("abc" == contract_sales_product_name) {
+//var contract_sales_add_sale=share_ajax(PROJECT_PATH+"lego/lego_fjTrade?servletName=addContractTrade",data);//添加贸易合同
+  var contract_sales_add_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=addContractTrade";
+  var contract_sales_add_get = ajax_assistant(contract_sales_add_url, contract_sales_data, false, true, false);
+  if (1 == contract_sales_add_get.status) {
     contract_sale_clear_raw_data();
-    contract_sale_data = {"data":[
-      {"contract_code":"fj-xy-170604", "buyer_uuid":"00000000000000000000000000000004", "seller_uuid":"00000000000000000000000000000001", "product_name":"福记", "real_name":"富纪有限公司", "price":"3.0", "quantity":"330", "deliver_datetime":"2017-05-06 00:00:00", "uuid":"11111111111111111111111111111111"},
-      {"contract_code":"fj-xy-111111", "buyer_uuid":"00000000000000000000000000000001", "seller_uuid":"00000000000000000000000000000003", "product_name":"福记", "real_name":"富纪有限公司", "price":"5.0", "quantity":"450", "deliver_datetime":"2017-05-06 00:00:00", "uuid":"11111111111111111111111111111112"},
-      {"contract_code":"fj-xy-222222", "buyer_uuid":"00000000000000000000000000000002", "seller_uuid":"00000000000000000000000000000001", "product_name":"福记", "real_name":"富纪有限公司", "price":"7.0", "quantity":"360", "deliver_datetime":"2017-05-06 00:00:00", "uuid":"11111111111111111111111111111113"},
-      {"contract_code":"fj-xy-333333", "buyer_uuid":"00000000000000000000000000000004", "seller_uuid":"00000000000000000000000000000003", "product_name":"福记", "real_name":"富纪有限公司", "price":"4.0", "quantity":"780", "deliver_datetime":"2017-05-06 00:00:00", "uuid":"11111111111111111111111111111114"},
-      {"contract_code":"fj-xy-444444", "buyer_uuid":"00000000000000000000000000000002", "seller_uuid":"00000000000000000000000000000004", "product_name":"福记", "real_name":"富纪有限公司", "price":"2.0", "quantity":"4550", "deliver_datetime":"2017-05-06 00:00:00", "uuid":"11111111111111111111111111111115"},
-      {"contract_code":"fj-xy-000000", "buyer_uuid":"00000000000000000000000000000001", "seller_uuid":"00000000000000000000000000000001", "product_name":"福记", "real_name":"富纪有限公司", "price":"0.0", "quantity":"0", "deliver_datetime":"2017-05-06 00:00:00", "uuid":"11111111111111111111111111111116"}]
-    };
+    contract_sale_server_data_cover();
     contract_sale_fill_variable_data(); 
     $("#contract_sales_add_modle_prop").modal("hide");
     $("#contract_sales_add_modle_prop").on("hidden.bs.modal", function (e) {
@@ -490,18 +510,21 @@ function contract_sales_edit_modle_func(obj) {
   var contract_sales_remark = "";
   //附件
   var contract_sales_cluster_list = "";
-  var data = {
+  var contract_sales_edit_data = {
     "uuid":uuid,
     "type":1
   };
   //调接口  查询数据
-  var contract_warehouse_edit_data = [{"contract_code":"fj-xy-170604", "buyer_uuid":"00000000000000000000000000000004", "seller_uuid":"00000000000000000000000000000001", "product_name":"福记", "real_name":"富纪有限公司", "price":"3.0", "quantity":"330", "deliver_datetime":"2017-05-06 00:00:00", "deliver_place":"交货地点", "sign_datetime":"2017-05-06 00:00:00", "contract_ullage":"0.1", "warehouse_uuid":"33333333333333333333333333333331", "uuid":"11111111111111111111111111111111", "cluster_list":"aaa23aaaa4aaaaaaaaaaaaaaaaaaaaaa;bbbbbbbbbbbb6bbbbb77bbb89bbbbbbb", "specification":"规格", "remark":"啊啊啊啊啊啊啊啊啊"}];
-//if (1 == aaaaaaaaaaaaaaaaaaaa.status) {
+  var contract_sales_edit_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getContractTrade";
+  var contract_sales_edit_get_warehouse = ajax_assistant(contract_sales_edit_url, contract_sales_edit_data, false, true, false);
+  if (1 == contract_sales_edit_get_warehouse.status) {
+  var contract_warehouse_edit_data = JSON.parse(contract_sales_edit_get_warehouse.result);
+  console.log(contract_warehouse_edit_data);
     if (0 < contract_warehouse_edit_data.length) {
       contract_sales_buyer_uuid = contract_warehouse_edit_data[0].buyer_uuid;
       contract_sales_seller_uuid = contract_warehouse_edit_data[0].seller_uuid;
-      if (null != contract_warehouse_edit_data[0].cluster_list) {
-        contract_sales_cluster_list = contract_warehouse_edit_data[0].cluster_list;
+      if (null != contract_warehouse_edit_data[0].normal_cluster_list) {
+        contract_sales_cluster_list = contract_warehouse_edit_data[0].normal_cluster_list;
       };
       if (null != contract_warehouse_edit_data[0].product_name) {
         contract_sales_product_name = contract_warehouse_edit_data[0].product_name;
@@ -541,9 +564,32 @@ function contract_sales_edit_modle_func(obj) {
     } else {
       alert("没数据");
     }
-//} else {
-//  alert("查询数据失败");
-//}
+  } else {
+    alert("查询数据失败");
+  }
+  //附件
+  var contract_sales_cluster_list_html = "";
+  if(0 < contract_sales_cluster_list.length){
+    contract_sales_cluster_list = contract_sales_cluster_list.substring(0, contract_sales_cluster_list.length - 1).split(';');
+    for(var i = 0; i < contract_sales_cluster_list.length; i++){
+      var cluster_name_data = {
+            "cluster_name":contract_sales_cluster_list[i]
+          };
+      var contract_sales_file_name=ajax_assistant(PROJECT_PATH+"lego/lego_storage?servletName=getFileByClusterName",cluster_name_data, false, true, false);//查询文件集群信息
+      var contract_sales_json=JSON.parse(contract_sales_file_name.result);
+      if(0 != contract_sales_file_name.count) {
+        contract_sales_cluster_list_html += 
+          '<li>'+
+            '<a class="upload_attachment_file" href="#" data-cluster="' + contract_sales_json[0].cluster_name + '" data-url="'+PROJECT_PATH+'upload/'+contract_sales_json[0].cluster_name+'.'+contract_sales_json[0].suffix+'">'+
+              '<button class="btn btn-danger">'+
+                '<span class="glyphicon glyphicon-remove  btn-danger"></span>'+
+              '</button>'+
+              '<img src="'+PROJECT_PATH+'upload/'+contract_sales_json[0].cluster_name+'.'+contract_sales_json[0].suffix+'" >'+
+            '</a>'+
+          '</li>';
+      }
+    }
+  }
   var contract_sale_edit_html = 
     '<div class = "modal fade custom_modal" tabindex = "-1" id = "contract_sales_edit_modle_prop" role = "dialog" aria-labelledby = "myLargeModalLabel">'+
       '<div class = "modal-dialog modal-lg" role = "document">'+
@@ -678,36 +724,7 @@ function contract_sales_edit_modle_func(obj) {
               '</div>'+
               '<div class = "col-md-12">'+
                 '<label class = "margin15">采购合同附件</label>'+
-                '<div class = "panel panel-default">'+
-                  '<div class = "panel-body clearfix attch">'+
-                    '<div class = "pull-left has-feedback">'+
-                      '<button class = "btn bg-default">'+
-                        '<span class = "glyphicon glyphicon-plus" style = "font-size:40px;margin-right:0;color:#fff;"></span>'+
-                      '</button>'+
-                      '<input class = "positionfile file_style" type = "file"  value = "" />'+
-                    '</div>';
-                    if(0 < contract_sales_cluster_list.length) {
-                      contract_sales_cluster_list = contract_sales_cluster_list.substring(0, contract_sales_cluster_list.length - 1).split(';');
-                      for(var i=0;i<contract_sales_cluster_list.length;i++) {
-                        var data = {
-                          "cluster_name":contract_sales_cluster_list[i]
-                        };
-//                        var contract_sale_file_name=ajax_assistant(PROJECT_PATH+"lego/lego_storage?servletName=getFileByClusterName",data, false, true, false);//查询文件集群信息
-//                        var contract_sales_json=JSON.parse(contract_sale_file_name.result);
-//                        if(0 != contract_sale_file_name.count){
-                          contract_sale_edit_html += 
-                            '<div class = "pull-left file_name has-feedback contract_sale_ml15">'+
-//                                '<img uuid = "'+contract_sales_json[0].cluster_name+'" src = "'+PROJECT_PATH+'upload/'+contract_sales_json[0].cluster_name+'.'+contract_sales_json[0].suffix+'" url = "'+PROJECT_PATH+'upload/'+contract_sales_json[0].cluster_name+'.'+contract_sales_json[0].suffix+'" width = "60" height = "60" class = "img-rounded">'+
-                                '<img src = "a.png" uuid = "' + contract_sales_cluster_list[i] + '" width = "60" height = "60" class = "img-rounded">'+
-                                '<button class = "btn btn-danger text-center delet_file_btn">'+
-                                  '<span class = "glyphicon glyphicon-remove  btn-danger fon12"></span>'+
-                                '</button>'+
-                            '</div>';
-//                        }
-                      }
-                    }
-                    contract_sale_edit_html += 
-                  '</div>'+
+                '<div class="panel panel-default" id = "contract_sales_edit_attch">'+
                 '</div>'+
               '</div>'+
             '</div>'+
@@ -720,6 +737,9 @@ function contract_sales_edit_modle_func(obj) {
       '</div>'+
     '</div>';
   $("body").append(contract_sale_edit_html);
+  upload_attachment_edit_output("#contract_sales_edit_attch");
+  upload_attachment_btn_event_bind("#contract_sales_edit_attch");
+  $("#contract_sales_edit_attch").find("ul").append(contract_sales_cluster_list_html);
   $("#contract_sales_edit_modle_prop").modal("show");
   $("#contract_sales_edit_modle_prop").on("hidden.bs.modal", function(e) {
     $(this).remove();
@@ -755,9 +775,14 @@ function contract_sales_edit_data_func(obj) {
   //备注
   var contract_sales_remark = obj.parents("#contract_sales_edit_modle_prop").find(".contract_sales_remark").val();
   //附件
+  var contract_sales_list = $("#contract_sales_edit_modle_prop ul").children("li");
   var contract_sales_cluster_list = "";
-  for (var i = 0; i < obj.parents("#contract_sales_edit_modle_prop").find(".file_name").length; i++) {
-    contract_sales_cluster_list += obj.parents("#contract_sales_edit_modle_prop").find(".file_name").eq(i).find("img").attr('uuid')+';';
+  for (var i = 0; i < contract_sales_list.length; i++) {
+    var contract_sales_dom = contract_sales_list[i];
+    var cluster = $(contract_sales_dom).find("a").attr("data-cluster");
+    if (undefined != cluster) {
+     contract_sales_cluster_list += cluster + ";"; 
+    }    
   }
   //验证
   if (null == contract_sales_buyer_uuid.match(/^[0-9a-zA-Z]{32}$/)) {
@@ -808,13 +833,13 @@ function contract_sales_edit_data_func(obj) {
     }
     data["product_name"] = contract_sales_product_name;
   }
-//if("" != contract_sales_cluster_list){
-//  if(null == contract_sales_cluster_list.match(/^([0-9a-zA-Z]{32};)+$/)){
-//    alert("请添加合同附件！");
-//    return;
-//  }
-//  data["normal_newClusterList"] = contract_sales_cluster_list;
-//}
+  if("" != contract_sales_cluster_list){
+    if(null == contract_sales_cluster_list.match(/^([0-9a-zA-Z]{32};)+$/)){
+      alert("请添加合同附件！");
+      return;
+    }
+    data["normal_newClusterList"] = contract_sales_cluster_list;
+  }
   if ("" != contract_sales_real_name) {
     if (null == contract_sales_real_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)) {
       alert("请输入正确的标记！");
@@ -867,15 +892,11 @@ function contract_sales_edit_data_func(obj) {
     data["warehouse_uuid"] = contract_sales_warehouse_uuid;
   };
   //调数据库
-  if ("abc" == contract_sales_product_name) {
+  var contract_sales_edit_data_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=modifyContractTrade";
+  var contract_sales_edit_data_get = ajax_assistant(contract_sales_edit_data_url, data, false, true, false);
+  if(1 == contract_sales_edit_data_get.status){
     contract_sale_clear_raw_data();
-    contract_sale_data = {"data":[
-      {"contract_code":"fj-xy-999999999", "buyer_uuid":"00000000000000000000000000000004", "seller_uuid":"00000000000000000000000000000001", "product_name":"福记", "real_name":"富纪有限公司", "price":"3.0", "quantity":"330", "deliver_datetime":"2017-05-06 00:00:00", "uuid":"11111111111111111111111111111111"},
-      {"contract_code":"fj-xy-111111", "buyer_uuid":"00000000000000000000000000000001", "seller_uuid":"00000000000000000000000000000003", "product_name":"福记", "real_name":"富纪有限公司", "price":"5.0", "quantity":"450", "deliver_datetime":"2017-05-06 00:00:00", "uuid":"11111111111111111111111111111112"},
-      {"contract_code":"fj-xy-222222", "buyer_uuid":"00000000000000000000000000000002", "seller_uuid":"00000000000000000000000000000001", "product_name":"福记", "real_name":"富纪有限公司", "price":"7.0", "quantity":"360", "deliver_datetime":"2017-05-06 00:00:00", "uuid":"11111111111111111111111111111113"},
-      {"contract_code":"fj-xy-333333", "buyer_uuid":"00000000000000000000000000000004", "seller_uuid":"00000000000000000000000000000003", "product_name":"福记", "real_name":"富纪有限公司", "price":"4.0", "quantity":"780", "deliver_datetime":"2017-05-06 00:00:00", "uuid":"11111111111111111111111111111114"},
-      {"contract_code":"fj-xy-444444", "buyer_uuid":"00000000000000000000000000000002", "seller_uuid":"00000000000000000000000000000004", "product_name":"福记", "real_name":"富纪有限公司", "price":"2.0", "quantity":"4550", "deliver_datetime":"2017-05-06 00:00:00", "uuid":"11111111111111111111111111111115"},]
-    };
+    contract_sale_server_data_cover();
     contract_sale_fill_variable_data();
     $("#contract_sales_edit_modle_prop").modal("hide");
     $("#contract_sales_edit_modle_prop").on("hidden.bs.modal", function(e) {
@@ -920,17 +941,14 @@ function contract_sales_delete_data_func(obj) {
     "contract_code":contract_sales_contract_code
   };
   //接口数据
-  if ("11111111111111111111111111111111" != uuid) {
+  var contract_sale_delete_data_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=removeContractTrade";
+  var contract_sale_delete_data_get = ajax_assistant(contract_sale_delete_data_url, data, false, true, false);
+  if(1 != contract_sale_delete_data_get.status){
     alert("删除销售合同失败");
   } else {    
   // 更新页面数据
     contract_sale_clear_raw_data();
-    contract_sale_data = {"data":[
-      {"contract_code":"fj-xy-111111", "buyer_uuid":"00000000000000000000000000000001", "seller_uuid":"00000000000000000000000000000003", "product_name":"福记", "real_name":"富纪有限公司", "price":"5.0", "quantity":"450", "deliver_datetime":"2017-05-06 00:00:00", "uuid":"11111111111111111111111111111112"},
-      {"contract_code":"fj-xy-222222", "buyer_uuid":"00000000000000000000000000000002", "seller_uuid":"00000000000000000000000000000001", "product_name":"福记", "real_name":"富纪有限公司", "price":"7.0", "quantity":"360", "deliver_datetime":"2017-05-06 00:00:00", "uuid":"11111111111111111111111111111113"},
-      {"contract_code":"fj-xy-333333", "buyer_uuid":"00000000000000000000000000000004", "seller_uuid":"00000000000000000000000000000003", "product_name":"福记", "real_name":"富纪有限公司", "price":"4.0", "quantity":"780", "deliver_datetime":"2017-05-06 00:00:00", "uuid":"11111111111111111111111111111114"},
-      {"contract_code":"fj-xy-444444", "buyer_uuid":"00000000000000000000000000000002", "seller_uuid":"00000000000000000000000000000004", "product_name":"福记", "real_name":"富纪有限公司", "price":"2.0", "quantity":"4550", "deliver_datetime":"2017-05-06 00:00:00", "uuid":"11111111111111111111111111111115"},]
-    };
+    contract_sale_server_data_cover();
     contract_sale_fill_variable_data();
   }
   $("#contract_sales_delete_modle_prop").modal("hide");
@@ -969,18 +987,21 @@ function contract_sales_info_modle_func(obj) {
   var contract_sales_remark = "";
   //附件
   var contract_sales_cluster_list = "";
-  var data = {
+  var contract_sales_info_data = {
     "uuid":uuid,
     "type":1
   };
   //调接口  查询数据
-  var contract_warehouse_edit_data = [{"contract_code":"fj-xy-170604", "buyer_uuid":"00000000000000000000000000000004", "seller_uuid":"00000000000000000000000000000001", "product_name":"福记", "real_name":"富纪有限公司", "price":"3.0", "quantity":"330", "deliver_datetime":"2017-05-06 00:00:00", "deliver_place":"交货地点", "sign_datetime":"2017-05-06 00:00:00", "contract_ullage":"0.1", "warehouse_uuid":"33333333333333333333333333333331", "uuid":"11111111111111111111111111111111", "cluster_list":"aaa23aaaa4aaaaaaaaaaaaaaaaaaaaaa;bbbbbbbbbbbb6bbbbb77bbb89bbbbbbb", "specification":"规格", "remark":"啊啊啊啊啊啊啊啊啊"}];
-//if(1 == aaaaaaaaaaaaaaaaaaaa.status){
+  var contract_sales_info_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getContractTrade";
+  var contract_sales_info_get_warehouse = ajax_assistant(contract_sales_info_url, contract_sales_info_data, false, true, false);
+  if (1 == contract_sales_info_get_warehouse.status) {
+  var contract_warehouse_edit_data = JSON.parse(contract_sales_info_get_warehouse.result);
+  console.log(contract_warehouse_edit_data);
     if (0 < contract_warehouse_edit_data.length) {
       contract_sales_buyer_uuid = contract_warehouse_edit_data[0].buyer_uuid;
       contract_sales_seller_uuid = contract_warehouse_edit_data[0].seller_uuid;
-      if (null != contract_warehouse_edit_data[0].cluster_list) {
-        contract_sales_cluster_list = contract_warehouse_edit_data[0].cluster_list;
+      if (null != contract_warehouse_edit_data[0].normal_cluster_list) {
+        contract_sales_cluster_list = contract_warehouse_edit_data[0].normal_cluster_list;
       }
       if (null != contract_warehouse_edit_data[0].product_name) {
         contract_sales_product_name = contract_warehouse_edit_data[0].product_name;
@@ -1020,9 +1041,29 @@ function contract_sales_info_modle_func(obj) {
     } else {
       alert("没数据");
     }
-//} else {
-//  alert("查询数据失败");
-//}
+  } else {
+    alert("查询数据失败");
+  }
+  //附件
+  var contract_sales_cluster_list_html = "";
+  if(0 < contract_sales_cluster_list.length){
+    contract_sales_cluster_list = contract_sales_cluster_list.substring(0, contract_sales_cluster_list.length - 1).split(';');
+    for(var i = 0; i < contract_sales_cluster_list.length; i++){
+      var cluster_name_data = {
+        "cluster_name":contract_sales_cluster_list[i]
+      };
+      var contract_sales_file_name=ajax_assistant(PROJECT_PATH+"lego/lego_storage?servletName=getFileByClusterName",cluster_name_data, false, true, false);//查询文件集群信息
+      var contract_sales_json=JSON.parse(contract_sales_file_name.result);
+      if(0 != contract_sales_file_name.count) {
+        contract_sales_cluster_list_html += 
+          '<li>'+
+            '<a class="upload_attachment_file" href="#" data-cluster="' + contract_sales_json[0].cluster_name + '" data-url="'+PROJECT_PATH+'upload/'+contract_sales_json[0].cluster_name+'.'+contract_sales_json[0].suffix+'">'+
+              '<img src="'+PROJECT_PATH+'upload/'+contract_sales_json[0].cluster_name+'.'+contract_sales_json[0].suffix+'" >'+
+            '</a>'+
+          '</li>';
+      }
+    }
+  }
   var contract_sale_edit_html = 
     '<div class = "modal fade custom_modal" tabindex = "-1" id = "contract_sales_info_modle_prop" role = "dialog" aria-labelledby = "myLargeModalLabel">'+
       '<div class = "modal-dialog modal-lg" role = "document">'+
@@ -1151,27 +1192,7 @@ function contract_sales_info_modle_func(obj) {
               '</div>'+
               '<div class = "col-md-12">'+
                 '<label class = "margin15">采购合同附件</label>'+
-                '<div class = "panel panel-default">'+
-                  '<div class = "panel-body clearfix attch">';
-                    if(0 < contract_sales_cluster_list.length) {
-                      contract_sales_cluster_list = contract_sales_cluster_list.substring(0, contract_sales_cluster_list.length - 1).split(';');
-                      for(var i=0;i<contract_sales_cluster_list.length;i++) {
-                        var data = {
-                          "cluster_name":contract_sales_cluster_list[i]
-                        };
-//                        var contract_sale_file_name=ajax_assistant(PROJECT_PATH+"lego/lego_storage?servletName=getFileByClusterName",data, false, true, false);//查询文件集群信息
-//                        var contract_sales_json=JSON.parse(contract_sale_file_name.result);
-//                        if(0 != contract_sale_file_name.count){
-                          contract_sale_edit_html += 
-                            '<div class = "pull-left file_name has-feedback contract_sale_ml15">'+
-//                                '<img uuid = "'+contract_sales_json[0].cluster_name+'" src = "'+PROJECT_PATH+'upload/'+contract_sales_json[0].cluster_name+'.'+contract_sales_json[0].suffix+'" url = "'+PROJECT_PATH+'upload/'+contract_sales_json[0].cluster_name+'.'+contract_sales_json[0].suffix+'" width = "60" height = "60" class = "img-rounded">'+
-                                '<img src = "a.png" uuid = "' + contract_sales_cluster_list[i] + '" width = "60" height = "60" class = "img-rounded">'+
-                            '</div>';
-//                        }
-                      }
-                    }
-                    contract_sale_edit_html += 
-                  '</div>'+
+                '<div class="panel panel-default" id = "contract_sales_delete_attch">'+
                 '</div>'+
               '</div>'+
             '</div>'+
@@ -1183,6 +1204,9 @@ function contract_sales_info_modle_func(obj) {
       '</div>'+
     '</div>';
   $("body").append(contract_sale_edit_html);
+  upload_attachment_edit_output("#contract_sales_delete_attch");
+  upload_attachment_btn_event_bind("#contract_sales_delete_attch");
+  $("#contract_sales_delete_attch").find("ul").html(contract_sales_cluster_list_html);
   $("#contract_sales_info_modle_prop").modal("show");
   $("#contract_sales_info_modle_prop").on("hidden.bs.modal", function (e) {
     $(this).remove();
@@ -1228,7 +1252,16 @@ function contract_sale_search_btn_func() {
   if (null == contract_sale_search_input_val.match(/^[A-Z]{2,}-[A-Z]{2,}-[0-9]{5,}$/)) {
     alert("请输入正确的合同号！");
     return;
+  }
+  current_offset = 0;
+  contract_sale_search_condition = {};    
+  contract_sale_search_condition = {
+    "contract_code":contract_sale_search_input_val,
+    "rows":rows,
+    "offset":current_offset,
   };
+  contract_sale_server_data_cover();
+  contract_sale_fill_variable_data(); 
 }
 
 function contract_sale_search_fuzzy_btn_func() {
@@ -1237,7 +1270,7 @@ function contract_sale_search_fuzzy_btn_func() {
   var contract_sale_search_product_name_fuzzy=$("#contract_sale_search_product_name_fuzzy").val();
   var contract_sale_search_real_name_fuzzy=$("#contract_sale_search_real_name_fuzzy").val();
   var contract_sale_search_warehouse_uuid=$("#contract_sale_search_warehouse_uuid").val();
-  var contract_sale_search_start_sign_datetime=$("#start_sign_datetime").val();
+  var contract_sale_search_start_sign_datetime=$("#contract_sale_search_start_sign_datetime").val();
   var contract_sale_search_end_sign_datetime=$("#contract_sale_search_end_sign_datetime").val();
   var contract_sale_invoice=$("#contract_sale_invoice").val();
   if ("" != contract_sale_search_product_name_fuzzy) {
@@ -1252,6 +1285,36 @@ function contract_sale_search_fuzzy_btn_func() {
       return;
     }
   }
+  current_offset = 0;
+  contract_sale_search_condition = {};
+  if ("" != contract_sale_buyer) {
+    contract_sale_search_condition["buyer_uuid"] = contract_sale_buyer;  
+  }
+  if ("" != contract_sale_saller) {
+    contract_sale_search_condition["seller_uuid"] = contract_sale_saller;  
+  }
+  if ("" != contract_sale_search_product_name_fuzzy) {
+    contract_sale_search_condition["product_name_fuzzy"] = contract_sale_search_product_name_fuzzy;
+  }
+  if ("" != contract_sale_search_real_name_fuzzy) {
+    contract_sale_search_condition["real_name_fuzzy"] = contract_sale_search_real_name_fuzzy;
+  }
+  if ("" != contract_sale_search_warehouse_uuid) {
+    contract_sale_search_condition["warehouse_uuid"] = contract_sale_search_warehouse_uuid;  
+  }
+  if ("" != contract_sale_search_start_sign_datetime) {
+    contract_sale_search_condition["start_sign_datetime"] = contract_sale_search_start_sign_datetime;  
+  }
+  if ("" != contract_sale_search_end_sign_datetime) {
+    contract_sale_search_condition["end_sign_datetime"] = contract_sale_search_end_sign_datetime;  
+  }
+  if ("" != contract_sale_invoice) {//发票数量
+     
+  }
+  contract_sale_search_condition["rows"] = rows;
+  contract_sale_search_condition["offset"] = current_offset;
+  contract_sale_server_data_cover();
+  contract_sale_fill_variable_data();
 }
 
 function contract_sale_enterprise_data_val() {
@@ -1273,6 +1336,3 @@ function contract_sale_warehouse_data_val() {
   }
   $("#contract_sale_search_warehouse_uuid").html(contract_sale_html);
 }
-
-
-

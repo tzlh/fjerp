@@ -684,7 +684,6 @@ function contract_warehouse_info_modle(obj) {
 }
 
 function contract_warehouse_search(obj) {
-  current_offset = 0;
   var contract_warehouse_contract_input = $("#contract_warehouse_search_input").val();
   if("" == contract_warehouse_contract_input) {
     alert("合同号不能为空");
@@ -694,6 +693,7 @@ function contract_warehouse_search(obj) {
     alert("请输入正确的合同号！");
     return;
   };
+  current_offset = 0;
   search_condition = {};    
   search_condition = {
     "contract_code":contract_warehouse_contract_input,

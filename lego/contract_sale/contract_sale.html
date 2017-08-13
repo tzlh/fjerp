@@ -9,6 +9,7 @@
   <link rel = "stylesheet" href = "../../plugin/jquery_timepicker_addon/1.6.3/jquery-ui-timepicker-addon.css" />
   <link rel = "stylesheet" href="../../plugin/icheck/1.x/skins/all.css" type = "text/css"/>
   <link rel = "stylesheet" href = "../../css/custom_modal.css">
+  <link rel = "stylesheet" href = "../upload_attachment/upload_attachment.css"/>
   <link rel = "stylesheet" href = "contract_sale.css">
   <script src = "../../plugin/jquery/1.12.4/jquery.min.js"></script>    
   <script src = "../../plugin/jquery_ui/1.12.1/jquery-ui.min.js"></script>
@@ -18,7 +19,7 @@
   <script src = "../../plugin/jquery_timepicker_addon/1.6.3/init.js"></script>
   <script src = "../../js/toolkit.js"></script>
   <script src = "../../js/configure.js"></script>
-  <script src = "upload_file.js"></script>
+  <script src = "../upload_attachment/upload_attachment.js" type = "text/javascript" charset = "utf-8"></script>
   <script src = "contract_sale.js"></script>
   <style>
     .file_style {
@@ -55,6 +56,10 @@
       contract_sale_enterprise_data_val();
       //搜索库区
       contract_sale_warehouse_data_val();
+      //分页
+      $(document).on("click", "#contract_sales_pages li", function() {
+        contract_sale_pages_fun($(this));
+      });
       //添加销售合同模态框
       $(document).on("click", "#contract_sales_add_modle", function() {
         contract_sales_add_modle_func();
@@ -92,11 +97,11 @@
         contract_sale_data_screening_func($(this));
       });
       //合同号搜索
-      $(document).on("ifClicked", "#contract_sale_search_btn", function() {
+      $(document).on("click", "#contract_sale_search_btn", function() {
         contract_sale_search_btn_func();
       });
       //合同模糊搜索
-      $(document).on("ifClicked", "#contract_sale_search_fuzzy_btn", function() {
+      $(document).on("click", "#contract_sale_search_fuzzy_btn", function() {
         contract_sale_search_fuzzy_btn_func();
       });
       //复选框
@@ -161,7 +166,7 @@
             <div class = "form-group has-feedback">
               <div class = "input-group">
                 <span class = "input-group-addon">签署时间（起）</span>
-                <input type = "text" class = "form-control widget_datepicker" value = "" id = "contract_sale_search_end_sign_datetime">
+                <input type = "text" class = "form-control widget_datepicker" value = "" id = "contract_sale_search_start_sign_datetime">
               </div>
               <span class = "glyphicon glyphicon-calendar form-control-feedback" ></span>
             </div>
@@ -170,7 +175,7 @@
             <div class = "form-group has-feedback">
               <div class = "input-group">
                 <span class = "input-group-addon">签署时间（止）</span>
-                <input type = "text" class = "form-control widget_datepicker" value = "">
+                <input type = "text" class = "form-control widget_datepicker" id = "contract_sale_search_end_sign_datetime" value = "">
               </div>
               <span class = "glyphicon glyphicon-calendar form-control-feedback" ></span>
             </div>

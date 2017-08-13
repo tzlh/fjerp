@@ -151,7 +151,7 @@ function warehouse_management_add_warehouse_data(obj) {
   var warehouse_add_data = {
     "name":warehouse_name
   };
-      // 调用后台添加接口
+  // 调用后台添加接口
   var warehouse_add_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=addWarehouse";
   var warehouse_add_get_warehouse = ajax_assistant(warehouse_add_url, warehouse_add_data, false, true, false);
   console.log(warehouse_add_get_warehouse);
