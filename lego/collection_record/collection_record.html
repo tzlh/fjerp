@@ -25,18 +25,23 @@
       //日历插件
       widget_datepicker_init();
       //清空原始数据
-//    contract_sale_clear_raw_data();
+      collection_record_clear_raw_data();
       //服务器数据
-//    contract_sale_server_data_cover();
+//    collection_record_server_data_cover();
       //加载数据
-//    contract_sale_fill_variable_data();
+      collection_record_fill_variable_data();
+      //添加收款记录
+      $(document).on("click", "#collection_record_add_modle", function() {
+        collection_record_add_modle_func();
+      });
+      
       
     });
   </script>
 </head>
 <body>
   <div class = "panel panel-primary">
-    <div class = "panel-heading clearfix">收款记录&nbsp;[应收货款&nbsp;:&nbsp;26000]&nbsp;[已收货款&nbsp;:&nbsp;26000]&nbsp;[未收货款&nbsp;:&nbsp;26000]<span class = "glyphicon glyphicon-plus pull-right" id = "contract_sales_add_modle"></span></div>
+    <div class = "panel-heading clearfix">收款记录&nbsp;[应收货款&nbsp;:&nbsp;26000]&nbsp;[已收货款&nbsp;:&nbsp;26000]&nbsp;[未收货款&nbsp;:&nbsp;26000]<span class = "glyphicon glyphicon-plus pull-right" id = "collection_record_add_modle"></span></div>
     <div class = "panel-body">
         <div class = "row">
           <div class = "col-lg-12">
@@ -48,44 +53,37 @@
                   <th>&nbsp;</th>
                 </tr>
               </thead>
-              <tbody id = "">
+              <tbody id = "collection_record_box">
                 <tr>
                   <td>2017-06-04</td>
                   <td>1500</td>
                   <td>
-                    <span class = "glyphicon glyphicon-info-sign contract_sale_ml15"></span>
-                    <span class = "glyphicon glyphicon-pencil contract_sale_ml15"></span>
-                    <span class = "glyphicon glyphicon-remove contract_sale_ml15"></span>
+                    <span class = "glyphicon glyphicon-info-sign collection_record_ml15"></span>
+                    <span class = "glyphicon glyphicon-pencil collection_record_ml15"></span>
+                    <span class = "glyphicon glyphicon-remove collection_record_ml15"></span>
                   </td>
                 </tr>
                 <tr>
                   <td>2017-06-04</td>
                   <td>1500</td>
                   <td>
-                    <span class = "glyphicon glyphicon-info-sign contract_sale_ml15"></span>
-                    <span class = "glyphicon glyphicon-pencil contract_sale_ml15"></span>
-                    <span class = "glyphicon glyphicon-remove contract_sale_ml15"></span>
+                    <span class = "glyphicon glyphicon-info-sign collection_record_ml15"></span>
+                    <span class = "glyphicon glyphicon-pencil collection_record_ml15"></span>
+                    <span class = "glyphicon glyphicon-remove collection_record_ml15"></span>
                   </td>
                 </tr>
                 <tr>
                   <td>2017-06-04</td>
                   <td>1500</td>
                   <td>
-                    <span class = "glyphicon glyphicon-info-sign contract_sale_ml15"></span>
-                    <span class = "glyphicon glyphicon-pencil contract_sale_ml15"></span>
-                    <span class = "glyphicon glyphicon-remove contract_sale_ml15"></span>
+                    <span class = "glyphicon glyphicon-info-sign collection_record_ml15"></span>
+                    <span class = "glyphicon glyphicon-pencil collection_record_ml15"></span>
+                    <span class = "glyphicon glyphicon-remove collection_record_ml15"></span>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
-        </div>
-        <div id = "contract_sales_pages">
-          <nav aria-label="Page navigation" style="text-align: right;">
-            <ul class="pagination">
-              <li class="active"><span href="#">1</span></li>
-            </ul>
-          </nav>
         </div>
       </div>
     </div>

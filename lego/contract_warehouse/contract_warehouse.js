@@ -63,7 +63,7 @@ function contract_warehouse_clear_raw_data() {
  */
 function contract_warehouse_server_data_cover() {
   var totalRows = 0;
-  var contract_warehouse_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getContractWarehousePot";
+  var contract_warehouse_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getContractWarehousePot&data_count=1";
   delete search_condition["rows"];
   delete search_condition["offset"];  
   var warehouse_pot_get_contract = ajax_assistant(contract_warehouse_url, search_condition, false, true, false);
@@ -71,8 +71,8 @@ function contract_warehouse_server_data_cover() {
     if (0 == warehouse_pot_get_contract.count) {
       $("#contract_warehouse_pages").html("");
     } else {
-      var result = JSON.parse(warehouse_pot_get_contract.result);  
-      totalRows = result.length;
+      var result = JSON.parse(warehouse_pot_get_contract.result);
+      totalRows = result[0].count;         
       generate_bootstrap_pagination_ctrl("#contract_warehouse_pages", current_offset, rows, 6, totalRows);
       search_condition["rows"] = rows;
       search_condition["offset"] = current_offset;
@@ -94,7 +94,7 @@ function contract_warehouse_server_data_cover() {
     } else {
       var tmp_arr = new Array();
       var result = JSON.parse(warehouse_pot_get_contract.result);  
-//    console.log(result);
+
       for (var i = 0; i < result.length; i++) {
         tmp_arr[i] = {"contract_code":result[i].contract_code, "lessor_uuid":result[i].lessor_uuid, "leaser_uuid":result[i].leaser_uuid, "start_datetime":result[i].start_datetime, "end_datetime":result[i].end_datetime, "uuid":result[i].uuid};
       }
@@ -242,7 +242,6 @@ function contract_warehouse_add_modle() {
     '</div>';
   $("body").append(contract_warehouse_add_modle);
   upload_attachment_edit_output("#contract_warehouse_add_modle_attch");
-  upload_attachment_btn_event_bind("#contract_warehouse_add_modle_attch");
   $("#contract_warehouse_add_modle").modal("show");
   $("#contract_warehouse_add_modle").on("hidden.bs.modal", function(e) {
     $(this).remove();
@@ -369,6 +368,8 @@ function contract_warehouse_edit_modle(obj) {
     }
     contract_warehouse_file_data = contract_warehouse_file_arr;
     console.log(contract_warehouse_file_data);
+  } else {
+    contract_warehouse_file_data = [];
   }
   var contract_warehouse_edit_html =
       '<div class="modal fade custom_modal" tabindex="-1" role="dialog" id="contract_warehouse_edit_modle" aria-labelledby="myModalLabel">'+
@@ -445,7 +446,6 @@ function contract_warehouse_edit_modle(obj) {
       '</div>';
     $("body").append(contract_warehouse_edit_html);
     upload_attachment_edit_output("#contract_warehouse_edit_attch", contract_warehouse_file_data);
-    upload_attachment_btn_event_bind("#contract_warehouse_edit_attch");
     $("#contract_warehouse_edit_modle").modal("show");
     $("#contract_warehouse_edit_modle").on("hidden.bs.modal", function (e) {
       $(this).remove();
@@ -614,6 +614,8 @@ function contract_warehouse_info_modle(obj) {
       }
     }
     contract_warehouse_file_data = contract_warehouse_file_arr;
+  } else {
+    contract_warehouse_file_data = [];
   }
   var contract_warehouse_edit_html =
     '<div class="modal fade custom_modal" tabindex="-1" role="dialog" id="contract_warehouse_info_modle" aria-labelledby="myModalLabel">'+
@@ -684,7 +686,6 @@ function contract_warehouse_info_modle(obj) {
     '</div>';
     $("body").append(contract_warehouse_edit_html);
     upload_attachment_preview_output("#contract_sales_info_attch", contract_warehouse_file_data);
-    upload_attachment_btn_event_bind("#contract_sales_info_attch");
     $("#contract_warehouse_info_modle").modal("show");
     $("#contract_warehouse_info_modle").on("hidden.bs.modal", function (e) {
       $(this).remove();

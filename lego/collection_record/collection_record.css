@@ -3,7 +3,4 @@
  */
 
 @charset "utf-8";
-.contract_sale_mt20{margin-top: 20px;}
-.contract_sale_ml15{margin-left: 15px;}
-#contract_sales_pages .pagination{margin: 0;}
-.contract_sales_none{display: none;}
+.collection_record_ml15{margin-left: 15px;}
