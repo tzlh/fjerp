@@ -372,12 +372,12 @@ function contract_sales_add_data_func(obj) {
   var contract_sales_deliver_place = obj.parents("#contract_sales_add_modle_prop").find(".contract_sales_deliver_place").val();
   //交货时间
   var contract_sales_deliver_datetime = obj.parents("#contract_sales_add_modle_prop").find(".contract_sales_deliver_datetime").val();
-  if(contract_sales_deliver_datetime.length > 0){
+  if(0 < contract_sales_deliver_datetime.length){
     contract_sales_deliver_datetime += ' 00:00:00';
   }
   //签订时间
   var contract_sales_sign_datetime = obj.parents("#contract_sales_add_modle_prop").find(".contract_sales_sign_datetime").val();
-  if(contract_sales_sign_datetime.length > 0){
+  if(0 < contract_sales_sign_datetime.length){
     contract_sales_sign_datetime += ' 00:00:00';
   }
   //合同损耗
@@ -469,9 +469,9 @@ function contract_sales_add_data_func(obj) {
     };
     contract_sales_data["specification"] = contract_sales_specification;
   };
-  if(0 == contract_sales_specification.length){
-    contract_sales_data["sn_specification"] = "set_null";
-  }
+//if(0 == contract_sales_specification.length){
+//  contract_sales_data["sn_specification"] = "set_null";
+//}
   if(0 < contract_sales_remark.length) {
     if(null == contract_sales_remark.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,128}$/)) {
       alert("请输入正确的备注！");
@@ -479,9 +479,9 @@ function contract_sales_add_data_func(obj) {
     };
     contract_sales_data["remark"] = contract_sales_remark;
   };
-  if(0 == contract_sales_remark.length){
-    contract_sales_data["sn_remark"] = "set_null";
-  }
+//if(0 == contract_sales_remark.length){
+//  contract_sales_data["sn_remark"] = "set_null";
+//}
   //调用接口
   var contract_sales_add_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=addContractTrade";
   var contract_sales_add_get = ajax_assistant(contract_sales_add_url, contract_sales_data, false, true, false);
@@ -919,7 +919,7 @@ function contract_sales_delete_modle_func(obj) {
               '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
               '<h4 class="modal-title">删除销售合同确认</h4>'+
             '</div>'+
-            '<div class="modal-body nopadding-bottom">确认要删除吗？</div>'+
+            '<div class="modal-body nopadding-bottom contract_sales_center">确认要删除吗？</div>'+
             '<div class="modal-footer noborder nopadding-top" style="text-align: center;">'+
             '<button type="button" class="btn btn-danger" id="contract_sales_delete_modle_prop_btn" contract_code = "' + contract_sales_contract_code + '" uuid="' + uuid + '">删除</button>'+
                 '<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>'+

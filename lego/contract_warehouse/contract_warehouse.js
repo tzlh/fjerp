@@ -524,7 +524,7 @@ function contract_warehouse_delete_modle(obj) {
               '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
               '<h4 class="modal-title">删除储罐租赁合同确认</h4>'+
             '</div>'+
-            '<div class="modal-body nopadding-bottom">确认要删除吗？</div>'+
+            '<div class="modal-body nopadding-bottom contract_warehouse_center">确认要删除吗？</div>'+
             '<div class="modal-footer noborder nopadding-top" style="text-align: center;">'+
             '<button type="button" class="btn btn-danger" id="contract_warehouse_delete_btn"  uuid="' + uuid + '">删除</button>'+
                 '<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>'+

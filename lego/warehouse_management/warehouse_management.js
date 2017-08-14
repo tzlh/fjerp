@@ -252,7 +252,7 @@ function warehouse_management_delet_warehouse_modal(obj) {
           '<button type = "button" class = "close" data-dismiss = "modal" aria-label="Close"><span aria-hidden = "true">&times;</span></button>'+
           '<h4 class = "modal-title" id="myModalLabel">删除库区确认</h4>'+
         '</div>'+
-        '<div class = "modal-body text-center nopadding-bottom">确定要删除库区吗？</div>'+
+        '<div class = "modal-body text-center nopadding-bottom warehouse_management_center">确定要删除库区吗？</div>'+
         '<div class = "modal-footer" style = "text-align: center;">'+
           '<button type = "button" class = "btn btn-danger warehouse_management_delet_data" uuid = "' + uuid + '">删除</button>'+
           '<button type = "button" class = "btn btn-default" data-dismiss = "modal">取消</button>'+
