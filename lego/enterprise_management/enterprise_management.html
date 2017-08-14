@@ -21,28 +21,9 @@
   <script src = "../../js/toolkit.js" type = "text/javascript" charset = "utf-8"></script>
   <script src = "../upload_attachment/upload_attachment.js" type = "text/javascript" charset = "utf-8"></script>
   <script src = "enterprise_management.js" type = "text/javascript" charset = "utf-8"></script>
-<style>
-  .file_style {
-      display: block;
-      width: 60px;
-      height: 60px;
-      position: absolute;
-      left: 0;
-      top: 0;
-      opacity: 0;
-  }
-  .file_name{width: 60px;margin-bottom: 15px !important;}
-  .delet_file_btn{
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 20px;
-    height: 20px;
-    padding: 0 !important;
-  }
-</style>
 <script type = "text/javascript">
 $(document).ready(function() {
+  enterprise_management_output("#enterprise_management_content")
   //日历插件
   widget_datepicker_init();
   // 复选框
@@ -80,16 +61,27 @@ $(document).ready(function() {
   // 修改企业信息模态框
   $(document).on("click", "#enterprise_management_edit_info", function() {
     var uuid = $(this).data("uuid");
+    enterprise_management_get_certificate(uuid);
     enterprise_management_edit_modal(uuid);
-  });
+    enterprise_management_search_condition = {};
+    enterprise_management_server_data_cover();
+    enterprise_management_fill_variable_data();
+    enterprise_management_show_or_hide();
+ });
   // 修改企业信息
   $(document).on("click", "#enterprise_management_edit_modal .edit_btn", function() {
-    var uuid = $(this).data("uuid");
-    enterprise_management_edit_info(uuid);
+    var enterprise_management_edit_uuid = $(this);
+    enterprise_management_edit_info(enterprise_management_edit_uuid);
   });
   // 企业详情模态框
   $(document).on("click", "#enterprise_management_detail_info", function() {
+    var uuid = $(this).data("uuid");
+    enterprise_management_get_certificate(uuid);
     enterprise_management_detail_modal();
+    enterprise_management_search_condition = {};
+    enterprise_management_server_data_cover();
+    enterprise_management_fill_variable_data();
+    enterprise_management_show_or_hide();
   });
   // 删除企业信息模态框
   $(document).on("click", "#enterprise_management_delete_info", function() {
@@ -114,186 +106,7 @@ $(document).ready(function() {
 <title></title>
 </head>
 <body>
-  <div class = "row">
-    <div class = "col-md-12">
-      <div class = "panel panel-primary">
-        <div class = "panel-heading clearfix">
-          <h3 class = "panel-title pull-left">企业信息管理</h3>
-          <span title = "添加企业信息" class="glyphicon glyphicon-plus pull-right" id = "enterprise_management_add_info"></span>
-        </div>
-        <div class = "panel-body">
-          <div class = "row" id = "enterprise_management_search">
-            <div class = "col-md-4">
-              <div class = "input-group">
-                  <span class = "input-group-addon">企业名称</span>
-                  <input type = "text" class = "form-control name" aria-label = "Amount (to the nearest dollar)">
-                  <span class = "input-group-btn" id = "enterprise_management_search_name">
-                    <button class = "btn btn-primary" type = "button">
-                      <span class = "glyphicon glyphicon-search"></span>
-                    </button>
-                  </span>
-              </div>
-            </div>
-            <div class = "col-md-3">
-              <div class = "input-group">
-                  <span class = "input-group-addon">企业简称</span>
-                  <input type = "text" class = "form-control short_name" aria-label = "Amount (to the nearest dollar)">
-                  <span class = "input-group-btn" id = "enterprise_management_search_short_name">
-                    <button class = "btn btn-primary" type = "button">
-                      <span class = "glyphicon glyphicon-search"></span>
-                    </button>
-                  </span>
-              </div>
-            </div>
-            <div class = "col-md-3">
-              <button class = "btn btn-primary" id = "enterprise_management_all_list" type = "button">全部列出</button>
-            </div>
-          </div>
-          <div class = "panel panel-primary enterprise_management_mt20" id = "enterprise_management_condition">
-            <div class = "panel-heading clearfix">
-              <h3 class = "panel-title pull-left">数据显示筛选</h3>
-            </div>
-            <div class = "panel-body">
-              <div class = "row companyInfo">
-                <div class = "col-md-2">
-                  <label class = "name change">
-                    <input type = "checkbox" style = "height: 22px;width: 22px;">
-                                            企业名称
-                  </label>
-                </div>
-                <div class = "col-md-2">
-                  <label class = "short_name change">
-                    <input type = "checkbox" style = "height: 22px;width: 22px;" checked = "checked">
-                                            企业简称
-                  </label>
-                </div>
-                <div class = "col-md-2">
-                  <label class = "registered_capital change">
-                    <input type = "checkbox" style = "height: 22px;width: 22px;" checked = "checked">
-                                            注册资金
-                  </label>
-                </div>
-                <div class = "col-md-2">
-                  <label class = "establish_datetime change">
-                    <input type = "checkbox" style = "height: 22px;width: 22px;" checked = "checked">
-                                            成立时间
-                  </label>
-                </div>
-                <div class = "col-md-2">
-                  <label class = "tax_identification_number change">
-                    <input type = "checkbox" style = "height: 22px;width: 22px;">
-                                            纳税识别号
-                  </label>
-                </div>
-                <div class = "col-md-2">
-                  <label class = "bank_name change">
-                    <input type = "checkbox" style = "height: 22px;width: 22px;">
-                                            开户银行
-                  </label>
-                </div>
-              </div>
-              <div class = "row margintop15 companyInfo">
-                <div class = "col-md-2">
-                  <label class = "account change">
-                    <input type = "checkbox" style="height: 22px;width: 22px;">
-                                            银行账号
-                  </label>
-                </div>
-                <div class = "col-md-2">
-                  <label class = "telephone_number change">
-                    <input type = "checkbox" style = "height: 22px;width: 22px;" checked = "checked">
-                                            联系电话
-                  </label>
-                </div>
-                <div class = "col-md-2">
-                  <label class = "address change">
-                    <input type = "checkbox" style = "height: 22px;width: 22px;" checked = "checked">
-                                            地址
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class = "panel panel-default panel-primary" style = "margin-bottom: 0;">
-              <div class = "panel-heading" role = "tab" id = "headingOne">
-                  <h4 class="panel-title">搜索结果</h4>
-              </div>
-              <div id = "collapsetwo" class = "panel-collapse collapse in" role = "tabpanel" aria-labelledby = "headingOne">
-                  <div class = "panel-body">
-                    <table class = "table tablea" id = "enterprise_management_list">
-                      <thead>
-                        <tr>
-                          <th class = "name">企业名称</th>
-                          <th class = "short_name">企业简称</th>
-                          <th class = "registered_capital">注册资金（元）</th>
-                          <th class = "establish_datetime">成立时间</th>
-                          <th class = "tax_identification_number">纳税识别号</th>
-                          <th class = "bank_name">开户银行</th>
-                          <th class = "account">银行账号</th>
-                          <th class = "telephone_number">联系电话</th>
-                          <th class = "address">地址</th>
-                          <th></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>福记能源科技上海有限公司</td>
-                          <td>5000.0000</td>
-                          <td>2016-03-02</td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td>
-                            <span class = "glyphicon glyphicon-info-sign"></span>
-                            <span class = "glyphicon glyphicon-pencil" id = "editCompanyBtn" data-toggle = "modal" data-target = "#editCompanyInfo"></span>
-                            <span class = "glyphicon glyphicon-remove"></span>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>福记能源科技上海有限公司</td>
-                          <td>5000.0000</td>
-                          <td>2016-03-02</td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td>
-                            <span class = "glyphicon glyphicon-info-sign"></span>
-                            <span class = "glyphicon glyphicon-pencil" id = "editCompanyBtn" data-toggle = "modal" data-target = "#editCompanyInfo"></span>
-                            <span class = "glyphicon glyphicon-remove"></span>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <div id = "enterprise_management_pages">
-                      <!--<nav aria-label="Page navigation" style="text-align: right;">
-                        <ul class="pagination">
-                           <li>
-                              <a href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                              </a>
-                            </li>
-                            <li class="active"><span href="#">1</span></li>
-                           <li>
-                              <a href="#" aria-label="Next">
-                               <span aria-hidden="true">&raquo;</span>
-                              </a>
-                            </li>
-                        </ul>
-                      </nav>-->
-                    </div>
-                  </div>
-              </div>
-            </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div class = "row" id = "enterprise_management_content"></div>
 </body>
 </html>
 
