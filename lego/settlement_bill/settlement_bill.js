@@ -262,10 +262,10 @@ function all_should_change(obj) {
   var price_corresponding = obj.parents(".modal-body").find(".price_corresponding").val();
   var amount_corresponding = obj.parents(".modal-body").find(".amount_corresponding").val();
   if (0 < volume_corresponding.length && 0 < price_corresponding.length && 0 < amount_corresponding.length) {
-    obj.parents(".modal-body").find(".total_price").val(volume_corresponding*price_corresponding);
-    obj.parents(".modal-body").find(".return_money_should").val(volume_corresponding*price_corresponding-amount_corresponding);
+    obj.parents(".modal-body").find(".total_price").val((volume_corresponding*price_corresponding).toFixed(2));
+    obj.parents(".modal-body").find(".return_money_should").val((volume_corresponding*price_corresponding-amount_corresponding).toFixed(2));
   } else if (0 < volume_corresponding.length && 0 < price_corresponding.length && 0 >= amount_corresponding.length) {
-    obj.parents(".modal-body").find(".total_price").val(volume_corresponding*price_corresponding);
+    obj.parents(".modal-body").find(".total_price").val((volume_corresponding*price_corresponding).toFixed(2));
     obj.parents(".modal-body").find(".return_money_should").val("");
   } else {
     obj.parents(".modal-body").find(".total_price,.return_money_should").val("");
@@ -884,4 +884,89 @@ function settlement_bill_info_modle_func(obj) {
   $("#settlement_bill_info_modle_prop").on("hidden.bs.modal", function(e) {
     $(this).remove();
   });
+}
+
+
+function settlement_bill_output(output_id) {
+  var content = 
+'  <div class = "panel panel-primary ">'+
+'    <div class = "panel-heading clearfix">物流对账单<span class = "glyphicon glyphicon-plus pull-right" id = "settlement_bill_add_modle"></span></div>'+
+'    <div class = "panel-body">'+
+'        <div class = "row">'+
+'          <div class = "col-lg-12">'+
+'            <table cellpadding = "0" cellspacing = "0" border = "0" width = "100%" class = "table">'+
+'              <thead>'+
+'                <tr>'+
+'                  <th>装货量</th>'+
+'                  <th>卸货量</th>'+
+'                  <th>约定损耗</th>'+
+'                  <th>实际损耗</th>'+
+'                  <th>结算量</th>'+
+'                  <th>货物单价</th>'+
+'                  <th>发票数量</th>'+
+'                  <th>合计价格</th>'+
+'                  <th>已付货款</th>'+
+'                  <th>应退货款</th>'+
+'                  <th></th>'+
+'                </tr>'+
+'              </thead>'+
+'              <tbody class = "settlement_bill_box">'+
+'                <tr>'+
+'                  <td>300</td>'+
+'                  <td>300</td>'+
+'                  <td>3‰</td>'+
+'                  <td>2‰</td>'+
+'                  <td>3000</td>'+
+'                  <td>3000</td>'+
+'                  <td>3000</td>'+
+'                  <td>3000</td>'+
+'                  <td>3600</td>'+
+'                  <td>300</td>'+
+'                  <td>'+
+'                    <span class = "glyphicon glyphicon-info-sign settlement_bill_ml15"></span>'+
+'                    <span class = "glyphicon glyphicon-pencil settlement_bill_ml15"></span>'+
+'                    <span class = "glyphicon glyphicon-remove settlement_bill_ml15"></span>'+
+'                  </td>'+
+'                </tr>'+
+'                <tr>'+
+'                  <td>300</td>'+
+'                  <td>300</td>'+
+'                  <td>3‰</td>'+
+'                  <td>2‰</td>'+
+'                  <td>3000</td>'+
+'                  <td>3000</td>'+
+'                  <td>3000</td>'+
+'                  <td>3000</td>'+
+'                  <td>3600</td>'+
+'                  <td>300</td>'+
+'                  <td>'+
+'                    <span class = "glyphicon glyphicon-info-sign settlement_bill_ml15"></span>'+
+'                    <span class = "glyphicon glyphicon-pencil settlement_bill_ml15"></span>'+
+'                    <span class = "glyphicon glyphicon-remove settlement_bill_ml15"></span>'+
+'                  </td>'+
+'                </tr>'+
+'                <tr>'+
+'                  <td>300</td>'+
+'                  <td>300</td>'+
+'                  <td>3‰</td>'+
+'                  <td>2‰</td>'+
+'                  <td>3000</td>'+
+'                  <td>3000</td>'+
+'                  <td>3000</td>'+
+'                  <td>3000</td>'+
+'                  <td>3600</td>'+
+'                  <td>300</td>'+
+'                  <td>'+
+'                    <span class = "glyphicon glyphicon-info-sign settlement_bill_ml15"></span>'+
+'                    <span class = "glyphicon glyphicon-pencil settlement_bill_ml15"></span>'+
+'                    <span class = "glyphicon glyphicon-remove settlement_bill_ml15"></span>'+
+'                  </td>'+
+'                </tr>'+
+'              </tbody>'+
+'            </table>'+
+'          </div>'+
+'        </div>'+
+'      </div>'+
+'    </div>';
+    $(output_id).html(content);
 }
