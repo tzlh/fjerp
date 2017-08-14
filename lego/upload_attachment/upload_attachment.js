@@ -266,7 +266,7 @@ function get_upload_attachment_data(output_id) {
     var obj = li[i];
     var invoice_cluster = $(obj).find("a").attr("data-cluster");
     if (undefined != invoice_cluster) {
-      ret_data[i] = {"cluster": invoice_cluster};
+      ret_data.push({"cluster": invoice_cluster});
     }    
   }
   return ret_data;
