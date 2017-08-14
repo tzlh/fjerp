@@ -2200,7 +2200,7 @@ function enterprise_management_detail_modal() {
               '</div>'+
             '</div>'+
             '<div class="modal-footer">'+
-              '<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>'+
+              '<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>'+
             '</div>'+
           '</div>'+
         '</div>'+
@@ -2260,10 +2260,10 @@ function enterprise_management_delete_info(uuid) {
   var delete_enterprise_url = PROJECT_PATH + "lego/lego_crm?servletName=removeEnterpriseInformation";
   var delete_enterprise_param_data = {};
   delete_enterprise_param_data["uuid"] = uuid;
-  var org_structure_delete_enterprise = ajax_assistant(delete_enterprise_url, delete_enterprise_param_data, false, true, false);
-  console.log(org_structure_delete_enterprise);
-  if (1 == org_structure_delete_enterprise.status) {
-    $("#org_structure_delete_enterprise").modal("hide");
+  var enterprise_management_delete_enterprise = ajax_assistant(delete_enterprise_url, delete_enterprise_param_data, false, true, false);
+  console.log(enterprise_management_delete_enterprise);
+  if (1 == enterprise_management_delete_enterprise.status) {
+    $("#enterprise_management_delete_modal").modal("hide");
     enterprise_management_search_condition = {};
     enterprise_management_server_data_cover();
     enterprise_management_fill_variable_data();
