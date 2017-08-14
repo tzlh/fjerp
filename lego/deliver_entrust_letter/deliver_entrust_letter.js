@@ -99,7 +99,6 @@ function deliver_entrust_letter_get_letter(uuid) {
   var get_deliver_entrust_letter_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getDeliverEntrustLetter";
   var get_deliver_entrust_letter_param_data = {};
   get_deliver_entrust_letter_param_data["uuid"] = uuid;
-  get_deliver_entrust_letter_param_data["contract_code"] = "ZS-TZGYL-17813261";
   var deliver_entrust_letter_get= ajax_assistant(get_deliver_entrust_letter_url, get_deliver_entrust_letter_param_data, false, true, false);
   console.log(deliver_entrust_letter_get);
   if (1 == deliver_entrust_letter_get.status) {
@@ -214,7 +213,7 @@ function deliver_entrust_letter_add_data() {
       return;
     }
   }
-  if ("" == deliver_datetime) {
+  if (null == deliver_datetime.match(/^(?:(?!0000)[0-9]{4}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[0-9]{2}(?:0[48]|[2468][048]|[13579][26])|(?:0[48]|[2468][048]|[13579][26])00)-02-29)\s+([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/)) {
     alert("请选择提货时间！");
     return;
   }
@@ -316,7 +315,7 @@ function deliver_entrust_letter_edit_data(uuid, contract_code) {
       return;
     }
   }
-  if ("" == deliver_datetime) {
+  if (null == deliver_datetime.match(/^(?:(?!0000)[0-9]{4}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[0-9]{2}(?:0[48]|[2468][048]|[13579][26])|(?:0[48]|[2468][048]|[13579][26])00)-02-29)\s+([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/)) {
     alert("请选择提货时间！");
     return;
   }

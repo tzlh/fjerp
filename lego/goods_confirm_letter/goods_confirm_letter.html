@@ -57,14 +57,12 @@
       // 删除货物确认函模态框
       $(document).on("click", ".goods_confirm_letter_delete", function() {
         var uuid = $(this).data("uuid");
-        var contract_code = $(this).data("contract_code");
-        goods_confirm_letter_delete_modal(uuid, contract_code);
+        goods_confirm_letter_delete_modal(uuid);
       });
       // 删除货物确认函
       $(document).on("click", "#goods_confirm_letter_delete_modal .remove", function() {
         var uuid = $(this).data("uuid");
-        var contract_code = $(this).contract_code;
-        goods_confirm_letter_delete_data(uuid, contract_code);
+        goods_confirm_letter_delete_data(uuid);
       });
     });
   </script>

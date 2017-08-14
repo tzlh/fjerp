@@ -64,7 +64,7 @@ function goods_confirm_letter_fill_variable_data() {
  * 获取货物确认函
  */
 function goods_confirm_letter_server_data_cover() {
-  var get_goods_confirm_letter_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getDeliverEntrustLetter";
+  var get_goods_confirm_letter_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getGoodsConfirmLetter";
   var get_goods_confirm_letter_param_data = {};
   get_goods_confirm_letter_param_data["contract_code"] = "ZS-TZGYL-17813261";
   var goods_confirm_letter_get= ajax_assistant(get_goods_confirm_letter_url, get_goods_confirm_letter_param_data, false, true, false);
@@ -77,8 +77,8 @@ function goods_confirm_letter_server_data_cover() {
       console.log(result);
       var goods_confirm_letter_data_arr = new Array();
       for (var i = 0; i < result.length; i++) {
-        var deliver_datetime = result[i].deliver_datetime.substring(0,result[i].deliver_datetime.indexOf(" "));
-        goods_confirm_letter_data_arr[i] = {"place": result[i].place,"deliver_datetime": deliver_datetime,"uuid": result[i].uuid,"contract_code": result[i].contract_code};
+        var create_datetime = result[i].create_datetime.substring(0,result[i].create_datetime.indexOf(" "));
+        goods_confirm_letter_data_arr[i] = {"numerical_order": i+1,"create_time": create_datetime,"uuid": result[i].uuid,"contract_code": result[i].contract_code};
       }
       goods_confirm_letter_data = goods_confirm_letter_data_arr;
     }
@@ -90,17 +90,14 @@ function goods_confirm_letter_server_data_cover() {
  */
 function goods_confirm_letter_get_letter(uuid) {
   console.log(uuid);
-  var get_goods_confirm_letter_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getDeliverEntrustLetter";
+  var get_goods_confirm_letter_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getGoodsConfirmLetter";
   var get_goods_confirm_letter_param_data = {};
   get_goods_confirm_letter_param_data["uuid"] = uuid;
-  get_goods_confirm_letter_param_data["contract_code"] = "ZS-TZGYL-17813261";
   var goods_confirm_letter_get= ajax_assistant(get_goods_confirm_letter_url, get_goods_confirm_letter_param_data, false, true, false);
   console.log(goods_confirm_letter_get);
   if (1 == goods_confirm_letter_get.status) {
     var result = JSON.parse(goods_confirm_letter_get.result);
     console.log(result);
-    var deliver_datetime = result[0].deliver_datetime.substring(0,result[0].deliver_datetime.indexOf(" "));
-    current_goods_confirm_letter_data = {"place": result[0].place,"deliver_datetime": deliver_datetime,"uuid": result[0].uuid,"contract_code": result[0].contract_code};
     var goods_confirm_letter_file_arr =new Array();
     var cluster_list_all = result[0].cluster_list;
     if (null != cluster_list_all) {
@@ -142,10 +139,11 @@ function goods_confirm_letter_add_modal() {
 '             <h4 class = "modal-title" id = "myModalLabel">添加货物确认函</h4>'+
 '           </div>'+
 '           <div class = "modal-body">'+
-'             <div class = "col-md-12">'+
-'               <label class = "">货物确认函附件</label>'+
-'               <div class = "panel panel-default" id = "goods_confirm_letter_add_attch"></div>'+
-'             </div>'+
+'              <div class = "row">'+
+'                 <div class = "col-md-12">'+
+'                   <label class = "">货物确认函附件</label>'+
+'                 <div class = "panel panel-default" id = "goods_confirm_letter_add_attch"></div>'+
+'               </div>'+
 '           </div>'+
 '           <div class = "modal-footer">'+
 '             <button type = "button" class = "btn btn-primary add_btn">添加</button>'+
@@ -173,11 +171,9 @@ function goods_confirm_letter_add_data() {
     }    
   }
   console.log(goods_confirm_letter_list);
-  var add_goods_confirm_letter_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=addDeliverEntrustLetter";
+  var add_goods_confirm_letter_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=addGoodsConfirmLetter";
   var add_goods_confirm_letter_param_data = {};
   add_goods_confirm_letter_param_data["contract_code"] = "ZS-TZGYL-17813261";
-  add_goods_confirm_letter_param_data["place"] = place;
-  add_goods_confirm_letter_param_data["deliver_datetime"] = deliver_datetime;
   if("" != goods_confirm_letter_list) {
     add_goods_confirm_letter_param_data["cluster_list"] = goods_confirm_letter_list;
   }
@@ -206,27 +202,6 @@ function goods_confirm_letter_edit_modal(uuid, contract_code) {
 '             </div>'+
 '             <div class = "modal-body">'+
 '               <div class = "row">'+
-'                 <div class = "col-md-6">'+
-'                   <form>'+
-'                     <div class = "form-group">'+
-'                       <label for = "">提货地点</label>'+
-'                       <input type = "text" class = "form-control place" value = "' + current_goods_confirm_letter_data.place + '" aria-label = "Amount (to the nearest dollar)">'+
-'                     </div>'+
-'                   </form>'+
-'                 </div>'+
-'                 <div class = "col-md-6">'+
-'                   <form>'+
-'                     <div class = "form-group">'+
-'                       <label for = "">提货时间</label>'+
-'                       <div class = "input-group">'+
-'                         <input type = "text" class = "widget_datepicker form-control start_deliver_datetime" value = "' + current_goods_confirm_letter_data.deliver_datetime + '" aria-label = "Amount (to the nearest dollar)">'+
-'                         <span class = "input-group-addon">'+
-'                           <span class = "glyphicon glyphicon-calendar"></span>'+
-'                         </span>'+
-'                       </div>'+
-'                     </div>'+
-'                   </form>'+
-'                 </div>'+
 '                 <div class = "col-md-12">'+
 '                   <label class = "">货物确认函附件</label>'+
 '                   <div class = "panel panel-default" id = "goods_confirm_letter_edit_attch"></div>'+
@@ -250,8 +225,6 @@ function goods_confirm_letter_edit_modal(uuid, contract_code) {
 
 function goods_confirm_letter_edit_data(uuid, contract_code) {
   console.log(uuid);
-  var place = $("#goods_confirm_letter_edit_modal .place").val();
-  var deliver_datetime = $("#goods_confirm_letter_edit_modal .start_deliver_datetime").val() + ' 00:00:00';
   var goods_confirm_letter_li = $("#goods_confirm_letter_edit_attch ul").children("li");
   var goods_confirm_letter_list = "";
   for (var i = 0; i < goods_confirm_letter_li.length; i++) {
@@ -262,25 +235,10 @@ function goods_confirm_letter_edit_data(uuid, contract_code) {
     }    
   }
   console.log(goods_confirm_letter_list);
-  if ("" == place) {
-    alert("请输入提货地点！");
-    return;
-  } else {
-    if (null == place.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)) {
-      alert("提货地点格式不正确！");
-      return;
-    }
-  }
-  if ("" == deliver_datetime) {
-    alert("请选择提货时间！");
-    return;
-  }
-  var edit_goods_confirm_letter_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=modifyDeliverEntrustLetter";
+  var edit_goods_confirm_letter_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=modifyGoodsConfirmLetter";
   var edit_goods_confirm_letter_param_data = {};
   edit_goods_confirm_letter_param_data["contract_code"] = contract_code;
   edit_goods_confirm_letter_param_data["idColumnValue"] = uuid;
-  edit_goods_confirm_letter_param_data["place"] = place;
-  edit_goods_confirm_letter_param_data["deliver_datetime"] = deliver_datetime;
   if ("" != goods_confirm_letter_list) {
     edit_goods_confirm_letter_param_data["newClusterList"] = goods_confirm_letter_list;
   }
@@ -303,33 +261,12 @@ function goods_confirm_letter_detail_modal() {
 '     <div class = "modal fade custom_modal" id = "goods_confirm_letter_detail_modal" tabindex = "-1">'+
 '       <div class = "modal-dialog" role = "document">'+
 '         <div class = "modal-content">'+
-'             <div class = "modal-header bg-primary">'+
-'               <button type = "button" class = "close" data-dismiss = "modal" aria-label = "Close"><span aria-hidden = "true">&times;</span></button>'+
-'               <h4 class = "modal-title" id = "myModalLabel">货物确认函详情</h4>'+
-'             </div>'+
-'             <div class = "modal-body">'+
-'               <div class = "row">'+
-'                 <div class = "col-md-6">'+
-'                   <form>'+
-'                     <div class = "form-group">'+
-'                       <label for = "">提货地点</label>'+
-'                       <input type = "text" class = "form-control place" disabled = "disabled" value = "' + current_goods_confirm_letter_data.place + '" aria-label = "Amount (to the nearest dollar)">'+
-'                     </div>'+
-'                   </form>'+
-'                 </div>'+
-'                 <div class = "col-md-6">'+
-'                   <form>'+
-'                     <div class = "form-group">'+
-'                       <label for = "">提货时间</label>'+
-'                       <div class = "input-group">'+
-'                         <input type = "text" class = "widget_datepicker form-control start_deliver_datetime" disabled = "disabled" value = "' + current_goods_confirm_letter_data.deliver_datetime + '" aria-label = "Amount (to the nearest dollar)">'+
-'                         <span class = "input-group-addon">'+
-'                           <span class = "glyphicon glyphicon-calendar"></span>'+
-'                         </span>'+
-'                       </div>'+
-'                     </div>'+
-'                   </form>'+
-'                 </div>'+
+'            <div class = "modal-header bg-primary">'+
+'              <button type = "button" class = "close" data-dismiss = "modal" aria-label = "Close"><span aria-hidden = "true">&times;</span></button>'+
+'              <h4 class = "modal-title" id = "myModalLabel">货物确认函详情</h4>'+
+'            </div>'+
+'            <div class = "modal-body">'+
+'              <div class = "row">'+
 '                 <div class = "col-md-12">'+
 '                   <label class = "">货物确认函附件</label>'+
 '                   <div class = "panel panel-default" id = "goods_confirm_letter_detail_attch"></div>'+
@@ -353,7 +290,7 @@ function goods_confirm_letter_detail_modal() {
 /**
  * 删除货物确认函
  */
-function goods_confirm_letter_delete_modal(uuid, contract_code) {
+function goods_confirm_letter_delete_modal(uuid) {
   var content = 
     '<div class="modal fade bs-example-modal-sm custom_modal" id="goods_confirm_letter_delete_modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'+
       '<div class="modal-dialog modal-sm" role="document">'+
@@ -377,8 +314,8 @@ function goods_confirm_letter_delete_modal(uuid, contract_code) {
   });
 }
 
-function goods_confirm_letter_delete_data(uuid, contract_code) {
-  var delete_goods_confirm_letter_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=removeDeliverEntrustLetter";
+function goods_confirm_letter_delete_data(uuid) {
+  var delete_goods_confirm_letter_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=removeGoodsConfirmLetter";
   var delete_goods_confirm_letter_param_data = {};
   delete_goods_confirm_letter_param_data["idColumnValue"] = uuid;
   var org_structure_delete_goods_confirm_letter= ajax_assistant(delete_goods_confirm_letter_url, delete_goods_confirm_letter_param_data, false, true, false);
