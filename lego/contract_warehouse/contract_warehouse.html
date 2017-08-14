@@ -8,6 +8,7 @@
   <link rel = "stylesheet" href = "../../plugin/jquery_ui/1.12.1/jquery-ui.min.css">
   <link rel = "stylesheet" href = "../../plugin/jquery_timepicker_addon/1.6.3/jquery-ui-timepicker-addon.css" />
   <link rel = "stylesheet" href = "../../css/custom_modal.css">
+  <link rel = "stylesheet" href = "../upload_attachment/upload_attachment.css"/>
   <link rel = "stylesheet" href = "contract_warehouse.css">
   <script src = "../../plugin/jquery/1.12.4/jquery.min.js"></script>    
   <script src = "../../plugin/jquery_ui/1.12.1/jquery-ui.min.js"></script>
@@ -16,28 +17,8 @@
   <script src = "../../plugin/jquery_timepicker_addon/1.6.3/init.js"></script>
   <script src = "../../js/toolkit.js"></script>
   <script src = "../../js/configure.js"></script>
-  <script src = "upload_file.js"></script>
+  <script src = "../upload_attachment/upload_attachment.js" type = "text/javascript" charset = "utf-8"></script>
   <script src = "contract_warehouse.js"></script>
-  <style>
-    .file_style {
-        display: block;
-        width: 60px;
-        height: 60px;
-        position: absolute;
-        left: 0;
-        top: 0;
-        opacity: 0;
-    }
-    .file_name{width: 60px;margin-bottom: 15px !important;}
-    .delet_file_btn{
-      position: absolute;
-      right: 0;
-      top: 0;
-      width: 20px;
-      height: 20px;
-      padding: 0 !important;
-    }
-  </style>
   <script>
     $(document).ready(function() {
       contract_warehouse_output("#contract_warehouse_content");

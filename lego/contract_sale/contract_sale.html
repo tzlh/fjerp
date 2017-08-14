@@ -9,6 +9,7 @@
   <link rel = "stylesheet" href = "../../plugin/jquery_timepicker_addon/1.6.3/jquery-ui-timepicker-addon.css" />
   <link rel = "stylesheet" href="../../plugin/icheck/1.x/skins/all.css" type = "text/css"/>
   <link rel = "stylesheet" href = "../../css/custom_modal.css">
+  <link rel = "stylesheet" href = "../upload_attachment/upload_attachment.css"/>
   <link rel = "stylesheet" href = "contract_sale.css">
   <script src = "../../plugin/jquery/1.12.4/jquery.min.js"></script>    
   <script src = "../../plugin/jquery_ui/1.12.1/jquery-ui.min.js"></script>
@@ -18,28 +19,8 @@
   <script src = "../../plugin/jquery_timepicker_addon/1.6.3/init.js"></script>
   <script src = "../../js/toolkit.js"></script>
   <script src = "../../js/configure.js"></script>
-  <script src = "upload_file.js"></script>
+  <script src = "../upload_attachment/upload_attachment.js" type = "text/javascript" charset = "utf-8"></script>
   <script src = "contract_sale.js"></script>
-  <style>
-    .file_style {
-        display: block;
-        width: 60px;
-        height: 60px;
-        position: absolute;
-        left: 0;
-        top: 0;
-        opacity: 0;
-    }
-    .file_name{width: 60px;margin-bottom: 15px !important;}
-    .delet_file_btn{
-      position: absolute;
-      right: 0;
-      top: 0;
-      width: 20px;
-      height: 20px;
-      padding: 0 !important;
-    }
-  </style>
   <script>
     $(document).ready(function() {
 //    contract_sale_output("#contract_sale_content");
@@ -47,12 +28,18 @@
       widget_datepicker_init();
       //清空原始数据
       contract_sale_clear_raw_data();
+      //服务器数据
+      contract_sale_server_data_cover();
       //加载数据
       contract_sale_fill_variable_data();
       //搜索获取购买方和销售方
       contract_sale_enterprise_data_val();
       //搜索库区
       contract_sale_warehouse_data_val();
+      //分页
+      $(document).on("click", "#contract_sales_pages li", function() {
+        contract_sale_pages_fun($(this));
+      });
       //添加销售合同模态框
       $(document).on("click", "#contract_sales_add_modle", function() {
         contract_sales_add_modle_func();
@@ -90,13 +77,14 @@
         contract_sale_data_screening_func($(this));
       });
       //合同号搜索
-      $(document).on("ifClicked", "#contract_sale_search_btn", function() {
+      $(document).on("click", "#contract_sale_search_btn", function() {
         contract_sale_search_btn_func();
       });
       //合同模糊搜索
-      $(document).on("ifClicked", "#contract_sale_search_fuzzy_btn", function() {
+      $(document).on("click", "#contract_sale_search_fuzzy_btn", function() {
         contract_sale_search_fuzzy_btn_func();
       });
+      //复选框
       $("[type='checkbox']").iCheck({
         checkboxClass: 'icheckbox_square-blue',
       });
@@ -104,7 +92,6 @@
   </script>
 </head>
 <body>
-  <div id = "contract_sale_content"></div>
   <div class = "panel panel-primary">
     <div class = "panel-heading clearfix">销售合同管理<span class = "glyphicon glyphicon-plus pull-right" id = "contract_sales_add_modle"></span></div>
     <div class = "panel-body">
@@ -126,14 +113,14 @@
           </div>
           <div class = "col-lg-2">
             <div class = "input-group">
-              <span class = "input-group-addon" id = "contract_sale_search_product_name_fuzzy">名称</span>
-              <input type = "text" class = "form-control">
+              <span class = "input-group-addon">名称</span>
+              <input type = "text" class = "form-control" id = "contract_sale_search_product_name_fuzzy">
             </div>
           </div>
           <div class = "col-lg-2">
             <div class = "input-group">
-              <span class = "input-group-addon" id = "contract_sale_search_real_name_fuzzy">品类</span>
-              <input type = "text" class = "form-control">
+              <span class = "input-group-addon">品类</span>
+              <input type = "text" class = "form-control" id = "contract_sale_search_real_name_fuzzy">
             </div>
           </div>
           <div class = "col-lg-2">
@@ -156,30 +143,25 @@
         </div>
         <div class = "row contract_sale_mt20">
           <div class = "col-lg-2">
-            <div class = "input-group">
-              <div class = "form-group has-feedback">
-                <div class = "input-group">
-                  <span class = "input-group-addon">签署时间（起）</span>
-                  <input type = "text" class = "form-control" value = "" id = "contract_sale_search_end_sign_datetime">
-                </div>
-                <span class = "glyphicon glyphicon-calendar form-control-feedback" ></span>
+            <div class = "form-group has-feedback">
+              <div class = "input-group">
+                <span class = "input-group-addon">签署时间（起）</span>
+                <input type = "text" class = "form-control widget_datepicker" value = "" id = "contract_sale_search_start_sign_datetime">
               </div>
+              <span class = "glyphicon glyphicon-calendar form-control-feedback" ></span>
             </div>
           </div>
           <div class = "col-lg-2">
-            <div class = "input-group">
-              <div class = "form-group has-feedback">
-                <div class = "input-group">
-                  <span class = "input-group-addon">签署时间（止）</span>
-                  <input type = "text" class = "form-control" value = "">
-                </div>
-                <span class = "glyphicon glyphicon-calendar form-control-feedback" ></span>
+            <div class = "form-group has-feedback">
+              <div class = "input-group">
+                <span class = "input-group-addon">签署时间（止）</span>
+                <input type = "text" class = "form-control widget_datepicker" id = "contract_sale_search_end_sign_datetime" value = "">
               </div>
+              <span class = "glyphicon glyphicon-calendar form-control-feedback" ></span>
             </div>
           </div>
           <div class = "col-lg-2" id = "contract_sale_search_fuzzy_btn">
             <div class = "input-group">
-              <!--<input type="button" name="" id="" value="搜索" class = "btn btn-primary"/>-->
               <button type = "button" class = "btn btn-primary">搜索</button>
             </div>
           </div>

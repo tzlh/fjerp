@@ -151,7 +151,7 @@ function warehouse_management_add_warehouse_data(obj) {
   var warehouse_add_data = {
     "name":warehouse_name
   };
-      // 调用后台添加接口
+  // 调用后台添加接口
   var warehouse_add_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=addWarehouse";
   var warehouse_add_get_warehouse = ajax_assistant(warehouse_add_url, warehouse_add_data, false, true, false);
   console.log(warehouse_add_get_warehouse);
@@ -252,7 +252,7 @@ function warehouse_management_delet_warehouse_modal(obj) {
           '<button type = "button" class = "close" data-dismiss = "modal" aria-label="Close"><span aria-hidden = "true">&times;</span></button>'+
           '<h4 class = "modal-title" id="myModalLabel">删除库区确认</h4>'+
         '</div>'+
-        '<div class = "modal-body text-center nopadding-bottom">确定要删除库区吗？</div>'+
+        '<div class = "modal-body text-center nopadding-bottom warehouse_management_center">确定要删除库区吗？</div>'+
         '<div class = "modal-footer" style = "text-align: center;">'+
           '<button type = "button" class = "btn btn-danger warehouse_management_delet_data" uuid = "' + uuid + '">删除</button>'+
           '<button type = "button" class = "btn btn-default" data-dismiss = "modal">取消</button>'+
