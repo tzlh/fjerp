@@ -3,107 +3,6 @@
  */
 
 /**
- * 输出上传附件（编辑）
- * @param output_id 输出内容id
- * @param file_data 文件数据的json对象。需要一个key：file_name。
- */
-function upload_attachment_edit_output(output_id, file_data) {
-  var data = "";
-  if (null != file_data) {
-    for (var i = 0; i < file_data.length; i++) {
-      var data_cluster = file_data[i].file_name.substring(0, file_data[i].file_name.indexOf("."));
-      var img_src = get_display_imgage_src(file_data[i].file_name);
-      data += '<li>';
-      data += '  <a class = "upload_attachment_file" href = "#" data-cluster = "' + data_cluster + '" data-url = "' + PROJECT_PATH + 'upload/' + file_data[i].file_name + '">';
-      data += '    <button class="btn btn-danger"><span class="glyphicon glyphicon-remove  btn-danger"></span></button>';
-      data += '    <img src = "' + img_src + '">';
-      data += '  </a>';
-      data += '</li>';
-    }
-  }
-  var content = 
-    '<div class = "upload_attachment_area">'+
-    '  <div class = "upload_attachment_btn upload_attachment_btn_left"><span class = "glyphicon glyphicon-chevron-left"></span></div>'+
-    '  <div class = "upload_attachment_content">'+
-    '    <input class = "upload_attachment_file_choose" type = "file" multiple = "multiple" accept = "image/png, aplication/zip, text/plain, application/pdf,  image/jpeg, image/jpeg, image/jpeg, image/jp2, image/gif" />'+
-    '    <div class = "upload_attachment_box">'+
-    '      <ul>'+
-    '        <li>'+
-    '          <a class = "upload_attachment_add" href = "#">'+
-    '            <img src = "../../img/add_attachment.png">'+
-    '          </a>'+
-    '        </li>'+ data +
-    '      </ul>'+
-    '    </div>'+
-    '  </div>'+
-    '  <div class = "upload_attachment_btn upload_attachment_btn_right"><span class = "glyphicon glyphicon-chevron-right"></span></div>'+
-    '</div>';
-    $(output_id).html(content);
-    // 绑定新页面打开附件事件
-    $(output_id).find(".upload_attachment_file").unbind("click");
-    $(output_id).find(".upload_attachment_file").click(function() {
-      window.open($(this).attr("data-url"));
-    });
-    // 绑定删除附件按钮事件
-    $(output_id).find(".upload_attachment_file button").unbind("click");
-    $(output_id).find(".upload_attachment_file button").click(function() {
-      $(this).parent().parent().remove();
-    });
-    upload_attachment_btn_event_bind(output_id);
-}
-
-/**
- * 输出上传附件（查看）
- * @param output_id 输出内容id
- * @param file_data 文件数据的json对象。需要一个key：file_name。
- *   file_name: 文件上传后的文件名，比如：a29cs8d82ka29cs8d82ka29cs8d82k22.png
- */
-function upload_attachment_preview_output(output_id, file_data) {
-  var data = "<ul>";
-  for (var i = 0; i < file_data.length; i++) {
-    var img_src = get_display_imgage_src(file_data[i].file_name);
-    data += '<li>';
-    data += '  <a class = "upload_attachment_file" href = "#" data-url = "' + PROJECT_PATH + 'upload/' + file_data[i].file_name + '">';
-    data += '    <img src = "' + img_src + '">';
-    data += '  </a>';
-    data += '</li>';
-  }
-  data += '</ul>';
-  var content = 
-    '<div class = "upload_attachment_area">'+
-    '  <div class = "upload_attachment_btn upload_attachment_btn_left"><span class = "glyphicon glyphicon-chevron-left"></span></div>'+
-    '  <div class = "upload_attachment_content">'+
-    '    <input class = "upload_attachment_file_choose" type = "file" multiple = "multiple" accept = "image/png, aplication/zip, text/plain, application/pdf,  image/jpeg, image/jpeg, image/jpeg, image/jp2, image/gif" />'+
-    '    <div class = "upload_attachment_box">' + data + '</div>'+
-    '  </div>'+
-    '  <div class = "upload_attachment_btn upload_attachment_btn_right"><span class = "glyphicon glyphicon-chevron-right"></span></div>'+
-    '</div>';
-    $(output_id).html(content);
-    // 绑定新页面打开附件事件
-    $(output_id).find(".upload_attachment_file").unbind("click");
-    $(output_id).find(".upload_attachment_file").click(function() {
-      window.open($(this).attr("data-url"));
-    });
-    // 绑定左右滚动按钮事件
-    $(output_id).find(".upload_attachment_btn_left").click(function() {
-      var left_value = parseInt($(output_id).find(".upload_attachment_box").css("left"));
-      var step = left_value + $(output_id).find("a").width();
-      if (0 <= step) {
-        step = 0;
-      }
-      $(output_id).find(".upload_attachment_box").css("left", step);
-    });
-    $(output_id).find(".upload_attachment_btn_right").click(function() {
-      var li_list = $(output_id).find("ul").children("li");
-      var left_value = parseInt($(output_id).find(".upload_attachment_box").css("left"));
-      var step = left_value - $(output_id).find("a").width();
-      if ($(output_id).find("a").width() * li_list.length - $(output_id).find("a").width() > Math.abs(step)) {
-        $(output_id).find(".upload_attachment_box").css("left", step);
-      }
-    });
-}
-
-/**
  * 根据后缀获取图片显示的src
  * @param file_name 文件名
  */
@@ -252,4 +151,123 @@ function upload_attachment_btn_event_bind(output_id) {
       $(output_id).find(".upload_attachment_box").css("left", step);
     }
   });
+}
+
+/**
+ * 输出上传附件（查看）
+ * @param output_id 输出内容id
+ * @param file_data 文件数据的json对象。需要一个key：file_name。
+ *   file_name: 文件上传后的文件名，比如：a29cs8d82ka29cs8d82ka29cs8d82k22.png
+ */
+function upload_attachment_preview_output(output_id, file_data) {
+  var data = "<ul>";
+  for (var i = 0; i < file_data.length; i++) {
+    var img_src = get_display_imgage_src(file_data[i].file_name);
+    data += '<li>';
+    data += '  <a class = "upload_attachment_file" href = "#" data-url = "' + PROJECT_PATH + 'upload/' + file_data[i].file_name + '">';
+    data += '    <img src = "' + img_src + '">';
+    data += '  </a>';
+    data += '</li>';
+  }
+  data += '</ul>';
+  var content = 
+    '<div class = "upload_attachment_area">'+
+    '  <div class = "upload_attachment_btn upload_attachment_btn_left"><span class = "glyphicon glyphicon-chevron-left"></span></div>'+
+    '  <div class = "upload_attachment_content">'+
+    '    <input class = "upload_attachment_file_choose" type = "file" multiple = "multiple" accept = "image/png, aplication/zip, text/plain, application/pdf,  image/jpeg, image/jpeg, image/jpeg, image/jp2, image/gif" />'+
+    '    <div class = "upload_attachment_box">' + data + '</div>'+
+    '  </div>'+
+    '  <div class = "upload_attachment_btn upload_attachment_btn_right"><span class = "glyphicon glyphicon-chevron-right"></span></div>'+
+    '</div>';
+    $(output_id).html(content);
+    // 绑定新页面打开附件事件
+    $(output_id).find(".upload_attachment_file").unbind("click");
+    $(output_id).find(".upload_attachment_file").click(function() {
+      window.open($(this).attr("data-url"));
+    });
+    // 绑定左右滚动按钮事件
+    $(output_id).find(".upload_attachment_btn_left").click(function() {
+      var left_value = parseInt($(output_id).find(".upload_attachment_box").css("left"));
+      var step = left_value + $(output_id).find("a").width();
+      if (0 <= step) {
+        step = 0;
+      }
+      $(output_id).find(".upload_attachment_box").css("left", step);
+    });
+    $(output_id).find(".upload_attachment_btn_right").click(function() {
+      var li_list = $(output_id).find("ul").children("li");
+      var left_value = parseInt($(output_id).find(".upload_attachment_box").css("left"));
+      var step = left_value - $(output_id).find("a").width();
+      if ($(output_id).find("a").width() * li_list.length - $(output_id).find("a").width() > Math.abs(step)) {
+        $(output_id).find(".upload_attachment_box").css("left", step);
+      }
+    });
+}
+
+/**
+ * 输出上传附件（编辑）
+ * @param output_id 输出内容id
+ * @param file_data 文件数据的json对象。需要一个key：file_name。
+ */
+function upload_attachment_edit_output(output_id, file_data) {
+  var data = "";
+  if (null != file_data) {
+    for (var i = 0; i < file_data.length; i++) {
+      var data_cluster = file_data[i].file_name.substring(0, file_data[i].file_name.indexOf("."));
+      var img_src = get_display_imgage_src(file_data[i].file_name);
+      data += '<li>';
+      data += '  <a class = "upload_attachment_file" href = "#" data-cluster = "' + data_cluster + '" data-url = "' + PROJECT_PATH + 'upload/' + file_data[i].file_name + '">';
+      data += '    <button class="btn btn-danger"><span class="glyphicon glyphicon-remove  btn-danger"></span></button>';
+      data += '    <img src = "' + img_src + '">';
+      data += '  </a>';
+      data += '</li>';
+    }
+  }
+  var content = 
+    '<div class = "upload_attachment_area">'+
+    '  <div class = "upload_attachment_btn upload_attachment_btn_left"><span class = "glyphicon glyphicon-chevron-left"></span></div>'+
+    '  <div class = "upload_attachment_content">'+
+    '    <input class = "upload_attachment_file_choose" type = "file" multiple = "multiple" accept = "image/png, aplication/zip, text/plain, application/pdf,  image/jpeg, image/jpeg, image/jpeg, image/jp2, image/gif" />'+
+    '    <div class = "upload_attachment_box">'+
+    '      <ul>'+
+    '        <li>'+
+    '          <a class = "upload_attachment_add" href = "#">'+
+    '            <img src = "../../img/add_attachment.png">'+
+    '          </a>'+
+    '        </li>'+ data +
+    '      </ul>'+
+    '    </div>'+
+    '  </div>'+
+    '  <div class = "upload_attachment_btn upload_attachment_btn_right"><span class = "glyphicon glyphicon-chevron-right"></span></div>'+
+    '</div>';
+    $(output_id).html(content);
+    // 绑定新页面打开附件事件
+    $(output_id).find(".upload_attachment_file").unbind("click");
+    $(output_id).find(".upload_attachment_file").click(function() {
+      window.open($(this).attr("data-url"));
+    });
+    // 绑定删除附件按钮事件
+    $(output_id).find(".upload_attachment_file button").unbind("click");
+    $(output_id).find(".upload_attachment_file button").click(function() {
+      $(this).parent().parent().remove();
+    });
+    upload_attachment_btn_event_bind(output_id);
+}
+
+/**
+ * 获取附件的数据
+ * @param output_id 输出内容id
+ * return json对象数组
+ */
+function get_upload_attachment_data(output_id) {
+  var ret_data = new Array();
+  var li = $("" + output_id + " ul").children("li");
+  for (var i = 0; i < li.length; i++) {
+    var obj = li[i];
+    var invoice_cluster = $(obj).find("a").attr("data-cluster");
+    if (undefined != invoice_cluster) {
+      ret_data[i] = {"cluster": invoice_cluster};
+    }    
+  }
+  return ret_data;
 }
