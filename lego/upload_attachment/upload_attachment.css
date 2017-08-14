@@ -2,6 +2,10 @@
  * @author yuanhang
  */
 
+.upload_attachment_area {
+  height: 80px;
+}
+
 .upload_attachment_content {
   width: calc(100% - 40px);
   height: 80px;
