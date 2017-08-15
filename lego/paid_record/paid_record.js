@@ -450,7 +450,8 @@ function paid_record_delete_data(uuid) {
 
 function paid_record_output(output_id) {
   var content =
-    '<div class = "panel-heading clearfix" id = "paid_record_paid">收款记录&nbsp;[应收货款&nbsp;:&nbsp;26000]&nbsp;[已收货款&nbsp;:&nbsp;26000]&nbsp;[未收货款&nbsp;:&nbsp;26000]<span class = "glyphicon glyphicon-plus pull-right" contract_code = "ZS-TZGYL-17813261" id = "paid_record_add_modle"></span></div>'+
+' <div class = "panel panel-primary">'+
+'  <div class = "panel-heading clearfix" id = "paid_record_paid">收款记录&nbsp;[应收货款&nbsp;:&nbsp;26000]&nbsp;[已收货款&nbsp;:&nbsp;26000]&nbsp;[未收货款&nbsp;:&nbsp;26000]<span class = "glyphicon glyphicon-plus pull-right" contract_code = "ZS-TZGYL-17813261" id = "paid_record_add_modle"></span></div>'+
 '    <div class = "panel-body">'+
 '        <div class = "row">'+
 '          <div class = "col-lg-12">'+
@@ -494,6 +495,7 @@ function paid_record_output(output_id) {
 '            </table>'+
 '          </div>'+
 '        </div>'+
-'      </div>';
+'      </div>'+
+'    </div>';
   $(output_id).html(content);
 }
