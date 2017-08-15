@@ -20,8 +20,11 @@
   <script src = "../../js/toolkit.js"></script>
   <script src = "../../js/configure.js"></script>
   <script src = "../upload_attachment/upload_attachment.js" type = "text/javascript" charset = "utf-8"></script>
+  <!--收款记录-->
+  <script src = "../paid_record/paid_record.js"></script>
   <!--物流合同-->
   <script src = "../contract_logistics/contract_logistics.js"></script>
+  <!--本页销售合同-->
   <script src = "contract_sale_all_penle.js"></script>
   <script src = "contract_sale.js"></script>
   <script>
@@ -91,13 +94,9 @@
       $("[type='checkbox']").iCheck({
         checkboxClass: 'icheckbox_square-blue',
       });
+      //收款记录
+      
       //物流合同
-      //清空原始数据
-      contract_logistics_clear_raw_data();
-      //服务器数据
-      contract_logistics_server_data_cover();
-      //加载数据
-      contract_logistics_fill_variable_data();   
     });
   </script>
 </head>
