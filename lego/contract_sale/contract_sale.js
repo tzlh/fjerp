@@ -1214,7 +1214,7 @@ function contract_sales_info_modle_func(obj) {
 
 function contract_sale_open_info_func(obj) {
   var contract_sales_contract_code = obj.attr("contract_code");
-  var contract_sales_html = '<tr class = "contract_sale_all_panel"><td colspan="11"><div class = "contract_sale_records_checkbox">收款记录</div><div class = "contract_sale_logistics_checkbox">物流合同</div><div class = "contract_sale_transport_checkbox">车船信息</div><div class = "contract_sale_pick_checkbox">提货委托函</div><div class = "contract_sale_confirm_checkbox">货物确认函</div><div class = "contract_sale_settlement_checkbox">销售结算函</div></td></tr>';
+  var contract_sales_html = contract_sale_all_penle;
   if (obj.hasClass("active")) {
     obj.find(".glyphicon").removeClass("glyphicon-chevron-down");
     obj.removeClass("active");
@@ -1231,6 +1231,10 @@ function contract_sale_open_info_func(obj) {
       }
     }
   }
+  //插入物流合同 
+  contract_logistics_output("#contract_logistics_content");
+  $("#contract_logistics_add_modle").attr("trade_contract_code",contract_sales_contract_code);
+  contract_logistics_trade_contract_code = contract_sales_contract_code;
 }
 
 function contract_sale_data_screening_func(obj) {

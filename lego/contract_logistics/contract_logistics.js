@@ -1,7 +1,7 @@
 /**
  * @author wangdi
  */
-
+var contract_logistics_trade_contract_code = ""
 /**
  * 附件
  */
@@ -64,7 +64,7 @@ function contract_logistics_clear_raw_data() {
 function contract_logistics_server_data_cover() {
   //获取物流合同
   var server_data = {
-    "trade_contract_code":"ZS-TZGYL-17813261"
+    "trade_contract_code":contract_logistics_trade_contract_code
   };
   var contract_logistics_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getContractLogistics";
   var contract_logistics_get_contract = ajax_assistant(contract_logistics_url, server_data, false, true, false);
@@ -80,7 +80,7 @@ function contract_logistics_server_data_cover() {
       var contract_logistics_result = JSON.parse(contract_logistics_get_contract.result);  
       console.log(contract_logistics_result);
       for (var i = 0; i < contract_logistics_result.length; i++) {
-        tmp_arr[i] = {"trade_contract_code":"ZS-TZGYL-17813261", "contract_code":contract_logistics_result[i].contract_code, "employer_uuid":contract_logistics_result[i].employer_uuid, "logistics_uuid":contract_logistics_result[i].logistics_uuid, "carrier_type":contract_logistics_result[i].carrier_type, "product_name":contract_logistics_result[i].product_name, "load_place":contract_logistics_result[i].load_place, "unload_place":contract_logistics_result[i].unload_place, "contract_ullage":contract_logistics_result[i].contract_ullage, "freight":contract_logistics_result[i].freight, "quantity":contract_logistics_result[i].quantity, "uuid":contract_logistics_result[i].uuid};
+        tmp_arr[i] = {"trade_contract_code":contract_logistics_trade_contract_code, "contract_code":contract_logistics_result[i].contract_code, "employer_uuid":contract_logistics_result[i].employer_uuid, "logistics_uuid":contract_logistics_result[i].logistics_uuid, "carrier_type":contract_logistics_result[i].carrier_type, "product_name":contract_logistics_result[i].product_name, "load_place":contract_logistics_result[i].load_place, "unload_place":contract_logistics_result[i].unload_place, "contract_ullage":contract_logistics_result[i].contract_ullage, "freight":contract_logistics_result[i].freight, "quantity":contract_logistics_result[i].quantity, "uuid":contract_logistics_result[i].uuid};
       }
       contract_logistics_data["data"] = tmp_arr;
     }
@@ -151,8 +151,8 @@ function contract_logistics_fill_variable_data() {
 }
 
 function contract_logistics_add_modle_func(obj) {
-//var trade_contract_code = obj.attr("trade_contract_code");
-  var trade_contract_code = "ZS-TZGYL-17813261";
+  var trade_contract_code = obj.attr("trade_contract_code");
+//var trade_contract_code = "ZS-TZGYL-17813261";
   var contract_logistics_html = 
       '<div class = "modal fade custom_modal" tabindex = "-1" id = "contract_logistics_add_modle_prop" role = "dialog" aria-labelledby = "myLargeModalLabel">'+
         '<div class = "modal-dialog modal-lg" role = "document">'+
@@ -1162,4 +1162,88 @@ function contract_logistics_open_info_func(obj) {
     obj.addClass("active");
     obj.parent().parent().after(contract_logistics_html);
   }
+}
+
+function contract_logistics_output(output_id) {
+  var content = 
+    '<div class = "panel panel-primary ">'+
+'    <div class = "panel-heading clearfix">物流合同<span class = "glyphicon glyphicon-plus pull-right" id = "contract_logistics_add_modle"></span></div>'+
+'    <div class = "panel-body">'+
+'        <div class = "row">'+
+'          <div class = "col-lg-12">'+
+'            <table cellpadding = "0" cellspacing = "0" border = "0" width = "100%" class = "table">'+
+'              <thead>'+
+'                <tr>'+
+'                  <th>展开详情</th>'+
+'                  <th>使用企业</th>'+
+'                  <th>物流企业</th>'+
+'                  <th>物流载体</th>'+
+'                  <th>货品</th>'+
+'                  <th>装货地点</th>'+
+'                  <th>卸货地点</th>'+
+'                  <th>合同损耗（‰）</th>'+
+'                  <th>运费（元）</th>'+
+'                  <th>运量（吨）</th>'+
+'                  <th>&nbsp;</th>'+
+'                </tr>'+
+'              </thead>'+
+'              <tbody class = "contract_logistics_box">'+
+'                <tr>'+
+'                  <td><button type = "button" class = "btn btn-info btn-xs"><span class = "glyphicon glyphicon-chevron-up"></span></button></td>'+
+'                  <td>福记</td>'+
+'                  <td>细语</td>'+
+'                  <td>加技术</td>'+
+'                  <td>METB</td>'+
+'                  <td>舟山</td>'+
+'                  <td>上海</td>'+
+'                  <td>2</td>'+
+'                  <td>3600</td>'+
+'                  <td>3600</td>'+
+'                  <td>'+
+'                    <span class = "glyphicon glyphicon-info-sign contract_logistics_ml15"></span>'+
+'                    <span class = "glyphicon glyphicon-pencil contract_logistics_ml15"></span>'+
+'                    <span class = "glyphicon glyphicon-remove contract_logistics_ml15"></span>'+
+'                  </td>'+
+'                </tr>'+
+'                <tr>'+
+'                  <td><button type = "button" class = "btn btn-info btn-xs"><span class = "glyphicon glyphicon-chevron-up"></span></button></td>'+
+'                  <td>福记</td>'+
+'                  <td>细语</td>'+
+'                  <td>加技术</td>'+
+'                  <td>METB</td>'+
+'                  <td>舟山</td>'+
+'                  <td>上海</td>'+
+'                  <td>2</td>'+
+'                  <td>3600</td>'+
+'                  <td>3600</td>'+
+'                  <td>'+
+'                    <span class = "glyphicon glyphicon-info-sign contract_logistics_ml15"></span>'+
+'                    <span class = "glyphicon glyphicon-pencil contract_logistics_ml15"></span>'+
+'                    <span class = "glyphicon glyphicon-remove contract_logistics_ml15"></span>'+
+'                  </td>'+
+'                </tr>'+
+'                <tr>'+
+'                  <td><button type = "button" class = "btn btn-info btn-xs"><span class = "glyphicon glyphicon-chevron-up"></span></button></td>'+
+'                  <td>福记</td>'+
+'                  <td>细语</td>'+
+'                  <td>加技术</td>'+
+'                  <td>METB</td>'+
+'                  <td>舟山</td>'+
+'                  <td>上海</td>'+
+'                  <td>2</td>'+
+'                  <td>3600</td>'+
+'                  <td>3600</td>'+
+'                  <td>'+
+'                    <span class = "glyphicon glyphicon-info-sign contract_logistics_ml15"></span>'+
+'                    <span class = "glyphicon glyphicon-pencil contract_logistics_ml15"></span>'+
+'                    <span class = "glyphicon glyphicon-remove contract_logistics_ml15"></span>'+
+'                  </td>'+
+'                </tr>'+
+'              </tbody>'+
+'            </table>'+
+'          </div>'+
+'        </div>'+
+'      </div>'+
+'    </div>';
+    $(output_id).html(content);
 }

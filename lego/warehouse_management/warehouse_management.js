@@ -185,7 +185,7 @@ function warehouse_management_edit_warehouse_modal(obj) {
     }
   }
   var warehouse_management_html = 
-  '<div class = "modal fade custom_modal custom_modal" id = "warehouse_management_prop_edit" tabindex = "-1" role = "dialog" aria-labelledby = "myModalLabel">'+
+  '<div class = "modal fade custom_modal" id = "warehouse_management_prop_edit" tabindex = "-1" role = "dialog" aria-labelledby = "myModalLabel">'+
     '<div class = "modal-dialog modal-sm" role = "document">'+
       '<div class = "modal-content">'+
         '<div class = "modal-header bg-primary">'+
@@ -357,19 +357,19 @@ function warehouse_management_add_warehouse_pot_data(obj) {
   if (null == storage_tank_style.match(/^[12]$/)) {
     alert("请选择正确的储罐类型");
     return;
-  };
+  }
   if (null == storage_tank_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)) {
     alert("请输入正确的储罐名称");
     return;
-  };
+  }
   if (null == effective_capacity.match(/^[0-9]+\.{0,1}[0-9]{0,4}$/)) {
     alert("请输入正确的有效容量");
     return;
-  };
+  }
   if (null == billing_capacity.match(/^[0-9]+\.{0,1}[0-9]{0,4}$/)) {
     alert("请输入正确的计费容量");
     return;
-  };
+  }
   //添加的参数
   var warehouse_m_pot_data = {
     "warehouse_uuid":warehouse_uuid,
