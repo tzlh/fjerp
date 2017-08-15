@@ -447,3 +447,53 @@ function paid_record_delete_data(uuid) {
     alert("删除失败");
   }
 }
+
+function paid_record_output(output_id) {
+  var content =
+    '<div class = "panel-heading clearfix" id = "paid_record_paid">收款记录&nbsp;[应收货款&nbsp;:&nbsp;26000]&nbsp;[已收货款&nbsp;:&nbsp;26000]&nbsp;[未收货款&nbsp;:&nbsp;26000]<span class = "glyphicon glyphicon-plus pull-right" contract_code = "ZS-TZGYL-17813261" id = "paid_record_add_modle"></span></div>'+
+'    <div class = "panel-body">'+
+'        <div class = "row">'+
+'          <div class = "col-lg-12">'+
+'            <table cellpadding = "0" cellspacing = "0" border = "0" width = "100%" class = "table">'+
+'              <thead id = "paid_record_thead">'+
+'                <tr>'+
+'                  <th>收款时间</th>'+
+'                  <th>收款金额（元）</th>'+
+'                  <th>&nbsp;</th>'+
+'                </tr>'+
+'              </thead>'+
+'              <tbody id = "paid_record_box">'+
+'                <tr>'+
+'                  <td>2017-06-04</td>'+
+'                  <td>1500</td>'+
+'                  <td>'+
+'                    <span class = "glyphicon glyphicon-info-sign paid_record_ml15"></span>'+
+'                    <span class = "glyphicon glyphicon-pencil paid_record_ml15"></span>'+
+'                    <span class = "glyphicon glyphicon-remove paid_record_ml15"></span>'+
+'                  </td>'+
+'                </tr>'+
+'                <tr>'+
+'                  <td>2017-06-04</td>'+
+'                  <td>1500</td>'+
+'                  <td>'+
+'                    <span class = "glyphicon glyphicon-info-sign paid_record_ml15"></span>'+
+'                    <span class = "glyphicon glyphicon-pencil paid_record_ml15"></span>'+
+'                    <span class = "glyphicon glyphicon-remove paid_record_ml15"></span>'+
+'                  </td>'+
+'                </tr>'+
+'                <tr>'+
+'                  <td>2017-06-04</td>'+
+'                  <td>1500</td>'+
+'                  <td>'+
+'                    <span class = "glyphicon glyphicon-info-sign paid_record_ml15"></span>'+
+'                    <span class = "glyphicon glyphicon-pencil paid_record_ml15"></span>'+
+'                    <span class = "glyphicon glyphicon-remove paid_record_ml15"></span>'+
+'                  </td>'+
+'                </tr>'+
+'              </tbody>'+
+'            </table>'+
+'          </div>'+
+'        </div>'+
+'      </div>';
+  $(output_id).html(content);
+}
