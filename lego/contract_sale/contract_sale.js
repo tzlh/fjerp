@@ -1231,6 +1231,9 @@ function contract_sale_open_info_func(obj) {
       }
     }
   }
+  //收款记录
+  paid_record_output("#paid_record_content");
+//$("#contract_logistics_add_modle").attr("trade_contract_code",contract_sales_contract_code);
   //插入物流合同 
   contract_logistics_output("#contract_logistics_content");
   $("#contract_logistics_add_modle").attr("trade_contract_code",contract_sales_contract_code);
