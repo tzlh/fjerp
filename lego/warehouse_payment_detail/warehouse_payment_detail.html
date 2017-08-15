@@ -15,43 +15,14 @@
   <script src = "warehouse_payment_detail.js" type = "text/javascript" charset = "utf-8"></script>
   <script type = "text/javascript">
   $(document).ready(function() {
-    contact_management_output("#contact_management_content");
     // 初始化
-    contact_management_clear_raw_data();
-    // 服务器数据
-    contact_management_server_enterprise_data_cover();
-    //contact_management_server_data_cover();
+    warehouse_payment_detail_clear_raw_data();
     // 赋值
-    contact_management_fill_variable_enterprise_data();
-    //contact_management_fill_variable_data();
-    // 分页
-    $(document).on("click", "#contact_management_pages li", function() {
-      var contact_management_pages = $(this);
-      contact_management_pages_fun(contact_management_pages);
-    });
-    // 点击企业搜索
-    $(document).on("click", "#contact_management_enterprise_search_btn", function() {
-      contact_management_search_enterprise_name();
-    });
-    // 点击联系人姓名搜索
-    $(document).on("click", "#contact_management_contact_name_search", function() {
-      contact_management_search_contact_name();
-    });
-    // 添加联系人
-    $(document).on("click", "#contact_management_add_contact", function(){
-      contact_management_add_contact();
-    });
-    // 删除模态框
-    $(document).on("click", ".contact_management_delete", function(){
-      var uuid = $(this).data("uuid");
-      contact_management_delete_contact(uuid);
-    });
-    // 删除
-    $(document).on("click", "#contact_management_delete_modal .remove", function(){
-      var uuid = $(this).data("uuid");
-      contact_management_delete_data(uuid);
-    });
-    
+    warehouse_payment_detail_fill_variable_data();
+    // 获取企业信息
+    warehouse_payment_detail_get_enterprise();
+    // 获取合同
+    warehouse_payment_detail_get_contract();
   }); 
   </script>
   <title></title>
