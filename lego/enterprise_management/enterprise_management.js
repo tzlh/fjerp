@@ -283,7 +283,7 @@ function enterprise_management_server_data_cover() {
           console.log(result_invoice);
         }
         var establish_datetime = result[i].establish_datetime.substring(0,result[i].establish_datetime.indexOf(" "));
-        company_data_arr[i] = {"name": result[i].name,"short_name": result[i].short_name,"registered_capital": result[i].registered_capital,"establish_datetime": establish_datetime,"tax_identification_number": result_invoice[0].tax_identification_number,"bank_name": result_invoice[0].bank_name,"account": result_invoice[0].account,"telephone_number": result_invoice[0].telephone_number,"address": result_invoice[0].address,"uuid": result[i].uuid};
+        company_data_arr.push({"name": result[i].name,"short_name": result[i].short_name,"registered_capital": result[i].registered_capital,"establish_datetime": establish_datetime,"tax_identification_number": result_invoice[0].tax_identification_number,"bank_name": result_invoice[0].bank_name,"account": result_invoice[0].account,"telephone_number": result_invoice[0].telephone_number,"address": result_invoice[0].address,"uuid": result[i].uuid});
       }
       company_data["data"] = company_data_arr;
       console.log(company_data);
@@ -945,7 +945,7 @@ function enterprise_management_get_certificate(uuid) {
                 var invoice_cluster_name = invoice_file_result[0].cluster_name;
                 var invoice_suffix = invoice_file_result[0].suffix;
                 var file_name = invoice_cluster_name + '.' + invoice_suffix;
-                invoice_file_arr[j] = {"file_name": file_name};
+                invoice_file_arr.push({"file_name": file_name});
               }
             }
             invoice_file_data = invoice_file_arr;
@@ -987,7 +987,7 @@ function enterprise_management_get_certificate(uuid) {
                 var institutional_cluster_name = institutional_file_result[0].cluster_name;
                 var institutional_suffix = institutional_file_result[0].suffix;
                 var file_name = institutional_cluster_name + '.' + institutional_suffix;
-                institutional_file_arr[j] = {"file_name": file_name};
+                institutional_file_arr.push({"file_name": file_name});
               }
             }
             institutional_file_data = institutional_file_arr;
@@ -1029,7 +1029,7 @@ function enterprise_management_get_certificate(uuid) {
                 var hazardous_cluster_name = hazardous_file_result[0].cluster_name;
                 var hazardous_suffix = hazardous_file_result[0].suffix;
                 var file_name = hazardous_cluster_name + '.' + hazardous_suffix;
-                hazardous_file_arr[j] = {"file_name": file_name};
+                hazardous_file_arr.push({"file_name": file_name});
               }
             }
             hazardous_file_data = hazardous_file_arr;
@@ -1071,7 +1071,7 @@ function enterprise_management_get_certificate(uuid) {
                 var idcard_cluster_name = idcard_file_result[0].cluster_name;
                 var idcard_suffix = idcard_file_result[0].suffix;
                 var file_name = idcard_cluster_name + '.' + idcard_suffix;
-                idcard_file_arr[j] = {"file_name": file_name};
+                idcard_file_arr.push({"file_name": file_name});
               }
             }
             idcard_file_data = idcard_file_arr;
@@ -1113,7 +1113,7 @@ function enterprise_management_get_certificate(uuid) {
                 var account_cluster_name = account_file_result[0].cluster_name;
                 var account_suffix = account_file_result[0].suffix;
                 var file_name = account_cluster_name + '.' + account_suffix;
-                account_file_arr[j] = {"file_name": file_name};
+                account_file_arr.push({"file_name": file_name});
               }
             }
             account_file_data = account_file_arr;
@@ -1155,7 +1155,7 @@ function enterprise_management_get_certificate(uuid) {
                 var safety_cluster_name = safety_file_result[0].cluster_name;
                 var safety_suffix = safety_file_result[0].suffix;
                 var file_name = safety_cluster_name + '.' + safety_suffix;
-                safety_file_arr[j] = {"file_name": file_name};
+                safety_file_arr.push({"file_name": file_name});
               }
             }
             safety_file_data = safety_file_arr;
@@ -1197,7 +1197,7 @@ function enterprise_management_get_certificate(uuid) {
                 var business_cluster_name = business_file_result[0].cluster_name;
                 var business_suffix = business_file_result[0].suffix;
                 var file_name = business_cluster_name + '.' + business_suffix;
-                business_file_arr[j] = {"file_name": file_name};
+                business_file_arr.push({"file_name": file_name});
               }
             }
             business_file_data = business_file_arr;

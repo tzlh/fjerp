@@ -100,7 +100,7 @@ function paid_record_server_data_cover() {
         received_one = Number(result[i].amount);
         console.log(received)
         var paid_datetime = result[i].paid_datetime.substring(0,result[i].paid_datetime.indexOf(" "));
-        paid_record_data_arr[i] = {"amount": result[i].amount,"paid_datetime": paid_datetime,"uuid": result[i].uuid,"contract_code": result[i].contract_code};
+        paid_record_data_arr.push({"amount": result[i].amount,"paid_datetime": paid_datetime,"uuid": result[i].uuid,"contract_code": result[i].contract_code});
         received = received + received_one;
       }
       unreceived = all_paid - received;
@@ -144,7 +144,7 @@ function paid_record_get_record(uuid) {
           var paid_record_cluster_name = paid_record_file_result[0].cluster_name;
           var paid_record_suffix = paid_record_file_result[0].suffix;
           var file_name = paid_record_cluster_name + '.' + paid_record_suffix;
-          paid_record_file_arr[j] = {"file_name": file_name};
+          paid_record_file_arr.push({"file_name": file_name});
         }
       }
       paid_record_file_data = paid_record_file_arr;

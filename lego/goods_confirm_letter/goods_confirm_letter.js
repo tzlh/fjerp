@@ -78,7 +78,7 @@ function goods_confirm_letter_server_data_cover() {
       var goods_confirm_letter_data_arr = new Array();
       for (var i = 0; i < result.length; i++) {
         var create_datetime = result[i].create_datetime.substring(0,result[i].create_datetime.indexOf(" "));
-        goods_confirm_letter_data_arr[i] = {"numerical_order": i+1,"create_time": create_datetime,"uuid": result[i].uuid,"contract_code": result[i].contract_code};
+        goods_confirm_letter_data_arr.push({"numerical_order": i+1,"create_time": create_datetime,"uuid": result[i].uuid,"contract_code": result[i].contract_code});
       }
       goods_confirm_letter_data = goods_confirm_letter_data_arr;
     }
@@ -116,7 +116,7 @@ function goods_confirm_letter_get_letter(uuid) {
           var goods_confirm_letter_cluster_name = goods_confirm_letter_file_result[0].cluster_name;
           var goods_confirm_letter_suffix = goods_confirm_letter_file_result[0].suffix;
           var file_name = goods_confirm_letter_cluster_name + '.' + goods_confirm_letter_suffix;
-          goods_confirm_letter_file_arr[j] = {"file_name": file_name};
+          goods_confirm_letter_file_arr.push({"file_name": file_name});
         }
       }
       goods_confirm_letter_file_data = goods_confirm_letter_file_arr;

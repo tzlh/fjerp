@@ -84,7 +84,7 @@ function deliver_entrust_letter_server_data_cover() {
       var deliver_entrust_letter_data_arr = new Array();
       for (var i = 0; i < result.length; i++) {
         var deliver_datetime = result[i].deliver_datetime.substring(0,result[i].deliver_datetime.indexOf(" "));
-        deliver_entrust_letter_data_arr[i] = {"place": result[i].place,"deliver_datetime": deliver_datetime,"uuid": result[i].uuid,"contract_code": result[i].contract_code};
+        deliver_entrust_letter_data_arr.push({"place": result[i].place,"deliver_datetime": deliver_datetime,"uuid": result[i].uuid,"contract_code": result[i].contract_code});
       }
       deliver_entrust_letter_data = deliver_entrust_letter_data_arr;
     }
@@ -124,7 +124,7 @@ function deliver_entrust_letter_get_letter(uuid) {
           var deliver_entrust_letter_cluster_name = deliver_entrust_letter_file_result[0].cluster_name;
           var deliver_entrust_letter_suffix = deliver_entrust_letter_file_result[0].suffix;
           var file_name = deliver_entrust_letter_cluster_name + '.' + deliver_entrust_letter_suffix;
-          deliver_entrust_letter_file_arr[j] = {"file_name": file_name};
+          deliver_entrust_letter_file_arr.push({"file_name": file_name});
         }
       }
       deliver_entrust_letter_file_data = deliver_entrust_letter_file_arr;

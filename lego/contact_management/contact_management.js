@@ -103,7 +103,7 @@ function contact_management_server_enterprise_data_cover() {
     console.log(enterprise_result);
     var enterprise_data_arr = new Array();
     for (var i = 0; i < enterprise_result.length; i++) {
-      enterprise_data_arr[i] = {"short_name": enterprise_result[i].short_name, "uuid": enterprise_result[i].uuid};
+      enterprise_data_arr.push({"short_name": enterprise_result[i].short_name, "uuid": enterprise_result[i].uuid});
     }
     enterprise_data = enterprise_data_arr;
   } else {
@@ -159,7 +159,7 @@ function contact_management_server_data_cover() {
         if (1 == contact_management_get_enterprise.status) {
           var get_enterprise_result = JSON.parse(contact_management_get_enterprise.result);
           console.log(get_enterprise_result);
-          contact_data_arr[i] = {"name": get_contact_result[i].name,"position": get_contact_result[i].position,"contact": contact,"enterprise": get_enterprise_result[0].short_name,"uuid": get_contact_result[i].uuid};
+          contact_data_arr.push({"name": get_contact_result[i].name,"position": get_contact_result[i].position,"contact": contact,"enterprise": get_enterprise_result[0].short_name,"uuid": get_contact_result[i].uuid});
         }
       }
       contact_data = contact_data_arr;

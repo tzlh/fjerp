@@ -156,7 +156,7 @@ var root_department_uuid = null;
 /**
  * 获取根部门
  */
-function get_root_department_data_fill() {  
+function org_structure_get_root_department_data_fill() {  
   var root_department_url = PROJECT_PATH + "lego/lego_workflow?servletName=getDepartment";
   var root_department_param_data = {};
   root_department_param_data["parent_uuid"] = "00000000000000000000000000000000";
@@ -169,7 +169,7 @@ function get_root_department_data_fill() {
       var root_departmnt_arr = new Array();
       var result = JSON.parse(org_structure_get_root_departmnt.result); 
       for (var i = 0; i < result.length; i++) {
-        root_departmnt_arr[i] = {"name":result[i].name, "uuid":result[i].uuid, "parent_uuid": result[i].parent_uuid};
+        root_departmnt_arr.push({"name":result[i].name, "uuid":result[i].uuid, "parent_uuid": result[i].parent_uuid});
         root_department_uuid = result[i].uuid;
       }
       root_department["data"] = root_departmnt_arr;
@@ -194,7 +194,7 @@ function org_structure_server_data_cover() {
         if ("00000000000000000000000000000000" == result[i].parent_uuid) {
           continue;
         }
-        department_arr[j] = {"department_name":result[i].name, "uuid":result[i].uuid, "parent_uuid": result[i].parent_uuid};
+        department_arr.push({"department_name":result[i].name, "uuid":result[i].uuid, "parent_uuid": result[i].parent_uuid});
         j++;
       }
       department_data["data"] = department_arr;
@@ -214,7 +214,7 @@ function org_structure_server_data_cover() {
       var positiont_arr = new Array();
       var result = JSON.parse(org_structure_get_position.result); 
       for (var i = 0; i < result.length; i++) {
-        positiont_arr[i] = {"position_name":result[i].name, "uuid":result[i].uuid, "department_uuid": result[i].department_uuid};
+        positiont_arr.push({"position_name":result[i].name, "uuid":result[i].uuid, "department_uuid": result[i].department_uuid});
       }
       position_data["data"] = positiont_arr;
     }
@@ -233,7 +233,7 @@ function org_structure_server_data_cover() {
       var employee_arr = new Array();
       var result = JSON.parse(org_structure_get_employee.result);
       for (var i = 0; i < result.length; i++) {
-        employee_arr[i] = {"employee_name":result[i].name, "uuid":result[i].uuid, "position_uuid": result[i].position_uuid, "user_uuid": result[i].user_uuid};
+        employee_arr.push({"employee_name":result[i].name, "uuid":result[i].uuid, "position_uuid": result[i].position_uuid, "user_uuid": result[i].user_uuid});
       }
       employee_data["data"] = employee_arr;
       console.log(employee_data["data"]);
@@ -319,9 +319,9 @@ function org_structure_add_enterprise_data_func() {
   console.log(org_structure_add_root_department);
   if (1 == org_structure_add_root_department.status) {
     $("#org_structure_add_enterprise").modal("hide");
-    get_root_department_data_fill();
-    server_data_cover();
-    fill_variable_data();
+    org_structure_get_root_department_data_fill();
+    org_structure_server_data_cover();
+    org_structure_fill_variable_data();
   } else {
     alert("添加失败");
   }
@@ -388,9 +388,9 @@ function org_structure_add_department_data_func(parent_uuid) {
   console.log(org_structure_add_department);
   if (1 == org_structure_add_department.status) {
     $("#org_structure_add_department").modal("hide");
-    get_root_department_data_fill();
-    server_data_cover();
-    fill_variable_data();
+    org_structure_get_root_department_data_fill();
+    org_structure_server_data_cover();
+    org_structure_fill_variable_data();
   } else {
     alert("添加失败");
   }
@@ -447,9 +447,9 @@ function org_structure_edit_enterprise_data_func(uuid) {
   console.log(org_structure_edit_root_department);
   if (1 == org_structure_edit_root_department.status) {
     $("#org_structure_edit_root_department").modal("hide");
-    get_root_department_data_fill();
-    server_data_cover();
-    fill_variable_data();
+    org_structure_get_root_department_data_fill();
+    org_structure_server_data_cover();
+    org_structure_fill_variable_data();
   } else {
     alert("修改失败");
   }
@@ -521,9 +521,9 @@ function org_structure_edit_department_data_func(uuid, parent_uuid) {
   console.log(org_structure_edit_department);
   if (1 == org_structure_edit_department.status) {
     $("#org_structure_edit_department").modal("hide");
-    get_root_department_data_fill();
-    server_data_cover();
-    fill_variable_data();
+    org_structure_get_root_department_data_fill();
+    org_structure_server_data_cover();
+    org_structure_fill_variable_data();
   } else {
     alert("修改失败");
   }
@@ -565,9 +565,9 @@ function org_structure_delete_department_data_func(uuid) {
   console.log(org_structure_delete_department);
   if (1 == org_structure_delete_department.status) {
     $("#org_structure_delete_department").modal("hide");
-    get_root_department_data_fill();
-    server_data_cover();
-    fill_variable_data();
+    org_structure_get_root_department_data_fill();
+    org_structure_server_data_cover();
+    org_structure_fill_variable_data();
   } else {
     alert("删除失败");
   }
@@ -636,9 +636,9 @@ function org_structure_add_position_data_func(department_uuid) {
   console.log(org_structure_add_position);
   if (1 == org_structure_add_position.status) {
     $("#org_structure_add_position").modal("hide");
-    get_root_department_data_fill();
-    server_data_cover();
-    fill_variable_data();
+    org_structure_get_root_department_data_fill();
+    org_structure_server_data_cover();
+    org_structure_fill_variable_data();
   } else {
     alert("添加失败");
   }
@@ -710,9 +710,9 @@ function org_structure_edit_position_data_func(uuid, department_uuid) {
   console.log(org_structure_edit_position);
   if (1 == org_structure_edit_position.status) {
     $("#org_structure_edit_position").modal("hide");
-    get_root_department_data_fill();
-    server_data_cover();
-    fill_variable_data();
+    org_structure_get_root_department_data_fill();
+    org_structure_server_data_cover();
+    org_structure_fill_variable_data();
   } else {
     alert("修改失败");
   }
@@ -754,9 +754,9 @@ function org_structure_delete_position_data_func(uuid) {
   console.log(org_structure_delete_position);
   if (1 == org_structure_delete_position.status) {
     $("#org_structure_delete_position").modal("hide");
-    get_root_department_data_fill();
-    server_data_cover();
-    fill_variable_data();
+    org_structure_get_root_department_data_fill();
+    org_structure_server_data_cover();
+    org_structure_fill_variable_data();
   } else {
     alert("删除失败");
   }
@@ -777,7 +777,7 @@ function get_warehouse() {
       var warehouse_arr = new Array();
       var result = JSON.parse(org_structure_get_warehouse.result); 
       for (var i = 0; i < result.length; i++) {
-        warehouse_arr[i] = {"work_area_name":result[i].name, "work_area_uuid":result[i].uuid};
+        warehouse_arr.push({"work_area_name":result[i].name, "work_area_uuid":result[i].uuid});
       }
       work_area_data["data"] = warehouse_arr;
       console.log(work_area_data["data"]);
@@ -995,9 +995,9 @@ function org_structure_add_employee_data_func(position_uuid) {
   console.log(org_structure_add_employee);
   if (1 == org_structure_add_employee.status) {
     $("#org_structure_add_employee").modal("hide");
-    get_root_department_data_fill();
-    server_data_cover();
-    fill_variable_data();
+    org_structure_get_root_department_data_fill();
+    org_structure_server_data_cover();
+    org_structure_fill_variable_data();
   } else {
     alert("添加失败");
   }
@@ -1269,9 +1269,9 @@ function org_structure_edit_employee_data_func(user_uuid, position_uuid) {
    }
   if (1 == org_structure_edit_employee.status) {
     $("#org_structure_edit_employee").modal("hide");
-    get_root_department_data_fill();
-    server_data_cover();
-    fill_variable_data();
+    org_structure_get_root_department_data_fill();
+    org_structure_server_data_cover();
+    org_structure_fill_variable_data();
   } else {
     alert("修改失败");
   }
@@ -1313,9 +1313,9 @@ function org_structure_delete_employee_data_func(user_uuid) {
   console.log(org_structure_delete_employee);
   if (1 == org_structure_delete_employee.status) {
     $("#org_structure_delete_employee").modal("hide");
-    get_root_department_data_fill();
-    server_data_cover();
-    fill_variable_data();
+    org_structure_get_root_department_data_fill();
+    org_structure_server_data_cover();
+    org_structure_fill_variable_data();
   } else {
     alert("删除失败");
   }
