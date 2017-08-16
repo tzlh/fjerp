@@ -21,6 +21,8 @@ function contract_buy_open_info_func(obj) {
           '</div>'+
           '<div id = "deliver_entrust_letter_content' + contract_buy_contract_code_uuid + '">'+
           '</div>'+
+          '<div id = "godown_entry_notify_content' + contract_buy_contract_code_uuid + '">'+
+          '</div>'+
           '<div id = "goods_confirm_letter_content' + contract_buy_contract_code_uuid + '">'+
           '</div>'+
           '<div id = "settlement_bill_buy_content' + contract_buy_contract_code_uuid + '">'+
@@ -73,6 +75,19 @@ function contract_buy_open_info_func(obj) {
   deliver_entrust_letter_server_data_cover(contract_buy_contract_code);
   // 加载数据
   deliver_entrust_letter_fill_variable_data(contract_buy_contract_code_uuid);  
+  
+  //入库通知单
+  godown_entry_notify_content("#godown_entry_notify_content" + contract_buy_contract_code_uuid, contract_buy_all_price);
+  $("#godown_entry_notify_content" + contract_buy_contract_code_uuid).find("#godown_entry_notify_add_modal_btn").attr("contract_code",contract_buy_contract_code);
+  $("#godown_entry_notify_content" + contract_buy_contract_code_uuid).find("#godown_entry_notify_add_modal_btn").attr("contract_uuid",contract_buy_contract_code_uuid);
+  // 清空原始数据
+  godown_entry_notify_clear_raw_data(contract_buy_contract_code_uuid);
+  // 获取储罐
+  godown_entry_notify_get_warehouse_pot(contract_buy_warehouse_uuid);
+  // 服务器数据
+  godown_entry_notify_server_data_cover(contract_buy_contract_code);
+  // 加载数据
+  godown_entry_notify_fill_variable_data(contract_buy_contract_code_uuid);
   
   //货物确认函
   goods_confirm_letter_content("#goods_confirm_letter_content" + contract_buy_contract_code_uuid, contract_buy_all_price);

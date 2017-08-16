@@ -22,12 +22,14 @@
   <link rel="stylesheet" type="text/css" href="../godown_exit/godown_exit.css"/>
   <!--入库单-->
   <link rel="stylesheet" type="text/css" href="../godown_entry/godown_entry.css"/>
-  <!--化验单-->
-  <link rel="stylesheet" type="text/css" href="../report_test/report_test.css"/>
+  <!--船板单-->
+  <link rel="stylesheet" type="text/css" href="../report_boat_ullage/report_boat_ullage.css"/>
   <!--商检单-->
   <link rel="stylesheet" type="text/css" href="../report_shore_tank/report_shore_tank.css"/>
   <!--提货委托函-->
   <link rel="stylesheet" type="text/css" href="../deliver_entrust_letter/deliver_entrust_letter.css"/>
+  <!--入库通知单-->
+  <link rel="stylesheet" type="text/css" href="../godown_entry_notify/godown_entry_notify.css"/>
   <!--货物确认函-->
   <link rel="stylesheet" type="text/css" href="../goods_confirm_letter/goods_confirm_letter.css"/>
   <!--采购对账单样式-->
@@ -57,12 +59,14 @@
   <script src="../godown_exit/godown_exit.js" type="text/javascript" charset="utf-8"></script>
   <!--入库单-->
   <script src="../godown_entry/godown_entry.js" type="text/javascript" charset="utf-8"></script>
-  <!--<!--化验单-->
-  <!--<script src="../report_test/report_test.js" type="text/javascript" charset="utf-8"></script>-->-->
+  <!--船板单-->
+  <script src="../report_boat_ullage/report_boat_ullage.js" type="text/javascript" charset="utf-8"></script>-->
   <!--商检单-->
   <script src="../report_shore_tank/report_shore_tank.js" type="text/javascript" charset="utf-8"></script>
   <!--提货委托函-->
   <script src="../deliver_entrust_letter/deliver_entrust_letter.js" type="text/javascript" charset="utf-8"></script>
+  <!--入库通知单-->
+    <script src="../godown_entry_notify/godown_entry_notify.js" type="text/javascript" charset="utf-8"></script>
   <!--货物确认函-->
   <script src="../goods_confirm_letter/goods_confirm_letter.js" type="text/javascript" charset="utf-8"></script>
   <!--采购对账单算函-->
@@ -554,48 +558,48 @@
         var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
         godown_entry_delete_data(uuid, vehicle_information_uuid);
       });
-      //化验单
-      // 添加化验单模态框
-//    $(document).on("click", "#report_test_add_modal_btn", function() {
-//      var vehicle_information_uuid = $(this).attr("vehicle_information_uuid");
-//      report_test_add_modal(vehicle_information_uuid);
-//    });
-//    // 添加化验单
-//    $(document).on("click", "#report_test_add_modal .add_btn", function() {
-//      var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
-//      report_test_add_data(vehicle_information_uuid);
-//    });
-//    // 修改化验单模态框
-//    $(document).on("click", ".report_test_edit", function() {
-//      var uuid = $(this).data("uuid");
-//      var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
-//      report_test_get_letter(uuid, vehicle_information_uuid);
-//      report_test_edit_modal(uuid, vehicle_information_uuid);
-//    });
-//    // 修改化验单
-//    $(document).on("click", "#report_test_edit_modal .edit_btn", function() {
-//      var uuid = $(this).data("uuid");
-//      var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
-//      report_test_edit_data(uuid, vehicle_information_uuid);
-//    });
-//    // 化验单详情模态框
-//    $(document).on("click", ".report_test_detail", function() {
-//      var uuid = $(this).data("uuid");
-//      report_test_get_letter(uuid)
-//      report_test_detail_modal();
-//    });
-//    // 删除化验单模态框
-//    $(document).on("click", ".report_test_delete", function() {
-//      var uuid = $(this).data("uuid");
-//      var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
-//      report_test_delete_modal(uuid, vehicle_information_uuid);
-//    });
-//    // 删除化验单
-//    $(document).on("click", "#report_test_delete_modal .remove", function() {
-//      var uuid = $(this).data("uuid");
-//      var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
-//      report_test_delete_data(uuid, vehicle_information_uuid);
-//    });
+      //船板单
+      // 添加船板单模态框
+      $(document).on("click", "#report_boat_ullage_add_modle_btn", function() {
+        var vehicle_information_uuid = $(this).attr("vehicle_information_uuid");
+        report_boat_ullage_add_modal(vehicle_information_uuid);
+      });
+      // 添加船板单
+      $(document).on("click", "#report_boat_ullage_add_modal .add_btn", function() {
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        report_boat_ullage_add_data(vehicle_information_uuid);
+      });
+      // 修改船板单模态框
+      $(document).on("click", ".report_boat_ullage_edit", function() {
+        var uuid = $(this).data("uuid");
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        report_boat_ullage_get_letter(uuid);
+        report_boat_ullage_edit_modal(uuid, vehicle_information_uuid);
+      });
+      // 修改船板单
+      $(document).on("click", "#report_boat_ullage_edit_modal .edit_btn", function() {
+        var uuid = $(this).data("uuid");
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        report_boat_ullage_edit_data(uuid, vehicle_information_uuid);
+      });
+      // 船板单详情模态框
+      $(document).on("click", ".report_boat_ullage_detail", function() {
+        var uuid = $(this).data("uuid");
+        report_boat_ullage_get_letter(uuid)
+        report_boat_ullage_detail_modal();
+      });
+      // 删除船板单模态框
+      $(document).on("click", ".report_boat_ullage_delete", function() {
+        var uuid = $(this).data("uuid");
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        report_boat_ullage_delete_modal(uuid, vehicle_information_uuid);
+      });
+      // 删除船板单
+      $(document).on("click", "#report_boat_ullage_delete_modal .remove", function() {
+        var uuid = $(this).data("uuid");
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        report_boat_ullage_delete_data(uuid, vehicle_information_uuid);
+      });
       // 商检单
       // 添加商检单模态框
       $(document).on("click", "#report_shore_tank_add_modle_btn", function() {
@@ -637,6 +641,52 @@
         var uuid = $(this).data("uuid");
         var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
         report_shore_tank_delete_data(uuid, vehicle_information_uuid);
+      });
+      // 入库通知单
+      // 添加入库通知单模态框
+      $(document).on("click", "#godown_entry_notify_add_modal_btn", function() {
+        var contract_code = $(this).attr("contract_code");
+        var contract_uuid = $(this).attr("contract_uuid");
+        godown_entry_notify_add_modal(contract_code, contract_uuid);
+      });
+      // 添加入库通知单
+      $(document).on("click", "#godown_entry_notify_add_modal .add_btn", function() {
+        var contract_uuid = $(this).data("contract_uuid");
+        var contract_code = $(this).data("contract_code");
+        godown_entry_notify_add_data(contract_code, contract_uuid);
+      });
+      // 修改入库通知单模态框
+      $(document).on("click", ".godown_entry_notify_edit", function() {
+        var uuid = $(this).data("uuid");
+        var contract_code = $(this).data("contract_code");
+        godown_entry_notify_get_letter(uuid);
+        godown_entry_notify_edit_modal(uuid, contract_code);
+      });
+      // 修改入库通知单
+      $(document).on("click", "#godown_entry_notify_edit_modal .edit_btn", function() {
+        var uuid = $(this).data("uuid");
+        var contract_code = $(this).data("contract_code");
+        var contract_uuid = $("#goods_confirm_letter_add_modal_btn").attr("contract_uuid");
+        godown_entry_notify_edit_data(uuid, contract_code, contract_uuid);
+      });
+      // 入库通知单详情模态框
+      $(document).on("click", ".godown_entry_notify_detail", function() {
+        var uuid = $(this).data("uuid");
+        godown_entry_notify_get_letter(uuid)
+        godown_entry_notify_detail_modal();
+      });
+      // 删除入库通知单模态框
+      $(document).on("click", ".godown_entry_notify_delete", function() {
+        var uuid = $(this).data("uuid");
+        var contract_code = $(this).data("contract_code");
+        godown_entry_notify_delete_modal(uuid, contract_code);
+      });
+      // 删除入库通知单
+      $(document).on("click", "#godown_entry_notify_delete_modal .remove", function() {
+        var uuid = $(this).data("uuid");
+        var contract_code = $(this).data("contract_code");
+        var contract_uuid = $("#goods_confirm_letter_add_modal_btn").attr("contract_uuid");
+        godown_entry_notify_delete_data(uuid, contract_code, contract_uuid);
       });
     });
   </script>

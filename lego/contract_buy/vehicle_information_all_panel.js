@@ -11,7 +11,7 @@ function vehicle_information_open_info_func(obj) {
           '<div id = "godown_entry_content' + vehicle_information_uuid + '">'+
           '</div>'+
           '<div class = "row">'+
-            '<div class = "col-md-6" id = "report_test_content' + vehicle_information_uuid + '">'+
+            '<div class = "col-md-6" id = "report_boat_ullage_content' + vehicle_information_uuid + '">'+
             '</div>'+
             '<div class = "col-md-6" id = "report_shore_tank_content' + vehicle_information_uuid + '">'+
             '</div>'+
@@ -53,15 +53,15 @@ function vehicle_information_open_info_func(obj) {
   // 加载数据
   godown_entry_fill_variable_data(vehicle_information_uuid);  
   
-  //化验单
-  report_test_content("#report_test_content" + vehicle_information_uuid);
-  $("#report_test_content" + vehicle_information_uuid).find("#report_test_add_modal_btn").attr("vehicle_information_uuid",vehicle_information_uuid);
+  //船板单
+  report_boat_ullage_content("#report_boat_ullage_content" + vehicle_information_uuid);
+  $("#report_boat_ullage_content" + vehicle_information_uuid).find("#report_boat_ullage_add_modle_btn").attr("vehicle_information_uuid",vehicle_information_uuid);
   // 清空原始数据
-  report_test_clear_raw_data(vehicle_information_uuid);
+  report_boat_ullage_clear_raw_data(vehicle_information_uuid);
   // 服务器数据
-  report_test_server_data_cover(vehicle_information_uuid);
+  report_boat_ullage_server_data_cover(vehicle_information_uuid);
   // 加载数据
-  report_test_fill_variable_data(vehicle_information_uuid);  
+  report_boat_ullage_fill_variable_data(vehicle_information_uuid);
   
   //商检单
   report_shore_tank_content("#report_shore_tank_content" + vehicle_information_uuid);
