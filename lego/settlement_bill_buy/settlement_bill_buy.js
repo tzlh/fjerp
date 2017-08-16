@@ -908,7 +908,7 @@ function settlement_bill_buy_info_modle_func(obj) {
 
 function settlement_bill_buy_output(output_id) {
   var content = 
-'  <div class = "panel panel-primary ">'+
+'  <div class = "panel panel-primary contract_buy_settlement_checkbox">'+
 '    <div class = "panel-heading clearfix">采购对账单<span class = "glyphicon glyphicon-plus pull-right" id = "settlement_bill_buy_add_modle" contract_code_uuid = "6dc62fc9173544a9a11fd8b7c562274a"></span></div>'+
 '    <div class = "panel-body">'+
 '        <div class = "row">'+

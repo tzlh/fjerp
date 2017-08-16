@@ -43,12 +43,6 @@ function contract_buy_open_info_func(obj) {
     obj.find(".glyphicon").addClass("glyphicon-chevron-down");
     obj.addClass("active");
     obj.parent().parent().after(contract_buy_html);
-    for (var i = 0; i < $(".contract_buy_data_screening_btn").length; i++) {
-      if($(".contract_buy_data_screening_btn").eq(i).prop("checked") == false) {
-        var contract_buy_idd = $(".contract_buy_data_screening_btn").eq(i).attr("id");
-        $(".contract_buy_all_panel").find("." + contract_buy_idd).addClass("contract_buy_none");
-      }
-    }
   }
   
   //收款记录
@@ -154,4 +148,10 @@ function contract_buy_open_info_func(obj) {
   invoice_information_server_data_cover(contract_buy_contract_code);
   //加载数据
   invoice_information_fill_variable_data(contract_buy_contract_code_uuid, contract_buy_all_price, "0");
+  for (var i = 0; i < $(".contract_buy_data_screening_btn").length; i++) {
+    if($(".contract_buy_data_screening_btn").eq(i).prop("checked") == false) {
+      var contract_buy_idd = $(".contract_buy_data_screening_btn").eq(i).attr("id");
+      $("#contract_buy_box").find("." + contract_buy_idd).addClass("contract_buy_none");
+    }
+  }
 }

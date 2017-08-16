@@ -680,7 +680,7 @@ function godown_entry_notify_delete_data(uuid, contract_code, contract_uuid) {
  */
 function godown_entry_notify_content(output_id) {
   var content = 
-'   <div class = "panel panel-primary">'+
+'   <div class = "panel panel-primary contract_buy_receipt_notice_checkbox">'+
 '    <div class = "panel-heading clearfix" id = "godown_entry_notify_paid">入库通知单<span class = "glyphicon glyphicon-plus pull-right" id = "godown_entry_notify_add_modal_btn"></span></div>'+
 '    <div class = "panel-body">'+
 '        <div class = "row">'+

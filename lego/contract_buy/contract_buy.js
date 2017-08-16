@@ -1216,9 +1216,9 @@ function contract_buy_info_modle_func(obj, contract_type) {
 function contract_buy_data_screening_func(obj) {
   var contract_buy_idd = obj.attr("id");
   if (obj.prop("checked") == true) {
-    $(".contract_buy_all_panel").find("." + contract_buy_idd).addClass("contract_buy_none");
+    $("#contract_buy_box").find("." + contract_buy_idd).addClass("contract_buy_none");
   } else {
-    $(".contract_buy_all_panel").find("." + contract_buy_idd).removeClass("contract_buy_none");
+    $("#contract_buy_box").find("." + contract_buy_idd).removeClass("contract_buy_none");
   }
 }
 
@@ -1411,27 +1411,27 @@ function contract_buy_output(output_id) {
   '                <tr class = "companyInfo">'+
   '                  <td align = "center">'+
   '                    <div class = "icheckbox_square-blue">'+
-  '                      <input type = "checkbox" class = "contract_buy_data_screening_btn" id = "contract_buy_records_checkbox" checked = "checked">'+
+  '                      <input type = "checkbox" class = "contract_buy_data_screening_btn" id = "contract_sale_records_checkbox" checked = "checked">'+
   '                    </div>'+
-  '                    <label for = "contract_buy_records_checkbox">收款记录</label>'+
+  '                    <label for = "contract_sale_records_checkbox">收款记录</label>'+
   '                  </td>'+
   '                  <td align = "center">'+
   '                    <div class = "icheckbox_square-blue">'+
-  '                      <input type = "checkbox" class = "contract_buy_data_screening_btn" id = "contract_buy_logistics_checkbox" checked = "checked">'+
+  '                      <input type = "checkbox" class = "contract_buy_data_screening_btn" id = "contract_sale_logistics_checkbox" checked = "checked">'+
   '                    </div>'+
-  '                    <label for = "contract_buy_logistics_checkbox">物流合同</label>'+
+  '                    <label for = "contract_sale_logistics_checkbox">物流合同</label>'+
   '                  </td>'+
   '                  <td align = "center">'+
   '                    <div class = "icheckbox_square-blue">'+
-  '                      <input type = "checkbox" class = "contract_buy_data_screening_btn" id = "contract_buy_transport_checkbox" checked = "checked">'+
+  '                      <input type = "checkbox" class = "contract_buy_data_screening_btn" id = "contract_sale_transport_checkbox" checked = "checked">'+
   '                    </div>'+
-  '                    <label for = "contract_buy_transport_checkbox">车船信息</label>'+
+  '                    <label for = "contract_sale_transport_checkbox">车船信息</label>'+
   '                  </td>'+
   '                  <td align = "center">'+
   '                    <div class = "icheckbox_square-blue">'+
-  '                      <input type = "checkbox" class = "contract_buy_data_screening_btn" id = "contract_buy_pick_checkbox" checked = "checked">'+
+  '                      <input type = "checkbox" class = "contract_buy_data_screening_btn" id = "contract_sale_pick_checkbox" checked = "checked">'+
   '                    </div>'+
-  '                    <label for = "contract_buy_pick_checkbox">提货委托函</label>'+
+  '                    <label for = "contract_sale_pick_checkbox">提货委托函</label>'+
   '                  </td>'+
   '                  <td align = "center">'+
   '                    <div class = "icheckbox_square-blue">'+
@@ -1441,9 +1441,9 @@ function contract_buy_output(output_id) {
   '                  </td>'+
   '                  <td align = "center">'+
   '                    <div class = "icheckbox_square-blue">'+
-  '                      <input type = "checkbox" class = "contract_buy_data_screening_btn" id = "contract_buy_confirm_checkbox" checked = "checked">'+
+  '                      <input type = "checkbox" class = "contract_buy_data_screening_btn" id = "contract_sale_confirm_checkbox" checked = "checked">'+
   '                    </div>'+
-  '                    <label for = "contract_buy_confirm_checkbox">货物确认函</label>'+
+  '                    <label for = "contract_sale_confirm_checkbox">货物确认函</label>'+
   '                  </td>'+
   '                  <td align = "center">'+
   '                    <div class = "icheckbox_square-blue">'+
