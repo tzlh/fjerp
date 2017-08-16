@@ -81,7 +81,7 @@ function godown_entry_fill_variable_data(vehicle_information_uuid) {
       $("#godown_entry_content" + vehicle_information_uuid).find("#godown_entry_list tbody").html(godown_entry_tbody);  
     }
   } else {
-    $("#godown_entry_content" + vehicle_information_uuid).find("#godown_entry_list tbody").html('<tr><td colspan="6" align="center">没有数据</td></tr>');
+    $("#godown_entry_content" + vehicle_information_uuid).find("#godown_entry_list tbody").html('<tr><td colspan="6" align="center">没数据</td></tr>');
   }
 }
 

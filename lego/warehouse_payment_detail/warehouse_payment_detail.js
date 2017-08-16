@@ -63,7 +63,7 @@ function warehouse_payment_detail_fill_variable_data() {
       $("#warehouse_payment_detail_list thead").html(content_thead);
     } 
   } else {
-    $("#warehouse_payment_detail_list_box").html('<tr><td  colspan = "5">没有数据</td></tr>');
+    $("#warehouse_payment_detail_list_box").html('<tr><td  colspan = "5" align='center'>没数据</td></tr>');
   }
 }
 

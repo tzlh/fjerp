@@ -54,7 +54,7 @@ function deliver_entrust_letter_fill_variable_data(contract_uuid) {
       $("#deliver_entrust_letter_content" + contract_uuid).find("#deliver_entrust_letter_list tbody").html(deliver_entrust_letter_tbody);  
     }
   } else {
-    $("#deliver_entrust_letter_content" + contract_uuid).find("#deliver_entrust_letter_list tbody").html("<p>没有数据</p>");
+    $("#deliver_entrust_letter_content" + contract_uuid).find("#deliver_entrust_letter_list tbody").html("<tr><td colspan='3' align='center'>没数据</td></tr>");
   }
 }
 

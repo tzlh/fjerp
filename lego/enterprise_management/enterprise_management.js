@@ -171,7 +171,7 @@ function enterprise_management_fill_variable_data() {
     $("#enterprise_management_list thead").html(header);
     $("#enterprise_management_list tbody").html(content);
   } else {
-    $("#enterprise_management_list thead").html("没有数据");
+    $("#enterprise_management_list thead").html("<tr><td colspan='10' align='center'>没数据</td></tr>");
     $("#enterprise_management_list tbody").html("");
   }
 }
