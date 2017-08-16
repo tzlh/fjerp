@@ -486,6 +486,7 @@ function contract_sales_add_data_func(obj, contract_sales_type) {
   //调用接口
   var contract_sales_add_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=addContractTrade";
   var contract_sales_add_get = ajax_assistant(contract_sales_add_url, contract_sales_data, false, true, false);
+  console.log(contract_sales_add_get);
   if (1 == contract_sales_add_get.status) {
     contract_sale_clear_raw_data();
     contract_sale_server_data_cover("1");
