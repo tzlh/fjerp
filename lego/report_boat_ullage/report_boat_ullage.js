@@ -231,7 +231,7 @@ function report_boat_ullage_add_data(vehicle_information_uuid) {
 /**
  * 修改船板单
  */
-function report_boat_ullage_edit_modal(uuid) {
+function report_boat_ullage_edit_modal(uuid, vehicle_information_uuid) {
   var content = 
 '     <div class = "modal fade custom_modal" id = "report_boat_ullage_edit_modal" tabindex = "-1">'+
 '       <div class = "modal-dialog" role = "document">'+
@@ -257,7 +257,7 @@ function report_boat_ullage_edit_modal(uuid) {
 '               </div>'+
 '           </div>'+
 '           <div class = "modal-footer">'+
-'             <button type = "button" class = "btn btn-warning edit_btn" data-uuid = "' + uuid + '">修改</button>'+
+'             <button type = "button" class = "btn btn-warning edit_btn" data-uuid = "' + uuid + '" data-vehicle_information_uuid = "' + vehicle_information_uuid + '">修改</button>'+
 '             <button type = "button" class = "btn btn-default" data-dismiss = "modal">取消</button>'+
 '           </div>'+
 '         </div>'+
@@ -271,7 +271,7 @@ function report_boat_ullage_edit_modal(uuid) {
   });
 }
 
-function report_boat_ullage_edit_data(uuid) {
+function report_boat_ullage_edit_data(uuid, vehicle_information_uuid) {
   console.log(uuid);
   var quantity = $("#report_boat_ullage_edit_modal .quantity").val();
   var report_boat_ullage_li = $("#report_boat_ullage_edit_attch ul").children("li");
@@ -296,6 +296,7 @@ function report_boat_ullage_edit_data(uuid) {
   var edit_report_boat_ullage_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=modifyBoatUllageReport";
   var edit_report_boat_ullage_param_data = {};
   edit_report_boat_ullage_param_data["idColumnValue"] = uuid;
+  edit_report_boat_ullage_param_data["vehicle_information_uuid"] = vehicle_information_uuid;
   edit_report_boat_ullage_param_data["quantity"] = quantity;
   if ("" != report_boat_ullage_list) {
     edit_report_boat_ullage_param_data["newClusterList"] = report_boat_ullage_list;

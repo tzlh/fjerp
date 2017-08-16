@@ -43,13 +43,13 @@
         var uuid = $(this).data("uuid");
         var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
         report_boat_ullage_get_letter(uuid);
-        report_boat_ullage_edit_modal(uuid);
+        report_boat_ullage_edit_modal(uuid, vehicle_information_uuid);
       });
       // 修改船板单
       $(document).on("click", "#report_boat_ullage_edit_modal .edit_btn", function() {
         var uuid = $(this).data("uuid");
         var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
-        report_boat_ullage_edit_data(uuid);
+        report_boat_ullage_edit_data(uuid, vehicle_information_uuid);
       });
       // 船板单详情模态框
       $(document).on("click", ".report_boat_ullage_detail", function() {
