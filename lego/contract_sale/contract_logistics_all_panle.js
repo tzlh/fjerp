@@ -42,6 +42,7 @@ function contract_logistics_open_info_func(obj) {
   $("#contract_logistics_content" + contract_logistics_contract_code_uuid).find("#settlement_bill_logistics_add_modle").attr("seller_uuid",settlement_bill_logistics_add_seller_uuid);
   $("#contract_logistics_content" + contract_logistics_contract_code_uuid).find("#settlement_bill_logistics_add_modle").attr("product_name",settlement_bill_logistics_add_product_name);
   $("#contract_logistics_content" + contract_logistics_contract_code_uuid).find(".settlement_bill_table_sales_trad_uuid").attr("contract_logistics_code_uuid",contract_logistics_contract_code_uuid);
+  $("#contract_logistics_content" + contract_logistics_contract_code_uuid).find(".settlement_bill_table_sales_trad_uuid").attr("trade_contract_code",trade_contract_code);
   //清空原始数据
   settlement_bill_logistics_clear_raw_data(contract_logistics_contract_code_uuid);
   //服务器数据
