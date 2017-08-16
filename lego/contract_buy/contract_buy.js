@@ -60,7 +60,7 @@ var contract_buy_data = {"data":[
 /**
  * 分页变量
  */
-var rows = 2;
+var rows = 10;
 var current_offset = 0;
 
 function contract_buy_clear_raw_data() {
