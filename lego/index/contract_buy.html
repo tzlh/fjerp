@@ -60,13 +60,13 @@
   <!--入库单-->
   <script src="../godown_entry/godown_entry.js" type="text/javascript" charset="utf-8"></script>
   <!--船板单-->
-  <script src="../report_boat_ullage/report_boat_ullage.js" type="text/javascript" charset="utf-8"></script>-->
+  <script src="../report_boat_ullage/report_boat_ullage.js" type="text/javascript" charset="utf-8"></script>
   <!--商检单-->
   <script src="../report_shore_tank/report_shore_tank.js" type="text/javascript" charset="utf-8"></script>
   <!--提货委托函-->
   <script src="../deliver_entrust_letter/deliver_entrust_letter.js" type="text/javascript" charset="utf-8"></script>
   <!--入库通知单-->
-    <script src="../godown_entry_notify/godown_entry_notify.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../godown_entry_notify/godown_entry_notify.js" type="text/javascript" charset="utf-8"></script>
   <!--货物确认函-->
   <script src="../goods_confirm_letter/goods_confirm_letter.js" type="text/javascript" charset="utf-8"></script>
   <!--采购对账单算函-->
@@ -78,8 +78,10 @@
   <script src = "../contract_buy/contract_logistics_all_panle.js"></script>
   <script src="../contract_buy/vehicle_information_all_panel.js" type="text/javascript" charset="utf-8"></script>
   <script src = "../contract_buy/contract_buy.js"></script>
+  <script src = "../check_login/check_login.js"></script>
   <script>
     $(document).ready(function() {
+      check_login();
       contract_buy_output("#contract_buy_content");
       //日历插件
       widget_datepicker_init();

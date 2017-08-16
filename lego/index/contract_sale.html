@@ -74,8 +74,10 @@
   <script src = "../contract_sale/contract_logistics_all_panle.js"></script>
   <script src="../contract_sale/vehicle_information_all_panel.js" type="text/javascript" charset="utf-8"></script>
   <script src = "../contract_sale/contract_sale.js"></script>
+  <script src = "../check_login/check_login.js"></script>
   <script>
     $(document).ready(function() {
+      check_login();
       contract_sale_output("#contract_sale_content");
       //日历插件
       widget_datepicker_init();

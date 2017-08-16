@@ -1,3 +1,5 @@
+var login_redirect_url = null;
+
 /**
  * @author wangdi
  */
@@ -23,7 +25,11 @@ function login_func() {
   var login_url = PROJECT_PATH+'lego/lego_user?servletName=loginWithNamePassword';
   var login_result = ajax_assistant(login_url, login_data, false, true, false);
   if(1 == login_result.status) {
-    window.location.href = "index.html"; 
+    if (null == login_redirect_url) {
+      window.location.href = "index.html";
+    } else {
+      window.location.href = login_redirect_url;
+    }
   } else {
     alert('用户名或密码输入有误，请检查');
   }
