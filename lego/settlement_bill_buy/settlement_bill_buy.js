@@ -26,22 +26,21 @@ var settlement_bill_buy_data = {"data":[
   ]
 };
 
-function settlement_bill_buy_clear_raw_data() {
-//$("#settlement_bill_buy_"+trade_contract_code).find(".settlement_bill_buy_box")
-  $(".settlement_bill_buy_box").html('<tr><td colspan="11" align="center">没数据</td></tr>');
+function settlement_bill_buy_clear_raw_data(contract_buy_contract_code_uuid) {
+  $("#settlement_bill_buy_content" + contract_buy_contract_code_uuid).find(".settlement_bill_buy_box").html('<tr><td colspan="11" align="center">没数据</td></tr>');
 }
 
 /**
  * 服务器数据
  */
-function settlement_bill_buy_server_data_cover() {
-  var contract_code = "JYH-FJ-17731221";
+function settlement_bill_buy_server_data_cover(contract_code, contract_code_type, buy_type) {
+  var contract_code = contract_code;
   var settlement_bill_contract_buy_buyer_uuid = "";
   var settlement_bill_contract_buy_seller_uuid = "";
   var settlement_bill_contract_buy_contract_code_uuid = "";
   var contract_obj_data = {
     "contract_code":contract_code,
-    "type":"0"
+    "type":contract_code_type
   };
   //获取采购合同
   var settlement_bill_contract_buy_logistics_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getContractTrade";
@@ -74,7 +73,7 @@ function settlement_bill_buy_server_data_cover() {
       var settlement_bill_buy_result = JSON.parse(settlement_bill_buy_get_contract.result);  
       console.log(settlement_bill_buy_result);
       for (var i = 0; i < settlement_bill_buy_result.length; i++) {
-        tmp_arr[i] = {"contract_code":contract_code, "type":"1", "buyer_uuid":settlement_bill_contract_buy_buyer_uuid, "seller_uuid":settlement_bill_contract_buy_seller_uuid, "product_name":settlement_bill_buy_result[i].product_name, "load_quantity":settlement_bill_buy_result[i].load_quantity, "unload_quantity":settlement_bill_buy_result[i].unload_quantity, "contract_ullage":settlement_bill_buy_result[i].contract_ullage, "settle_quantity":settlement_bill_buy_result[i].settle_quantity, "goods_price":settlement_bill_buy_result[i].goods_price, "invoice_quantity":settlement_bill_buy_result[i].invoice_quantity, "paid_amount":settlement_bill_buy_result[i].paid_amount, "uuid":settlement_bill_buy_result[i].uuid, "contract_code_uuid":settlement_bill_contract_buy_contract_code_uuid};
+        tmp_arr[i] = {"contract_code":contract_code, "type":buy_type, "buyer_uuid":settlement_bill_contract_buy_buyer_uuid, "seller_uuid":settlement_bill_contract_buy_seller_uuid, "product_name":settlement_bill_buy_result[i].product_name, "load_quantity":settlement_bill_buy_result[i].load_quantity, "unload_quantity":settlement_bill_buy_result[i].unload_quantity, "contract_ullage":settlement_bill_buy_result[i].contract_ullage, "settle_quantity":settlement_bill_buy_result[i].settle_quantity, "goods_price":settlement_bill_buy_result[i].goods_price, "invoice_quantity":settlement_bill_buy_result[i].invoice_quantity, "paid_amount":settlement_bill_buy_result[i].paid_amount, "uuid":settlement_bill_buy_result[i].uuid, "contract_code_uuid":settlement_bill_contract_buy_contract_code_uuid};
       }
       settlement_bill_buy_data["data"] = tmp_arr;
     }
@@ -83,7 +82,7 @@ function settlement_bill_buy_server_data_cover() {
   }
 }
 
-function settlement_bill_buy_fill_variable_data() {
+function settlement_bill_buy_fill_variable_data(contract_buy_contract_code_uuid) {
   if(isJsonObjectHasData(settlement_bill_buy_data)) {
     var settlement_bill_buy_html = "";
     for (var i = 0; i < settlement_bill_buy_data.data.length; i++) {
@@ -110,10 +109,10 @@ function settlement_bill_buy_fill_variable_data() {
         '</tr>';
     }
     //$("#settlement_bill_buy_"+trade_contract_code).find(".settlement_bill_buy_box")
-    $(".settlement_bill_buy_box").html(settlement_bill_buy_html);
+    $("#settlement_bill_buy_content" + contract_buy_contract_code_uuid).find(".settlement_bill_buy_box").html(settlement_bill_buy_html);
   } else {
     //$("#settlement_bill_buy_"+trade_contract_code).find(".settlement_bill_buy_box")
-    $(".settlement_bill_buy_box").html('<tr><td colspan="11" align="center">没数据</td></tr>');
+    $("#settlement_bill_buy_content" + contract_buy_contract_code_uuid).find(".settlement_bill_buy_box").html('<tr><td colspan="11" align="center">没数据</td></tr>');
   }
 }
 
@@ -273,7 +272,7 @@ function volume_corresponding__change(obj) {
   obj.parents(".modal-body").find(".settlement_bill_buy_invoice_quantity").val(val_a);
 }
 
-function settlement_bill_buy_add_data_func(obj) {
+function settlement_bill_buy_add_data_func(obj, contract_code_type, buy_type) {
   var contract_code = obj.attr("contract_code");
   var contract_code_uuid = obj.attr("contract_code_uuid");
   var settlement_bill_buy_buyer_uuid = "";
@@ -281,7 +280,7 @@ function settlement_bill_buy_add_data_func(obj) {
   var settlement_bill_buy_product_name = "";
   var data_contract = {
     "contract_code":contract_code,
-    "type":0,
+    "type":contract_code_type,
     "uuid":contract_code_uuid
   };
   //获取销售合同
@@ -347,7 +346,7 @@ function settlement_bill_buy_add_data_func(obj) {
   }
   var data = {
     "contract_code":contract_code,
-    "type":1,
+    "type":buy_type,
     "buyer_uuid":settlement_bill_buy_buyer_uuid,
     "seller_uuid":settlement_bill_buy_seller_uuid,
     "product_name":settlement_bill_buy_product_name,
@@ -365,9 +364,9 @@ function settlement_bill_buy_add_data_func(obj) {
   var settlement_bill_buy__add_get_warehouse = ajax_assistant(settlement_bill_buy__add_url, data, false, true, false);
   console.log(settlement_bill_buy__add_get_warehouse);
   if ("1" == settlement_bill_buy__add_get_warehouse.status) {
-    settlement_bill_buy_clear_raw_data();
-    settlement_bill_buy_server_data_cover();
-    settlement_bill_buy_fill_variable_data(); 
+    settlement_bill_buy_clear_raw_data(contract_code_uuid);
+    settlement_bill_buy_server_data_cover(contract_code, "0", "1");
+    settlement_bill_buy_fill_variable_data(contract_code_uuid); 
     $("#settlement_bill_buy_add_modle_prop").modal("hide");
     $("#settlement_bill_buy_add_modle_prop").on("hidden.bs.modal", function(e) {
       $(this).remove();
@@ -562,7 +561,7 @@ function settlement_bill_buy_edit_modle_func(obj) {
   });
 }
 
-function settlement_bill_buy_edit_data_func(obj) {
+function settlement_bill_buy_edit_data_func(obj, contract_code_type, buy_type) {
   var uuid = obj.attr("uuid");
   var contract_code = obj.attr("contract_code");
   var contract_code_uuid = obj.attr("contract_code_uuid");
@@ -571,7 +570,7 @@ function settlement_bill_buy_edit_data_func(obj) {
   var settlement_bill_buy_product_name = "";
   var data_contract={
     "contract_code":contract_code,
-    "type":0,
+    "type":contract_code_type,
     "uuid":contract_code_uuid
   };
   //获取销售合同
@@ -634,7 +633,7 @@ function settlement_bill_buy_edit_data_func(obj) {
   var data = {
     "idColumnValue":uuid,
     "contract_code":contract_code,
-    "type":1,
+    "type":buy_type,
     "buyer_uuid":settlement_bill_buy_buyer_uuid,
     "seller_uuid":settlement_bill_buy_seller_uuid,
     "product_name":settlement_bill_buy_product_name,
@@ -658,9 +657,9 @@ function settlement_bill_buy_edit_data_func(obj) {
   var settlement_bill_buy_edit_data_get = ajax_assistant(settlement_bill_buy_edit_data_url, data, false, true, false);
   console.log(settlement_bill_buy_edit_data_get);
   if ("1" == settlement_bill_buy_edit_data_get.status) {
-    settlement_bill_buy_clear_raw_data();
-    settlement_bill_buy_server_data_cover();
-    settlement_bill_buy_fill_variable_data();
+    settlement_bill_buy_clear_raw_data(contract_code_uuid);
+    settlement_bill_buy_server_data_cover(contract_code, "0", "1");
+    settlement_bill_buy_fill_variable_data(contract_code_uuid);
     $("#settlement_bill_buy_edit_modle_prop").modal("hide");
     $("#settlement_bill_buy_edit_modle_prop").on("hidden.bs.modal", function(e) {
       $(this).remove();
@@ -673,6 +672,7 @@ function settlement_bill_buy_edit_data_func(obj) {
 function settlement_bill_buy_delete_modle_func(obj) {
   var uuid = obj.attr("uuid");
   var contract_code = obj.attr("contract_code");
+  var contract_code_uuid = obj.attr("contract_code_uuid");
   var settlement_bill_buy_add_buyer_uuid = obj.attr("buyer_uuid");
   var settlement_bill_buy_add_seller_uuid = obj.attr("seller_uuid");
   var settlement_bill_buy_add_product_name = obj.attr("product_name");
@@ -686,7 +686,7 @@ function settlement_bill_buy_delete_modle_func(obj) {
           '</div>'+
           '<div class = "modal-body nopadding-bottom settlement_bill_buy_center">确认要删除吗？</div>'+
           '<div class = "modal-footer noborder nopadding-top" style = "text-align: center;">'+
-          '<button type = "button" class = "btn btn-danger" id = "settlement_bill_buy_delete_modle_prop_btn"  uuid = "' + uuid + '" contract_code = "' + contract_code + '">删除</button>'+
+          '<button type = "button" class = "btn btn-danger" id = "settlement_bill_buy_delete_modle_prop_btn"  uuid = "' + uuid + '" contract_code = "' + contract_code + '" contract_code_uuid = "' + contract_code_uuid + '">删除</button>'+
               '<button type = "button" class = "btn btn-default" data-dismiss = "modal">取消</button>'+
           '</div>'+
         '</div>'+
@@ -701,6 +701,8 @@ function settlement_bill_buy_delete_modle_func(obj) {
 
 function settlement_bill_buy_delete_data_func(obj) {
   var uuid = obj.attr("uuid");
+  var contract_code = obj.attr("contract_code");
+  var contract_code_uuid = obj.attr("contract_code_uuid");
   var data = {
     "idColumnValue":uuid
   };
@@ -711,9 +713,9 @@ function settlement_bill_buy_delete_data_func(obj) {
     alert("删除采购对账单失败");
   } else {  
     // 更新页面数据
-    settlement_bill_buy_clear_raw_data();
-    settlement_bill_buy_server_data_cover();
-    settlement_bill_buy_fill_variable_data();
+    settlement_bill_buy_clear_raw_data(contract_code_uuid);
+    settlement_bill_buy_server_data_cover(contract_code, "0", "1");
+    settlement_bill_buy_fill_variable_data(contract_code_uuid);
     $("#settlement_bill_buy_delete_modle_prop").modal("hide");
     $("#settlement_bill_buy_delete_modle_prop").on("hidden.bs.modal", function(e) {
       $(this).remove();
@@ -905,6 +907,85 @@ function settlement_bill_buy_info_modle_func(obj) {
 }
 
 function settlement_bill_buy_output(output_id) {
-  var content = ""
+  var content = 
+'  <div class = "panel panel-primary ">'+
+'    <div class = "panel-heading clearfix">采购对账单<span class = "glyphicon glyphicon-plus pull-right" id = "settlement_bill_buy_add_modle" contract_code_uuid = "6dc62fc9173544a9a11fd8b7c562274a"></span></div>'+
+'    <div class = "panel-body">'+
+'        <div class = "row">'+
+'          <div class = "col-lg-12">'+
+'            <table cellpadding = "0" cellspacing = "0" border = "0" width = "100%" class = "table settlement_bill_table_sales_trad_uuid">'+
+'              <thead>'+
+'                <tr>'+
+'                  <th>装货量</th>'+
+'                  <th>卸货量</th>'+
+'                  <th>约定损耗</th>'+
+'                  <th>实际损耗</th>'+
+'                  <th>结算量</th>'+
+'                  <th>货物单价</th>'+
+'                  <th>发票数量</th>'+
+'                  <th>合计价格</th>'+
+'                  <th>已付货款</th>'+
+'                  <th>应退货款</th>'+
+'                  <th></th>'+
+'                </tr>'+
+'              </thead>'+
+'              <tbody class = "settlement_bill_buy_box">'+
+'                <tr>'+
+'                  <td>300</td>'+
+'                  <td>300</td>'+
+'                  <td>3‰</td>'+
+'                  <td>2‰</td>'+
+'                  <td>3000</td>'+
+'                  <td>3000</td>'+
+'                  <td>3000</td>'+
+'                  <td>3000</td>'+
+'                  <td>3600</td>'+
+'                  <td>300</td>'+
+'                  <td>'+
+'                    <span class = "glyphicon glyphicon-info-sign settlement_bill_buy_ml15"></span>'+
+'                    <span class = "glyphicon glyphicon-pencil settlement_bill_buy_ml15"></span>'+
+'                    <span class = "glyphicon glyphicon-remove settlement_bill_buy_ml15"></span>'+
+'                  </td>'+
+'                </tr>'+
+'                <tr>'+
+'                  <td>300</td>'+
+'                  <td>300</td>'+
+'                  <td>3‰</td>'+
+'                  <td>2‰</td>'+
+'                  <td>3000</td>'+
+'                  <td>3000</td>'+
+'                  <td>3000</td>'+
+'                  <td>3000</td>'+
+'                  <td>3600</td>'+
+'                  <td>300</td>'+
+'                  <td>'+
+'                    <span class = "glyphicon glyphicon-info-sign settlement_bill_buy_ml15"></span>'+
+'                    <span class = "glyphicon glyphicon-pencil settlement_bill_buy_ml15"></span>'+
+'                    <span class = "glyphicon glyphicon-remove settlement_bill_buy_ml15"></span>'+
+'                  </td>'+
+'                </tr>'+
+'                <tr>'+
+'                  <td>300</td>'+
+'                  <td>300</td>'+
+'                  <td>3‰</td>'+
+'                  <td>2‰</td>'+
+'                  <td>3000</td>'+
+'                  <td>3000</td>'+
+'                  <td>3000</td>'+
+'                  <td>3000</td>'+
+'                  <td>3600</td>'+
+'                  <td>300</td>'+
+'                  <td>'+
+'                    <span class = "glyphicon glyphicon-info-sign settlement_bill_buy_ml15"></span>'+
+'                    <span class = "glyphicon glyphicon-pencil settlement_bill_buy_ml15"></span>'+
+'                    <span class = "glyphicon glyphicon-remove settlement_bill_buy_ml15"></span>'+
+'                  </td>'+
+'                </tr>'+
+'              </tbody>'+
+'            </table>'+
+'          </div>'+
+'        </div>'+
+'      </div>'+
+'    </div>';
   $(output_id).html(content);
 }

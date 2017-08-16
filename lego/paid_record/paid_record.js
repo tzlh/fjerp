@@ -446,7 +446,7 @@ function paid_record_delete_data(uuid, paid_record_contract_code, paid_record_co
 
 function paid_record_output(output_id, contract_sale_all_price) {
   var content =
-' <div class = "panel panel-primary">'+
+' <div class = "panel panel-primary contract_sale_records_checkbox">'+
 '  <div class = "panel-heading clearfix" id = "paid_record_paid"><span class = "paid">收款记录&nbsp;[应收货款&nbsp;:&nbsp;' + contract_sale_all_price + ']&nbsp;[已收货款&nbsp;:&nbsp;0]&nbsp;[未收货款&nbsp;:&nbsp;0]</span><span class = "glyphicon glyphicon-plus pull-right" id = "paid_record_add_modle"></span></div>'+
 '    <div class = "panel-body">'+
 '        <div class = "row">'+

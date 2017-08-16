@@ -813,7 +813,7 @@ function settlement_bill_sale_info_modle_func(obj) {
 
 function settlement_bill_sale_output(output_id) {
   var content  =  
-    '    <div class = "panel panel-primary ">'+
+    '    <div class = "panel panel-primary contract_sale_settlement_checkbox">'+
     '      <div class = "panel-heading clearfix">销售结算函<span class = "glyphicon glyphicon-plus pull-right" id = "settlement_bill_sale_add_modle"></span></div>'+
     '      <div class = "panel-body">'+
     '        <div class = "row">'+

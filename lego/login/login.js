@@ -28,3 +28,25 @@ function login_func() {
     alert('用户名或密码输入有误，请检查');
   }
 }
+
+function login_output(output_id) {
+  var content = 
+    '<div class = "container-fluid">'+
+    '    <div class = "panel panel-primary login_middle">'+
+    '      <div class = "panel-heading panel-primary">登录</div>'+
+    '      <div class = "panel-body">'+
+    '        <div class = "text-center"><img src = "../../img/fjerp_logo_blue.png" width = "66"></div>'+
+    '        <div class = "form-group">'+
+    '          <label class = "pull-left">用户名</label><span class = "pull-left login_ml5" id = "login_username"></span>'+
+    '          <input type = "text" class = "form-control login_username_val" value = "">'+
+    '        </div>'+
+    '        <div class = "form-group span-block">'+
+    '          <label class = "pull-left">密码</label><span class = "pull-left login_ml5" id = "login_password"></span>'+
+    '          <input type = "password" class = "form-control login_password_val" value = "">'+
+    '        </div>'+
+    '        <div class = "form-group text-center"><button type = "button" class = "btn btn-primary" id = "login_btn">登录</button></div>'+
+    '      </div>'+
+    '    </div>'+
+    '  </div>';
+    $(output_id).html(content);
+}
