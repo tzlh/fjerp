@@ -95,15 +95,15 @@ function invoice_information_fill_variable_data(contract_code_uuid, invoice_info
     }
     $("#invoice_information_content" + contract_code_uuid).find(".invoice_information_box").html(invoice_information_html);
     $("#invoice_information_content" + contract_code_uuid).find(".invoice_information_already").html(Number(invoice_information_already_obj).toFixed(2));
-//  var no_obj = Number(invoice_information_should_be_obj) - Number(invoice_information_already_obj);
-    var no_obj = invoice_information_should_be_obj - invoice_information_already_obj;
-    $("#invoice_information_content" + contract_code_uuid).find(".invoice_information_no").html(no_obj.toFixed(2));
+    var no_obj = Number(invoice_information_should_be_obj) - Number(invoice_information_already_obj);
+//  var no_obj = (invoice_information_should_be_obj - invoice_information_already_obj;
+    $("#invoice_information_content" + contract_code_uuid).find(".invoice_information_no").html((no_obj.toFixed(2)));
   } else {
     $("#invoice_information_content" + contract_code_uuid).find(".invoice_information_box").html('<tr><td colspan="9" align="center">没数据</td></tr>');
     $("#invoice_information_content" + contract_code_uuid).find(".invoice_information_already").html("0");
-//  var no_obj = Number(invoice_information_should_be_obj) - Number(invoice_information_already_obj);
-    var no_obj = invoice_information_should_be_obj;
-    $("#invoice_information_content" + contract_code_uuid).find(".invoice_information_no").html(no_obj.toFixed(2));
+    var no_obj = Number(invoice_information_should_be_obj);
+//  var no_obj = invoice_information_should_be_obj;
+    $("#invoice_information_content" + contract_code_uuid).find(".invoice_information_no").html((no_obj.toFixed(2)));
   }
 }
 

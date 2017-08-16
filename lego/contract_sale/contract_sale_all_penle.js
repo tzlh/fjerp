@@ -9,7 +9,7 @@ function contract_sale_open_info_func(obj) {
   var contract_sale_all_price = obj.attr("contract_sale_all_price");
   
   var contract_sale_all_penle =
-  '<tr>'+
+  '<tr class = "contract_sale_all_panel">'+
     '<td colspan="11">'+
       '<div class="row">'+
         '<div class="col-lg-12">'+
@@ -41,12 +41,6 @@ function contract_sale_open_info_func(obj) {
     obj.find(".glyphicon").addClass("glyphicon-chevron-down");
     obj.addClass("active");
     obj.parent().parent().after(contract_sales_html);
-    for (var i = 0; i < $(".contract_sale_data_screening_btn").length; i++) {
-      if($(".contract_sale_data_screening_btn").eq(i).prop("checked") == false) {
-        var contract_sale_idd = $(".contract_sale_data_screening_btn").eq(i).attr("id");
-        $(".contract_sale_all_panel").find("." + contract_sale_idd).addClass("contract_sales_none");
-      }
-    }
   }
   
   //收款记录
@@ -144,4 +138,11 @@ function contract_sale_open_info_func(obj) {
   //加载数据
   
   invoice_information_fill_variable_data(contract_sales_contract_code_uuid, contract_sale_all_price, "1");
+  for (var i = 0; i < $(".contract_sale_data_screening_btn").length; i++) {
+    console.log();
+    if($(".contract_sale_data_screening_btn").eq(i).prop("checked") == false) {
+      var contract_sale_idd = $(".contract_sale_data_screening_btn").eq(i).attr("id");
+      $("#contract_sales_box").find("." + contract_sale_idd).addClass("contract_sales_none");
+    }
+  }
 }

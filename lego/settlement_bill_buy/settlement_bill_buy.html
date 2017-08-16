@@ -23,7 +23,7 @@
       settlement_bill_buy_server_data_cover();
       //加载数据
       settlement_bill_buy_fill_variable_data();     
-      //添加物流对账单模态框
+      //添加采购对账单模态框
       $(document).on("click", "#settlement_bill_buy_add_modle", function() {
         settlement_bill_buy_add_modle_func($(this));
       });
@@ -39,23 +39,23 @@
       $(document).on("blur",".volume_corresponding",function(){
         volume_corresponding__change($(this));
       });
-      //添加物流对账单数据
+      //添加采购对账单数据
       $(document).on("click", "#settlement_bill_buy_add_data_btn", function() {
-        settlement_bill_buy_add_data_func($(this));
+        settlement_bill_buy_add_data_func($(this), "0", "1");
       });
-      //修改物流对账单模态框
+      //修改采购对账单模态框
       $(document).on("click", ".settlement_bill_buy_modle_pencil", function() {
         settlement_bill_buy_edit_modle_func($(this));
       });
-      //修改物流对账单数据
+      //修改采购对账单数据
       $(document).on("click", "#settlement_bill_buy_edit_data_btn", function() {
-        settlement_bill_buy_edit_data_func($(this));
+        settlement_bill_buy_edit_data_func($(this), "0", "1");
       });
-      //删除物流对账单模态框
+      //删除采购对账单模态框
       $(document).on("click", ".settlement_bill_buy_modle_remove", function() {
         settlement_bill_buy_delete_modle_func($(this));
       });
-      //删除物流对账单数据
+      //删除采购对账单数据
       $(document).on("click", "#settlement_bill_buy_delete_modle_prop_btn", function() {
         settlement_bill_buy_delete_data_func($(this));
       });

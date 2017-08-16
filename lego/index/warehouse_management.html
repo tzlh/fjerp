@@ -14,6 +14,7 @@
 <script src = "../../js/toolkit.js"></script>
 <script src = "../../js/configure.js"></script>
 <script src = "../warehouse_management/warehouse_management.js"></script>
+<script src = "../check_login/check_login.js"></script>
 <title></title>
 <style>
   .warehouse_management_mt20{margin-top: 20px;}
@@ -21,6 +22,7 @@
 </style>
 <script>
   $(document).ready(function() {
+    check_login();
     header_output("#header");
     nav_menu_output("#nav_menu");
     warehouse_management_output("#warehouse_management_content");
@@ -89,6 +91,21 @@
     $(document).on("click", ".warehouse_management_tank_remove_data", function() {
       var warehouse_tank_remove_data_this = $(this);
       warehouse_management_delete_warehouse_pot_data( warehouse_tank_remove_data_this );
+    });
+    //修改密码
+    $(document).on("click", "#header_edit_password_prop", function() {
+      header_edit_password_func();
+    });
+    //保存密码
+    $(document).on("click", "#header_edit_password_btn", function() {
+      header_edit_password_save_func();
+    });
+    //退出
+    $(document).on("click", "#header_log_out_modle", function() {
+      header_edit_log_out_modle_func();
+    });
+    $(document).on("click", "#header_log_out_btn", function() {
+      header_log_out_data_func();
     });
   });
 </script>

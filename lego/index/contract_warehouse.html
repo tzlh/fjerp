@@ -18,6 +18,7 @@
 <script src = "../../js/configure.js"></script>
 <script src = "../upload_attachment/upload_attachment.js" type = "text/javascript" charset = "utf-8"></script>
 <script src = "../contract_warehouse/contract_warehouse.js"></script>
+<script src = "../check_login/check_login.js"></script>
 <title></title>
 <style>
   .contract_warehouse_mt20{margin-top: 20px;}
@@ -27,6 +28,7 @@
 </style>
 <script>
   $(document).ready(function() {
+    check_login();
     contract_warehouse_output("#contract_content");
     //日历插件
     widget_datepicker_init();

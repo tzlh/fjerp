@@ -434,7 +434,7 @@ function deliver_entrust_letter_delete_data(uuid, contract_code, contract_uuid) 
  */
 function deliver_entrust_letter_content(output_id) {
   var content = 
-'   <div class = "panel panel-primary ">'+
+'   <div class = "panel panel-primary contract_sale_pick_checkbox">'+
 '    <div class = "panel-heading clearfix">提货委托函<span class = "glyphicon glyphicon-plus pull-right" id = "deliver_entrust_letter_add_modal_btn"></span></div>'+
 '    <div class = "panel-body">'+
 '        <div class = "row">'+

@@ -93,6 +93,7 @@ function contract_sale_server_data_cover(contract_type) {
   } else {
     alert("销售合同数据获取失败");
   }
+  console.log(totalRows);
   //获取销售合同
   contract_sale_search_condition["type"] = contract_type;
   var contract_sale_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getContractTrade";
@@ -205,7 +206,7 @@ function contract_sale_fill_variable_data() {
 function contract_sale_pages_fun(obj) {
   current_offset = obj.attr("data-offset");
   contract_sale_search_condition["offset"] = current_offset;
-  contract_sale_server_data_cover();
+  contract_sale_server_data_cover("1");
   contract_sale_fill_variable_data();
 }
 
@@ -487,7 +488,7 @@ function contract_sales_add_data_func(obj, contract_sales_type) {
   var contract_sales_add_get = ajax_assistant(contract_sales_add_url, contract_sales_data, false, true, false);
   if (1 == contract_sales_add_get.status) {
     contract_sale_clear_raw_data();
-    contract_sale_server_data_cover();
+    contract_sale_server_data_cover("1");
     contract_sale_fill_variable_data(); 
     $("#contract_sales_add_modle_prop").modal("hide");
     $("#contract_sales_add_modle_prop").on("hidden.bs.modal", function (e) {
@@ -897,7 +898,7 @@ function contract_sales_edit_data_func(obj, contract_type) {
   var contract_sales_edit_data_get = ajax_assistant(contract_sales_edit_data_url, data, false, true, false);
   if(1 == contract_sales_edit_data_get.status){
     contract_sale_clear_raw_data();
-    contract_sale_server_data_cover();
+    contract_sale_server_data_cover("1");
     contract_sale_fill_variable_data();
     $("#contract_sales_edit_modle_prop").modal("hide");
     $("#contract_sales_edit_modle_prop").on("hidden.bs.modal", function(e) {
@@ -949,7 +950,7 @@ function contract_sales_delete_data_func(obj) {
   } else {    
   // 更新页面数据
     contract_sale_clear_raw_data();
-    contract_sale_server_data_cover();
+    contract_sale_server_data_cover("1");
     contract_sale_fill_variable_data();
   }
   $("#contract_sales_delete_modle_prop").modal("hide");
@@ -1215,9 +1216,9 @@ function contract_sales_info_modle_func(obj, contract_type) {
 function contract_sale_data_screening_func(obj) {
   var contract_sale_idd = obj.attr("id");
   if (obj.prop("checked") == true) {
-    $(".contract_sale_all_panel").find("." + contract_sale_idd).addClass("contract_sales_none");
+    $("#contract_sales_box .contract_sale_all_panel").find("." + contract_sale_idd).addClass("contract_sales_none");
   } else {
-    $(".contract_sale_all_panel").find("." + contract_sale_idd).removeClass("contract_sales_none");
+    $("#contract_sales_box .contract_sale_all_panel").find("." + contract_sale_idd).removeClass("contract_sales_none");
   }
 }
 
@@ -1238,7 +1239,7 @@ function contract_sale_search_btn_func() {
     "rows":rows,
     "offset":current_offset,
   };
-  contract_sale_server_data_cover();
+  contract_sale_server_data_cover("1");
   contract_sale_fill_variable_data(); 
 }
 
@@ -1293,7 +1294,7 @@ function contract_sale_search_fuzzy_btn_func() {
   } 
   contract_sale_search_condition["rows"] = rows;
   contract_sale_search_condition["offset"] = current_offset;
-  contract_sale_server_data_cover();
+  contract_sale_server_data_cover("1");
   contract_sale_fill_variable_data();
 }
 

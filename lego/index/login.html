@@ -3,7 +3,6 @@
 <head>
 <meta charset = "utf-8" />
 <link rel = "stylesheet" type = "text/css" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.css"/>
-<link rel = "stylesheet" type = "text/css" href = "upload_attachment.css"/>
 <link rel = "stylesheet" type = "text/css" href = "../login/login.css"/>
 <script src = "../../plugin/jquery/1.12.4/jquery.min.js" type = "text/javascript" charset = "utf-8"></script>
 <script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.js" type = "text/javascript" charset = "utf-8"></script>
@@ -13,9 +12,18 @@
 <script>
   $(document).ready(function() {
       var redirect_url = getQueryFromUrl("redirect_url");
-      alert(redirect_url);
-      // window.location.href = redirect_url;
+      if (null != redirect_url) {
+        login_redirect_url = redirect_url;
+      }
       login_output("#login_content");
+      $(document).on("click", "#login_btn", function() {
+        login_func();
+      });
+      $(document).keydown(function(e){
+        if(e.keyCode == 13){
+          $("#login_btn").trigger("click");
+        }
+      });
   });
 </script>
 <title>用户登录</title>
