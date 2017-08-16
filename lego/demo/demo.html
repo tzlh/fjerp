@@ -9,10 +9,14 @@
     <script src = "../../plugin/jquery/1.12.4/jquery.min.js"></script>
     <script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src = "../../plugin/less/2.7.1/less.min.js"></script>
-    <script src = " ../../js/toolkit.js"></script>
+    <script src = "../../js/toolkit.js"></script>
+    <script src = "demo.js"></script>
     <script>
     $(document).ready(function() {
-        alert($("#my #name").html());
+        var d1 = new DemoObject("yuanhang", 33, "Manager");
+        d1.setAge(67);
+        alert(d1.getName());
+        alert(d1.getJob("JOB"));
     });
     </script>
   </head>

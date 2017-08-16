@@ -19,4 +19,10 @@ function check_login() {
   // 未登录
   LAST_URL_CHECK_LOGIN = window.location.href;
   window.location.href = "../index/login.html?redirect_url=" + LAST_URL_CHECK_LOGIN;
+  window.onerror = function(s) {
+    if ("user_not_login" == s) {
+      // 返回true，浏览器不会提示错误信息。
+      return true;
+    }
+    throw new Error("user_not_login");
 }
