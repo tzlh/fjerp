@@ -12,12 +12,13 @@ function contract_logistics_open_info_func(obj) {
         '<div class="col-lg-12">'+
           '<div id = "contract_logistics_content' + contract_logistics_contract_code_uuid + '">'+
           '</div>'+
+          '<div id = "invoice_information_content' + contract_logistics_contract_code_uuid + '">'+
+          '</div>'+
         '</div>'+
       '</div>'+
     '</td>'+
   '</tr>';
   var contract_logistics_html = contract_logistics_all_panle_html;
- 
   if (obj.hasClass("active")) {
     obj.find(".glyphicon").removeClass("glyphicon-chevron-down");
     obj.removeClass("active");
@@ -43,4 +44,17 @@ function contract_logistics_open_info_func(obj) {
   settlement_bill_logistics_server_data_cover(trade_contract_code, contract_logistics_contract_code);
   //加载数据
   settlement_bill_logistics_fill_variable_data(contract_logistics_contract_code_uuid);
+  //发票信息///////////////////////////////////////////////////////////////////////
+  invoice_information_output("#invoice_information_content" + contract_logistics_contract_code_uuid, "");
+  $("#invoice_information_content" + contract_logistics_contract_code_uuid).find(".panel-heading").html('发票信息<span class = "glyphicon glyphicon-plus pull-right" id = "invoice_information_add_modle"></span>');
+  $("#invoice_information_content" + contract_logistics_contract_code_uuid).find("#invoice_information_add_modle").attr("contract_code",contract_logistics_contract_code);
+  $("#invoice_information_content" + contract_logistics_contract_code_uuid).find("#invoice_information_add_modle").attr("contract_code_uuid",contract_logistics_contract_code_uuid);
+  $("#invoice_information_content" + contract_logistics_contract_code_uuid).find(".invoice_information_table_sales_trad_uuid").attr("contract_code_uuid",contract_logistics_contract_code_uuid);
+  //清空原始数据
+  invoice_information_clear_raw_data(contract_logistics_contract_code_uuid);
+  //服务器数据
+  invoice_information_server_data_cover(contract_logistics_contract_code);
+  //加载数据
+  invoice_information_fill_variable_data(contract_logistics_contract_code_uuid, "", "1");
+
 }

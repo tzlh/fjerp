@@ -55,7 +55,7 @@
       //清空原始数据
       contract_sale_clear_raw_data();
       //服务器数据
-      contract_sale_server_data_cover();
+      contract_sale_server_data_cover("1");
       //加载数据
       contract_sale_fill_variable_data();
       //搜索获取购买方和销售方
@@ -72,15 +72,15 @@
       });
       //添加销售合同数据
       $(document).on("click", "#contract_sales_add_modle_prop_btn", function() {
-        contract_sales_add_data_func($(this));
+        contract_sales_add_data_func($(this), "1");
       });
       //修改销售合同模态框
       $(document).on("click", ".contract_sale_modle_pencil", function() {
-        contract_sales_edit_modle_func($(this));
+        contract_sales_edit_modle_func($(this), "1");
       });
       //修改销售合同数据
       $(document).on("click", "#contract_sales_edit_modle_prop_btn", function() {
-        contract_sales_edit_data_func($(this));
+        contract_sales_edit_data_func($(this), "1");
       });
       //删除销售合同模态框
       $(document).on("click", ".contract_sale_modle_remove", function() {
@@ -92,7 +92,7 @@
       });
       //详情
       $(document).on("click", ".contract_sale_modle_info", function() {
-        contract_sales_info_modle_func($(this));
+        contract_sales_info_modle_func($(this), "1");
       });
       //合同展开详情按钮
       $(document).on("click", ".contract_sale_open_btn", function() {

@@ -72,13 +72,13 @@ function contract_sale_clear_raw_data() {
  * 服务器数据
  */
 var contract_sale_search_condition = {};
-function contract_sale_server_data_cover() {
+function contract_sale_server_data_cover(contract_type) {
   //分页  获取总条数
   var totalRows = 0;
   var contract_sale_total_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getContractTrade&data_count=1";
   delete contract_sale_search_condition["rows"];
   delete contract_sale_search_condition["offset"];
-  contract_sale_search_condition["type"] = "1";
+  contract_sale_search_condition["type"] = contract_type;
   var contract_sale_total_get_contract = ajax_assistant(contract_sale_total_url, contract_sale_search_condition, false, true, false);
   if(1 == contract_sale_total_get_contract.status) {
     if (0 == contract_sale_total_get_contract.count) {
@@ -94,7 +94,7 @@ function contract_sale_server_data_cover() {
     alert("销售合同数据获取失败");
   }
   //获取销售合同
-  contract_sale_search_condition["type"] = "1";
+  contract_sale_search_condition["type"] = contract_type;
   var contract_sale_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getContractTrade";
   var contract_sale_get_contract = ajax_assistant(contract_sale_url, contract_sale_search_condition, false, true, false);
   //获取企业信息
@@ -355,7 +355,7 @@ function contract_sales_add_modle_func() {
   });
 }
 
-function contract_sales_add_data_func(obj) {
+function contract_sales_add_data_func(obj, contract_sales_type) {
   //购买企业uuid
   var contract_sales_buyer_uuid = obj.parents("#contract_sales_add_modle_prop").find(".contract_sales_buyer_uuid").val();
   //销售企业uuid
@@ -460,7 +460,7 @@ function contract_sales_add_data_func(obj) {
     "sign_datetime":contract_sales_sign_datetime,
     "contract_ullage":contract_sales_contract_ullage,
     "warehouse_uuid":contract_sales_warehouse_uuid,
-    "type":1
+    "type":contract_sales_type
   };
   if(0 < contract_sales_specification.length) {
     if(null == contract_sales_specification.match(/^.{1,128}$/)) {
@@ -498,7 +498,7 @@ function contract_sales_add_data_func(obj) {
   }
 }
 
-function contract_sales_edit_modle_func(obj) {
+function contract_sales_edit_modle_func(obj, contract_type) {
   var uuid = obj.attr("uuid");
   //购买企业uuid
   var contract_sales_buyer_uuid = "";
@@ -530,7 +530,7 @@ function contract_sales_edit_modle_func(obj) {
   var contract_sales_cluster_list = "";
   var contract_sales_edit_data = {
     "uuid":uuid,
-    "type":1
+    "type":contract_type
   };
   //调接口  查询数据
   var contract_sales_edit_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getContractTrade";
@@ -760,7 +760,7 @@ function contract_sales_edit_modle_func(obj) {
   });
 }
 
-function contract_sales_edit_data_func(obj) {
+function contract_sales_edit_data_func(obj, contract_type) {
   var uuid = obj.attr("uuid");
   //购买企业uuid
   var contract_sales_buyer_uuid = obj.parents("#contract_sales_edit_modle_prop").find(".contract_sales_buyer_uuid").val();
@@ -862,7 +862,7 @@ function contract_sales_edit_data_func(obj) {
     "sign_datetime":contract_sales_sign_datetime,
     "contract_ullage":contract_sales_contract_ullage,
     "warehouse_uuid":contract_sales_warehouse_uuid,
-    "type":1
+    "type":contract_type
   };
   if(0 < contract_sales_cluster_list.length) {
     if(null == contract_sales_cluster_list.match(/^([0-9a-zA-Z]{32};)+$/)) {
@@ -958,7 +958,7 @@ function contract_sales_delete_data_func(obj) {
   });
 }
 
-function contract_sales_info_modle_func(obj) {
+function contract_sales_info_modle_func(obj, contract_type) {
   var uuid = obj.attr("uuid");
   //购买企业uuid
   var contract_sales_buyer_uuid = "";
@@ -990,7 +990,7 @@ function contract_sales_info_modle_func(obj) {
   var contract_sales_cluster_list = "";
   var contract_sales_info_data = {
     "uuid":uuid,
-    "type":1
+    "type":contract_type
   };
   //调接口  查询数据
   var contract_sales_info_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getContractTrade";
