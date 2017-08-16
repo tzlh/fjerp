@@ -50,11 +50,11 @@ var contract_sale_enterprise_data = {"data":[
  * quantity:数量
  */
 var contract_sale_data = {"data":[
-  {"contract_code":"fj-xy-170604", "buyer_uuid":"00000000000000000000000000000004", "seller_uuid":"00000000000000000000000000000001", "product_name":"福记", "real_name":"富纪有限公司", "price":"3.0", "quantity":"330", "deliver_datetime":"2017-05-06 00:00:00", "uuid":"11111111111111111111111111111111"},
-  {"contract_code":"fj-xy-111111", "buyer_uuid":"00000000000000000000000000000001", "seller_uuid":"00000000000000000000000000000003", "product_name":"福记", "real_name":"富纪有限公司", "price":"5.0", "quantity":"450", "deliver_datetime":"2017-05-06 00:00:00", "uuid":"11111111111111111111111111111112"},
-  {"contract_code":"fj-xy-222222", "buyer_uuid":"00000000000000000000000000000002", "seller_uuid":"00000000000000000000000000000001", "product_name":"福记", "real_name":"富纪有限公司", "price":"7.0", "quantity":"360", "deliver_datetime":"2017-05-06 00:00:00", "uuid":"11111111111111111111111111111113"},
-  {"contract_code":"fj-xy-333333", "buyer_uuid":"00000000000000000000000000000004", "seller_uuid":"00000000000000000000000000000003", "product_name":"福记", "real_name":"富纪有限公司", "price":"4.0", "quantity":"780", "deliver_datetime":"2017-05-06 00:00:00", "uuid":"11111111111111111111111111111114"},
-  {"contract_code":"fj-xy-444444", "buyer_uuid":"00000000000000000000000000000002", "seller_uuid":"00000000000000000000000000000004", "product_name":"福记", "real_name":"富纪有限公司", "price":"2.0", "quantity":"4550", "deliver_datetime":"2017-05-06 00:00:00", "uuid":"11111111111111111111111111111115"}]
+  {"contract_code":"fj-xy-170604", "buyer_uuid":"00000000000000000000000000000004", "seller_uuid":"00000000000000000000000000000001", "product_name":"福记", "real_name":"富纪有限公司", "price":"3.0", "quantity":"330", "deliver_datetime":"2017-05-06 00:00:00", "warehouse_uuid":"1224444", "uuid":"11111111111111111111111111111111"},
+  {"contract_code":"fj-xy-111111", "buyer_uuid":"00000000000000000000000000000001", "seller_uuid":"00000000000000000000000000000003", "product_name":"福记", "real_name":"富纪有限公司", "price":"5.0", "quantity":"450", "deliver_datetime":"2017-05-06 00:00:00", "warehouse_uuid":"1224444", "uuid":"11111111111111111111111111111112"},
+  {"contract_code":"fj-xy-222222", "buyer_uuid":"00000000000000000000000000000002", "seller_uuid":"00000000000000000000000000000001", "product_name":"福记", "real_name":"富纪有限公司", "price":"7.0", "quantity":"360", "deliver_datetime":"2017-05-06 00:00:00", "warehouse_uuid":"1224444", "uuid":"11111111111111111111111111111113"},
+  {"contract_code":"fj-xy-333333", "buyer_uuid":"00000000000000000000000000000004", "seller_uuid":"00000000000000000000000000000003", "product_name":"福记", "real_name":"富纪有限公司", "price":"4.0", "quantity":"780", "deliver_datetime":"2017-05-06 00:00:00", "warehouse_uuid":"1224444", "uuid":"11111111111111111111111111111114"},
+  {"contract_code":"fj-xy-444444", "buyer_uuid":"00000000000000000000000000000002", "seller_uuid":"00000000000000000000000000000004", "product_name":"福记", "real_name":"富纪有限公司", "price":"2.0", "quantity":"4550", "deliver_datetime":"2017-05-06 00:00:00", "warehouse_uuid":"1224444", "uuid":"11111111111111111111111111111115"}]
 };
 
 /**
@@ -113,7 +113,7 @@ function contract_sale_server_data_cover() {
       var contract_sale_result = JSON.parse(contract_sale_get_contract.result);  
       console.log(contract_sale_result);
       for (var i = 0; i < contract_sale_result.length; i++) {
-        tmp_arr[i] = {"contract_code":contract_sale_result[i].contract_code, "buyer_uuid":contract_sale_result[i].buyer_uuid, "seller_uuid":contract_sale_result[i].seller_uuid, "product_name":contract_sale_result[i].product_name, "real_name":contract_sale_result[i].real_name, "price":contract_sale_result[i].price, "quantity":contract_sale_result[i].quantity, "deliver_datetime":contract_sale_result[i].deliver_datetime, "uuid":contract_sale_result[i].uuid};
+        tmp_arr[i] = {"contract_code":contract_sale_result[i].contract_code, "buyer_uuid":contract_sale_result[i].buyer_uuid, "seller_uuid":contract_sale_result[i].seller_uuid, "product_name":contract_sale_result[i].product_name, "real_name":contract_sale_result[i].real_name, "price":contract_sale_result[i].price, "quantity":contract_sale_result[i].quantity, "deliver_datetime":contract_sale_result[i].deliver_datetime, "warehouse_uuid":contract_sale_result[i].warehouse_uuid, "uuid":contract_sale_result[i].uuid};
       }
       contract_sale_data["data"] = tmp_arr;
     }
@@ -179,7 +179,7 @@ function contract_sale_fill_variable_data() {
       var contract_sale_all_price = (contract_sale_data.data[i].price*contract_sale_data.data[i].quantity).toFixed(2);
       contract_sale_html +=
         '<tr class = "contract_sale_tr">'+
-          '<td><button type = "button" class = "btn btn-info btn-xs contract_sale_open_btn" contract_code = "' + contract_sale_data.data[i].contract_code + '"><span class = "glyphicon glyphicon-chevron-up"></span></button></td>'+
+          '<td><button type = "button" class = "btn btn-info btn-xs contract_sale_open_btn" contract_code = "' + contract_sale_data.data[i].contract_code + '" contract_sales_contract_code_uuid = "' + contract_sale_data.data[i].uuid + '" contract_sale_warehouse_uuid = "' + contract_sale_data.data[i].warehouse_uuid + '" contract_sale_all_price = "' + contract_sale_all_price + '"><span class = "glyphicon glyphicon-chevron-up"></span></button></td>'+
           '<td>' + contract_sale_data.data[i].contract_code + '</td>'+
           '<td>' + buyer_uuid + '</td>'+
           '<td>' + seller_uuid + '</td>'+
@@ -1210,27 +1210,6 @@ function contract_sales_info_modle_func(obj) {
   $("#contract_sales_info_modle_prop").on("hidden.bs.modal", function (e) {
     $(this).remove();
   });
-}
-
-function contract_sale_open_info_func(obj) {
-  var contract_sales_contract_code = obj.attr("contract_code");
-  var contract_sales_html = '<tr class = "contract_sale_all_panel"><td colspan="11"><div class = "contract_sale_records_checkbox">收款记录</div><div class = "contract_sale_logistics_checkbox">物流合同</div><div class = "contract_sale_transport_checkbox">车船信息</div><div class = "contract_sale_pick_checkbox">提货委托函</div><div class = "contract_sale_confirm_checkbox">货物确认函</div><div class = "contract_sale_settlement_checkbox">销售结算函</div></td></tr>';
-  if (obj.hasClass("active")) {
-    obj.find(".glyphicon").removeClass("glyphicon-chevron-down");
-    obj.removeClass("active");
-    obj.parent().parent().nextUntil(".contract_sale_tr").remove();
-    contract_sales_html = "";
-  } else {
-    obj.find(".glyphicon").addClass("glyphicon-chevron-down");
-    obj.addClass("active");
-    obj.parent().parent().after(contract_sales_html);
-    for (var i = 0; i < $(".contract_sale_data_screening_btn").length; i++) {
-      if($(".contract_sale_data_screening_btn").eq(i).prop("checked") == false) {
-        var contract_sale_idd = $(".contract_sale_data_screening_btn").eq(i).attr("id");
-        $(".contract_sale_all_panel").find("." + contract_sale_idd).addClass("contract_sales_none");
-      }
-    }
-  }
 }
 
 function contract_sale_data_screening_func(obj) {

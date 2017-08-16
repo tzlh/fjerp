@@ -23,7 +23,7 @@
   <script src = "contract_logistics.js"></script>
   <script>
     $(document).ready(function() {
-//    contract_logistics_output("#contract_logistics_content");
+      contract_logistics_output("#contract_logistics_content");
       //日历插件
       widget_datepicker_init();
       //清空原始数据
@@ -33,7 +33,6 @@
       //加载数据
       contract_logistics_fill_variable_data();     
       //添加物流合同模态框
-//    $(document).on("click", "#contract_logistics_add_modle"+trade_contract_code, function() {
       $(document).on("click", "#contract_logistics_add_modle", function() {
         contract_logistics_add_modle_func($(this));
       });
@@ -69,8 +68,9 @@
   </script>
 </head>
 <body>
+  <div id = "contract_logistics_content"></div>
   <!--id ="contract_logistics_"+trade_contract_code-->
-  <div class = "panel panel-primary ">
+  <!--<div class = "panel panel-primary ">
     <div class = "panel-heading clearfix">物流合同<span class = "glyphicon glyphicon-plus pull-right" id = "contract_logistics_add_modle"></span></div>
     <div class = "panel-body">
         <div class = "row">
@@ -148,6 +148,6 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>-->
 </body>
 </html>
