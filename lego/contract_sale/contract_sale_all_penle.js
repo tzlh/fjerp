@@ -44,18 +44,23 @@ function contract_sale_open_info_func(obj) {
   }
   
   //收款记录
-  paid_record_output("#paid_record_content" + contract_sales_contract_code_uuid, contract_sale_all_price);
+  var paid_record_title = {
+    paid_record_name: "收款记录",
+    paid_record_time: "收款时间",
+    paid_record_paid: "收款金额（元）"
+  }
+  paid_record_output("#paid_record_content" + contract_sales_contract_code_uuid, contract_sale_all_price, paid_record_title);
   $("#paid_record_content" + contract_sales_contract_code_uuid).find("#paid_record_add_modle").attr("trade_contract_code",contract_sales_contract_code);
   $("#paid_record_content" + contract_sales_contract_code_uuid).find("#paid_record_add_modle").attr("contract_sale_all_price",contract_sale_all_price);
   $("#paid_record_content" + contract_sales_contract_code_uuid).find("#paid_record_add_modle").attr("contract_sales_contract_code_uuid",contract_sales_contract_code_uuid);
   $("#paid_record_content" + contract_sales_contract_code_uuid).find(".settlement_bill_table_sales_trad_uuid").attr("contract_sales_contract_code_uuid",contract_sales_contract_code_uuid);
   $("#paid_record_content" + contract_sales_contract_code_uuid).find("#paid_record_add_modle").attr("contract_uuid",contract_sales_contract_code_uuid);
   // 清空原始数据
-  paid_record_clear_raw_data(contract_sales_contract_code_uuid);
+  paid_record_clear_raw_data(contract_sales_contract_code_uuid, paid_record_title);
   // 服务器数据
   paid_record_server_data_cover(contract_sales_contract_code, contract_sale_all_price);
   // 加载数据
-  paid_record_fill_variable_data(contract_sales_contract_code_uuid, contract_sale_all_price);
+  paid_record_fill_variable_data(contract_sales_contract_code_uuid, paid_record_title, contract_sale_all_price);
   
   //提货委托函
   deliver_entrust_letter_content("#deliver_entrust_letter_content" + contract_sales_contract_code_uuid, contract_sale_all_price);
