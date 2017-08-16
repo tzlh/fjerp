@@ -128,9 +128,9 @@ function contract_buy_open_info_func(obj) {
   $("#invoice_information_content" + contract_buy_contract_code_uuid).find("#invoice_information_add_modle").attr("invoice_type","0");
   $("#invoice_information_content" + contract_buy_contract_code_uuid).find("#invoice_information_add_modle").attr("contract_logistics_trad_add_url",contract_trad_add_url);
   $("#invoice_information_content" + contract_buy_contract_code_uuid).find("#invoice_information_add_modle").attr("contract_code_uuid",contract_buy_contract_code_uuid);
-  $("#invoice_information_content" + contract_buy_contract_code_uuid).find("#invoice_information_add_modle").attr("contract_buy_all_price",contract_buy_all_price);
+  $("#invoice_information_content" + contract_buy_contract_code_uuid).find("#invoice_information_add_modle").attr("contract_sale_all_price",contract_buy_all_price);
   $("#invoice_information_content" + contract_buy_contract_code_uuid).find(".invoice_information_table_sales_trad_uuid").attr("contract_code_uuid",contract_buy_contract_code_uuid);
-  $("#invoice_information_content" + contract_buy_contract_code_uuid).find(".invoice_information_table_sales_trad_uuid").attr("contract_buy_all_price",contract_buy_all_price);
+  $("#invoice_information_content" + contract_buy_contract_code_uuid).find(".invoice_information_table_sales_trad_uuid").attr("contract_sale_all_price",contract_buy_all_price);
   $("#invoice_information_content" + contract_buy_contract_code_uuid).find(".invoice_information_table_sales_trad_uuid").attr("invoice_type","0");
   $("#invoice_information_content" + contract_buy_contract_code_uuid).find(".invoice_information_table_sales_trad_uuid").attr("contract_logistics_trad_edit_url",contract_trad_edit_url);
   //清空原始数据
@@ -138,5 +138,5 @@ function contract_buy_open_info_func(obj) {
   //服务器数据
   invoice_information_server_data_cover(contract_buy_contract_code);
   //加载数据
-  invoice_information_fill_variable_data(contract_buy_contract_code_uuid, contract_buy_all_price, "1");
+  invoice_information_fill_variable_data(contract_buy_contract_code_uuid, contract_buy_all_price, "0");
 }
