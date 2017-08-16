@@ -226,7 +226,6 @@ function warehouse_payment_detail_get_warehouse() {
  */
 function warehouse_payment_detail_content(output_id) {
   var content = 
-'    <div class = "col-md-12">'+
 '      <div class = "panel panel-default panel-primary">'+
 '        <div class = "panel-heading">搜索条件</div>'+
 '        <div class = "panel-body" style="padding-bottom: 0;">'+
@@ -312,7 +311,6 @@ function warehouse_payment_detail_content(output_id) {
 '            </table>'+
 '          </div>'+
 '        </div>'+
-'      </div>'+
-'    </div>';
+'      </div>';
   $(output_id).html(content);
 }

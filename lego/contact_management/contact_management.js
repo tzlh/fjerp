@@ -393,7 +393,7 @@ function contact_management_output(output_id) {
 '              </select>'+
 '            </div>'+
 '          </div>'+
-'          <div class = "col-md-1">'+
+'          <div class = "col-md-2">'+
 '            <button type = "button" class = "btn btn-primary pull-left" id = "contact_management_enterprise_search_btn" style = "width: 100px;">搜索</button>'+
 '          </div>'+
 '          <div class = "col-md-3">'+
