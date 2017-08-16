@@ -21,7 +21,7 @@ var contact_data = [
 /**
  * 分页变量
  */
-var rows = 2;
+var rows = 20;
 var current_offset = 0;
 
 /**
