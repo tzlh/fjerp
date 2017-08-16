@@ -678,3 +678,47 @@ function godown_entry_notify_delete_data(uuid) {
     alert("删除失败");
   }
 }
+
+/**
+ * 入库通知单输出
+ * @param output_id
+ */
+function godown_entry_notify_content(output_id) {
+  var content = 
+'   <div class = "panel panel-primary">'+
+'    <div class = "panel-heading clearfix" id = "godown_entry_notify_paid">入库通知单<span class = "glyphicon glyphicon-plus pull-right" data-contract_code = "ZS-TZGYL-17813261" id = "godown_entry_notify_add_modal_btn"></span></div>'+
+'    <div class = "panel-body">'+
+'        <div class = "row">'+
+'          <div class = "col-lg-12">'+
+'            <table id = "godown_entry_notify_list" cellpadding = "0" cellspacing = "0" border = "0" width = "100%" class = "table">'+
+'              <thead>'+
+'                <tr>'+
+'                  <th>品类</th>'+
+'                  <th>卸货量（吨）</th>'+
+'                  <th>卸货开始时间</th>'+
+'                  <th>卸货结束时间</th>'+
+'                  <th>储罐</th>'+
+'                  <th>&nbsp;</th>'+
+'                </tr>'+
+'              </thead>'+
+'              <tbody class = "godown_entry_notify_ml15_box">'+
+'                <tr>'+
+'                  <td>原油</td>'+
+'                  <td>10</td>'+
+'                  <td>2017-05-14</td>'+
+'                  <td>2017-05-14</td>'+
+'                  <td>储罐1</td>'+
+'                  <td>'+
+'                    <span class = "glyphicon glyphicon-info-sign godown_entry_notify_ml15 godown_entry_notify_detail"></span>'+
+'                    <span class = "glyphicon glyphicon-pencil godown_entry_notify_ml15 godown_entry_notify_edit"></span>'+
+'                    <span class = "glyphicon glyphicon-remove godown_entry_notify_ml15 godown_entry_notify_delete"></span>'+
+'                  </td>'+
+'                </tr>'+
+'              </tbody>'+
+'            </table>'+
+'          </div>'+
+'        </div>'+
+'      </div>'+
+'    </div>';
+  $(output_id).html(content);
+}

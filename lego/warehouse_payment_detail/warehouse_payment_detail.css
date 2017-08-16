@@ -15,6 +15,9 @@
 #warehouse_payment_detail_content table{
   margin-bottom: 0;
 }
-#contact_management_list tbody td{
+#warehouse_payment_detail_list tbody td{
+  text-align: center;
+}
+#warehouse_payment_detail_list thead th{
   text-align: center;
 }

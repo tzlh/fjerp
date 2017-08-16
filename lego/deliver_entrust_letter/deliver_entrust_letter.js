@@ -30,22 +30,15 @@ var deliver_entrust_letter_file_data = [
 /**
  * 初始化
  */
-function deliver_entrust_letter_clear_raw_data() {
-  $("#deliver_entrust_letter_list thead").html("");
-  $("#deliver_entrust_letter_list tbody").html("");
+function deliver_entrust_letter_clear_raw_data(contract_uuid) {
+  $("#deliver_entrust_letter_content" + contract_uuid).find("#deliver_entrust_letter_list tbody").html("");
 }
 
 /**
  * 赋值
  */
-function deliver_entrust_letter_fill_variable_data() {
+function deliver_entrust_letter_fill_variable_data(contract_uuid) {
   if (isJsonObjectHasData(deliver_entrust_letter_data)) {
-    var deliver_entrust_letter_thead  = 
-      '<tr>'+
-        '<th>提货地点</th>'+
-        '<th>提货时间</th>'+
-        '<th>&nbsp;</th>'+
-      '</tr>';
     var deliver_entrust_letter_tbody = "";
     for (var i = 0; i < deliver_entrust_letter_data.length; i++) {
       deliver_entrust_letter_tbody += 
@@ -58,21 +51,20 @@ function deliver_entrust_letter_fill_variable_data() {
             '<span class = "glyphicon glyphicon-remove deliver_entrust_letter_ml15 deliver_entrust_letter_delete" data-uuid = "' + deliver_entrust_letter_data[i].uuid + '" data-contract_code = "' + deliver_entrust_letter_data[i].contract_code + '"></span>'+
           '</td>'+
         '</tr>';
-      $("#deliver_entrust_letter_list thead").html(deliver_entrust_letter_thead);
-      $("#deliver_entrust_letter_list tbody").html(deliver_entrust_letter_tbody);  
+      $("#deliver_entrust_letter_content" + contract_uuid).find("#deliver_entrust_letter_list tbody").html(deliver_entrust_letter_tbody);  
     }
   } else {
-    $("#deliver_entrust_letter_list thead").html("没有数据");
+    $("#deliver_entrust_letter_content" + contract_uuid).find("#deliver_entrust_letter_list tbody").html("<p>没有数据</p>");
   }
 }
 
 /**
  * 获取提货委托函
  */
-function deliver_entrust_letter_server_data_cover() {
+function deliver_entrust_letter_server_data_cover(contract_code) {
   var get_deliver_entrust_letter_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getDeliverEntrustLetter";
   var get_deliver_entrust_letter_param_data = {};
-  get_deliver_entrust_letter_param_data["contract_code"] = "ZS-TZGYL-17813261";
+  get_deliver_entrust_letter_param_data["contract_code"] = contract_code;
   var deliver_entrust_letter_get= ajax_assistant(get_deliver_entrust_letter_url, get_deliver_entrust_letter_param_data, false, true, false);
   console.log(deliver_entrust_letter_get);
   if (1 == deliver_entrust_letter_get.status) {
@@ -137,7 +129,7 @@ function deliver_entrust_letter_get_letter(uuid) {
 /**
  * 添加提货委托函
  */
-function deliver_entrust_letter_add_modal() {
+function deliver_entrust_letter_add_modal(contract_code, contract_uuid) {
   var content = 
 '      <div class = "modal fade custom_modal" id = "deliver_entrust_letter_add_modal" tabindex = "-1">'+
 '       <div class = "modal-dialog" role = "document">'+
@@ -176,7 +168,7 @@ function deliver_entrust_letter_add_modal() {
 '               </div>'+
 '           </div>'+
 '           <div class = "modal-footer">'+
-'             <button type = "button" class = "btn btn-primary add_btn">添加</button>'+
+'             <button type = "button" class = "btn btn-primary add_btn" data-contract_code = "' + contract_code + '" data-contract_uuid= "' + contract_uuid + '">添加</button>'+
 '             <button type = "button" class = "btn btn-default" data-dismiss = "modal">取消</button>'+
 '           </div>'+
 '         </div>'+
@@ -190,7 +182,7 @@ function deliver_entrust_letter_add_modal() {
   });
 }
 
-function deliver_entrust_letter_add_data() {
+function deliver_entrust_letter_add_data(contract_code, contract_uuid) {
   var place = $("#deliver_entrust_letter_add_modal .place").val();
   var deliver_datetime = $("#deliver_entrust_letter_add_modal .deliver_datetime").val() + ' 00:00:00';
   var deliver_entrust_letter_li = $("#deliver_entrust_letter_add_attch ul").children("li");
@@ -219,7 +211,7 @@ function deliver_entrust_letter_add_data() {
   }
   var add_deliver_entrust_letter_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=addDeliverEntrustLetter";
   var add_deliver_entrust_letter_param_data = {};
-  add_deliver_entrust_letter_param_data["contract_code"] = "ZS-TZGYL-17813261";
+  add_deliver_entrust_letter_param_data["contract_code"] = contract_code;
   add_deliver_entrust_letter_param_data["place"] = place;
   add_deliver_entrust_letter_param_data["deliver_datetime"] = deliver_datetime;
   if("" != deliver_entrust_letter_list) {
@@ -229,8 +221,8 @@ function deliver_entrust_letter_add_data() {
   console.log(deliver_entrust_letter_add);
   if (1 == deliver_entrust_letter_add.status) {
     $("#deliver_entrust_letter_add_modal").modal("hide");
-    deliver_entrust_letter_server_data_cover();
-    deliver_entrust_letter_fill_variable_data();
+    deliver_entrust_letter_server_data_cover(contract_code);
+    deliver_entrust_letter_fill_variable_data(contract_uuid);
   } else {
     alert("添加失败！");
   }
@@ -292,7 +284,7 @@ function deliver_entrust_letter_edit_modal(uuid, contract_code) {
   });
 }
 
-function deliver_entrust_letter_edit_data(uuid, contract_code) {
+function deliver_entrust_letter_edit_data(uuid, contract_code, contract_uuid) {
   console.log(uuid);
   var place = $("#deliver_entrust_letter_edit_modal .place").val();
   var deliver_datetime = $("#deliver_entrust_letter_edit_modal .start_deliver_datetime").val() + ' 00:00:00';
@@ -332,8 +324,8 @@ function deliver_entrust_letter_edit_data(uuid, contract_code) {
   console.log(deliver_entrust_letter_edit);
   if (1 == deliver_entrust_letter_edit.status) {
     $("#deliver_entrust_letter_edit_modal").modal("hide");
-    deliver_entrust_letter_server_data_cover();
-    deliver_entrust_letter_fill_variable_data();
+    deliver_entrust_letter_server_data_cover(contract_code);
+    deliver_entrust_letter_fill_variable_data(contract_uuid);
   } else {
     alert("修改失败！");
   }
@@ -421,7 +413,7 @@ function deliver_entrust_letter_delete_modal(uuid, contract_code) {
   });
 }
 
-function deliver_entrust_letter_delete_data(uuid, contract_code) {
+function deliver_entrust_letter_delete_data(uuid, contract_code, contract_uuid) {
   var delete_deliver_entrust_letter_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=removeDeliverEntrustLetter";
   var delete_deliver_entrust_letter_param_data = {};
   delete_deliver_entrust_letter_param_data["idColumnValue"] = uuid;
@@ -429,9 +421,47 @@ function deliver_entrust_letter_delete_data(uuid, contract_code) {
   console.log(org_structure_delete_deliver_entrust_letter);
   if (1 == org_structure_delete_deliver_entrust_letter.status) {
     $("#deliver_entrust_letter_delete_modal").modal("hide");
-    deliver_entrust_letter_server_data_cover();
-    deliver_entrust_letter_fill_variable_data();
+    deliver_entrust_letter_server_data_cover(contract_code);
+    deliver_entrust_letter_fill_variable_data(contract_uuid);
   } else {
     alert("删除失败");
   }
+}
+
+/**
+ * 提货委托函输出
+ * @param output_id
+ */
+function deliver_entrust_letter_content(output_id) {
+  var content = 
+'   <div class = "panel panel-primary ">'+
+'    <div class = "panel-heading clearfix">提货委托函<span class = "glyphicon glyphicon-plus pull-right" id = "deliver_entrust_letter_add_modal_btn"></span></div>'+
+'    <div class = "panel-body">'+
+'        <div class = "row">'+
+'          <div class = "col-lg-12">'+
+'            <table id = "deliver_entrust_letter_list" cellpadding = "0" cellspacing = "0" border = "0" width = "100%" class = "table">'+
+'              <thead>'+
+'                <tr>'+
+'                  <th>提货地点</th>'+
+'                  <th>提货时间</th>'+
+'                  <th>&nbsp;</th>'+
+'                </tr>'+
+'              </thead>'+
+'              <tbody class = "deliver_entrust_letter_ml15_box">'+
+'                <tr>'+
+'                  <td>舟山</td>'+
+'                  <td>2017-05-14</td>'+
+'                  <td>'+
+'                    <span class = "glyphicon glyphicon-info-sign deliver_entrust_letter_ml15 deliver_entrust_letter_detail"></span>'+
+'                    <span class = "glyphicon glyphicon-pencil deliver_entrust_letter_ml15 deliver_entrust_letter_edit"></span>'+
+'                    <span class = "glyphicon glyphicon-remove deliver_entrust_letter_ml15 deliver_entrust_letter_delete"></span>'+
+'                  </td>'+
+'                </tr>'+
+'              </tbody>'+
+'            </table>'+
+'          </div>'+
+'        </div>'+
+'      </div>'+
+'    </div>';
+  $(output_id).html(content);
 }

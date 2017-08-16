@@ -24,21 +24,15 @@ var report_test_file_data = [
 /**
  * 初始化
  */
-function report_test_clear_raw_data() {
-  $("#report_test_list thead").html("");
-  $("#report_test_list tbody").html("");
+function report_test_clear_raw_data(vehicle_information_uuid) {
+  $("#report_test_content" + vehicle_information_uuid).find("#report_test_list tbody").html("");
 }
 
 /**
  * 赋值
  */
-function report_test_fill_variable_data() {
+function report_test_fill_variable_data(vehicle_information_uuid) {
   if (isJsonObjectHasData(report_test_data)) {
-    var report_test_thead  = 
-      '<tr>'+
-        '<th>序号</th>'+
-        '<th>&nbsp;</th>'+
-      '</tr>';
     var report_test_tbody = "";
     for (var i = 0; i < report_test_data.length; i++) {
       report_test_tbody += 
@@ -50,21 +44,20 @@ function report_test_fill_variable_data() {
             '<span class = "glyphicon glyphicon-remove report_test_ml15 report_test_delete" data-uuid = "' + report_test_data[i].uuid + '" data-vehicle_information_uuid = "' + report_test_data[i].vehicle_information_uuid + '"></span>'+
           '</td>'+
         '</tr>';
-      $("#report_test_list thead").html(report_test_thead);
-      $("#report_test_list tbody").html(report_test_tbody);  
+      $("#report_test_content" + vehicle_information_uuid).find("#report_test_list tbody").html(report_test_tbody);  
     }
   } else {
-    $("#report_test_list thead").html("没有数据");
+    $("#report_test_content" + vehicle_information_uuid).find("#report_test_list tbody").html("没有数据");
   }
 }
 
 /**
  * 获取化验单
  */
-function report_test_server_data_cover() {
+function report_test_server_data_cover(vehicle_information_uuid) {
   var get_report_test_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getTestReport";
   var get_report_test_param_data = {};
-  get_report_test_param_data["contract_code"] = "ZS-TZGYL-17813261";
+  get_report_test_param_data["vehicle_information_uuid"] = vehicle_information_uuid;
   var report_test_get= ajax_assistant(get_report_test_url, get_report_test_param_data, false, true, false);
   console.log(report_test_get);
   if (1 == report_test_get.status) {
@@ -126,7 +119,7 @@ function report_test_get_letter(uuid) {
 /**
  * 添加化验单
  */
-function report_test_add_modal() {
+function report_test_add_modal(vehicle_information_uuid) {
   var content = 
 '      <div class = "modal fade custom_modal" id = "report_test_add_modal" tabindex = "-1">'+
 '       <div class = "modal-dialog" role = "document">'+
@@ -143,7 +136,7 @@ function report_test_add_modal() {
 '               </div>'+
 '           </div>'+
 '           <div class = "modal-footer">'+
-'             <button type = "button" class = "btn btn-primary add_btn">添加</button>'+
+'             <button type = "button" class = "btn btn-primary add_btn" data-vehicle_information_uuid = "' + vehicle_information_uuid + '">添加</button>'+
 '             <button type = "button" class = "btn btn-default" data-dismiss = "modal">取消</button>'+
 '           </div>'+
 '         </div>'+
@@ -157,7 +150,7 @@ function report_test_add_modal() {
   });
 }
 
-function report_test_add_data() {
+function report_test_add_data(vehicle_information_uuid) {
   var report_test_li = $("#report_test_add_attch ul").children("li");
   var report_test_list = "";
   for (var i = 0; i < report_test_li.length; i++) {
@@ -178,8 +171,8 @@ function report_test_add_data() {
   console.log(report_test_add);
   if (1 == report_test_add.status) {
     $("#report_test_add_modal").modal("hide");
-    report_test_server_data_cover();
-    report_test_fill_variable_data();
+    report_test_server_data_cover(vehicle_information_uuid);
+    report_test_fill_variable_data(vehicle_information_uuid);
   } else {
     alert("添加失败！");
   }
@@ -188,7 +181,7 @@ function report_test_add_data() {
 /**
  * 修改化验单
  */
-function report_test_edit_modal(uuid) {
+function report_test_edit_modal(uuid, vehicle_information_uuid) {
   var content = 
 '     <div class = "modal fade custom_modal" id = "report_test_edit_modal" tabindex = "-1">'+
 '       <div class = "modal-dialog" role = "document">'+
@@ -206,7 +199,7 @@ function report_test_edit_modal(uuid) {
 '               </div>'+
 '           </div>'+
 '           <div class = "modal-footer">'+
-'             <button type = "button" class = "btn btn-warning edit_btn" data-uuid = "' + uuid + '">修改</button>'+
+'             <button type = "button" class = "btn btn-warning edit_btn" data-uuid = "' + uuid + '" data-vehicle_information_uuid = "' + vehicle_information_uuid + '">修改</button>'+
 '             <button type = "button" class = "btn btn-default" data-dismiss = "modal">取消</button>'+
 '           </div>'+
 '         </div>'+
@@ -220,7 +213,7 @@ function report_test_edit_modal(uuid) {
   });
 }
 
-function report_test_edit_data(uuid) {
+function report_test_edit_data(uuid, vehicle_information_uuid) {
   console.log(uuid);
   var report_test_li = $("#report_test_edit_attch ul").children("li");
   var report_test_list = "";
@@ -235,6 +228,7 @@ function report_test_edit_data(uuid) {
   var edit_report_test_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=modifyTestReport";
   var edit_report_test_param_data = {};
   edit_report_test_param_data["idColumnValue"] = uuid;
+  edit_report_test_param_data["vehicle_information_uuid"] = vehicle_information_uuid;
   if ("" != report_test_list) {
     edit_report_test_param_data["newClusterList"] = report_test_list;
   }
@@ -242,8 +236,8 @@ function report_test_edit_data(uuid) {
   console.log(report_test_edit);
   if (1 == report_test_edit.status) {
     $("#report_test_edit_modal").modal("hide");
-    report_test_server_data_cover();
-    report_test_fill_variable_data();
+    report_test_server_data_cover(vehicle_information_uuid);
+    report_test_fill_variable_data(vehicle_information_uuid);
   } else {
     alert("修改失败！");
   }
@@ -319,9 +313,45 @@ function report_test_delete_data(uuid, vehicle_information_uuid) {
   console.log(org_structure_delete_report_test);
   if (1 == org_structure_delete_report_test.status) {
     $("#report_test_delete_modal").modal("hide");
-    report_test_server_data_cover();
-    report_test_fill_variable_data();
+    report_test_server_data_cover(vehicle_information_uuid);
+    report_test_fill_variable_data(vehicle_information_uuid);
   } else {
     alert("删除失败");
   }
+}
+
+/**
+ * 化验单输出
+ * @param output_id
+ */
+function report_test_content(output_id) {
+  var content = 
+'   <div class = "panel panel-primary ">'+
+'    <div class = "panel-heading clearfix">化验单<span class = "glyphicon glyphicon-plus pull-right" id = "report_test_add_modal_btn"></span></div>'+
+'    <div class = "panel-body">'+
+'        <div class = "row">'+
+'          <div class = "col-lg-12">'+
+'            <table id = "report_test_list" cellpadding = "0" cellspacing = "0" border = "0" width = "100%" class = "table">'+
+'              <thead>'+
+'                <tr>'+
+'                  <th>序号</th>'+
+'                  <th>&nbsp;</th>'+
+'                </tr>'+
+'              </thead>'+
+'              <tbody class = "report_test_ml15_box">'+
+'                <tr>'+
+'                  <td>1</td>'+
+'                  <td>'+
+'                    <span class = "glyphicon glyphicon-info-sign report_test_ml15 report_test_detail"></span>'+
+'                    <span class = "glyphicon glyphicon-pencil report_test_ml15 report_test_edit"></span>'+
+'                    <span class = "glyphicon glyphicon-remove report_test_ml15 report_test_delete"></span>'+
+'                  </td>'+
+'                </tr>'+
+'              </tbody>'+
+'            </table>'+
+'          </div>'+
+'        </div>'+
+'      </div>'+
+'    </div>';
+  $(output_id).html(content);
 }

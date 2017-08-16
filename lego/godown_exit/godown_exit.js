@@ -37,19 +37,18 @@ var godown_exit_actual_quantity_count = 0;
 /**
  * 初始化
  */
-function godown_exit_clear_raw_data() {
-//$("#godown_exit_list thead").html("");
-  $("#godown_exit_list tbody").html("");
+function godown_exit_clear_raw_data(vehicle_information_uuid) {
+  $("#godown_exit_content" + vehicle_information_uuid).find("#godown_exit_list tbody").html("");
   godown_exit_plan_quantity_count = 0;
   godown_exit_actual_quantity_count = 0;
-  $("#godown_exit_paid").html('出库单&nbsp;[计划量总量&nbsp;:&nbsp;0][实发量总量&nbsp;:&nbsp;0]&nbsp;<span class = "glyphicon glyphicon-plus pull-right" data-vehicle_information_uuid = "45cd2b07a2d843a188522902083a696d" id = "godown_exit_add_modal_btn"></span>');
+  $("#godown_exit_content" + vehicle_information_uuid).find("#godown_exit_paid span.paid").html('出库单&nbsp;[计划量总量&nbsp;:&nbsp;0][实发量总量&nbsp;:&nbsp;0]&nbsp;');
 }
 
 /**
  * 赋值
  */
-function godown_exit_fill_variable_data() {
-  $("#godown_exit_paid").html('出库单&nbsp;[计划量总量&nbsp;:&nbsp;' + godown_exit_plan_quantity_count + '][实发量总量&nbsp;:&nbsp;' + godown_exit_actual_quantity_count + ']&nbsp;<span class = "glyphicon glyphicon-plus pull-right" data-vehicle_information_uuid = "45cd2b07a2d843a188522902083a696d" id = "godown_exit_add_modal_btn"></span>');
+function godown_exit_fill_variable_data(vehicle_information_uuid) {
+  $("#godown_exit_content" + vehicle_information_uuid).find("#godown_exit_paid span.paid").html('出库单&nbsp;[计划量总量&nbsp;:&nbsp;' + godown_exit_plan_quantity_count + '][实发量总量&nbsp;:&nbsp;' + godown_exit_actual_quantity_count + ']&nbsp;');
   if (isJsonObjectHasData(godown_exit_data)) {
 //  var godown_exit_thead  = 
 //    '<tr>'+
@@ -72,20 +71,20 @@ function godown_exit_fill_variable_data() {
             '<span class = "glyphicon glyphicon-remove godown_exit_ml15 godown_exit_delete" data-uuid = "' + godown_exit_data[i].uuid + '" data-vehicle_information_uuid = "' + godown_exit_data[i].vehicle_information_uuid + '"></span>'+
           '</td>'+
         '</tr>';
-      $("#godown_exit_list tbody").html(godown_exit_tbody);  
+      $("#godown_exit_content" + vehicle_information_uuid).find("#godown_exit_list tbody").html(godown_exit_tbody);  
     }
   } else {
-    $("#godown_exit_list tbody").html('<tr><td colspan="6" align="center">没有数据</td></tr>');
+    $("#godown_exit_content" + vehicle_information_uuid).find("#godown_exit_list tbody").html('<tr><td colspan="6" align="center">没有数据</td></tr>');
   }
 }
 
 /**
  * 获取出库单
  */
-function godown_exit_server_data_cover() {
+function godown_exit_server_data_cover(vehicle_information_uuid) {
   var get_godown_exit_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getGodownExit";
   var get_godown_exit_param_data = {};
-  get_godown_exit_param_data["vehicle_information_uuid"] = "45cd2b07a2d843a188522902083a696d";
+  get_godown_exit_param_data["vehicle_information_uuid"] = vehicle_information_uuid;
   var godown_exit_get= ajax_assistant(get_godown_exit_url, get_godown_exit_param_data, false, true, false);
   console.log(godown_exit_get);
   if (1 == godown_exit_get.status) {
@@ -315,9 +314,9 @@ function godown_exit_add_data(vehicle_information_uuid) {
   console.log(godown_exit_add);
   if (1 == godown_exit_add.status) {
     $("#godown_exit_add_modal").modal("hide");
-    godown_exit_clear_raw_data();
-    godown_exit_server_data_cover();
-    godown_exit_fill_variable_data();
+    godown_exit_clear_raw_data(vehicle_information_uuid);
+    godown_exit_server_data_cover(vehicle_information_uuid);
+    godown_exit_fill_variable_data(vehicle_information_uuid);
   } else {
     alert("添加失败！");
   }
@@ -487,9 +486,9 @@ function godown_exit_edit_data(uuid, vehicle_information_uuid) {
   console.log(godown_exit_edit);
   if (1 == godown_exit_edit.status) {
     $("#godown_exit_edit_modal").modal("hide");
-    godown_exit_clear_raw_data();
-    godown_exit_server_data_cover();
-    godown_exit_fill_variable_data();
+    godown_exit_clear_raw_data(vehicle_information_uuid);
+    godown_exit_server_data_cover(vehicle_information_uuid);
+    godown_exit_fill_variable_data(vehicle_information_uuid);
   } else {
     alert("修改失败！");
   }
@@ -622,10 +621,54 @@ function godown_exit_delete_data(uuid, vehicle_information_uuid) {
   console.log(godown_exit_delete_godown_exit);
   if (1 == godown_exit_delete_godown_exit.status) {
     $("#godown_exit_delete_modal").modal("hide");
-    godown_exit_clear_raw_data();
-    godown_exit_server_data_cover();
-    godown_exit_fill_variable_data();
+    godown_exit_clear_raw_data(vehicle_information_uuid);
+    godown_exit_server_data_cover(vehicle_information_uuid);
+    godown_exit_fill_variable_data(vehicle_information_uuid);
   } else {
     alert("删除失败");
   }
+}
+
+/**
+ * 出库单输出
+ * @param output_id
+ */
+function godown_exit_content(output_id) {
+  var content = 
+'   <div class = "panel panel-primary ">'+
+'    <div class = "panel-heading clearfix" id = "godown_exit_paid"><span class = "paid">出库单&nbsp;[净重总量&nbsp;:&nbsp;0]&nbsp;</span><span class = "glyphicon glyphicon-plus pull-right" id = "godown_exit_add_modal_btn"></span></div>'+
+'    <div class = "panel-body">'+
+'        <div class = "row">'+
+'          <div class = "col-lg-12">'+
+'            <table id = "godown_exit_list" cellpadding = "0" cellspacing = "0" border = "0" width = "100%" class = "table">'+
+'              <thead>'+
+'                <tr>'+
+'                  <th>计划量（吨）</th>'+
+'                  <th>实发量（吨）</th>'+
+'                  <th>皮重（吨）</th>'+
+'                  <th>毛重（吨）</th>'+
+'                  <th>出货日期</th>'+
+'                  <th>&nbsp;</th>'+
+'                </tr>'+
+'              </thead>'+
+'              <tbody class = "godown_exit_ml15_box">'+
+'                <tr>'+
+'                  <td>10</td>'+
+'                  <td>10</td>'+
+'                  <td>10</td>'+
+'                  <td>10</td>'+
+'                  <td>2017-05-14</td>'+
+'                  <td>'+
+'                    <span class = "glyphicon glyphicon-info-sign godown_exit_ml15 godown_exit_detail"></span>'+
+'                    <span class = "glyphicon glyphicon-pencil godown_exit_ml15 godown_exit_edit"></span>'+
+'                    <span class = "glyphicon glyphicon-remove godown_exit_ml15 godown_exit_delete"></span>'+
+'                  </td>'+
+'                </tr>'+
+'              </tbody>'+
+'            </table>'+
+'          </div>'+
+'        </div>'+
+'      </div>'+
+'    </div>';
+  $(output_id).html(content);
 }
