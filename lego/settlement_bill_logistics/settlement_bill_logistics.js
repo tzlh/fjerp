@@ -31,17 +31,16 @@ var settlement_bill_logistics_data = {"data":[
   ]
 };
 
-function settlement_bill_logistics_clear_raw_data() {
-//$("#settlement_bill_logistics_"+trade_contract_code).find(".settlement_bill_logistics_box")
-  $(".settlement_bill_logistics_box").html('<tr><td colspan="11" align="center">没数据</td></tr>');
+function settlement_bill_logistics_clear_raw_data(contract_logistics_contract_code_uuid) {
+  $("#contract_logistics_content" + contract_logistics_contract_code_uuid).find(".settlement_bill_logistics_box").html('<tr><td colspan="11" align="center">没数据</td></tr>');
 }
 
 /**
  * 服务器数据
  */
-function settlement_bill_logistics_server_data_cover() {
-  var trade_contract_code = "ZS-TZGYL-17813261";
-  var contract_code = "JYH-XY-17814006";
+function settlement_bill_logistics_server_data_cover(trad_contract_code, logistics_contract_code) {
+  var trade_contract_code = trad_contract_code;
+  var contract_code = logistics_contract_code;
   var logistics_data = {
     "contract_code":contract_code,
     "trade_contract_code":trade_contract_code
@@ -68,7 +67,7 @@ function settlement_bill_logistics_server_data_cover() {
           var settlement_bill_logistics_result = JSON.parse(settlement_bill_logistics_get_contract.result);  
           console.log(settlement_bill_logistics_result);
           for (var i = 0; i < settlement_bill_logistics_result.length; i++) {
-            tmp_arr[i] = {"trade_contract_code":"ZS-TZGYL-17813261", "contract_code":settlement_bill_logistics_logistics_result[0].contract_code, "buyer_uuid":settlement_bill_logistics_logistics_result[0].employer_uuid, "seller_uuid":settlement_bill_logistics_logistics_result[0].logistics_uuid, "product_name":settlement_bill_logistics_logistics_result[0].product_name, "load_quantity":settlement_bill_logistics_result[i].load_quantity, "unload_quantity":settlement_bill_logistics_result[i].unload_quantity, "contract_ullage":settlement_bill_logistics_result[i].contract_ullage, "settle_quantity":settlement_bill_logistics_result[i].settle_quantity, "freight":settlement_bill_logistics_result[i].freight, "goods_price":settlement_bill_logistics_result[i].goods_price, "invoice_quantity":settlement_bill_logistics_result[i].invoice_quantity, "paid_amount":settlement_bill_logistics_result[i].paid_amount, "uuid":settlement_bill_logistics_result[i].uuid};
+            tmp_arr[i] = {"trade_contract_code":trad_contract_code, "contract_code":settlement_bill_logistics_logistics_result[0].contract_code, "buyer_uuid":settlement_bill_logistics_logistics_result[0].employer_uuid, "seller_uuid":settlement_bill_logistics_logistics_result[0].logistics_uuid, "product_name":settlement_bill_logistics_logistics_result[0].product_name, "load_quantity":settlement_bill_logistics_result[i].load_quantity, "unload_quantity":settlement_bill_logistics_result[i].unload_quantity, "contract_ullage":settlement_bill_logistics_result[i].contract_ullage, "settle_quantity":settlement_bill_logistics_result[i].settle_quantity, "freight":settlement_bill_logistics_result[i].freight, "goods_price":settlement_bill_logistics_result[i].goods_price, "invoice_quantity":settlement_bill_logistics_result[i].invoice_quantity, "paid_amount":settlement_bill_logistics_result[i].paid_amount, "uuid":settlement_bill_logistics_result[i].uuid};
           }
           settlement_bill_logistics_data["data"] = tmp_arr;
         }
@@ -83,7 +82,7 @@ function settlement_bill_logistics_server_data_cover() {
   }
 }
 
-function settlement_bill_logistics_fill_variable_data() {
+function settlement_bill_logistics_fill_variable_data(logistics_contract_code_uuid) {
   if(isJsonObjectHasData(settlement_bill_logistics_data)) {
     var settlement_bill_logistics_html = "";
     for (var i = 0; i < settlement_bill_logistics_data.data.length; i++) {
@@ -109,21 +108,19 @@ function settlement_bill_logistics_fill_variable_data() {
           '</td>'+
         '</tr>';
     }
-    //$("#settlement_bill_logistics_"+trade_contract_code).find(".settlement_bill_logistics_box")
-    $(".settlement_bill_logistics_box").html(settlement_bill_logistics_html);
+    $("#contract_logistics_content" + logistics_contract_code_uuid).find(".settlement_bill_logistics_box").html(settlement_bill_logistics_html);
   } else {
-    //$("#settlement_bill_logistics_"+trade_contract_code).find(".settlement_bill_logistics_box")
-    $(".settlement_bill_logistics_box").html('<tr><td colspan="11" align="center">没数据</td></tr>');
+    $("#contract_logistics_content" + logistics_contract_code_uuid).find(".settlement_bill_logistics_box").html('<tr><td colspan="11" align="center">没数据</td></tr>');
   }
 }
 
 function settlement_bill_logistics_add_modle_func(obj) {
-//var trade_contract_code = obj.attr("trade_contract_code");
-  var trade_contract_code = "ZS-TZGYL-17813261";
-  var contract_code = "JYH-XY-17814006";
-  var settlement_bill_logistics_add_buyer_uuid = "c855961bac994980b9b61656d824aa96";
-  var settlement_bill_logistics_add_seller_uuid = "9a088b0070c64c33a93f51af8d0fbc58";
-  var settlement_bill_logistics_add_product_name = "都不够花";
+  var trade_contract_code = obj.attr("trade_contract_code");
+  var contract_code = obj.attr("contract_logistics_code");
+  var contract_logistics_code_uuid = obj.attr("contract_logistics_code_uuid");
+  var settlement_bill_logistics_add_buyer_uuid = obj.attr("buyer_uuid");
+  var settlement_bill_logistics_add_seller_uuid = obj.attr("seller_uuid");
+  var settlement_bill_logistics_add_product_name = obj.attr("product_name");
   var settlement_bill_logistics_html = 
       '<div class = "modal fade custom_modal" tabindex = "-1" id = "settlement_bill_logistics_add_modle_prop" role = "dialog" aria-labelledby = "myLargeModalLabel">'+
         '<div class = "modal-dialog" role = "document">'+
@@ -232,7 +229,7 @@ function settlement_bill_logistics_add_modle_func(obj) {
               '</div>'+
             '</div>'+
             '<div class = "modal-footer" style = "text-align: center;">'+
-              '<button type = "button" class = "btn btn-primary" id = "settlement_bill_logistics_add_data_btn" "trade_contract_code" = "' + trade_contract_code + '" contract_code = "' + contract_code + '" buyer_uuid = "' + settlement_bill_logistics_add_buyer_uuid + '" seller_uuid = "' + settlement_bill_logistics_add_seller_uuid + '" product_name = "' + settlement_bill_logistics_add_product_name + '">添加</button>'+
+              '<button type = "button" class = "btn btn-primary" id = "settlement_bill_logistics_add_data_btn" "trade_contract_code" = "' + trade_contract_code + '" contract_code = "' + contract_code + '" buyer_uuid = "' + settlement_bill_logistics_add_buyer_uuid + '" seller_uuid = "' + settlement_bill_logistics_add_seller_uuid + '" product_name = "' + settlement_bill_logistics_add_product_name + '" contract_logistics_code_uuid = "' + contract_logistics_code_uuid + '">添加</button>'+
               '<button type = "button" class = "btn btn-default" data-dismiss = "modal">取消</button>'+
             '</div>'+
           '</div>'+
@@ -280,6 +277,7 @@ function volume_corresponding__change(obj) {
 function settlement_bill_logistics_add_data_func(obj) {
   var trade_contract_code = obj.attr("trade_contract_code");
   var contract_code = obj.attr("contract_code");
+  var contract_logistics_code_uuid = obj.attr("contract_logistics_code_uuid");
   var settlement_bill_logistics_add_buyer_uuid = obj.attr("buyer_uuid");
   var settlement_bill_logistics_add_seller_uuid = obj.attr("seller_uuid");
   var settlement_bill_logistics_add_product_name = obj.attr("product_name");
@@ -356,9 +354,9 @@ function settlement_bill_logistics_add_data_func(obj) {
   var settlement_bill_logistics__add_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=addLogisticsSettlementBill";
   var settlement_bill_logistics__add_get_warehouse = ajax_assistant(settlement_bill_logistics__add_url, data, false, true, false);
   if ("1" == settlement_bill_logistics__add_get_warehouse.status) {
-    settlement_bill_logistics_clear_raw_data();
-    settlement_bill_logistics_server_data_cover();
-    settlement_bill_logistics_fill_variable_data(); 
+    settlement_bill_logistics_clear_raw_data(contract_logistics_code_uuid);
+    settlement_bill_logistics_server_data_cover(trade_contract_code, contract_code);
+    settlement_bill_logistics_fill_variable_data(contract_logistics_code_uuid); 
     $("#settlement_bill_logistics_add_modle_prop").modal("hide");
     $("#settlement_bill_logistics_add_modle_prop").on("hidden.bs.modal", function(e) {
       $(this).remove();
@@ -371,6 +369,8 @@ function settlement_bill_logistics_add_data_func(obj) {
 function settlement_bill_logistics_edit_modle_func(obj) {
   var uuid = obj.attr("uuid");
   var contract_code = obj.attr("contract_code");
+  var trade_contract_code = obj.attr("trade_contract_code");
+  var contract_logistics_code_uuid = obj.parent().parent().parent().parent().attr("contract_logistics_code_uuid");
   var settlement_bill_logistics_add_buyer_uuid = obj.attr("buyer_uuid");
   var settlement_bill_logistics_add_seller_uuid = obj.attr("seller_uuid");
   var settlement_bill_logistics_add_product_name = obj.attr("product_name");
@@ -541,7 +541,7 @@ function settlement_bill_logistics_edit_modle_func(obj) {
               '</div>'+
             '</div>'+
             '<div class = "modal-footer" style = "text-align: center;">'+
-              '<button type = "button" class = "btn btn-warning" id = "settlement_bill_logistics_edit_data_btn" contract_code = "' + contract_code + '" buyer_uuid = "' + settlement_bill_logistics_add_buyer_uuid + '" seller_uuid = "' + settlement_bill_logistics_add_seller_uuid + '" product_name = "' + settlement_bill_logistics_add_product_name + '" uuid = "' + uuid + '">修改</button>'+
+              '<button type = "button" class = "btn btn-warning" id = "settlement_bill_logistics_edit_data_btn" contract_code = "' + contract_code + '" buyer_uuid = "' + settlement_bill_logistics_add_buyer_uuid + '" seller_uuid = "' + settlement_bill_logistics_add_seller_uuid + '" product_name = "' + settlement_bill_logistics_add_product_name + '" uuid = "' + uuid + '" contract_logistics_code_uuid = "' + contract_logistics_code_uuid + '" trade_contract_code = "' + trade_contract_code + '">修改</button>'+
               '<button type = "button" class = "btn btn-default" data-dismiss = "modal">取消</button>'+
             '</div>'+
           '</div>'+
@@ -558,6 +558,8 @@ function settlement_bill_logistics_edit_modle_func(obj) {
 function settlement_bill_logistics_edit_data_func(obj) {
   var uuid = obj.attr("uuid");
   var contract_code = obj.attr("contract_code");
+  var trade_contract_code = obj.attr("trade_contract_code");
+  var contract_logistics_code_uuid = obj.attr("contract_logistics_code_uuid");
   var settlement_bill_logistics_add_buyer_uuid = obj.attr("buyer_uuid");
   var settlement_bill_logistics_add_seller_uuid = obj.attr("seller_uuid");
   var settlement_bill_logistics_add_product_name = obj.attr("product_name");
@@ -638,9 +640,9 @@ function settlement_bill_logistics_edit_data_func(obj) {
   var settlement_bill_logistics_edit_data_get = ajax_assistant(settlement_bill_logistics_edit_data_url, data, false, true, false);
   console.log(settlement_bill_logistics_edit_data_get);
   if ("1" == settlement_bill_logistics_edit_data_get.status){
-    settlement_bill_logistics_clear_raw_data();
-    settlement_bill_logistics_server_data_cover();
-    settlement_bill_logistics_fill_variable_data();
+    settlement_bill_logistics_clear_raw_data(contract_logistics_code_uuid);
+    settlement_bill_logistics_server_data_cover(trade_contract_code, contract_code);
+    settlement_bill_logistics_fill_variable_data(contract_logistics_code_uuid);
     $("#settlement_bill_logistics_edit_modle_prop").modal("hide");
     $("#settlement_bill_logistics_edit_modle_prop").on("hidden.bs.modal", function(e) {
       $(this).remove();
@@ -653,6 +655,8 @@ function settlement_bill_logistics_edit_data_func(obj) {
 function settlement_bill_logistics_delete_modle_func(obj) {
   var uuid = obj.attr("uuid");
   var contract_code = obj.attr("contract_code");
+  var trade_contract_code = obj.attr("trade_contract_code");
+  var contract_logistics_code_uuid = obj.parent().parent().parent().parent().attr("contract_logistics_code_uuid");
   var settlement_bill_logistics_add_buyer_uuid = obj.attr("buyer_uuid");
   var settlement_bill_logistics_add_seller_uuid = obj.attr("seller_uuid");
   var settlement_bill_logistics_add_product_name = obj.attr("product_name");
@@ -666,7 +670,7 @@ function settlement_bill_logistics_delete_modle_func(obj) {
             '</div>'+
             '<div class = "modal-body nopadding-bottom settlement_bill_logistics_center">确认要删除吗？</div>'+
             '<div class = "modal-footer noborder nopadding-top" style = "text-align: center;">'+
-            '<button type = "button" class = "btn btn-danger" id = "settlement_bill_logistics_delete_modle_prop_btn"  uuid = "' + uuid + '" contract_code = "' + contract_code + '">删除</button>'+
+            '<button type = "button" class = "btn btn-danger" id = "settlement_bill_logistics_delete_modle_prop_btn"  uuid = "' + uuid + '" contract_code = "' + contract_code + '" contract_logistics_code_uuid = "' + contract_logistics_code_uuid + '" trade_contract_code = "' + trade_contract_code + '">删除</button>'+
                 '<button type = "button" class = "btn btn-default" data-dismiss = "modal">取消</button>'+
             '</div>'+
           '</div>'+
@@ -681,6 +685,9 @@ function settlement_bill_logistics_delete_modle_func(obj) {
 
 function settlement_bill_logistics_delete_data_func(obj) {
   var uuid = obj.attr("uuid");
+  var contract_code = obj.attr("contract_code");
+  var trade_contract_code = obj.attr("trade_contract_code");
+  var contract_logistics_code_uuid = obj.attr("contract_logistics_code_uuid");
   var data = {
     "idColumnValue":uuid
   };
@@ -691,9 +698,9 @@ function settlement_bill_logistics_delete_data_func(obj) {
     alert("删除物流对账单失败");
   } else {  
     // 更新页面数据
-    settlement_bill_logistics_clear_raw_data();
-    settlement_bill_logistics_server_data_cover();
-    settlement_bill_logistics_fill_variable_data();
+    settlement_bill_logistics_clear_raw_data(contract_logistics_code_uuid);
+    settlement_bill_logistics_server_data_cover(trade_contract_code, contract_code);
+    settlement_bill_logistics_fill_variable_data(contract_logistics_code_uuid);
     $("#settlement_bill_logistics_delete_modle_prop").modal("hide");
     $("#settlement_bill_logistics_delete_modle_prop").on("hidden.bs.modal", function(e) {
       $(this).remove();
@@ -894,7 +901,7 @@ function settlement_bill_logistics_output(output_id) {
 '    <div class = "panel-body">'+
 '        <div class = "row">'+
 '          <div class = "col-lg-12">'+
-'            <table cellpadding = "0" cellspacing = "0" border = "0" width = "100%" class = "table">'+
+'            <table cellpadding = "0" cellspacing = "0" border = "0" width = "100%" class = "table settlement_bill_table_sales_trad_uuid">'+
 '              <thead>'+
 '                <tr>'+
 '                  <th>装货量</th>'+

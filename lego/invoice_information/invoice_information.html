@@ -44,21 +44,20 @@
         all_should_change_price($(this));
       });
       //添加发票信息模态框
-
       $(document).on("click", "#invoice_information_add_modle", function() {
-        invoice_information_add_modle_func($(this));
+        invoice_information_add_modle_func($(this), "1");
       });
       //添加发票信息数据
       $(document).on("click", "#invoice_information_add_data_btn", function() {
-        invoice_information_add_data_func($(this));
+        invoice_information_add_data_func($(this), "1");
       });
       //修改发票信息模态框
       $(document).on("click", ".invoice_information_modle_pencil", function() {
-        invoice_information_edit_modle_func($(this));
+        invoice_information_edit_modle_func($(this), "1");
       });
       //修改发票信息数据
       $(document).on("click", "#invoice_information_edit_data_btn", function() {
-        invoice_information_edit_data_func($(this));
+        invoice_information_edit_data_func($(this), "1");
       });
       //删除发票信息模态框
       $(document).on("click", ".invoice_information_modle_remove", function() {
@@ -70,15 +69,15 @@
       });
       //详情
       $(document).on("click", ".invoice_information_modle_info", function() {
-        invoice_information_info_modle_func($(this));
+        invoice_information_info_modle_func($(this), "1");
       });
     });
   </script>
 </head>
 <body>
-  <!--id ="invoice_information_"+trade_contract_code-->
+  <div id = "invoice_information_content"></div>
   <div class = "panel panel-primary ">
-    <div class = "panel-heading clearfix">发票信息  [应开发票:<span class="invoice_information_should_be">12.00</span>] [已开发票:<span class="invoice_information_already">0</span>] [未开发票:<span class="invoice_information_no">0</span>]<span class = "glyphicon glyphicon-plus pull-right" id = "invoice_information_add_modle" contract_code = "ZS-TZGYL-17813261"></span></div>
+    <div class = "panel-heading clearfix">发票信息  [应开发票:<span class="invoice_information_should_be">12.00</span>] [已开发票:<span class="invoice_information_already">0</span>] [未开发票:<span class="invoice_information_no">0</span>]<span class = "glyphicon glyphicon-plus pull-right" id = "invoice_information_add_modle"></span></div>
     <div class = "panel-body">
         <div class = "row">
           <div class = "col-lg-12">

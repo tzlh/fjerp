@@ -33,7 +33,7 @@
       });
       //添加销售结算函数据
       $(document).on("click", "#settlement_bill_sale_add_data_btn", function() {
-        settlement_bill_sale_add_data_func($(this));
+        settlement_bill_sale_add_data_func($(this), "1", "2");
       });
       //修改销售结算函模态框
       $(document).on("click", ".settlement_bill_sale_modle_pencil", function() {
@@ -41,7 +41,7 @@
       });
       //修改销售结算函数据
       $(document).on("click", "#settlement_bill_sale_edit_data_btn", function() {
-        settlement_bill_sale_edit_data_func($(this));
+        settlement_bill_sale_edit_data_func($(this), "1", "2");
       });
       //删除销售结算函模态框
       $(document).on("click", ".settlement_bill_sale_modle_remove", function() {
@@ -60,7 +60,7 @@
 </head>
 <body>
   <!--id ="settlement_bill_sale_"+trade_contract_code-->
-  <!--<div id = "settlement_bill_sale_content"></div>-->
+  <div id = "settlement_bill_sale_content"></div>
     <div class = "panel panel-primary ">
       <div class = "panel-heading clearfix">销售结算函<span class = "glyphicon glyphicon-plus pull-right" id = "settlement_bill_sale_add_modle" contract_code_uuid = "b9fb85295cbb4ceb8d6f4e9dfd398ac8" contract_code = "ZS-TZGYL-17813261"></span></div>
       <div class = "panel-body">
