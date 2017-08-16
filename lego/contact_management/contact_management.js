@@ -84,7 +84,7 @@ function contact_management_fill_variable_data() {
     $("#contact_management_list thead").html(contact_content_thead);
     $("#contact_management_list tbody").html(contact_content_tbody);
   } else {
-    $("#contact_management_list thead").html("<p>没有数据</p>");
+    $("#contact_management_list thead").html("<tr><td colspan='5' align='center'>没数据</td></tr>");
     $("#contact_management_list tbody").html("");
   }
 }

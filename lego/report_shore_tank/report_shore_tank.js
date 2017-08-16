@@ -59,7 +59,7 @@ function report_shore_tank_fill_variable_data(vehicle_information_uuid) {
       $("#report_shore_tank_content" + vehicle_information_uuid).find("#report_shore_tank_list tbody").html(report_shore_tank_tbody);  
     }
   } else {
-    $("#report_shore_tank_content" + vehicle_information_uuid).find("#report_shore_tank_list tbody").html("<p>没有数据</p>");
+    $("#report_shore_tank_content" + vehicle_information_uuid).find("#report_shore_tank_list tbody").html("tr><td colspan='2' align='center'>没数据</td></tr>");
   }
 }
 

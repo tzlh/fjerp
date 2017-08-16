@@ -47,7 +47,7 @@ function report_test_fill_variable_data(vehicle_information_uuid) {
       $("#report_test_content" + vehicle_information_uuid).find("#report_test_list tbody").html(report_test_tbody);  
     }
   } else {
-    $("#report_test_content" + vehicle_information_uuid).find("#report_test_list tbody").html("没有数据");
+    $("#report_test_content" + vehicle_information_uuid).find("#report_test_list tbody").html("<tr><td colspan = '3' algin = 'center'>没数据</td></tr/>");
   }
 }
 

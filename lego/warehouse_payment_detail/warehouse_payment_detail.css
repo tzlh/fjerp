@@ -9,8 +9,8 @@
   width: 83px;
   height: 83px;
 }
-#warehouse_payment_detail_content .panel-body{
-  padding-bottom: 0;
+.warehouse_payment_detail_pb0{
+  padding: 0 0 1px 0;
 }
 #warehouse_payment_detail_content table{
   margin-bottom: 0;
