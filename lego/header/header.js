@@ -41,15 +41,19 @@ function header_edit_password_save_func() {
   if ("" == header_edit_new_password && "" == header_edit_confirm_password) {
     $("#header_edit_push_password").html("请输入密码");
     $(".header_edit_new_password").focus();
+    return;
   } else if ("" != header_edit_new_password && "" == header_edit_confirm_password) {
     $("#header_edit_push_password").html("请输入确认密码");
     $(".header_edit_confirm_password").focus();
+    return;
   } else if ("" == header_edit_new_password && "" != header_edit_confirm_password) {
     $("#header_edit_push_password").html("请输入密码");
     $(".header_edit_new_password").focus();
+    return;
   }
   if("" != header_edit_new_password && "" != header_edit_confirm_password && (header_edit_new_password!=header_edit_confirm_password)){
-    $("#header_edit_push_password").html("两次密码不一致");
+    alert("两次密码不一致");
+    return;
   }
   var header_password_url = PROJECT_PATH+"lego/lego_user?servletName=modifyUserSecurityWithPasswordByUser";
   var header_password_param = {
@@ -61,6 +65,9 @@ function header_edit_password_save_func() {
     $("#header_edit_password_modal").on("hidden.bs.modal", function(e) {
       $(this).remove();
     });
+  } else {
+    alert("修改失败");
+    return;
   }
 }
 
