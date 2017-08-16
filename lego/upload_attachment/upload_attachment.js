@@ -111,7 +111,7 @@ function upload_attachment_btn_event_bind(output_id) {
         var img_src = get_display_imgage_src(result.file_name);
         $(output_id).find("ul").append(
           '<li>'+
-          '  <a class = "upload_attachment_file" href = "#" data-cluster = "' + result.cluster_name + '" data-url = "' + PROJECT_PATH + 'upload/' + result.file_name + '">'+
+          '  <a class = "upload_attachment_file" data-cluster = "' + result.cluster_name + '" data-url = "' + PROJECT_PATH + 'upload/' + result.file_name + '">'+
           '    <button class="btn btn-danger"><span class="glyphicon glyphicon-remove  btn-danger"></span></button>'+
           '    <img src = "' + img_src + '">'+
           '  </a>'+
@@ -164,7 +164,7 @@ function upload_attachment_preview_output(output_id, file_data) {
   for (var i = 0; i < file_data.length; i++) {
     var img_src = get_display_imgage_src(file_data[i].file_name);
     data += '<li>';
-    data += '  <a class = "upload_attachment_file" href = "#" data-url = "' + PROJECT_PATH + 'upload/' + file_data[i].file_name + '">';
+    data += '  <a class = "upload_attachment_file" data-url = "' + PROJECT_PATH + 'upload/' + file_data[i].file_name + '">';
     data += '    <img src = "' + img_src + '">';
     data += '  </a>';
     data += '</li>';
@@ -216,7 +216,7 @@ function upload_attachment_edit_output(output_id, file_data) {
       var data_cluster = file_data[i].file_name.substring(0, file_data[i].file_name.indexOf("."));
       var img_src = get_display_imgage_src(file_data[i].file_name);
       data += '<li>';
-      data += '  <a class = "upload_attachment_file" href = "#" data-cluster = "' + data_cluster + '" data-url = "' + PROJECT_PATH + 'upload/' + file_data[i].file_name + '">';
+      data += '  <a class = "upload_attachment_file" data-cluster = "' + data_cluster + '" data-url = "' + PROJECT_PATH + 'upload/' + file_data[i].file_name + '">';
       data += '    <button class="btn btn-danger"><span class="glyphicon glyphicon-remove  btn-danger"></span></button>';
       data += '    <img src = "' + img_src + '">';
       data += '  </a>';
@@ -231,7 +231,7 @@ function upload_attachment_edit_output(output_id, file_data) {
     '    <div class = "upload_attachment_box">'+
     '      <ul>'+
     '        <li>'+
-    '          <a class = "upload_attachment_add" href = "#">'+
+    '          <a class = "upload_attachment_add">'+
     '            <img src = "../../img/add_attachment.png">'+
     '          </a>'+
     '        </li>'+ data +
