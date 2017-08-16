@@ -25,7 +25,8 @@ var  warehouse_payment_detail_work_area_data = {"data": [
 ]};
 
 function warehouse_payment_detail_clear_raw_data() {
-  $("#warehouse_payment_detail_list tbody").html("");
+  $("#warehouse_payment_detail_list thead").html('<tr><td colspan = "5" align = "center">请选择查询条件</td></tr>');
+  $("#warehouse_payment_detail_list_box").html("");
   $("#warehouse_payment_detail_warehouse").html("");
 }
 
@@ -40,6 +41,14 @@ function warehouse_payment_detail_fill_variable_data_warehouse() {
 }
 function warehouse_payment_detail_fill_variable_data() {
   if (isJsonObjectHasData(warehouse_payment_detail_data)) {
+    var content_thead = 
+      '<tr>'+
+        '<th>日期</th>'+
+        '<th>收款</th>'+
+        '<th>付款</th>'+
+        '<th>占用资金</th>'+
+        '<th>资金利息</th>'+
+      '</tr>';
     var content = "";
     for (var i = 0; i < warehouse_payment_detail_data.length; i++){
       content += 
@@ -51,6 +60,7 @@ function warehouse_payment_detail_fill_variable_data() {
           '<td>' + warehouse_payment_detail_data[i].interest + '</td>'+
         '</tr>';
       $("#warehouse_payment_detail_list_box").html(content);
+      $("#warehouse_payment_detail_list thead").html(content_thead);
     } 
   } else {
     $("#warehouse_payment_detail_list_box").html('<tr><td  colspan = "5">没有数据</td></tr>');
@@ -296,15 +306,6 @@ function warehouse_payment_detail_content(output_id) {
 '                  <td>2000000</td>'+
 '                  <td>2000000</td>'+
 '                  <td>2000000</td>'+
-'                  <td>2000000</td>'+
-'                </tr>'+
-'              </tbody>'+
-'              <tbody id = "warehouse_payment_detail_total">'+
-'                <tr>'+
-'                  <td>合计</td>'+
-'                  <td>2000000</td>'+
-'                  <td>2000000</td>'+
-'                  <td></td>'+
 '                  <td>2000000</td>'+
 '                </tr>'+
 '              </tbody>'+
