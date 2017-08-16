@@ -84,6 +84,7 @@ function settlement_bill_logistics_server_data_cover(trad_contract_code, logisti
 
 function settlement_bill_logistics_fill_variable_data(logistics_contract_code_uuid) {
   if(isJsonObjectHasData(settlement_bill_logistics_data)) {
+    console.log(settlement_bill_logistics_data);
     var settlement_bill_logistics_html = "";
     for (var i = 0; i < settlement_bill_logistics_data.data.length; i++) {
       var settlement_bill_logistics_actual_ullage = (settlement_bill_logistics_data.data[i].load_quantity - settlement_bill_logistics_data.data[i].unload_quantity)/settlement_bill_logistics_data.data[i].load_quantity;
@@ -229,7 +230,7 @@ function settlement_bill_logistics_add_modle_func(obj) {
               '</div>'+
             '</div>'+
             '<div class = "modal-footer" style = "text-align: center;">'+
-              '<button type = "button" class = "btn btn-primary" id = "settlement_bill_logistics_add_data_btn" "trade_contract_code" = "' + trade_contract_code + '" contract_code = "' + contract_code + '" buyer_uuid = "' + settlement_bill_logistics_add_buyer_uuid + '" seller_uuid = "' + settlement_bill_logistics_add_seller_uuid + '" product_name = "' + settlement_bill_logistics_add_product_name + '" contract_logistics_code_uuid = "' + contract_logistics_code_uuid + '">添加</button>'+
+              '<button type = "button" class = "btn btn-primary" id = "settlement_bill_logistics_add_data_btn" trade_contract_code = "' + trade_contract_code + '" contract_code = "' + contract_code + '" buyer_uuid = "' + settlement_bill_logistics_add_buyer_uuid + '" seller_uuid = "' + settlement_bill_logistics_add_seller_uuid + '" product_name = "' + settlement_bill_logistics_add_product_name + '" contract_logistics_code_uuid = "' + contract_logistics_code_uuid + '">添加</button>'+
               '<button type = "button" class = "btn btn-default" data-dismiss = "modal">取消</button>'+
             '</div>'+
           '</div>'+
