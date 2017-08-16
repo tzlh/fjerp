@@ -3,6 +3,8 @@ function contract_sale_open_info_func(obj) {
   var contract_sales_contract_code = obj.attr("contract_code");
   var contract_sales_contract_code_uuid = obj.attr("contract_sales_contract_code_uuid");
   var contract_sale_warehouse_uuid = obj.attr("contract_sale_warehouse_uuid");
+  var contract_trad_add_url = "lego/lego_fjTrade?servletName=addTradeInvoiceInformation";
+  var contract_trad_edit_url = "lego/lego_fjTrade?servletName=modifyTradeInvoiceInformation";
   //贸易合同合计
   var contract_sale_all_price = obj.attr("contract_sale_all_price");
   
@@ -125,12 +127,16 @@ function contract_sale_open_info_func(obj) {
   
   
   //发票信息///////////////////////////////////////////
-  invoice_information_output("#invoice_information_content" + contract_sales_contract_code_uuid, contract_sale_all_price);
+  invoice_information_output("#invoice_information_content" + contract_sales_contract_code_uuid, contract_sale_all_price, "1");
   $("#invoice_information_content" + contract_sales_contract_code_uuid).find("#invoice_information_add_modle").attr("contract_code",contract_sales_contract_code);
+  $("#invoice_information_content" + contract_sales_contract_code_uuid).find("#invoice_information_add_modle").attr("invoice_type","1");
+  $("#invoice_information_content" + contract_sales_contract_code_uuid).find("#invoice_information_add_modle").attr("contract_logistics_trad_add_url",contract_trad_add_url);
   $("#invoice_information_content" + contract_sales_contract_code_uuid).find("#invoice_information_add_modle").attr("contract_code_uuid",contract_sales_contract_code_uuid);
   $("#invoice_information_content" + contract_sales_contract_code_uuid).find("#invoice_information_add_modle").attr("contract_sale_all_price",contract_sale_all_price);
   $("#invoice_information_content" + contract_sales_contract_code_uuid).find(".invoice_information_table_sales_trad_uuid").attr("contract_code_uuid",contract_sales_contract_code_uuid);
   $("#invoice_information_content" + contract_sales_contract_code_uuid).find(".invoice_information_table_sales_trad_uuid").attr("contract_sale_all_price",contract_sale_all_price);
+  $("#invoice_information_content" + contract_sales_contract_code_uuid).find(".invoice_information_table_sales_trad_uuid").attr("invoice_type","1");
+  $("#invoice_information_content" + contract_sales_contract_code_uuid).find(".invoice_information_table_sales_trad_uuid").attr("contract_logistics_trad_edit_url",contract_trad_edit_url);
   //清空原始数据
   invoice_information_clear_raw_data(contract_sales_contract_code_uuid);
   //服务器数据

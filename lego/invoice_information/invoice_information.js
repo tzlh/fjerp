@@ -43,7 +43,7 @@ function invoice_information_clear_raw_data(contract_code_uuid) {
 function invoice_information_server_data_cover(contract_code) {
   //获取发票信息
   var server_data = {
-    "trade_contract_code":contract_code
+    "contract_code":contract_code
   };
   var invoice_information_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getInvoiceInformation";
   var invoice_information_get_contract = ajax_assistant(invoice_information_url, server_data, false, true, false);
@@ -95,13 +95,15 @@ function invoice_information_fill_variable_data(contract_code_uuid, invoice_info
     }
     $("#invoice_information_content" + contract_code_uuid).find(".invoice_information_box").html(invoice_information_html);
     $("#invoice_information_content" + contract_code_uuid).find(".invoice_information_already").html(Number(invoice_information_already_obj).toFixed(2));
-    var no_obj = Number(invoice_information_should_be_obj) - Number(invoice_information_already_obj);
+//  var no_obj = Number(invoice_information_should_be_obj) - Number(invoice_information_already_obj);
+    var no_obj = invoice_information_should_be_obj - invoice_information_already_obj;
     $("#invoice_information_content" + contract_code_uuid).find(".invoice_information_no").html(no_obj.toFixed(2));
   } else {
     $("#invoice_information_content" + contract_code_uuid).find(".invoice_information_box").html('<tr><td colspan="9" align="center">没数据</td></tr>');
     $("#invoice_information_content" + contract_code_uuid).find(".invoice_information_already").html("0");
-    var no_obj = Number(invoice_information_should_be_obj) - Number(invoice_information_already_obj);
-    $("#invoice_information_content" + contract_code_uuid).find(".invoice_information_already").html(no_obj.toFixed(2));
+//  var no_obj = Number(invoice_information_should_be_obj) - Number(invoice_information_already_obj);
+    var no_obj = invoice_information_should_be_obj;
+    $("#invoice_information_content" + contract_code_uuid).find(".invoice_information_no").html(no_obj.toFixed(2));
   }
 }
 
@@ -115,7 +117,10 @@ function invoice_information_tax_blur_change(obj) {
   if (invoice_information_val == "") {obj.val("0.17")};
 }
 
-function invoice_information_add_modle_func(obj, type_in) {
+function invoice_information_add_modle_func(obj) {
+  var contract_logistics_trad_add_url = obj.attr("contract_logistics_trad_add_url");
+  var contract_sale_all_price = obj.attr("contract_sale_all_price");
+  var type_in = obj.attr("invoice_type");
   var contract_code = obj.attr("contract_code");
   var contract_code_uuid = obj.attr("contract_code_uuid");
   var invoice_information_html = 
@@ -188,7 +193,7 @@ function invoice_information_add_modle_func(obj, type_in) {
             '</div>'+
           '</div>'+
           '<div class = "modal-footer text-center">'+
-            '<button type = "button" class = "btn btn-primary" id = "invoice_information_add_data_btn" contract_code = "' + contract_code + '" contract_code_uuid = "' + contract_code_uuid + '">添加</button>'+
+            '<button type = "button" class = "btn btn-primary" id = "invoice_information_add_data_btn" contract_code = "' + contract_code + '" contract_code_uuid = "' + contract_code_uuid + '" invoice_type = "' + type_in + '" contract_logistics_trad_add_url = "' + contract_logistics_trad_add_url + '" contract_sale_all_price = "' + contract_sale_all_price + '">添加</button>'+
             '<button type = "button" class = "btn btn-default close_model" data-dismiss = "modal">取消</button>'+
           '</div>'+
         '</div>'+
@@ -214,7 +219,9 @@ function all_should_change_price(obj) {
   }
 }
 
-function invoice_information_add_data_func(obj, type_out) {
+function invoice_information_add_data_func(obj) {
+  var contract_logistics_trad_add_url = obj.attr("contract_logistics_trad_add_url");
+  var type_out = obj.attr("invoice_type");
   var contract_code = obj.attr("contract_code");
   var contract_code_uuid = obj.attr("contract_code_uuid");
   var contract_sale_all_price = obj.attr("contract_sale_all_price");
@@ -287,13 +294,13 @@ function invoice_information_add_data_func(obj, type_out) {
     data["remark"] = invoice_information_remark;
   }
   //调用接口
-  var invoice_information_add_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=addInvoiceInformation";
+  var invoice_information_add_url = PROJECT_PATH + contract_logistics_trad_add_url;
   var invoice_information_add_get = ajax_assistant(invoice_information_add_url, data, false, true, false);
   console.log(invoice_information_add_get);
   if ("1" == invoice_information_add_get.status) {
     invoice_information_clear_raw_data(contract_code_uuid);
     invoice_information_server_data_cover(contract_code);
-    invoice_information_fill_variable_data(contract_code_uuid, contract_sale_all_price, "1"); 
+    invoice_information_fill_variable_data(contract_code_uuid, contract_sale_all_price, type_out); 
     $("#invoice_information_add_modle_prop").modal("hide");
     $("#invoice_information_add_modle_prop").on("hidden.bs.modal", function(e) {
       $(this).remove();
@@ -303,7 +310,9 @@ function invoice_information_add_data_func(obj, type_out) {
   }
 }
 
-function invoice_information_edit_modle_func(obj, type_in) {
+function invoice_information_edit_modle_func(obj) {
+  var type_in = obj.parent().parent().parent().parent().attr("invoice_type");
+  var contract_logistics_trad_edit_url = obj.parent().parent().parent().parent().attr("contract_logistics_trad_edit_url");
   var uuid = obj.attr("uuid");
   var contract_code = obj.attr("contract_code");
   var contract_code_uuid = obj.parent().parent().parent().parent().attr("contract_code_uuid");
@@ -319,7 +328,7 @@ function invoice_information_edit_modle_func(obj, type_in) {
   var invoice_information_edit_data = {
     "uuid":uuid,
     "contract_code":contract_code,
-    "type":"1"
+    "type":type_in
   };
   //调接口  查询数据
   var invoice_information_edit_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getInvoiceInformation";
@@ -438,7 +447,7 @@ function invoice_information_edit_modle_func(obj, type_in) {
               '</div>'+
             '</div>'+
             '<div class = "modal-footer text-center">'+
-              '<button type = "button" class = "btn btn-warning" id = "invoice_information_edit_data_btn" contract_code = "' + contract_code + '" uuid = "' + uuid + '" contract_code_uuid = "' + contract_code_uuid + '" contract_sale_all_price = "' + contract_sale_all_price + '">修改</button>'+
+              '<button type = "button" class = "btn btn-warning" id = "invoice_information_edit_data_btn" contract_code = "' + contract_code + '" uuid = "' + uuid + '" contract_code_uuid = "' + contract_code_uuid + '" contract_sale_all_price = "' + contract_sale_all_price + '" invoice_type = "' + type_in + '" contract_logistics_trad_edit_url = "' + contract_logistics_trad_edit_url + '">修改</button>'+
               '<button type = "button" class = "btn btn-default close_model" data-dismiss = "modal">取消</button>'+
             '</div>'+
           '</div>'+
@@ -452,7 +461,9 @@ function invoice_information_edit_modle_func(obj, type_in) {
   });
 }
 
-function invoice_information_edit_data_func(obj, type_off) {
+function invoice_information_edit_data_func(obj) {
+  var contract_logistics_trad_edit_url = obj.attr("contract_logistics_trad_edit_url");
+  var type_off = obj.attr("invoice_type");
   var uuid = obj.attr("uuid");
   var contract_code = obj.attr("contract_code");
   var contract_code_uuid = obj.attr("contract_code_uuid");
@@ -532,13 +543,13 @@ function invoice_information_edit_data_func(obj, type_off) {
     data["sn_remark"] = "set_null";
   }
   //调数据库
-  var invoice_information_edit_data_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=modifyInvoiceInformation";
+  var invoice_information_edit_data_url = PROJECT_PATH + contract_logistics_trad_edit_url;
   var invoice_information_edit_data_get = ajax_assistant(invoice_information_edit_data_url, data, false, true, false);
   console.log(invoice_information_edit_data_get);
   if ("1" == invoice_information_edit_data_get.status){
     invoice_information_clear_raw_data(contract_code_uuid);
     invoice_information_server_data_cover(contract_code);
-    invoice_information_fill_variable_data(contract_code_uuid, contract_sale_all_price, "1");
+    invoice_information_fill_variable_data(contract_code_uuid, contract_sale_all_price, type_off);
     $("#invoice_information_edit_modle_prop").modal("hide");
     $("#invoice_information_edit_modle_prop").on("hidden.bs.modal", function(e) {
       $(this).remove();
@@ -549,6 +560,7 @@ function invoice_information_edit_data_func(obj, type_off) {
 }
 
 function invoice_information_delete_modle_func(obj) {
+  var type_in = obj.parent().parent().parent().parent().attr("invoice_type");
   var uuid = obj.attr("uuid");
   var contract_code = obj.attr("contract_code");
   var contract_code_uuid = obj.parent().parent().parent().parent().attr("contract_code_uuid");
@@ -563,7 +575,7 @@ function invoice_information_delete_modle_func(obj) {
             '</div>'+
             '<div class="modal-body nopadding-bottom invoice_information_center">确认要删除吗？</div>'+
             '<div class="modal-footer noborder nopadding-top" style="text-align: center;">'+
-            '<button type="button" class="btn btn-danger" id="invoice_information_delete_modle_prop_btn" contract_code = "' + contract_code + '" uuid = "' + uuid + '" contract_code_uuid = "' + contract_code_uuid + '" contract_sale_all_price = "' + contract_sale_all_price + '">删除</button>'+
+            '<button type="button" class="btn btn-danger" id="invoice_information_delete_modle_prop_btn" contract_code = "' + contract_code + '" uuid = "' + uuid + '" contract_code_uuid = "' + contract_code_uuid + '" contract_sale_all_price = "' + contract_sale_all_price + '" invoice_type = "' + type_in + '">删除</button>'+
                 '<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>'+
             '</div>'+
           '</div>'+
@@ -577,6 +589,7 @@ function invoice_information_delete_modle_func(obj) {
 }
 
 function invoice_information_delete_data_func(obj) {
+  var type_in = obj.attr("invoice_type");
   var uuid = obj.attr("uuid");
   var contract_code = obj.attr("contract_code");
   var contract_code_uuid = obj.attr("contract_code_uuid");
@@ -594,7 +607,7 @@ function invoice_information_delete_data_func(obj) {
     // 更新页面数据
     invoice_information_clear_raw_data(contract_code_uuid);
     invoice_information_server_data_cover(contract_code);
-    invoice_information_fill_variable_data(contract_code_uuid, contract_sale_all_price, "1");
+    invoice_information_fill_variable_data(contract_code_uuid, contract_sale_all_price, type_in);
     $("#invoice_information_delete_modle_prop").modal("hide");
     $("#invoice_information_delete_modle_prop").on("hidden.bs.modal", function(e) {
       $(this).remove();
@@ -602,7 +615,8 @@ function invoice_information_delete_data_func(obj) {
   }
 }
 
-function invoice_information_info_modle_func(obj, type_in) {
+function invoice_information_info_modle_func(obj) {
+  var type_in = obj.parent().parent().parent().parent().attr("invoice_type");
   var uuid = obj.attr("uuid");
   var contract_code = obj.attr("contract_code");
   var invoice_information_product_name = "";
@@ -616,7 +630,7 @@ function invoice_information_info_modle_func(obj, type_in) {
   var invoice_information_edit_data = {
     "uuid":uuid,
     "contract_code":contract_code,
-    "type":"1"
+    "type":type_in
   };
   //调接口  查询数据
   var invoice_information_edit_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getInvoiceInformation";
@@ -748,7 +762,7 @@ function invoice_information_info_modle_func(obj, type_in) {
   });
 }
 
-function invoice_information_output(output_id, contract_sale_all_price) {
+function invoice_information_output(output_id, contract_sale_all_price, type_in) {
   var content = 
   '  <div class = "panel panel-primary ">'+
   '    <div class = "panel-heading clearfix">发票信息  [应开发票:<span class="invoice_information_should_be">' + contract_sale_all_price + '</span>] [已开发票:<span class="invoice_information_already">0</span>] [未开发票:<span class="invoice_information_no">0</span>]<span class = "glyphicon glyphicon-plus pull-right" id = "invoice_information_add_modle"></span></div>'+
@@ -771,7 +785,7 @@ function invoice_information_output(output_id, contract_sale_all_price) {
   '              </thead>'+
   '              <tbody class = "invoice_information_box">'+
   '                <tr>'+
-  '                  <td>出库</td>'+
+  '                  <td>' + invoice_information_type[type_in] + '</td>'+
   '                  <td>甲基丁</td>'+
   '                  <td>3</td>'+
   '                  <td>200</td>'+

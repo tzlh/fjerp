@@ -228,19 +228,19 @@
       });
       //添加发票信息模态框
       $(document).on("click", "#invoice_information_add_modle", function() {
-        invoice_information_add_modle_func($(this), "1");
+        invoice_information_add_modle_func($(this));
       });
       //添加发票信息数据
       $(document).on("click", "#invoice_information_add_data_btn", function() {
-        invoice_information_add_data_func($(this), "1");
+        invoice_information_add_data_func($(this));
       });
       //修改发票信息模态框
       $(document).on("click", ".invoice_information_modle_pencil", function() {
-        invoice_information_edit_modle_func($(this), "1");
+        invoice_information_edit_modle_func($(this));
       });
       //修改发票信息数据
       $(document).on("click", "#invoice_information_edit_data_btn", function() {
-        invoice_information_edit_data_func($(this), "1");
+        invoice_information_edit_data_func($(this));
       });
       //删除发票信息模态框
       $(document).on("click", ".invoice_information_modle_remove", function() {
@@ -252,7 +252,7 @@
       });
       //详情
       $(document).on("click", ".invoice_information_modle_info", function() {
-        invoice_information_info_modle_func($(this), "1");
+        invoice_information_info_modle_func($(this));
       });
       //物流对账单///////////////////////////////
       $(document).on("click", "#settlement_bill_logistics_add_modle", function() {
