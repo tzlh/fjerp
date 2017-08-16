@@ -42,23 +42,16 @@ var godown_entry_notify_file_data = [
 /**
  * 初始化
  */
-function godown_entry_notify_clear_raw_data() {
-//$("#godown_entry_notify_list thead").html("");
-  $("#godown_entry_notify_list tbody").html("");
+function godown_entry_notify_clear_raw_data(contract_uuid) {
+  $("#godown_entry_notify_content" + contract_uuid).find("#godown_entry_notify_list tbody").html("");
 }
 
 /**
  * 赋值
  */
-function godown_entry_notify_fill_variable_data() {
+function godown_entry_notify_fill_variable_data(contract_uuid) {
   if (isJsonObjectHasData(godown_entry_notify_data)) {
-//  var godown_entry_notify_thead  = 
-//    '<tr>'+
-//      '<th>提货地点</th>'+
-//      '<th>提货时间</th>'+
-//      '<th>&nbsp;</th>'+
-//    '</tr>';
-    var godown_entry_notify_tbody = "";
+  var godown_entry_notify_tbody = "";
     for (var i = 0; i < godown_entry_notify_data.length; i++) {
       godown_entry_notify_tbody += 
         '<tr>'+
@@ -73,20 +66,20 @@ function godown_entry_notify_fill_variable_data() {
             '<span class = "glyphicon glyphicon-remove godown_entry_notify_ml15 godown_entry_notify_delete" data-uuid = "' + godown_entry_notify_data[i].uuid + '" data-contract_code = "' + godown_entry_notify_data[i].contract_code + '"></span>'+
           '</td>'+
         '</tr>';
-      $("#godown_entry_notify_list tbody").html(godown_entry_notify_tbody);  
+      $("#godown_entry_notify_content" + contract_uuid).find("#godown_entry_notify_list tbody").html(godown_entry_notify_tbody);  
     }
   } else {
-    $("#godown_entry_notify_list tbody").html('<tr><td colspan="6" align="center">没有数据</td></tr>');
+    $("#godown_entry_notify_content" + contract_uuid).find("#godown_entry_notify_list tbody").html('<tr><td colspan="6" align="center">没有数据</td></tr>');
   }
 }
 
 /**
  * 获取入库单通知单
  */
-function godown_entry_notify_server_data_cover() {
+function godown_entry_notify_server_data_cover(contract_code) {
   var get_godown_entry_notify_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getGodownEntryNotify";
   var get_godown_entry_notify_param_data = {};
-  get_godown_entry_notify_param_data["vehicle_information_uuid"] = "45cd2b07a2d843a188522902083a696d";
+  get_godown_entry_notify_param_data["contract_code"] = contract_code;
   var godown_entry_notify_get= ajax_assistant(get_godown_entry_notify_url, get_godown_entry_notify_param_data, false, true, false);
   console.log(godown_entry_notify_get);
   if (1 == godown_entry_notify_get.status) {
@@ -165,10 +158,10 @@ function godown_entry_notify_get_letter(uuid) {
 /**
  * 获取储罐
  */
-function godown_entry_notify_get_warehouse_pot() {
+function godown_entry_notify_get_warehouse_pot(warehouse_uuid) {
   var get_warehouse_pot_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getWarehousePot";
   var get_warehouse_pot_param_data = {};
-  get_warehouse_pot_param_data["warehouse_uuid"] = "fe0f5dea02e149589c7992bc52a74e12";
+  get_warehouse_pot_param_data["warehouse_uuid"] = warehouse_uuid;
   var godown_entry_notify_get_warehouse_pot = ajax_assistant(get_warehouse_pot_url, get_warehouse_pot_param_data, false, true, false);
   console.log(godown_entry_notify_get_warehouse_pot);
   if (1 == godown_entry_notify_get_warehouse_pot.status) {
@@ -192,7 +185,7 @@ function godown_entry_notify_get_warehouse_pot() {
 /**
  * 添加入库单通知单
  */
-function godown_entry_notify_add_modal(contract_code) {
+function godown_entry_notify_add_modal(contract_code, contract_uuid) {
   var content = 
 '      <div class = "modal fade custom_modal" id = "godown_entry_notify_add_modal" tabindex = "-1">'+
 '       <div class = "modal-dialog" role = "document">'+
@@ -265,7 +258,7 @@ function godown_entry_notify_add_modal(contract_code) {
 '               </div>'+
 '           </div>'+
 '           <div class = "modal-footer">'+
-'             <button type = "button" class = "btn btn-primary add_btn" data-contract_code = "' + contract_code + '">添加</button>'+
+'             <button type = "button" class = "btn btn-primary add_btn" data-contract_code = "' + contract_code + '" data-contract_uuid = "' + contract_uuid + '">添加</button>'+
 '             <button type = "button" class = "btn btn-default" data-dismiss = "modal">取消</button>'+
 '           </div>'+
 '         </div>'+
@@ -286,7 +279,7 @@ function godown_entry_notify_add_modal(contract_code) {
   });
 }
 
-function godown_entry_notify_add_data(contract_code) {
+function godown_entry_notify_add_data(contract_code, contract_uuid) {
   var product_name = $("#godown_entry_notify_add_modal .product_name").val();
   var quantity = $("#godown_entry_notify_add_modal .quantity").val();
   var start_datetime = $("#godown_entry_notify_add_modal .start_datetime").val() + ' 00:00:00';
@@ -347,9 +340,9 @@ function godown_entry_notify_add_data(contract_code) {
   console.log(godown_entry_notify_add);
   if (1 == godown_entry_notify_add.status) {
     $("#godown_entry_notify_add_modal").modal("hide");
-    godown_entry_notify_clear_raw_data();
-    godown_entry_notify_server_data_cover();
-    godown_entry_notify_fill_variable_data();
+    godown_entry_notify_clear_raw_data(contract_uuid);
+    godown_entry_notify_server_data_cover(contract_code);
+    godown_entry_notify_fill_variable_data(contract_uuid);
   } else {
     alert("添加失败！");
   }
@@ -461,7 +454,8 @@ function godown_entry_notify_edit_modal(uuid, contract_code) {
   });
 }
 
-function godown_entry_notify_edit_data(uuid, contract_code) {
+function godown_entry_notify_edit_data(uuid, contract_code, contract_uuid) {
+  debugger;
   var product_name = $("#godown_entry_notify_edit_modal .product_name").val();
   var quantity = $("#godown_entry_notify_edit_modal .quantity").val();
   var start_datetime = $("#godown_entry_notify_edit_modal .start_datetime").val() + ' 00:00:00';
@@ -523,9 +517,9 @@ function godown_entry_notify_edit_data(uuid, contract_code) {
   console.log(godown_entry_notify_edit);
   if (1 == godown_entry_notify_edit.status) {
     $("#godown_entry_notify_edit_modal").modal("hide");
-    godown_entry_notify_clear_raw_data();
-    godown_entry_notify_server_data_cover();
-    godown_entry_notify_fill_variable_data();
+    godown_entry_notify_clear_raw_data(contract_uuid);
+    godown_entry_notify_server_data_cover(contract_code);
+    godown_entry_notify_fill_variable_data(contract_uuid);
   } else {
     alert("修改失败！");
   }
@@ -639,7 +633,7 @@ function godown_entry_notify_detail_modal() {
 /**
  * 删除入库单通知单
  */
-function godown_entry_notify_delete_modal(uuid) {
+function godown_entry_notify_delete_modal(uuid, contract_code) {
   var content = 
     '<div class="modal fade bs-example-modal-sm custom_modal" id="godown_entry_notify_delete_modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'+
       '<div class="modal-dialog modal-sm" role="document">'+
@@ -650,7 +644,7 @@ function godown_entry_notify_delete_modal(uuid) {
           '</div>'+
           '<div class="modal-body nopadding-bottom" style="text-align: center;margin-bottom: 15px;">确认要删除入库单通知单吗？</div>'+
           '<div class="modal-footer">'+
-            '<button type="button" class="btn btn-danger remove" data-uuid = "' + uuid + '">删除</button>'+
+            '<button type="button" class="btn btn-danger remove" data-uuid = "' + uuid + '" data-contract_code = "' + contract_code + '">删除</button>'+
             '<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>'+
           '</div>'+
         '</div>'+
@@ -663,17 +657,18 @@ function godown_entry_notify_delete_modal(uuid) {
   });
 }
 
-function godown_entry_notify_delete_data(uuid) {
+function godown_entry_notify_delete_data(uuid, contract_code, contract_uuid) {
   var delete_godown_entry_notify_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=removeGodownEntryNotify";
   var delete_godown_entry_notify_param_data = {};
   delete_godown_entry_notify_param_data["idColumnValue"] = uuid;
+  delete_godown_entry_notify_param_data["contract_code"] = contract_code;
   var godown_entry_notify_delete_godown_entry_notify= ajax_assistant(delete_godown_entry_notify_url, delete_godown_entry_notify_param_data, false, true, false);
   console.log(godown_entry_notify_delete_godown_entry_notify);
   if (1 == godown_entry_notify_delete_godown_entry_notify.status) {
     $("#godown_entry_notify_delete_modal").modal("hide");
-    godown_entry_notify_clear_raw_data();
-    godown_entry_notify_server_data_cover();
-    godown_entry_notify_fill_variable_data();
+    godown_entry_notify_clear_raw_data(contract_uuid);
+    godown_entry_notify_server_data_cover(contract_code);
+    godown_entry_notify_fill_variable_data(contract_uuid);
   } else {
     alert("删除失败");
   }
@@ -686,7 +681,7 @@ function godown_entry_notify_delete_data(uuid) {
 function godown_entry_notify_content(output_id) {
   var content = 
 '   <div class = "panel panel-primary">'+
-'    <div class = "panel-heading clearfix" id = "godown_entry_notify_paid">入库通知单<span class = "glyphicon glyphicon-plus pull-right" data-contract_code = "ZS-TZGYL-17813261" id = "godown_entry_notify_add_modal_btn"></span></div>'+
+'    <div class = "panel-heading clearfix" id = "godown_entry_notify_paid">入库通知单<span class = "glyphicon glyphicon-plus pull-right" id = "godown_entry_notify_add_modal_btn"></span></div>'+
 '    <div class = "panel-body">'+
 '        <div class = "row">'+
 '          <div class = "col-lg-12">'+

@@ -11,33 +11,17 @@
     <script src = "../../plugin/less/2.7.1/less.min.js"></script>
     <script src = " ../../js/toolkit.js"></script>
     <script>
-    var data = [
-      {"id": "2", "data_time": "2016-01-02"},
-      {"id": "12", "data_time": "2016-01-12"},
-      {"id": "4", "data_time": "2016-01-04"},
-      {"id": "5", "data_time": "2016-01-05"},
-      {"id": "7", "data_time": "2016-01-07"},
-      {"id": "1", "data_time": "2016-01-01"},
-      {"id": "11", "data_time": "2016-01-11"},
-      {"id": "8", "data_time": "2016-01-08"},
-      {"id": "9", "data_time": "2016-01-09"},
-      {"id": "10", "data_time": "2016-01-10"},
-      {"id": "6", "data_time": "2016-01-06"},
-      {"id": "13", "data_time": "2016-01-13"},
-      {"id": "3", "data_time": "2016-01-03"},
-      {"id": "14", "data_time": "2016-01-14"}
-    ];
     $(document).ready(function() {
-        data.sort(function(a, b) {
-          if (a.data_time > b.data_time) {
-            return 1;
-          }
-          return -1;
-        });
-        console.log(data);
+        alert($("#my #name").html());
     });
     </script>
   </head>
   <body>
+    <div id = "my">
+      <div id = "name">yuanhang</div>
+    </div>
+    <div id = "you">
+      <div id = "name">wangdi</div>
+    </div>
   </body>
 </html>
