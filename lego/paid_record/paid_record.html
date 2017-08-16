@@ -33,12 +33,16 @@
       // 添加收付款记录模态框
       $(document).on("click", "#paid_record_add_modle", function() {
         var contract_code = $(this).attr("contract_code");
-        paid_record_add_modle_func(contract_code);
+        var contract_uuid = $(this).attr("contract_uuid");
+        console.log(contract_code);
+        console.log(contract_uuid);
+        paid_record_add_modle_func(contract_code, contract_uuid);
       });
       // 添加收付款数据
       $(document).on("click", "#paid_record_add_modle_prop_btn", function() {
         var contract_code = $(this).attr("contract_code");
-        paid_record_add_data_func(contract_code);
+        var contract_uuid = $(this).attr("contract_uuid");
+        paid_record_add_data_func(contract_code, contract_uuid);
       });
       // 修改收付款记录模态框
       $(document).on("click", ".paid_record_modle_pencil", function() {

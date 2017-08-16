@@ -2,7 +2,7 @@
  * @author wangdi
  */
 
-var sale_contract_code = "TZ-TZGYL-17813218";
+//var sale_contract_code = "TZ-TZGYL-17813218";
 
 /**
  * 附件
@@ -32,7 +32,7 @@ var paid_record_data = [
 /**
  * 应付货款
  */
-var all_paid = 26000000;
+//var all_paid = 26000000;
 var received = 0;
 var unreceived = 0;
 
@@ -44,21 +44,15 @@ var current_paid_record_data = {
 };
 
 
-function paid_record_clear_raw_data() {
+function paid_record_clear_raw_data(paid_record_contract_uuid) {
   //$("#paid_record_thead").html('');
-  $("#paid_record_box").html('<tr><td colspan="3" align="center">没数据</td></tr>');
-  $("#paid_record_paid").html('收款记录&nbsp;[应收货款&nbsp;:&nbsp;0]&nbsp;[已收货款&nbsp;:&nbsp;0]&nbsp;[未收货款&nbsp;:&nbsp;0]<span class = "glyphicon glyphicon-plus pull-right" contract_code = "ZS-TZGYL-17813261" id = "paid_record_add_modle"></span>');
+  $("#paid_record_content"+paid_record_contract_uuid).find("#paid_record_box").html('<tr><td colspan="3" align="center">没数据</td></tr>');
+  $("#paid_record_content"+paid_record_contract_uuid).find("#paid_record_paid").html('收款记录&nbsp;[应收货款&nbsp;:&nbsp;0]&nbsp;[已收货款&nbsp;:&nbsp;0]&nbsp;[未收货款&nbsp;:&nbsp;0]<span class = "glyphicon glyphicon-plus pull-right" id = "paid_record_add_modle"></span>');
 }
 
-function paid_record_fill_variable_data() {
+function paid_record_fill_variable_data(paid_record_contract_uuid, all_paid) {
   unreceived = all_paid - received;
-  $("#paid_record_paid").html('收款记录&nbsp;[应收货款&nbsp;:&nbsp;' + all_paid + ']&nbsp;[已收货款&nbsp;:&nbsp;' + received + ']&nbsp;[未收货款&nbsp;:&nbsp;' + unreceived + ']<span class = "glyphicon glyphicon-plus pull-right" contract_code = "ZS-TZGYL-17813261" id = "paid_record_add_modle"></span>');
-  var deliver_entrust_letter_thead  = 
-       '<tr>'+
-        '<th>收款时间</th>'+
-        '<th>收款金额（元）</th>'+
-        '<th>&nbsp;</th>'+
-      '</tr>';
+  $("#paid_record_paid").html('收款记录&nbsp;[应收货款&nbsp;:&nbsp;' + all_paid + ']&nbsp;[已收货款&nbsp;:&nbsp;' + received + ']&nbsp;[未收货款&nbsp;:&nbsp;' + unreceived + ']<span class = "glyphicon glyphicon-plus pull-right" id = "paid_record_add_modle"></span>');
   if(isJsonObjectHasData(paid_record_data)) {
     var paid_record_html = "";
     for (var i = 0; i < paid_record_data.length; i++) {
@@ -73,20 +67,20 @@ function paid_record_fill_variable_data() {
           '</td>'+
         '</tr>';
     }
-    $("#paid_record_box").html(paid_record_html);
+    $("#paid_record_content"+paid_record_contract_uuid).find("#paid_record_box").html(paid_record_html);
   } else {
-    $("#paid_record_box").html('<tr><td colspan="3" align="center">没数据</td></tr>');
+    $("#paid_record_content"+paid_record_contract_uuid).find("#paid_record_box").html('<tr><td colspan="3" align="center">没数据</td></tr>');
   }
 }
 
 /**
  * 获取收付款记录
  */
-function paid_record_server_data_cover() {
+function paid_record_server_data_cover(contract_sales_contract_code, all_paid) {
   received = 0;
   var get_paid_record_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getPaidRecord";
   var get_paid_record_param_data = {};
-  get_paid_record_param_data["contract_code"] = "ZS-TZGYL-17813261";
+  get_paid_record_param_data["contract_code"] = contract_sales_contract_code;
   var paid_record_get= ajax_assistant(get_paid_record_url, get_paid_record_param_data, false, true, false);
   console.log(paid_record_get);
   if (1 == paid_record_get.status) {
@@ -157,7 +151,7 @@ function paid_record_get_record(uuid) {
 /**
  * 添加收款记录
  */
-function paid_record_add_modle_func(contract_code) {
+function paid_record_add_modle_func(contract_code, contract_uuid) {
   var paid_record_html = 
     '<div class = "modal fade custom_modal" tabindex = "-1" id = "paid_record_add_modle_prop" role = "dialog" aria-labelledby = "myLargeModalLabel">'+
       '<div class = "modal-dialog" role = "document">'+
@@ -189,7 +183,7 @@ function paid_record_add_modle_func(contract_code) {
             '</div>'+
           '</div>'+
           '<div class = "modal-footer"  style = "text-align: center;">'+
-              '<button type = "button" class = "btn btn-primary" id = "paid_record_add_modle_prop_btn" contract_code = "' + contract_code + '">添加</button>'+
+              '<button type = "button" class = "btn btn-primary" id = "paid_record_add_modle_prop_btn" contract_code = "' + contract_code + '" contract_uuid = "' + contract_uuid + '">添加</button>'+
               '<button type = "button" class = "btn btn-default" data-dismiss = "modal">取消</button>'+
           '</div>'+
         '</div>'+
@@ -203,11 +197,14 @@ function paid_record_add_modle_func(contract_code) {
   });
 }
 
-function paid_record_add_data_func(contract_code) {
+function paid_record_add_data_func(paid_record_contract_code, paid_record_contract_uuid) {
+  console.log(paid_record_contract_code)
+  console.log(paid_record_contract_uuid)
   var amount = $("#paid_record_add_modle_prop .amount").val();//付款金额
   var paid_datetime = $("#paid_record_add_modle_prop .paid_datetime").val() + ' 00:00:00';//付款时间
   var paid_record_li = $("#paid_record_add_modle_attch ul").children("li");
   var paid_record_list = "";
+  debugger;
   for (var i = 0; i < paid_record_li.length; i++) {
     var obj = paid_record_li[i];
     var paid_record = $(obj).find("a").attr("data-cluster");
@@ -231,7 +228,7 @@ function paid_record_add_data_func(contract_code) {
   }
   var add_paid_record_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=addPaidRecord";
   var add_paid_record_param_data = {};
-  add_paid_record_param_data["contract_code"] = contract_code;
+  add_paid_record_param_data["contract_code"] = paid_record_contract_code;
   add_paid_record_param_data["amount"] = amount;
   add_paid_record_param_data["paid_datetime"] = paid_datetime;
   if("" != paid_record_list) {
@@ -241,8 +238,8 @@ function paid_record_add_data_func(contract_code) {
   console.log(paid_record_add);
   if (1 == paid_record_add.status) {
     $("#paid_record_add_modle_prop").modal("hide");
-    paid_record_server_data_cover();
-    paid_record_fill_variable_data();
+    paid_record_server_data_cover(paid_record_contract_code);
+    paid_record_fill_variable_data(paid_record_contract_uuid);
   } else {
     alert("添加失败！");
   }
@@ -251,7 +248,7 @@ function paid_record_add_data_func(contract_code) {
 /**
  * 修改收付款记录
  */
-function paid_record_edit_modal(uuid, contract_code) {
+function paid_record_edit_modal(uuid, paid_record_contract_code, paid_record_contract_uuid) {
   var content = 
 '     <div class = "modal fade custom_modal" id = "paid_record_edit_modal" tabindex = "-1">'+
 '       <div class = "modal-dialog" role = "document">'+
@@ -290,7 +287,7 @@ function paid_record_edit_modal(uuid, contract_code) {
 '               </div>'+
 '           </div>'+
 '           <div class = "modal-footer">'+
-'             <button type = "button" class = "btn btn-warning edit_btn" uuid = "' + uuid + '" contract_code = "' + contract_code + '">修改</button>'+
+'             <button type = "button" class = "btn btn-warning edit_btn" uuid = "' + uuid + '" contract_code = "' + paid_record_contract_code + '"  contract_uuid = "' + paid_record_contract_uuid + '">修改</button>'+
 '             <button type = "button" class = "btn btn-default" data-dismiss = "modal">取消</button>'+
 '           </div>'+
 '         </div>'+
@@ -304,7 +301,7 @@ function paid_record_edit_modal(uuid, contract_code) {
   });
 }
 
-function paid_record_edit_data(uuid, contract_code) {
+function paid_record_edit_data(uuid, paid_record_contract_code, paid_record_contract_uuid) {
   console.log(uuid);
   var amount = $("#paid_record_edit_modal .amount").val();//付款金额
   var paid_datetime = $("#paid_record_edit_modal .paid_datetime").val() + ' 00:00:00';//付款时间
@@ -333,7 +330,7 @@ function paid_record_edit_data(uuid, contract_code) {
   }
   var edit_paid_record_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=modifyPaidRecord";
   var edit_paid_record_param_data = {};
-  edit_paid_record_param_data["contract_code"] = contract_code;
+  edit_paid_record_param_data["contract_code"] = paid_record_contract_code;
   edit_paid_record_param_data["amount"] = amount;
   edit_paid_record_param_data["paid_datetime"] = paid_datetime;
   edit_paid_record_param_data["idColumnValue"] = uuid;
@@ -344,8 +341,8 @@ function paid_record_edit_data(uuid, contract_code) {
   console.log(paid_record_edit);
   if (1 == paid_record_edit.status) {
     $("#paid_record_edit_modal").modal("hide");
-    paid_record_server_data_cover();
-    paid_record_fill_variable_data();
+    paid_record_server_data_cover(paid_record_contract_code);
+    paid_record_fill_variable_data(paid_record_contract_uuid);
   } else {
     alert("修改失败！");
   }
@@ -409,7 +406,7 @@ function paid_record_detail_modal() {
 /**
  * 删除收付款记录
  */
-function paid_record_delete_modal(uuid) {
+function paid_record_delete_modal(uuid, paid_record_contract_code, paid_record_contract_uuid) {
   var content = 
     '<div class="modal fade bs-example-modal-sm custom_modal" id="paid_record_delete_modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'+
       '<div class="modal-dialog modal-sm" role="document">'+
@@ -420,7 +417,7 @@ function paid_record_delete_modal(uuid) {
           '</div>'+
           '<div class="modal-body nopadding-bottom" style="text-align: center;margin-bottom: 15px;">确认要删除收款记录吗？</div>'+
           '<div class="modal-footer">'+
-            '<button type="button" class="btn btn-danger remove" uuid = "' + uuid + '">删除</button>'+
+            '<button type="button" class="btn btn-danger remove" uuid = "' + uuid + '" contract_code = "' + paid_record_contract_code + '" contract_uuid = "' + paid_record_contract_uuid + '">删除</button>'+
             '<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>'+
           '</div>'+
         '</div>'+
@@ -433,7 +430,7 @@ function paid_record_delete_modal(uuid) {
   });
 }
 
-function paid_record_delete_data(uuid) {
+function paid_record_delete_data(uuid, paid_record_contract_code, paid_record_contract_uuid) {
   var delete_paid_record_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=removePaidRecord";
   var delete_paid_record_param_data = {};
   delete_paid_record_param_data["idColumnValue"] = uuid;
@@ -441,8 +438,8 @@ function paid_record_delete_data(uuid) {
   console.log(org_structure_delete_paid_record);
   if (1 == org_structure_delete_paid_record.status) {
     $("#paid_record_delete_modal").modal("hide");
-    paid_record_server_data_cover();
-    paid_record_fill_variable_data();
+    paid_record_server_data_cover(paid_record_contract_code);
+    paid_record_fill_variable_data(paid_record_contract_uuid);
   } else {
     alert("删除失败");
   }
@@ -451,7 +448,7 @@ function paid_record_delete_data(uuid) {
 function paid_record_output(output_id, contract_sale_all_price) {
   var content =
 ' <div class = "panel panel-primary">'+
-'  <div class = "panel-heading clearfix" id = "paid_record_paid">收款记录&nbsp;[应收货款&nbsp;:&nbsp;' + contract_sale_all_price + ']&nbsp;[已收货款&nbsp;:&nbsp;26000]&nbsp;[未收货款&nbsp;:&nbsp;26000]<span class = "glyphicon glyphicon-plus pull-right" contract_code = "ZS-TZGYL-17813261" id = "paid_record_add_modle"></span></div>'+
+'  <div class = "panel-heading clearfix" id = "paid_record_paid">收款记录&nbsp;[应收货款&nbsp;:&nbsp;' + contract_sale_all_price + ']&nbsp;[已收货款&nbsp;:&nbsp;26000]&nbsp;[未收货款&nbsp;:&nbsp;26000]<span class = "glyphicon glyphicon-plus pull-right" id = "paid_record_add_modle"></span></div>'+
 '    <div class = "panel-body">'+
 '        <div class = "row">'+
 '          <div class = "col-lg-12">'+

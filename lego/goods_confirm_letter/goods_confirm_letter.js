@@ -24,22 +24,15 @@ var goods_confirm_letter_file_data = [
 /**
  * 初始化
  */
-function goods_confirm_letter_clear_raw_data() {
-  $("#goods_confirm_letter_list thead").html("");
-  $("#goods_confirm_letter_list tbody").html("");
+function goods_confirm_letter_clear_raw_data(contract_uuid) {
+  $("#goods_confirm_letter_content" + contract_uuid).find("#goods_confirm_letter_list tbody").html("");
 }
 
 /**
  * 赋值
  */
-function goods_confirm_letter_fill_variable_data() {
+function goods_confirm_letter_fill_variable_data(contract_uuid) {
   if (isJsonObjectHasData(goods_confirm_letter_data)) {
-    var goods_confirm_letter_thead  = 
-      '<tr>'+
-        '<th>序号</th>'+
-        '<th>创建时间</th>'+
-        '<th>&nbsp;</th>'+
-      '</tr>';
     var goods_confirm_letter_tbody = "";
     for (var i = 0; i < goods_confirm_letter_data.length; i++) {
       goods_confirm_letter_tbody += 
@@ -52,21 +45,20 @@ function goods_confirm_letter_fill_variable_data() {
             '<span class = "glyphicon glyphicon-remove goods_confirm_letter_ml15 goods_confirm_letter_delete" data-uuid = "' + goods_confirm_letter_data[i].uuid + '" data-contract_code = "' + goods_confirm_letter_data[i].contract_code + '"></span>'+
           '</td>'+
         '</tr>';
-      $("#goods_confirm_letter_list thead").html(goods_confirm_letter_thead);
-      $("#goods_confirm_letter_list tbody").html(goods_confirm_letter_tbody);  
+      $("#goods_confirm_letter_content" + contract_uuid).find("#goods_confirm_letter_list tbody").html(goods_confirm_letter_tbody);  
     }
   } else {
-    $("#goods_confirm_letter_list thead").html("没有数据");
+    $("#goods_confirm_letter_content" + contract_uuid).find("#goods_confirm_letter_list tbody").html("<tr><td>没有数据</td></tr>");
   }
 }
 
 /**
  * 获取货物确认函
  */
-function goods_confirm_letter_server_data_cover() {
+function goods_confirm_letter_server_data_cover(contract_code) {
   var get_goods_confirm_letter_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getGoodsConfirmLetter";
   var get_goods_confirm_letter_param_data = {};
-  get_goods_confirm_letter_param_data["contract_code"] = "ZS-TZGYL-17813261";
+  get_goods_confirm_letter_param_data["contract_code"] = contract_code;
   var goods_confirm_letter_get= ajax_assistant(get_goods_confirm_letter_url, get_goods_confirm_letter_param_data, false, true, false);
   console.log(goods_confirm_letter_get);
   if (1 == goods_confirm_letter_get.status) {
@@ -129,7 +121,7 @@ function goods_confirm_letter_get_letter(uuid) {
 /**
  * 添加货物确认函
  */
-function goods_confirm_letter_add_modal() {
+function goods_confirm_letter_add_modal(contract_code, contract_uuid) {
   var content = 
 '      <div class = "modal fade custom_modal" id = "goods_confirm_letter_add_modal" tabindex = "-1">'+
 '       <div class = "modal-dialog" role = "document">'+
@@ -146,7 +138,7 @@ function goods_confirm_letter_add_modal() {
 '               </div>'+
 '           </div>'+
 '           <div class = "modal-footer">'+
-'             <button type = "button" class = "btn btn-primary add_btn">添加</button>'+
+'             <button type = "button" class = "btn btn-primary add_btn" data-contract_code = "' + contract_code + '" data-contract_uuid = "' + contract_uuid + '">添加</button>'+
 '             <button type = "button" class = "btn btn-default" data-dismiss = "modal">取消</button>'+
 '           </div>'+
 '         </div>'+
@@ -160,7 +152,7 @@ function goods_confirm_letter_add_modal() {
   });
 }
 
-function goods_confirm_letter_add_data() {
+function goods_confirm_letter_add_data(contract_code, contract_uuid) {
   var goods_confirm_letter_li = $("#goods_confirm_letter_add_attch ul").children("li");
   var goods_confirm_letter_list = "";
   for (var i = 0; i < goods_confirm_letter_li.length; i++) {
@@ -173,7 +165,7 @@ function goods_confirm_letter_add_data() {
   console.log(goods_confirm_letter_list);
   var add_goods_confirm_letter_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=addGoodsConfirmLetter";
   var add_goods_confirm_letter_param_data = {};
-  add_goods_confirm_letter_param_data["contract_code"] = "ZS-TZGYL-17813261";
+  add_goods_confirm_letter_param_data["contract_code"] = contract_code;
   if("" != goods_confirm_letter_list) {
     add_goods_confirm_letter_param_data["cluster_list"] = goods_confirm_letter_list;
   }
@@ -181,8 +173,8 @@ function goods_confirm_letter_add_data() {
   console.log(goods_confirm_letter_add);
   if (1 == goods_confirm_letter_add.status) {
     $("#goods_confirm_letter_add_modal").modal("hide");
-    goods_confirm_letter_server_data_cover();
-    goods_confirm_letter_fill_variable_data();
+    goods_confirm_letter_server_data_cover(contract_code);
+    goods_confirm_letter_fill_variable_data(contract_uuid);
   } else {
     alert("添加失败！");
   }
@@ -246,8 +238,8 @@ function goods_confirm_letter_edit_data(uuid, contract_code) {
   console.log(goods_confirm_letter_edit);
   if (1 == goods_confirm_letter_edit.status) {
     $("#goods_confirm_letter_edit_modal").modal("hide");
-    goods_confirm_letter_server_data_cover();
-    goods_confirm_letter_fill_variable_data();
+    goods_confirm_letter_server_data_cover(contract_code);
+    goods_confirm_letter_fill_variable_data(contract_uuid);
   } else {
     alert("修改失败！");
   }
@@ -290,7 +282,7 @@ function goods_confirm_letter_detail_modal() {
 /**
  * 删除货物确认函
  */
-function goods_confirm_letter_delete_modal(uuid) {
+function goods_confirm_letter_delete_modal(uuid, contract_code) {
   var content = 
     '<div class="modal fade bs-example-modal-sm custom_modal" id="goods_confirm_letter_delete_modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'+
       '<div class="modal-dialog modal-sm" role="document">'+
@@ -301,7 +293,7 @@ function goods_confirm_letter_delete_modal(uuid) {
           '</div>'+
           '<div class="modal-body nopadding-bottom" style="text-align: center;margin-bottom: 15px;">确认要删除货物确认函吗？</div>'+
           '<div class="modal-footer">'+
-            '<button type="button" class="btn btn-danger remove" data-uuid = "' + uuid + '">删除</button>'+
+            '<button type="button" class="btn btn-danger remove" data-uuid = "' + uuid + '" data-contract_code = "' + contract_code + '">删除</button>'+
             '<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>'+
           '</div>'+
         '</div>'+
@@ -314,7 +306,7 @@ function goods_confirm_letter_delete_modal(uuid) {
   });
 }
 
-function goods_confirm_letter_delete_data(uuid) {
+function goods_confirm_letter_delete_data(uuid, contract_code, contract_uuid) {
   var delete_goods_confirm_letter_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=removeGoodsConfirmLetter";
   var delete_goods_confirm_letter_param_data = {};
   delete_goods_confirm_letter_param_data["idColumnValue"] = uuid;
@@ -322,8 +314,8 @@ function goods_confirm_letter_delete_data(uuid) {
   console.log(org_structure_delete_goods_confirm_letter);
   if (1 == org_structure_delete_goods_confirm_letter.status) {
     $("#goods_confirm_letter_delete_modal").modal("hide");
-    goods_confirm_letter_server_data_cover();
-    goods_confirm_letter_fill_variable_data();
+    goods_confirm_letter_server_data_cover(contract_code);
+    goods_confirm_letter_fill_variable_data(contract_uuid);
   } else {
     alert("删除失败");
   }

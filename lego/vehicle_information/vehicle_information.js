@@ -533,7 +533,7 @@ function vehicle_information_info_modle_func(obj) {
   });
 }
 
-function vehicle_information_open_info_func(obj) {
+/*function vehicle_information_open_info_func(obj) {
   var vehicle_information_contract_code = obj.attr("contract_code");
   var vehicle_information_html = '<tr class = "vehicle_information_all_panel"><td colspan="8"><div>aaaaaaaaa</div></td></tr>';
   if (obj.hasClass("active")) {
@@ -546,7 +546,7 @@ function vehicle_information_open_info_func(obj) {
     obj.addClass("active");
     obj.parent().parent().after(vehicle_information_html);
   }
-}
+}*/
 
 /**
  * 输出top_nav
