@@ -2279,7 +2279,6 @@ function enterprise_management_delete_info(uuid) {
  */
 function enterprise_management_output(output_id) {
   var content = 
-    '<div class = "col-md-12">'+
 '      <div class = "panel panel-primary">'+
 '        <div class = "panel-heading clearfix">'+
 '          <h3 class = "panel-title pull-left">企业信息管理</h3>'+
@@ -2455,7 +2454,6 @@ function enterprise_management_output(output_id) {
 '              </div>'+
 '            </div>'+
 '        </div>'+
-'      </div>'+
-'    </div>';
+'      </div>';
   $(output_id).html(content);
 }

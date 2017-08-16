@@ -5,6 +5,8 @@
 <link rel = "stylesheet" type = "text/css" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.css"/>
 <link rel="stylesheet" type="text/css" href=" ../../plugin/icheck/1.x/skins/all.css"/>
 <link rel="stylesheet" type="text/css" href="../../css/custom_modal.css"/>
+<link rel = "stylesheet" href = "../nav_menu/nav_menu.css">
+<link rel = "stylesheet" href = "../header/header.css">
 <link rel="stylesheet" type="text/css" href="../org_structure/org_structure.css"/>
 <script src = "../../plugin/jquery/1.12.4/jquery.min.js" type = "text/javascript" charset = "utf-8"></script>
 <script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.js" type = "text/javascript" charset = "utf-8"></script>
@@ -146,13 +148,17 @@ $(document).ready(function() {
 	.org_structure_mt0{
 	  margin-top: 0!important;
 	}
+	.org_structure_mt20{
+	  margin-top: 10px;
+    padding-left: 0;
+	}
 </style>
 </head>
 <body>
   <div id = "header"></div>
   <div class = "row org_structure_mt0">
     <div id = "nav_menu" class = "col-lg-2"></div>
-    <div id = "org_structure_content" class = "col-lg-10"></div>
+    <div class = "col-lg-10 org_structure_mt20" id = "org_structure_content"></div>
   </div>
 </body>
 </html>

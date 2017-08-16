@@ -1327,8 +1327,7 @@ function org_structure_delete_employee_data_func(user_uuid) {
  */
 function org_structure_output(output_id) {
   var content =
-  '<div class = "row">'+
-'        <div class = "col-md-12" id="org_structure_list">'+
+'        <div class = "" id="org_structure_list">'+
 '          <ul class = "list-group">'+
 '            <li class = "list-group-item org_structure_lh40">'+
 '              <p>'+
@@ -1441,7 +1440,6 @@ function org_structure_output(output_id) {
 '              </ul>'+
 '            </li>'+
 '          </ul>'+
-'        </div>'+
-'      </div>';
+'        </div>';
     $(output_id).html(content);
 }

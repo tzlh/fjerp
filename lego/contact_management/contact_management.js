@@ -328,7 +328,6 @@ function contact_management_delete_data(uuid) {
  */
 function contact_management_output(output_id) {
   var content = 
-    '<div class = "col-md-12">'+
 '      <div class = "panel panel-default panel-primary">'+
 '        <div class = "panel-heading">添加联系人</div>'+
 '        <div class = "panel-body" style="padding-bottom: 0;">'+
@@ -450,7 +449,6 @@ function contact_management_output(output_id) {
 '            </div>'+
 '          </div>'+
 '        </div>'+
-'      </div>'+
-'    </div>';
+'      </div>';
   $(output_id).html(content);
 }
