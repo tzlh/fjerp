@@ -22,6 +22,20 @@
   $(document).ready(function() {
     check_login();
     header_output("#header");
+    $(document).on("click", "#header_edit_password_prop", function() {
+      header_edit_password_func();
+    });
+    //保存密码
+    $(document).on("click", "#header_edit_password_btn", function() {
+      header_edit_password_save_func();
+    });
+    //退出
+    $(document).on("click", "#header_log_out_modle", function() {
+      header_edit_log_out_modle_func();
+    });
+    $(document).on("click", "#header_log_out_btn", function() {
+      header_log_out_data_func();
+    });
     nav_menu_output("#nav_menu");
     contact_management_output("#contact_management_content");
     // 初始化
