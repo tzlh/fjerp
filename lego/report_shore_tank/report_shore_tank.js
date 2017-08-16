@@ -32,25 +32,18 @@ var count = 0;
 /**
  * 初始化
  */
-function report_shore_tank_clear_raw_data() {
-  //$("#report_shore_tank_list thead").html("");
-  $("#report_shore_tank_list tbody").html("");
+function report_shore_tank_clear_raw_data(vehicle_information_uuid) {
+  $("#report_shore_tank_content" + vehicle_information_uuid).find("#report_shore_tank_list tbody").html("");
   count = 0;
-  $("#report_shore_tank_paid").html('商检单&nbsp;[总量&nbsp;:&nbsp;0]&nbsp;<span class = "glyphicon glyphicon-plus pull-right" data-vehicle_information_uuid = "45cd2b07a2d843a188522902083a696d" id = "report_shore_tank_add_modle_btn"></span>');
+  $("#report_shore_tank_content" + vehicle_information_uuid).find("#report_shore_tank_paid span.paid").html('商检单&nbsp;[总量&nbsp;:&nbsp;0]&nbsp;');
 }
 
 /**
  * 赋值
  */
-function report_shore_tank_fill_variable_data() {
-  $("#report_shore_tank_paid").html('商检单&nbsp;[总量&nbsp;:&nbsp;' + count + ']&nbsp;<span class = "glyphicon glyphicon-plus pull-right" data-vehicle_information_uuid = "45cd2b07a2d843a188522902083a696d" id = "report_shore_tank_add_modle_btn"></span>');
+function report_shore_tank_fill_variable_data(vehicle_information_uuid) {
+  $("#report_shore_tank_content" + vehicle_information_uuid).find("#report_shore_tank_paid span.paid").html('商检单&nbsp;[总量&nbsp;:&nbsp;' + count + ']&nbsp;');
   if (isJsonObjectHasData(report_shore_tank_data)) {
-//  var report_shore_tank_thead  = 
-//    '<tr>'+
-//      '<th>提货地点</th>'+
-//      '<th>提货时间</th>'+
-//      '<th>&nbsp;</th>'+
-//    '</tr>';
     var report_shore_tank_tbody = "";
     for (var i = 0; i < report_shore_tank_data.length; i++) {
       report_shore_tank_tbody += 
@@ -63,20 +56,20 @@ function report_shore_tank_fill_variable_data() {
           '</td>'+
         '</tr>';
       //$("#report_shore_tank_list thead").html(report_shore_tank_thead);
-      $("#report_shore_tank_list tbody").html(report_shore_tank_tbody);  
+      $("#report_shore_tank_content" + vehicle_information_uuid).find("#report_shore_tank_list tbody").html(report_shore_tank_tbody);  
     }
   } else {
-    $("#report_shore_tank_list tbody").html("<p>没有数据</p>");
+    $("#report_shore_tank_content" + vehicle_information_uuid).find("#report_shore_tank_list tbody").html("<p>没有数据</p>");
   }
 }
 
 /**
  * 获取商检单
  */
-function report_shore_tank_server_data_cover() {
+function report_shore_tank_server_data_cover(vehicle_information_uuid) {
   var get_report_shore_tank_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getShoreTankReport";
   var get_report_shore_tank_param_data = {};
-  get_report_shore_tank_param_data["vehicle_information_uuid"] = "45cd2b07a2d843a188522902083a696d";
+  get_report_shore_tank_param_data["vehicle_information_uuid"] = vehicle_information_uuid;
   var report_shore_tank_get= ajax_assistant(get_report_shore_tank_url, get_report_shore_tank_param_data, false, true, false);
   console.log(report_shore_tank_get);
   if (1 == report_shore_tank_get.status) {
@@ -149,6 +142,7 @@ function report_shore_tank_get_letter(uuid) {
  * 添加商检单
  */
 function report_shore_tank_add_modal(vehicle_information_uuid) {
+  debugger;
   var content = 
 '      <div class = "modal fade custom_modal" id = "report_shore_tank_add_modal" tabindex = "-1">'+
 '       <div class = "modal-dialog" role = "document">'+
@@ -189,6 +183,7 @@ function report_shore_tank_add_modal(vehicle_information_uuid) {
 }
 
 function report_shore_tank_add_data(vehicle_information_uuid) {
+  debugger;
   var quantity = $("#report_shore_tank_add_modal .quantity").val();
   var report_shore_tank_li = $("#report_shore_tank_add_attch ul").children("li");
   var report_shore_tank_list = "";
@@ -211,7 +206,7 @@ function report_shore_tank_add_data(vehicle_information_uuid) {
   }
   var add_report_shore_tank_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=addShoreTankReport";
   var add_report_shore_tank_param_data = {};
-  add_report_shore_tank_param_data["vehicle_information_uuid"] = "45cd2b07a2d843a188522902083a696d";
+  add_report_shore_tank_param_data["vehicle_information_uuid"] = vehicle_information_uuid;
   add_report_shore_tank_param_data["quantity"] = quantity;
   if("" != report_shore_tank_list) {
     add_report_shore_tank_param_data["cluster_list"] = report_shore_tank_list;
@@ -220,9 +215,9 @@ function report_shore_tank_add_data(vehicle_information_uuid) {
   console.log(report_shore_tank_add);
   if (1 == report_shore_tank_add.status) {
     $("#report_shore_tank_add_modal").modal("hide");
-    report_shore_tank_clear_raw_data();
-    report_shore_tank_server_data_cover();
-    report_shore_tank_fill_variable_data();
+    report_shore_tank_clear_raw_data(vehicle_information_uuid);
+    report_shore_tank_server_data_cover(vehicle_information_uuid);
+    report_shore_tank_fill_variable_data(vehicle_information_uuid);
   } else {
     alert("添加失败！");
   }
@@ -231,7 +226,7 @@ function report_shore_tank_add_data(vehicle_information_uuid) {
 /**
  * 修改商检单
  */
-function report_shore_tank_edit_modal(uuid) {
+function report_shore_tank_edit_modal(uuid, vehicle_information_uuid) {
   var content = 
 '     <div class = "modal fade custom_modal" id = "report_shore_tank_edit_modal" tabindex = "-1">'+
 '       <div class = "modal-dialog" role = "document">'+
@@ -257,7 +252,7 @@ function report_shore_tank_edit_modal(uuid) {
 '               </div>'+
 '           </div>'+
 '           <div class = "modal-footer">'+
-'             <button type = "button" class = "btn btn-warning edit_btn" data-uuid = "' + uuid + '">修改</button>'+
+'             <button type = "button" class = "btn btn-warning edit_btn" data-uuid = "' + uuid + '" data-vehicle_information_uuid = "' + vehicle_information_uuid + '">修改</button>'+
 '             <button type = "button" class = "btn btn-default" data-dismiss = "modal">取消</button>'+
 '           </div>'+
 '         </div>'+
@@ -271,7 +266,7 @@ function report_shore_tank_edit_modal(uuid) {
   });
 }
 
-function report_shore_tank_edit_data(uuid) {
+function report_shore_tank_edit_data(uuid, vehicle_information_uuid) {
   console.log(uuid);
   var quantity = $("#report_shore_tank_edit_modal .quantity").val();
   var report_shore_tank_li = $("#report_shore_tank_edit_attch ul").children("li");
@@ -295,6 +290,7 @@ function report_shore_tank_edit_data(uuid) {
   }
   var edit_report_shore_tank_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=modifyShoreTankReport";
   var edit_report_shore_tank_param_data = {};
+  edit_report_shore_tank_param_data["vehicle_information_uuid"] = vehicle_information_uuid;
   edit_report_shore_tank_param_data["idColumnValue"] = uuid;
   edit_report_shore_tank_param_data["quantity"] = quantity;
   if ("" != report_shore_tank_list) {
@@ -304,9 +300,9 @@ function report_shore_tank_edit_data(uuid) {
   console.log(report_shore_tank_edit);
   if (1 == report_shore_tank_edit.status) {
     $("#report_shore_tank_edit_modal").modal("hide");
-    report_shore_tank_clear_raw_data();
-    report_shore_tank_server_data_cover();
-    report_shore_tank_fill_variable_data();
+    report_shore_tank_clear_raw_data(vehicle_information_uuid);
+    report_shore_tank_server_data_cover(vehicle_information_uuid);
+    report_shore_tank_fill_variable_data(vehicle_information_uuid);
   } else {
     alert("修改失败！");
   }
@@ -390,9 +386,9 @@ function report_shore_tank_delete_data(uuid, vehicle_information_uuid) {
   console.log(org_structure_delete_report_shore_tank);
   if (1 == org_structure_delete_report_shore_tank.status) {
     $("#report_shore_tank_delete_modal").modal("hide");
-    report_shore_tank_clear_raw_data();
-    report_shore_tank_server_data_cover();
-    report_shore_tank_fill_variable_data();
+    report_shore_tank_clear_raw_data(vehicle_information_uuid);
+    report_shore_tank_server_data_cover(vehicle_information_uuid);
+    report_shore_tank_fill_variable_data(vehicle_information_uuid);
   } else {
     alert("删除失败");
   }
@@ -405,7 +401,7 @@ function report_shore_tank_delete_data(uuid, vehicle_information_uuid) {
 function report_shore_tank_content(output_id) {
   var content = 
 '   <div class = "panel panel-primary">'+
-'    <div class = "panel-heading clearfix" id = "report_shore_tank_paid">商检单&nbsp;[总量&nbsp;:&nbsp;0]&nbsp;<span class = "glyphicon glyphicon-plus pull-right" data-vehicle_information_uuid = "45cd2b07a2d843a188522902083a696d" id = "report_shore_tank_add_modle_btn"></span></div>'+
+'    <div class = "panel-heading clearfix" id = "report_shore_tank_paid"><span class = "paid">商检单&nbsp;[总量&nbsp;:&nbsp;0]&nbsp;</span><span class = "glyphicon glyphicon-plus pull-right" id = "report_shore_tank_add_modle_btn"></span></div>'+
 '    <div class = "panel-body">'+
 '        <div class = "row">'+
 '          <div class = "col-lg-12">'+

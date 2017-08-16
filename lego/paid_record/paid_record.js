@@ -47,12 +47,12 @@ var current_paid_record_data = {
 function paid_record_clear_raw_data(paid_record_contract_uuid) {
   //$("#paid_record_thead").html('');
   $("#paid_record_content"+paid_record_contract_uuid).find("#paid_record_box").html('<tr><td colspan="3" align="center">没数据</td></tr>');
-  $("#paid_record_content"+paid_record_contract_uuid).find("#paid_record_paid").html('收款记录&nbsp;[应收货款&nbsp;:&nbsp;0]&nbsp;[已收货款&nbsp;:&nbsp;0]&nbsp;[未收货款&nbsp;:&nbsp;0]<span class = "glyphicon glyphicon-plus pull-right" id = "paid_record_add_modle"></span>');
+  $("#paid_record_content"+paid_record_contract_uuid).find("#paid_record_paid span.paid").html('收款记录&nbsp;[应收货款&nbsp;:&nbsp;0]&nbsp;[已收货款&nbsp;:&nbsp;0]&nbsp;[未收货款&nbsp;:&nbsp;0]');
 }
 
 function paid_record_fill_variable_data(paid_record_contract_uuid, all_paid) {
   unreceived = all_paid - received;
-  $("#paid_record_paid").html('收款记录&nbsp;[应收货款&nbsp;:&nbsp;' + all_paid + ']&nbsp;[已收货款&nbsp;:&nbsp;' + received + ']&nbsp;[未收货款&nbsp;:&nbsp;' + unreceived + ']<span class = "glyphicon glyphicon-plus pull-right" id = "paid_record_add_modle"></span>');
+  $("#paid_record_content"+paid_record_contract_uuid).find("#paid_record_paid span.paid").html('收款记录&nbsp;[应收货款&nbsp;:&nbsp;' + all_paid + ']&nbsp;[已收货款&nbsp;:&nbsp;' + received + ']&nbsp;[未收货款&nbsp;:&nbsp;' + unreceived + ']');
   if(isJsonObjectHasData(paid_record_data)) {
     var paid_record_html = "";
     for (var i = 0; i < paid_record_data.length; i++) {
@@ -204,7 +204,6 @@ function paid_record_add_data_func(paid_record_contract_code, paid_record_contra
   var paid_datetime = $("#paid_record_add_modle_prop .paid_datetime").val() + ' 00:00:00';//付款时间
   var paid_record_li = $("#paid_record_add_modle_attch ul").children("li");
   var paid_record_list = "";
-  debugger;
   for (var i = 0; i < paid_record_li.length; i++) {
     var obj = paid_record_li[i];
     var paid_record = $(obj).find("a").attr("data-cluster");
@@ -448,7 +447,7 @@ function paid_record_delete_data(uuid, paid_record_contract_code, paid_record_co
 function paid_record_output(output_id, contract_sale_all_price) {
   var content =
 ' <div class = "panel panel-primary">'+
-'  <div class = "panel-heading clearfix" id = "paid_record_paid">收款记录&nbsp;[应收货款&nbsp;:&nbsp;' + contract_sale_all_price + ']&nbsp;[已收货款&nbsp;:&nbsp;26000]&nbsp;[未收货款&nbsp;:&nbsp;26000]<span class = "glyphicon glyphicon-plus pull-right" id = "paid_record_add_modle"></span></div>'+
+'  <div class = "panel-heading clearfix" id = "paid_record_paid"><span class = "paid">收款记录&nbsp;[应收货款&nbsp;:&nbsp;' + contract_sale_all_price + ']&nbsp;[已收货款&nbsp;:&nbsp;0]&nbsp;[未收货款&nbsp;:&nbsp;0]</span><span class = "glyphicon glyphicon-plus pull-right" id = "paid_record_add_modle"></span></div>'+
 '    <div class = "panel-body">'+
 '        <div class = "row">'+
 '          <div class = "col-lg-12">'+

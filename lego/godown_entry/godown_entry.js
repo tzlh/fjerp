@@ -44,18 +44,18 @@ var net_weight_count = 0;
 /**
  * 初始化
  */
-function godown_entry_clear_raw_data() {
+function godown_entry_clear_raw_data(vehicle_information_uuid) {
 //$("#godown_entry_list thead").html("");
-  $("#godown_entry_list tbody").html("");
+  $("#godown_entry_content" + vehicle_information_uuid).find("#godown_entry_list tbody").html("");
   net_weight_count = 0;
-  $("#godown_entry_paid").html('入库单&nbsp;[净重总量&nbsp;:&nbsp;0]&nbsp;<span class = "glyphicon glyphicon-plus pull-right" data-vehicle_information_uuid = "45cd2b07a2d843a188522902083a696d" id = "godown_entry_add_modal_btn"></span>');
+  $("#godown_entry_content" + vehicle_information_uuid).find("#godown_entry_paid span.paid").html('入库单&nbsp;[净重总量&nbsp;:&nbsp;0]&nbsp;');
 }
 
 /**
  * 赋值
  */
-function godown_entry_fill_variable_data() {
-  $("#godown_entry_paid").html('入库单&nbsp;[净重总量&nbsp;:&nbsp;' + net_weight_count + ']&nbsp;<span class = "glyphicon glyphicon-plus pull-right" data-vehicle_information_uuid = "45cd2b07a2d843a188522902083a696d" id = "godown_entry_add_modal_btn"></span>');
+function godown_entry_fill_variable_data(vehicle_information_uuid) {
+  $("#godown_entry_content" + vehicle_information_uuid).find("#godown_entry_paid span.paid").html('入库单&nbsp;[净重总量&nbsp;:&nbsp;' + net_weight_count + ']&nbsp;');
   if (isJsonObjectHasData(godown_entry_data)) {
 //  var godown_entry_thead  = 
 //    '<tr>'+
@@ -78,20 +78,20 @@ function godown_entry_fill_variable_data() {
             '<span class = "glyphicon glyphicon-remove godown_entry_ml15 godown_entry_delete" data-uuid = "' + godown_entry_data[i].uuid + '" data-vehicle_information_uuid = "' + godown_entry_data[i].vehicle_information_uuid + '"></span>'+
           '</td>'+
         '</tr>';
-      $("#godown_entry_list tbody").html(godown_entry_tbody);  
+      $("#godown_entry_content" + vehicle_information_uuid).find("#godown_entry_list tbody").html(godown_entry_tbody);  
     }
   } else {
-    $("#godown_entry_list tbody").html('<tr><td colspan="6" align="center">没有数据</td></tr>');
+    $("#godown_entry_content" + vehicle_information_uuid).find("#godown_entry_list tbody").html('<tr><td colspan="6" align="center">没有数据</td></tr>');
   }
 }
 
 /**
  * 获取入库单
  */
-function godown_entry_server_data_cover() {
+function godown_entry_server_data_cover(vehicle_information_uuid) {
   var get_godown_entry_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getGodownEntry";
   var get_godown_entry_param_data = {};
-  get_godown_entry_param_data["vehicle_information_uuid"] = "45cd2b07a2d843a188522902083a696d";
+  get_godown_entry_param_data["vehicle_information_uuid"] = vehicle_information_uuid;
   var godown_entry_get= ajax_assistant(get_godown_entry_url, get_godown_entry_param_data, false, true, false);
   console.log(godown_entry_get);
   if (1 == godown_entry_get.status) {
@@ -358,9 +358,9 @@ function godown_entry_add_data(vehicle_information_uuid) {
   console.log(godown_entry_add);
   if (1 == godown_entry_add.status) {
     $("#godown_entry_add_modal").modal("hide");
-    godown_entry_clear_raw_data();
-    godown_entry_server_data_cover();
-    godown_entry_fill_variable_data();
+    godown_entry_clear_raw_data(vehicle_information_uuid);
+    godown_entry_server_data_cover(vehicle_information_uuid);
+    godown_entry_fill_variable_data(vehicle_information_uuid);
   } else {
     alert("添加失败！");
   }
@@ -540,9 +540,9 @@ function godown_entry_edit_data(uuid, vehicle_information_uuid) {
   console.log(godown_entry_edit);
   if (1 == godown_entry_edit.status) {
     $("#godown_entry_edit_modal").modal("hide");
-    godown_entry_clear_raw_data();
-    godown_entry_server_data_cover();
-    godown_entry_fill_variable_data();
+    godown_entry_clear_raw_data(vehicle_information_uuid);
+    godown_entry_server_data_cover(vehicle_information_uuid);
+    godown_entry_fill_variable_data(vehicle_information_uuid);
   } else {
     alert("修改失败！");
   }
@@ -690,9 +690,9 @@ function godown_entry_delete_data(uuid, vehicle_information_uuid) {
   console.log(godown_entry_delete_godown_entry);
   if (1 == godown_entry_delete_godown_entry.status) {
     $("#godown_entry_delete_modal").modal("hide");
-    godown_entry_clear_raw_data();
-    godown_entry_server_data_cover();
-    godown_entry_fill_variable_data();
+    godown_entry_clear_raw_data(vehicle_information_uuid);
+    godown_entry_server_data_cover(vehicle_information_uuid);
+    godown_entry_fill_variable_data(vehicle_information_uuid);
   } else {
     alert("删除失败");
   }
@@ -705,7 +705,7 @@ function godown_entry_delete_data(uuid, vehicle_information_uuid) {
 function godown_entry_content(output_id) {
   var content = 
 '   <div class = "panel panel-primary ">'+
-'    <div class = "panel-heading clearfix" id = "godown_entry_paid">入库单&nbsp;[净重总量&nbsp;:&nbsp;0]&nbsp;<span class = "glyphicon glyphicon-plus pull-right" data-vehicle_information_uuid = "45cd2b07a2d843a188522902083a696d" id = "godown_entry_add_modal_btn"></span></div>'+
+'    <div class = "panel-heading clearfix" id = "godown_entry_paid"><span class = "paid">入库单&nbsp;[净重总量&nbsp;:&nbsp;0]&nbsp;</span><span class = "glyphicon glyphicon-plus pull-right" id = "godown_entry_add_modal_btn"></span></div>'+
 '    <div class = "panel-body">'+
 '        <div class = "row">'+
 '          <div class = "col-lg-12">'+
