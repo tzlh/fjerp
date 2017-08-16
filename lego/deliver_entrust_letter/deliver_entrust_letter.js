@@ -435,3 +435,41 @@ function deliver_entrust_letter_delete_data(uuid, contract_code) {
     alert("删除失败");
   }
 }
+
+/**
+ * 提货委托函输出
+ * @param output_id
+ */
+function deliver_entrust_letter_content(output_id) {
+  var content = 
+'   <div class = "panel panel-primary ">'+
+'    <div class = "panel-heading clearfix">提货委托函<span class = "glyphicon glyphicon-plus pull-right" id = "deliver_entrust_letter_add_modal_btn"></span></div>'+
+'    <div class = "panel-body">'+
+'        <div class = "row">'+
+'          <div class = "col-lg-12">'+
+'            <table id = "deliver_entrust_letter_list" cellpadding = "0" cellspacing = "0" border = "0" width = "100%" class = "table">'+
+'              <thead>'+
+'                <tr>'+
+'                  <th>提货地点</th>'+
+'                  <th>提货时间</th>'+
+'                  <th>&nbsp;</th>'+
+'                </tr>'+
+'              </thead>'+
+'              <tbody class = "deliver_entrust_letter_ml15_box">'+
+'                <tr>'+
+'                  <td>舟山</td>'+
+'                  <td>2017-05-14</td>'+
+'                  <td>'+
+'                    <span class = "glyphicon glyphicon-info-sign deliver_entrust_letter_ml15 deliver_entrust_letter_detail"></span>'+
+'                    <span class = "glyphicon glyphicon-pencil deliver_entrust_letter_ml15 deliver_entrust_letter_edit"></span>'+
+'                    <span class = "glyphicon glyphicon-remove deliver_entrust_letter_ml15 deliver_entrust_letter_delete"></span>'+
+'                  </td>'+
+'                </tr>'+
+'              </tbody>'+
+'            </table>'+
+'          </div>'+
+'        </div>'+
+'      </div>'+
+'    </div>';
+  $(output_id).html(content);
+}

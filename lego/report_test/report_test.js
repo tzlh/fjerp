@@ -325,3 +325,39 @@ function report_test_delete_data(uuid, vehicle_information_uuid) {
     alert("删除失败");
   }
 }
+
+/**
+ * 化验单输出
+ * @param output_id
+ */
+function report_test_content(output_id) {
+  var content = 
+'   <div class = "panel panel-primary ">'+
+'    <div class = "panel-heading clearfix">化验单<span class = "glyphicon glyphicon-plus pull-right" id = "report_test_add_modal_btn"></span></div>'+
+'    <div class = "panel-body">'+
+'        <div class = "row">'+
+'          <div class = "col-lg-12">'+
+'            <table id = "report_test_list" cellpadding = "0" cellspacing = "0" border = "0" width = "100%" class = "table">'+
+'              <thead>'+
+'                <tr>'+
+'                  <th>序号</th>'+
+'                  <th>&nbsp;</th>'+
+'                </tr>'+
+'              </thead>'+
+'              <tbody class = "report_test_ml15_box">'+
+'                <tr>'+
+'                  <td>1</td>'+
+'                  <td>'+
+'                    <span class = "glyphicon glyphicon-info-sign report_test_ml15 report_test_detail"></span>'+
+'                    <span class = "glyphicon glyphicon-pencil report_test_ml15 report_test_edit"></span>'+
+'                    <span class = "glyphicon glyphicon-remove report_test_ml15 report_test_delete"></span>'+
+'                  </td>'+
+'                </tr>'+
+'              </tbody>'+
+'            </table>'+
+'          </div>'+
+'        </div>'+
+'      </div>'+
+'    </div>';
+  $(output_id).html(content);
+}

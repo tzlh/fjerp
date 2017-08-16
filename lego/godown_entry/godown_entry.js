@@ -697,3 +697,47 @@ function godown_entry_delete_data(uuid, vehicle_information_uuid) {
     alert("删除失败");
   }
 }
+
+/**
+ * 入库单输出
+ * @param output_id
+ */
+function godown_entry_content(output_id) {
+  var content = 
+'   <div class = "panel panel-primary ">'+
+'    <div class = "panel-heading clearfix" id = "godown_entry_paid">入库单&nbsp;[净重总量&nbsp;:&nbsp;0]&nbsp;<span class = "glyphicon glyphicon-plus pull-right" data-vehicle_information_uuid = "45cd2b07a2d843a188522902083a696d" id = "godown_entry_add_modal_btn"></span></div>'+
+'    <div class = "panel-body">'+
+'        <div class = "row">'+
+'          <div class = "col-lg-12">'+
+'            <table id = "godown_entry_list" cellpadding = "0" cellspacing = "0" border = "0" width = "100%" class = "table">'+
+'              <thead>'+
+'                <tr>'+
+'                  <th>入库日期</th>'+
+'                  <th>皮重（吨）</th>'+
+'                  <th>毛重（吨）</th>'+
+'                  <th>净重（吨）</th>'+
+'                  <th>储罐</th>'+
+'                  <th>&nbsp;</th>'+
+'                </tr>'+
+'              </thead>'+
+'              <tbody class = "godown_entry_ml15_box">'+
+'                <tr>'+
+'                  <td>2017-05-14</td>'+
+'                  <td>10</td>'+
+'                  <td>10</td>'+
+'                  <td>10</td>'+
+'                  <td>储罐1</td>'+
+'                  <td>'+
+'                    <span class = "glyphicon glyphicon-info-sign godown_entry_ml15 godown_entry_detail"></span>'+
+'                    <span class = "glyphicon glyphicon-pencil godown_entry_ml15 godown_entry_edit"></span>'+
+'                    <span class = "glyphicon glyphicon-remove godown_entry_ml15 godown_entry_delete"></span>'+
+'                  </td>'+
+'                </tr>'+
+'              </tbody>'+
+'            </table>'+
+'          </div>'+
+'        </div>'+
+'      </div>'+
+'    </div>';
+  $(output_id).html(content);
+}
