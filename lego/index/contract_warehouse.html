@@ -7,6 +7,7 @@
 <link rel="stylesheet" href = "../../plugin/jquery_timepicker_addon/1.6.3/jquery-ui-timepicker-addon.css" />
 <link rel = "stylesheet" href = "../../plugin/jquery_ui/1.12.1/jquery-ui.min.css">
 <link rel = "stylesheet" href = "../../css/custom_modal.css">
+<link rel = "stylesheet" href = "../upload_attachment/upload_attachment.css"/>
 <link rel = "stylesheet" href = "../contract_warehouse/contract_warehouse.css">
 <script src = "../../plugin/jquery/1.12.4/jquery.min.js"></script>    
 <script src="../../plugin/jquery_ui/1.12.1/jquery-ui.min.js"></script>
@@ -15,8 +16,7 @@
 <script src = "../../plugin/jquery_timepicker_addon/1.6.3/init.js"></script>
 <script src = "../../js/toolkit.js"></script>
 <script src = "../../js/configure.js"></script>
-<script src="../contract_warehouse/upload_file.js"></script>
-<script src="../contract_warehouse/page.js"></script>
+<script src = "../upload_attachment/upload_attachment.js" type = "text/javascript" charset = "utf-8"></script>
 <script src = "../contract_warehouse/contract_warehouse.js"></script>
 <title></title>
 <style>
@@ -30,14 +30,14 @@
     contract_warehouse_output("#contract_content");
     //日历插件
     widget_datepicker_init();
-    //清空原始数据
-    clear_raw_data();
-    //服务器数据
-    new_server_data_fill();
+    // 初始化
+    contract_warehouse_clear_raw_data();
+    // 服务器数据
+    contract_warehouse_server_data_cover();
     //分页
-    pages('', current_page);
+//  pages('', current_page);
     //加载数据
-    fill_variable_data();
+    contract_warehouse_fill_variable_data();
     //搜索获取出租方和承租方
     contract_warehouse_enterprise_data();
     //分页
