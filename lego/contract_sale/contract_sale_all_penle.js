@@ -9,7 +9,7 @@ function contract_sale_open_info_func(obj) {
   var contract_sale_all_price = obj.attr("contract_sale_all_price");
   
   var contract_sale_all_penle =
-  '<tr>'+
+  '<tr class = "contract_sale_all_panel">'+
     '<td colspan="11">'+
       '<div class="row">'+
         '<div class="col-lg-12">'+

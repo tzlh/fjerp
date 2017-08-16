@@ -1172,7 +1172,7 @@ function contract_logistics_info_modle_func(obj) {
 
 function contract_logistics_output(output_id) {
   var content = 
-    '<div class = "panel panel-primary ">'+
+    '<div class = "panel panel-primary contract_sale_logistics_checkbox">'+
 '    <div class = "panel-heading clearfix">物流合同<span class = "glyphicon glyphicon-plus pull-right" id = "contract_logistics_add_modle"></span></div>'+
 '    <div class = "panel-body">'+
 '        <div class = "row">'+

@@ -327,7 +327,7 @@ function goods_confirm_letter_delete_data(uuid, contract_code, contract_uuid) {
  */
 function goods_confirm_letter_content(output_id) {
   var content = 
-'   <div class = "panel panel-primary ">'+
+'   <div class = "panel panel-primary contract_sale_confirm_checkbox">'+
 '    <div class = "panel-heading clearfix">货物确认函<span class = "glyphicon glyphicon-plus pull-right" id = "goods_confirm_letter_add_modal_btn"></span></div>'+
 '    <div class = "panel-body">'+
 '        <div class = "row">'+

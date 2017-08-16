@@ -554,7 +554,7 @@ function vehicle_information_info_modle_func(obj) {
  */
 function vehicle_information_output(output_id) {
   var content = 
-    '  <div class = "panel panel-primary ">'+
+    '  <div class = "panel panel-primary contract_sale_transport_checkbox">'+
     '    <div class = "panel-heading clearfix">车船信息<span class = "glyphicon glyphicon-plus pull-right" id = "vehicle_information_add_modle"></span></div>'+
     '    <div class = "panel-body">'+
     '        <div class = "row">'+
