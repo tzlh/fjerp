@@ -1316,3 +1316,222 @@ function contract_sale_warehouse_data_val() {
   }
   $("#contract_sale_search_warehouse_uuid").html(contract_sale_html);
 }
+
+function contract_sale_output(output_id) {
+  var content = 
+  '  <div class = "panel panel-primary">'+
+  '    <div class = "panel-heading clearfix">销售合同管理<span class = "glyphicon glyphicon-plus pull-right" id = "contract_sales_add_modle"></span></div>'+
+  '    <div class = "panel-body">'+
+  '      <div class = "container-fluid">'+
+  '        <div class = "row">'+
+  '          <div class = "col-lg-2">'+
+  '            <div class = "input-group">'+
+  '              <div class = "input-group-addon">购买方</div>'+
+  '              <select class = "form-control" id = "contract_sale_buyer" value = "">'+
+  '              </select>'+
+  '            </div>'+
+  '          </div>'+
+  '          <div class = "col-lg-2">'+
+  '            <div class = "input-group">'+
+  '              <div class = "input-group-addon">销售方</div>'+
+  '              <select class = "form-control" id = "contract_sale_saller" value = "">'+
+  '              </select>'+
+  '            </div>'+
+  '          </div>'+
+  '          <div class = "col-lg-2">'+
+  '            <div class = "input-group">'+
+  '              <span class = "input-group-addon">名称</span>'+
+  '              <input type = "text" class = "form-control" id = "contract_sale_search_product_name_fuzzy">'+
+  '            </div>'+
+  '          </div>'+
+  '          <div class = "col-lg-2">'+
+  '            <div class = "input-group">'+
+  '              <span class = "input-group-addon">品类</span>'+
+  '              <input type = "text" class = "form-control" id = "contract_sale_search_real_name_fuzzy">'+
+  '            </div>'+
+  '          </div>'+
+  '          <div class = "col-lg-2">'+
+  '            <div class = "input-group">'+
+  '              <span class = "input-group-addon" >来源库区</span>'+
+  '              <select class = "form-control" value = "" id = "contract_sale_search_warehouse_uuid">'+
+  '              </select>'+
+  '             </div>'+
+  '          </div>'+
+  '          <div class = "col-lg-2">'+
+  '            <div class = "input-group">'+
+  '              <span class = "input-group-addon">发票状态</span>'+
+  '              <select class = "form-control" value = "" id = "contract_sale_invoice">'+
+  '                <option value = "">--请选择--</option>'+
+  '                <option value = "1">已收到</option>'+
+  '                <option value = "0">未收到</option>'+
+  '              </select>'+
+  '            </div>'+
+  '          </div>'+
+  '        </div>'+
+  '        <div class = "row contract_sale_mt20">'+
+  '          <div class = "col-lg-2">'+
+  '            <div class = "form-group has-feedback">'+
+  '              <div class = "input-group">'+
+  '                <span class = "input-group-addon">签署时间（起）</span>'+
+  '                <input type = "text" class = "form-control widget_datepicker" value = "" id = "contract_sale_search_start_sign_datetime">'+
+  '              </div>'+
+  '              <span class = "glyphicon glyphicon-calendar form-control-feedback" ></span>'+
+  '            </div>'+
+  '          </div>'+
+  '          <div class = "col-lg-2">'+
+  '            <div class = "form-group has-feedback">'+
+  '              <div class = "input-group">'+
+  '                <span class = "input-group-addon">签署时间（止）</span>'+
+  '                <input type = "text" class = "form-control widget_datepicker" id = "contract_sale_search_end_sign_datetime" value = "">'+
+  '              </div>'+
+  '              <span class = "glyphicon glyphicon-calendar form-control-feedback" ></span>'+
+  '            </div>'+
+  '          </div>'+
+  '          <div class = "col-lg-2" id = "contract_sale_search_fuzzy_btn">'+
+  '            <div class = "input-group">'+
+  '              <button type = "button" class = "btn btn-primary">搜索</button>'+
+  '            </div>'+
+  '          </div>'+
+  '          <div class = "col-lg-6">'+
+  '            <div class = "input-group">'+
+  '              <div class = "input-group-addon">合同编号</div>'+
+  '              <input type = "text" class = "form-control" id = "contract_sale_search_input">'+
+  '              <span class = "input-group-btn" id = "contract_sale_search_btn">'+
+  '                <button class = "btn btn-primary " type = "button"><span class = "glyphicon glyphicon-search"></span></button>'+
+  '              </span>'+
+  '            </div>'+
+  '          </div>'+
+  '        </div>'+
+  '        <div class = "row">'+
+  '          <div class = "col-lg-12">'+
+  '            <div class = "panel panel-primary">'+
+  '              <div class = "panel-heading">数据显示筛选</div>'+
+  '              <table class = "table" width = "100%" border = "0" cellpadding = "0" cellspacing = "0">'+
+  '                <tr class = "companyInfo">'+
+  '                  <td align = "center">'+
+  '                    <div class = "icheckbox_square-blue">'+
+  '                      <input type = "checkbox" class = "contract_sale_data_screening_btn" id = "contract_sale_records_checkbox" checked = "checked">'+
+  '                    </div>'+
+  '                    <label for = "contract_sale_records_checkbox">收款记录</label>'+
+  '                  </td>'+
+  '                  <td align = "center">'+
+  '                    <div class = "icheckbox_square-blue">'+
+  '                      <input type = "checkbox" class = "contract_sale_data_screening_btn" id = "contract_sale_logistics_checkbox" checked = "checked">'+
+  '                    </div>'+
+  '                    <label for = "contract_sale_logistics_checkbox">物流合同</label>'+
+  '                  </td>'+
+  '                  <td align = "center">'+
+  '                    <div class = "icheckbox_square-blue">'+
+  '                      <input type = "checkbox" class = "contract_sale_data_screening_btn" id = "contract_sale_transport_checkbox" checked = "checked">'+
+  '                    </div>'+
+  '                    <label for = "contract_sale_transport_checkbox">车船信息</label>'+
+  '                  </td>'+
+  '                  <td align = "center">'+
+  '                    <div class = "icheckbox_square-blue">'+
+  '                      <input type = "checkbox" class = "contract_sale_data_screening_btn" id = "contract_sale_pick_checkbox" checked = "checked">'+
+  '                    </div>'+
+  '                    <label for = "contract_sale_pick_checkbox">提货委托函</label>'+
+  '                  </td>'+
+  '                  <td align = "center">'+
+  '                    <div class = "icheckbox_square-blue">'+
+  '                      <input type = "checkbox" class = "contract_sale_data_screening_btn" id = "contract_sale_confirm_checkbox" checked = "checked">'+
+  '                    </div>'+
+  '                    <label for = "contract_sale_confirm_checkbox">货物确认函</label>'+
+  '                  </td>'+
+  '                  <td align = "center">'+
+  '                    <div class = "icheckbox_square-blue">'+
+  '                      <input type = "checkbox" class = "contract_sale_data_screening_btn" id = "contract_sale_settlement_checkbox" checked = "checked">'+
+  '                    </div>'+
+  '                    <label for = "contract_sale_settlement_checkbox">销售结算函</label>'+
+  '                  </td>'+
+  '                </tr>'+
+  '              </table>'+
+  '            </div>'+
+  '          </div>'+
+  '        </div>'+
+  '        <div class = "row">'+
+  '          <div class = "col-lg-12">'+
+  '            <table cellpadding = "0" cellspacing = "0" border = "0" width = "100%" class = "table">'+
+  '              <thead>'+
+  '                <tr>'+
+  '                  <th>展开详情</th>'+
+  '                  <th>合同编号</th>'+
+  '                  <th>购买方</th>'+
+  '                  <th>销售方</th>'+
+  '                  <th>名称</th>'+
+  '                  <th>品类</th>'+
+  '                  <th>单价</th>'+
+  '                  <th>数量（吨）</th>'+
+  '                  <th>合计</th>'+
+  '                  <th>交货时间</th>'+
+  '                  <th>&nbsp;</th>'+
+  '                </tr>'+
+  '              </thead>'+
+  '              <tbody id = "contract_sales_box">'+
+  '                <tr>'+
+  '                  <td><button type = "button" class = "btn btn-info btn-xs"><span class = "glyphicon glyphicon-chevron-up"></span></button></td>'+
+  '                  <td>fj-xy-170604</td>'+
+  '                  <td>福记</td>'+
+  '                  <td>细语</td>'+
+  '                  <td>加技术</td>'+
+  '                  <td>95</td>'+
+  '                  <td>4512</td>'+
+  '                  <td>300</td>'+
+  '                  <td>154879</td>'+
+  '                  <td>2017-06-04</td>'+
+  '                  <td>'+
+  '                    <span class = "glyphicon glyphicon-info-sign contract_sale_ml15"></span>'+
+  '                    <span class = "glyphicon glyphicon-pencil contract_sale_ml15"></span>'+
+  '                    <span class = "glyphicon glyphicon-remove contract_sale_ml15"></span>'+
+  '                  </td>'+
+  '                </tr>'+
+  '                <tr>'+
+  '                  <td><button type = "button" class = "btn btn-info btn-xs"><span class = "glyphicon glyphicon-chevron-up"></span></button></td>'+
+  '                  <td>fj-xy-170604</td>'+
+  '                  <td>福记</td>'+
+  '                  <td>细语</td>'+
+  '                  <td>加技术</td>'+
+  '                  <td>95</td>'+
+  '                  <td>4512</td>'+
+  '                  <td>300</td>'+
+  '                  <td>154879</td>'+
+  '                  <td>2017-06-04</td>'+
+  '                  <td>'+
+  '                    <span class = "glyphicon glyphicon-info-sign contract_sale_ml15"></span>'+
+  '                    <span class = "glyphicon glyphicon-pencil contract_sale_ml15"></span>'+
+  '                    <span class = "glyphicon glyphicon-remove contract_sale_ml15"></span>'+
+  '                  </td>'+
+  '                </tr>'+
+  '                <tr>'+
+  '                  <td><button type = "button" class = "btn btn-info btn-xs"><span class = "glyphicon glyphicon-chevron-up"></span></button></td>'+
+  '                  <td>fj-xy-170604</td>'+
+  '                  <td>福记</td>'+
+  '                  <td>细语</td>'+
+  '                  <td>加技术</td>'+
+  '                  <td>95</td>'+
+  '                  <td>4512</td>'+
+  '                  <td>300</td>'+
+  '                  <td>154879</td>'+
+  '                  <td>2017-06-04</td>'+
+  '                  <td>'+
+  '                    <span class = "glyphicon glyphicon-info-sign contract_sale_ml15"></span>'+
+  '                    <span class = "glyphicon glyphicon-pencil contract_sale_ml15"></span>'+
+  '                    <span class = "glyphicon glyphicon-remove contract_sale_ml15"></span>'+
+  '                  </td>'+
+  '                </tr>'+
+  '              </tbody>'+
+  '            </table>'+
+  '          </div>'+
+  '        </div>'+
+  '        <div id = "contract_sales_pages">'+
+  '          <nav aria-label="Page navigation" style="text-align: right;">'+
+  '            <ul class="pagination">'+
+  '              <li class="active"><span href="#">1</span></li>'+
+  '            </ul>'+
+  '          </nav>'+
+  '        </div>'+
+  '      </div>'+
+  '    </div>'+
+  '  </div>';
+    $(output_id).html(content);
+}
