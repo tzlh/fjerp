@@ -51,7 +51,7 @@ function vehicle_information_fill_variable_data(trade_contract_code_uuid) {
     for (var i = 0; i < vehicle_information_data.data.length; i++) {
       vehicle_information_html +=
         '<tr class = "vehicle_information_tr">'+
-          '<td><button type = "button" class = "btn btn-info btn-xs vehicle_information_open_btn" contract_code = "' + vehicle_information_data.data[i].contract_code + '"><span class = "glyphicon glyphicon-chevron-up"></span></button></td>'+
+          '<td><button type = "button" class = "btn btn-info btn-xs vehicle_information_open_btn" contract_code = "' + vehicle_information_data.data[i].contract_code + '" uuid = "' + vehicle_information_data.data[i].uuid + '"><span class = "glyphicon glyphicon-chevron-up"></span></button></td>'+
           '<td>' + vehicle_information_data.data[i].name + '</td>'+
           '<td>' + vehicle_information_data.data[i].approved_load + '</td>'+
           '<td>' + vehicle_information_data.data[i].deliver_quantity + '</td>'+
