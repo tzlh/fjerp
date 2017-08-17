@@ -319,64 +319,58 @@
       $(document).on("click", ".settlement_bill_logistics_modle_info", function() {
         settlement_bill_logistics_info_modle_func($(this));
       });
-      //收款记录
-      var paid_record_title = {
-        paid_record_name: "收款记录",
-        paid_record_time: "收款时间",
-        paid_record_paid: "收款金额（元）"
-      }
       // 添加收付款记录模态框
       $(document).on("click", "#paid_record_add_modle", function() {
-        var trade_contract_code = $(this).attr("trade_contract_code");
-        var contract_sale_all_price = $(this).attr("contract_sale_all_price");
-        var contract_sales_contract_code_uuid = $(this).attr("contract_sales_contract_code_uuid");
-        paid_record_add_modle_func(trade_contract_code,contract_sales_contract_code_uuid);
+        // var trade_contract_code = $(this).attr("trade_contract_code");
+        // var contract_sale_all_price = $(this).attr("contract_sale_all_price");
+        // var contract_sales_contract_code_uuid = $(this).attr("contract_sales_contract_code_uuid");
+        paid_record.paid_record_add_modle_func();
       });
       // 添加收付款数据
       $(document).on("click", "#paid_record_add_modle_prop_btn", function() {
-        var contract_code = $(this).attr("contract_code");
-        var contract_sale_all_price = $(this).attr("contract_sale_all_price");
-        var contract_uuid = $(this).attr("contract_uuid");
-        var contract_sale_all_price = $("#paid_record_add_modle").attr("contract_sale_all_price");
-        paid_record_add_data_func(contract_code, contract_uuid, paid_record_title, contract_sale_all_price);
+        // var contract_code = $(this).attr("contract_code");
+        // var contract_sale_all_price = $(this).attr("contract_sale_all_price");
+        // var contract_uuid = $(this).attr("contract_uuid");
+        // var contract_sale_all_price = $("#paid_record_add_modle").attr("contract_sale_all_price");
+        paid_record.paid_record_add_data_func();
       });
       // 修改收付款记录模态框
       $(document).on("click", ".paid_record_modle_pencil", function() {
         var uuid = $(this).attr("uuid");
-        var contract_code = $(this).attr("contract_code");
-        var contract_uuid = $(".settlement_bill_table_sales_trad_uuid").attr("contract_sales_contract_code_uuid");
-        paid_record_get_record(uuid, contract_code, contract_uuid);
-        paid_record_edit_modal(uuid, contract_code,contract_uuid);
+        // var contract_code = $(this).attr("contract_code");
+        // var contract_uuid = $(".settlement_bill_table_sales_trad_uuid").attr("contract_sales_contract_code_uuid");
+        paid_record.paid_record_get_record(uuid);
+        paid_record.paid_record_edit_modal(uuid);
       });
       // 修改收付款数据
       $(document).on("click", "#paid_record_edit_modal .edit_btn", function() {
         var uuid = $(this).attr("uuid");
-        var contract_code = $(this).attr("contract_code");
-        var contract_uuid = $(".settlement_bill_table_sales_trad_uuid").attr("contract_sales_contract_code_uuid");
-        var contract_sale_all_price = $("#paid_record_add_modle").attr("contract_sale_all_price");
-        paid_record_edit_data(uuid, contract_code, contract_uuid, paid_record_title, contract_sale_all_price);
+        // var contract_code = $(this).attr("contract_code");
+        // var contract_uuid = $(".settlement_bill_table_sales_trad_uuid").attr("contract_sales_contract_code_uuid");
+        // var contract_sale_all_price = $("#paid_record_add_modle").attr("contract_sale_all_price");
+        paid_record.paid_record_edit_data(uuid);
       });
       // 收付款记录详情模态框
       $(document).on("click", ".paid_record_modle_info", function() {
         var uuid = $(this).attr("uuid");
-        var contract_code = $(this).attr("contract_code");
-        paid_record_get_record(uuid, contract_code, paid_record_title);
-        paid_record_detail_modal();
+        // var contract_code = $(this).attr("contract_code");
+        paid_record.paid_record_get_record(uuid);
+        paid_record.paid_record_detail_modal();
       });
       // 删除收付款记录模态框
       $(document).on("click", ".paid_record_modle_remove", function() {
         var uuid = $(this).attr("uuid");
-        var contract_code = $(this).attr("contract_code");
-        var contract_uuid = $(".settlement_bill_table_sales_trad_uuid").attr("contract_sales_contract_code_uuid");
-        paid_record_delete_modal(uuid, contract_code, contract_uuid);
+        // var contract_code = $(this).attr("contract_code");
+        // var contract_uuid = $(".settlement_bill_table_sales_trad_uuid").attr("contract_sales_contract_code_uuid");
+        paid_record.paid_record_delete_modal(uuid);
       });
       // 删除收付款数据
       $(document).on("click", "#paid_record_delete_modal .remove", function() {
         var uuid = $(this).attr("uuid");
-        var contract_code = $(this).attr("contract_code");
-        var contract_uuid = $(".settlement_bill_table_sales_trad_uuid").attr("contract_sales_contract_code_uuid");
-        var contract_sale_all_price = $("#paid_record_add_modle").attr("contract_sale_all_price");
-        paid_record_delete_data(uuid, contract_code, contract_uuid, paid_record_title, contract_sale_all_price);
+        // var contract_code = $(this).attr("contract_code");
+        // var contract_uuid = $(".settlement_bill_table_sales_trad_uuid").attr("contract_sales_contract_code_uuid");
+        // var contract_sale_all_price = $("#paid_record_add_modle").attr("contract_sale_all_price");
+        paid_record.paid_record_delete_data(uuid);
       });
       // 提货委托函
       // 添加提货委托函模态框
