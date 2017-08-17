@@ -499,5 +499,5 @@ function PaidRecord(all_paid, sale_contract_code, title_object, paid_record_cont
   '      </div>'+
   '    </div>';
     $(this.paid_record_content_id).html(content);
-  };
+  }
 }
