@@ -169,7 +169,7 @@ function settlement_bill_buy_add_modle_func(obj) {
                  '<div class = "form-group">'+
                    '<label for = "">结算量</label>'+
                     '<div class = " input-group">'+
-                      '<input type = "text" class = "form-control settlement_bill_buy_settle_quantity volume_corresponding" value = "">'+
+                      '<input type = "text" class = "form-control settlement_bill_buy_settle_quantity volume_corresponding_a" value = "">'+
                       '<span class = "input-group-addon">吨</span>'+
                     '</div>'+
                   '</div>'+
@@ -178,7 +178,7 @@ function settlement_bill_buy_add_modle_func(obj) {
                   '<div class = "form-group">'+
                     '<label for = "">货物单价</label>'+
                     '<div class = " input-group">'+
-                      '<input type = "text" class = "form-control settlement_bill_buy_goods_price price_corresponding" value = "">'+
+                      '<input type = "text" class = "form-control settlement_bill_buy_goods_price price_corresponding_a" value = "">'+
                       '<span class = "input-group-addon">元</span>'+
                     '</div>'+
                   '</div>'+
@@ -205,7 +205,7 @@ function settlement_bill_buy_add_modle_func(obj) {
                   '<div class = "form-group">'+
                     '<label for = "">已付货款</label>'+
                     '<div class = " input-group">'+
-                      '<input type = "text" class = "form-control settlement_bill_buy_paid_amount amount_corresponding" value = "">'+
+                      '<input type = "text" class = "form-control settlement_bill_buy_paid_amount amount_corresponding_a" value = "">'+
                       '<span class = "input-group-addon">元</span>'+
                     '</div>'+
                   '</div>'+
@@ -252,10 +252,10 @@ function actual_loss_change(obj) {
   }
 }
 
-function all_should_change(obj) {
-  var volume_corresponding = obj.parents(".modal-body").find(".volume_corresponding").val();
-  var price_corresponding = obj.parents(".modal-body").find(".price_corresponding").val();
-  var amount_corresponding = obj.parents(".modal-body").find(".amount_corresponding").val();
+function all_should_change_a(obj) {
+  var volume_corresponding = obj.parents(".modal-body").find(".volume_corresponding_a").val();
+  var price_corresponding = obj.parents(".modal-body").find(".price_corresponding_a").val();
+  var amount_corresponding = obj.parents(".modal-body").find(".amount_corresponding_a").val();
   if (0 < volume_corresponding.length && 0 < price_corresponding.length && 0 < amount_corresponding.length && !isNaN(volume_corresponding) && !isNaN(price_corresponding) && !isNaN(amount_corresponding)) {
     obj.parents(".modal-body").find(".total_price").val((volume_corresponding*price_corresponding).toFixed(2));
     obj.parents(".modal-body").find(".return_money_should").val((volume_corresponding*price_corresponding-amount_corresponding).toFixed(2));
@@ -267,7 +267,7 @@ function all_should_change(obj) {
   }
 }
 
-function volume_corresponding__change(obj) {
+function volume_corresponding_a_change(obj) {
   var val_a = obj.val();
   obj.parents(".modal-body").find(".settlement_bill_buy_invoice_quantity").val(val_a);
 }
@@ -489,7 +489,7 @@ function settlement_bill_buy_edit_modle_func(obj) {
                  '<div class = "form-group">'+
                    '<label for = "">结算量</label>'+
                     '<div class = " input-group">'+
-                      '<input type = "text" class = "form-control settlement_bill_buy_settle_quantity volume_corresponding" value = "' + settlement_bill_buy_settle_quantity + '">'+
+                      '<input type = "text" class = "form-control settlement_bill_buy_settle_quantity volume_corresponding_a" value = "' + settlement_bill_buy_settle_quantity + '">'+
                       '<span class = "input-group-addon">吨</span>'+
                     '</div>'+
                   '</div>'+
@@ -498,7 +498,7 @@ function settlement_bill_buy_edit_modle_func(obj) {
                   '<div class = "form-group">'+
                     '<label for = "">货物单价</label>'+
                     '<div class = " input-group">'+
-                      '<input type = "text" class = "form-control settlement_bill_buy_goods_price price_corresponding" value = "' + settlement_bill_buy_goods_price + '">'+
+                      '<input type = "text" class = "form-control settlement_bill_buy_goods_price price_corresponding_a" value = "' + settlement_bill_buy_goods_price + '">'+
                       '<span class = "input-group-addon">元</span>'+
                     '</div>'+
                   '</div>'+
@@ -525,7 +525,7 @@ function settlement_bill_buy_edit_modle_func(obj) {
                   '<div class = "form-group">'+
                     '<label for = "">已付货款</label>'+
                     '<div class = " input-group">'+
-                      '<input type = "text" class = "form-control settlement_bill_buy_paid_amount amount_corresponding" value = "' + settlement_bill_buy_paid_amount + '">'+
+                      '<input type = "text" class = "form-control settlement_bill_buy_paid_amount amount_corresponding_a" value = "' + settlement_bill_buy_paid_amount + '">'+
                       '<span class = "input-group-addon">元</span>'+
                     '</div>'+
                   '</div>'+
@@ -835,7 +835,7 @@ function settlement_bill_buy_info_modle_func(obj) {
                  '<div class = "form-group">'+
                    '<label for = "">结算量</label>'+
                     '<div class = " input-group">'+
-                      '<input type = "text" class = "form-control settlement_bill_buy_settle_quantity volume_corresponding" value = "' + settlement_bill_buy_settle_quantity + '" disabled = "disabled">'+
+                      '<input type = "text" class = "form-control settlement_bill_buy_settle_quantity volume_corresponding_a" value = "' + settlement_bill_buy_settle_quantity + '" disabled = "disabled">'+
                       '<span class = "input-group-addon">吨</span>'+
                     '</div>'+
                   '</div>'+
@@ -844,7 +844,7 @@ function settlement_bill_buy_info_modle_func(obj) {
                   '<div class = "form-group">'+
                     '<label for = "">货物单价</label>'+
                     '<div class = " input-group">'+
-                      '<input type = "text" class = "form-control settlement_bill_buy_goods_price price_corresponding" value = "' + settlement_bill_buy_goods_price + '" disabled = "disabled">'+
+                      '<input type = "text" class = "form-control settlement_bill_buy_goods_price price_corresponding_a" value = "' + settlement_bill_buy_goods_price + '" disabled = "disabled">'+
                       '<span class = "input-group-addon">元</span>'+
                     '</div>'+
                   '</div>'+
@@ -871,7 +871,7 @@ function settlement_bill_buy_info_modle_func(obj) {
                   '<div class = "form-group">'+
                     '<label for = "">已付货款</label>'+
                     '<div class = " input-group">'+
-                      '<input type = "text" class = "form-control settlement_bill_buy_paid_amount amount_corresponding" value = "' + settlement_bill_buy_paid_amount + '" disabled = "disabled">'+
+                      '<input type = "text" class = "form-control settlement_bill_buy_paid_amount amount_corresponding_a" value = "' + settlement_bill_buy_paid_amount + '" disabled = "disabled">'+
                       '<span class = "input-group-addon">元</span>'+
                     '</div>'+
                   '</div>'+

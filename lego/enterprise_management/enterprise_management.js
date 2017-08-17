@@ -379,11 +379,11 @@ function enterprise_management_add_modal() {
                 '<div class="row">'+
                   '<div class="form-group col-md-6">'+
                     '<label>企业名称</label>'+
-                    '<input type="text" class="form-control enterprise_name" value = "腾智联合互联网科技有限公司">'+
+                    '<input type="text" class="form-control enterprise_name">'+
                   '</div>'+
                   '<div class="form-group col-md-3">'+
                     '<label>企业简称</label>'+
-                    '<input type="text" class="form-control enterprise_short_name" value = "腾智">'+
+                    '<input type="text" class="form-control enterprise_short_name">'+
                   '</div>'+
                   '<div class="form-group col-md-3">'+
                     '<label>企业类型</label>'+
@@ -398,12 +398,12 @@ function enterprise_management_add_modal() {
                 '<div class="row">'+
                   '<div class="form-group col-md-6">'+
                     '<label>注册资金(万元)</label>'+
-                    '<input type="text" class="form-control registered_capital" value = "1000000">'+
+                    '<input type="text" class="form-control registered_capital">'+
                   '</div>'+
                   '<div class="col-md-6">'+
                     '<div class="form-group has-feedback">'+
                       '<label>成立时间</label>'+
-                      '<input type="text" class="form-control widget_datepicker establish_datetime" value = "2017-05-17">'+
+                      '<input type="text" class="form-control widget_datepicker establish_datetime">'+
                       '<span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>'+
                     '</div>'+
                   '</div>'+
@@ -416,47 +416,33 @@ function enterprise_management_add_modal() {
                 '<div class="row">'+
                   '<div class="form-group col-md-6">'+
                     '<label>纳税识别号</label>'+
-                    '<input type="text" class="form-control tax_identification_number" value = "00000000000000000">'+
+                    '<input type="text" class="form-control tax_identification_number">'+
                   '</div>'+
                   '<div class="form-group col-md-6">'+
                     '<label>开户银行</label>'+
-                    '<input type="text" class="form-control bank_name" value = "山东建设银行历下支行">'+
+                    '<input type="text" class="form-control bank_name">'+
                   '</div>'+
                 '</div>'+
                 '<div class="row">'+
                   '<div class="form-group col-md-6">'+
                     '<label>银行账号</label>'+
-                    '<input type="text" class="form-control account" value = "111111111111">'+
+                    '<input type="text" class="form-control account">'+
                   '</div>'+
                   '<div class="form-group col-md-6">'+
                     '<label>联系电话</label>'+
-                    '<input type="text" class="form-control telephone_number" value = "111111111">'+
+                    '<input type="text" class="form-control telephone_number">'+
                   '</div>'+
                 '</div>'+
                 '<div class="row">'+
                   '<div class="form-group col-md-12">'+
                     '<label>地址</label>'+
-                    '<input type="text" class="form-control address" value = "山东省济南市历下区">'+
+                    '<input type="text" class="form-control address">'+
                   '</div>'+
                 '</div>'+
               '<div class="row">'+
               '<div class="form-group col-md-12">'+
                 '<label>开票信息附件</label>'+
                 '<div class="panel panel-default" id = "enterprise_management_invoice_attch">'+
-                  // '<div class="panel-body attch clearfix invoice_attch">'+
-                  //   '<div class="pull-left has-feedback">'+
-                  //     '<button class="btn bg-default">'+
-                  //       '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
-                  //     '</button>'+
-                  //     '<input class="positionfile file_style" type="file"  value="" />'+
-                  //   '</div>'+
-                  //   /*'<div class="swiper-slide btn_slider position-relative">'+
-                  //     '<img src="img/img2.jpg"/>'+
-                  //     '<button class="btn btn-danger position-absolute ab-btn text-center btn-remove">'+
-                  //     '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
-                  //     '</button>'+
-                  //   '</div>'+*/
-                  // '</div>'+
                 '</div>'+
               '</div>'+
             '</div>'+
@@ -468,20 +454,6 @@ function enterprise_management_add_modal() {
                 '<div class="form-group col-md-12">'+
                   '<label>机构信用代码证</label>'+
                   '<div class="panel panel-default" id = "enterprise_management_institutional_attch">'+
-//                  '<div class="panel-body attch clearfix institutionalCreditCodeAttch">'+
-//                    '<div class="pull-left has-feedback">'+
-//                      '<button class="btn bg-default">'+
-//                        '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
-//                      '</button>'+
-//                      '<input class="positionfile file_style" type="file"  value="" />'+
-//                    '</div>'+
-//                    /*'<div class="swiper-slide btn_slider position-relative">'+
-//                      '<img src="img/img2.jpg"/>'+
-//                      '<button class="btn btn-danger position-absolute ab-btn text-center">'+
-//                      '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
-//                      '</button>'+
-//                    '</div>'+*/
-//                  '</div>'+
                   '</div>'+
                 '</div>'+
               '</div>'+
@@ -489,20 +461,6 @@ function enterprise_management_add_modal() {
                   '<div class="form-group col-md-12">'+
                     '<label>危化品经营许可证</label>'+
                     '<div class="panel panel-default" id = "enterprise_management_hazardous_attch">'+
-//                    '<div class="panel-body attch clearfix HazardousChemicalsAttch">'+
-//                      '<div class="pull-left has-feedback">'+
-//                        '<button class="btn bg-default">'+
-//                          '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
-//                        '</button>'+
-//                        '<input class="positionfile file_style" type="file"  value="" />'+
-//                      '</div>'+
-//                      /*'<div class="swiper-slide btn_slider position-relative">'+
-//                        '<img src="img/img2.jpg"/>'+
-//                        '<button class="btn btn-danger position-absolute ab-btn text-center">'+
-//                          '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
-//                        '</button>'+
-//                      '</div>'+*/
-//                    '</div>'+
                     '</div>'+
                   '</div>'+
                 '</div>'+
@@ -510,20 +468,6 @@ function enterprise_management_add_modal() {
                   '<div class="form-group col-md-12">'+
                     '<label>法人身份证</label>'+
                     '<div class="panel panel-default" id = "enterprise_management_idcard_attch">'+
-//                    '<div class="panel-body attch clearfix IdCardAttch">'+
-//                      '<div class="pull-left has-feedback">'+
-//                        '<button class="btn bg-default">'+
-//                          '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
-//                        '</button>'+
-//                        '<input class="positionfile file_style" type="file"  value="" />'+
-//                      '</div>'+
-//                      /*'<div class="swiper-slide btn_slider position-relative">'+
-//                        '<img src="img/img2.jpg"/>'+
-//                        '<button class="btn btn-danger position-absolute ab-btn text-center">'+
-//                          '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
-//                        '</button>'+
-//                      '</div>'+*/
-//                    '</div>'+
                     '</div>'+
                   '</div>'+
                 '</div>'+
@@ -531,20 +475,6 @@ function enterprise_management_add_modal() {
                   '<div class="form-group col-md-12">'+
                     '<label>开户许可证</label>'+
                     '<div class="panel panel-default" id = "enterprise_management_account_attch">'+
-//                    '<div class="panel-body attch clearfix AccountOpeningPermitAttch">'+
-//                      '<div class="pull-left has-feedback">'+
-//                        '<button class="btn bg-default">'+
-//                          '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
-//                        '</button>'+
-//                        '<input class="positionfile file_style" type="file"  value="" />'+
-//                      '</div>'+
-//                      /*'<div class="swiper-slide btn_slider position-relative">'+
-//                        '<img src="img/img2.jpg"/>'+
-//                        '<button class="btn btn-danger position-absolute ab-btn text-center">'+
-//                          '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
-//                        '</button>'+
-//                      '</div>'+*/
-//                    '</div>'+
                     '</div>'+
                   '</div>'+
                 '</div>'+
@@ -552,20 +482,6 @@ function enterprise_management_add_modal() {
                   '<div class="form-group col-md-12">'+
                     '<label>安全生产许可证</label>'+
                     '<div class="panel panel-default" id = "enterprise_management_safety_attch">'+
-//                    '<div class="panel-body attch clearfix SafetyProductionAttch">'+
-//                      '<div class="pull-left has-feedback">'+
-//                        '<button class="btn bg-default">'+
-//                          '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
-//                        '</button>'+
-//                        '<input class="positionfile file_style" type="file"  value="" />'+
-//                      '</div>'+
-//                      /*'<div class="swiper-slide btn_slider position-relative">'+
-//                        '<img src="img/img2.jpg"/>'+
-//                        '<button class="btn btn-danger position-absolute ab-btn text-center">'+
-//                          '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
-//                        '</button>'+
-//                      ' </div>'+*/
-//                    '</div>'+
                     '</div>'+
                   '</div>'+
                 '</div>'+
@@ -573,20 +489,6 @@ function enterprise_management_add_modal() {
                   '<div class="form-group col-md-12">'+
                     '<label>营业执照</label>'+
                     '<div class="panel panel-default" id = "enterprise_management_business_attch">'+
-//                    '<div class="panel-body attch clearfix BusinessLicenseAttch">'+
-//                      '<div class="pull-left has-feedback">'+
-//                        '<button class="btn bg-default">'+
-//                          '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
-//                        '</button>'+
-//                        '<input class="positionfile file_style" type="file"  value="" />'+
-//                      '</div>'+
-//                      /*'<div class="swiper-slide btn_slider position-relative">'+
-//                        '<img src="img/img2.jpg"/>'+
-//                        '<button class="btn btn-danger position-absolute ab-btn text-center">'+
-//                          '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
-//                        '</button>'+
-//                      '</div>'+*/
-//                    '</div>'+
                     '</div>'+
                   '</div>'+
                 '</div>'+
@@ -1309,20 +1211,6 @@ function enterprise_management_edit_modal(uuid) {
               '<div class="form-group col-md-12">'+
                 '<label>开票信息附件</label>'+
                 '<div class="panel panel-default" id = "enterprise_management_edit_invoice_attch">'+
-                  // '<div class="panel-body attch clearfix invoice_attch">'+
-                  //   '<div class="pull-left has-feedback">'+
-                  //     '<button class="btn bg-default">'+
-                  //       '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
-                  //     '</button>'+
-                  //     '<input class="positionfile file_style" type="file"  value="" />'+
-                  //   '</div>'+
-                  //   /*'<div class="swiper-slide btn_slider position-relative">'+
-                  //     '<img src="img/img2.jpg"/>'+
-                  //     '<button class="btn btn-danger position-absolute ab-btn text-center btn-remove">'+
-                  //     '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
-                  //     '</button>'+
-                  //   '</div>'+*/
-                  // '</div>'+
                 '</div>'+
               '</div>'+
             '</div>'+
@@ -1334,20 +1222,6 @@ function enterprise_management_edit_modal(uuid) {
                 '<div class="form-group col-md-12">'+
                   '<label>机构信用代码证</label>'+
                   '<div class="panel panel-default" id = "enterprise_management_edit_institutional_attch">'+
-//                  '<div class="panel-body attch clearfix institutionalCreditCodeAttch">'+
-//                    '<div class="pull-left has-feedback">'+
-//                      '<button class="btn bg-default">'+
-//                        '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
-//                      '</button>'+
-//                      '<input class="positionfile file_style" type="file"  value="" />'+
-//                    '</div>'+
-//                    /*'<div class="swiper-slide btn_slider position-relative">'+
-//                      '<img src="img/img2.jpg"/>'+
-//                      '<button class="btn btn-danger position-absolute ab-btn text-center">'+
-//                      '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
-//                      '</button>'+
-//                    '</div>'+*/
-//                  '</div>'+
                   '</div>'+
                 '</div>'+
               '</div>'+
@@ -1355,20 +1229,6 @@ function enterprise_management_edit_modal(uuid) {
                   '<div class="form-group col-md-12">'+
                     '<label>危化品经营许可证</label>'+
                     '<div class="panel panel-default" id = "enterprise_management_edit_hazardous_attch">'+
-//                    '<div class="panel-body attch clearfix HazardousChemicalsAttch">'+
-//                      '<div class="pull-left has-feedback">'+
-//                        '<button class="btn bg-default">'+
-//                          '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
-//                        '</button>'+
-//                        '<input class="positionfile file_style" type="file"  value="" />'+
-//                      '</div>'+
-//                      /*'<div class="swiper-slide btn_slider position-relative">'+
-//                        '<img src="img/img2.jpg"/>'+
-//                        '<button class="btn btn-danger position-absolute ab-btn text-center">'+
-//                          '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
-//                        '</button>'+
-//                      '</div>'+*/
-//                    '</div>'+
                     '</div>'+
                   '</div>'+
                 '</div>'+
@@ -1376,20 +1236,6 @@ function enterprise_management_edit_modal(uuid) {
                   '<div class="form-group col-md-12">'+
                     '<label>法人身份证</label>'+
                     '<div class="panel panel-default" id = "enterprise_management_edit_idcard_attch">'+
-//                    '<div class="panel-body attch clearfix IdCardAttch">'+
-//                      '<div class="pull-left has-feedback">'+
-//                        '<button class="btn bg-default">'+
-//                          '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
-//                        '</button>'+
-//                        '<input class="positionfile file_style" type="file"  value="" />'+
-//                      '</div>'+
-//                      /*'<div class="swiper-slide btn_slider position-relative">'+
-//                        '<img src="img/img2.jpg"/>'+
-//                        '<button class="btn btn-danger position-absolute ab-btn text-center">'+
-//                          '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
-//                        '</button>'+
-//                      '</div>'+*/
-//                    '</div>'+
                     '</div>'+
                   '</div>'+
                 '</div>'+
@@ -1397,20 +1243,6 @@ function enterprise_management_edit_modal(uuid) {
                   '<div class="form-group col-md-12">'+
                     '<label>开户许可证</label>'+
                     '<div class="panel panel-default" id = "enterprise_management_edit_account_attch">'+
-//                    '<div class="panel-body attch clearfix AccountOpeningPermitAttch">'+
-//                      '<div class="pull-left has-feedback">'+
-//                        '<button class="btn bg-default">'+
-//                          '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
-//                        '</button>'+
-//                        '<input class="positionfile file_style" type="file"  value="" />'+
-//                      '</div>'+
-//                      /*'<div class="swiper-slide btn_slider position-relative">'+
-//                        '<img src="img/img2.jpg"/>'+
-//                        '<button class="btn btn-danger position-absolute ab-btn text-center">'+
-//                          '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
-//                        '</button>'+
-//                      '</div>'+*/
-//                    '</div>'+
                     '</div>'+
                   '</div>'+
                 '</div>'+
@@ -1418,20 +1250,6 @@ function enterprise_management_edit_modal(uuid) {
                   '<div class="form-group col-md-12">'+
                     '<label>安全生产许可证</label>'+
                     '<div class="panel panel-default" id = "enterprise_management_edit_safety_attch">'+
-//                    '<div class="panel-body attch clearfix SafetyProductionAttch">'+
-//                      '<div class="pull-left has-feedback">'+
-//                        '<button class="btn bg-default">'+
-//                          '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
-//                        '</button>'+
-//                        '<input class="positionfile file_style" type="file"  value="" />'+
-//                      '</div>'+
-//                      /*'<div class="swiper-slide btn_slider position-relative">'+
-//                        '<img src="img/img2.jpg"/>'+
-//                        '<button class="btn btn-danger position-absolute ab-btn text-center">'+
-//                          '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
-//                        '</button>'+
-//                      ' </div>'+*/
-//                    '</div>'+
                     '</div>'+
                   '</div>'+
                 '</div>'+
@@ -1439,20 +1257,6 @@ function enterprise_management_edit_modal(uuid) {
                   '<div class="form-group col-md-12">'+
                     '<label>营业执照</label>'+
                     '<div class="panel panel-default" id = "enterprise_management_edit_business_attch">'+
-//                    '<div class="panel-body attch clearfix BusinessLicenseAttch">'+
-//                      '<div class="pull-left has-feedback">'+
-//                        '<button class="btn bg-default">'+
-//                          '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
-//                        '</button>'+
-//                        '<input class="positionfile file_style" type="file"  value="" />'+
-//                      '</div>'+
-//                      /*'<div class="swiper-slide btn_slider position-relative">'+
-//                        '<img src="img/img2.jpg"/>'+
-//                        '<button class="btn btn-danger position-absolute ab-btn text-center">'+
-//                          '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
-//                        '</button>'+
-//                      '</div>'+*/
-//                    '</div>'+
                     '</div>'+
                   '</div>'+
                 '</div>'+
@@ -1997,15 +1801,15 @@ function enterprise_management_detail_modal() {
                 '<div class="row">'+
                   '<div class="form-group col-md-6">'+
                     '<label>企业名称</label>'+
-                    '<input type="text" class="form-control enterprise_name" value = "' + current_company_detail_data.name + '">'+
+                    '<input type="text" class="form-control enterprise_name" disabled = "disabled" value = "' + current_company_detail_data.name + '">'+
                   '</div>'+
                   '<div class="form-group col-md-3">'+
                     '<label>企业简称</label>'+
-                    '<input type="text" class="form-control enterprise_short_name" value = "' + current_company_detail_data.short_name + '">'+
+                    '<input type="text" class="form-control enterprise_short_name" disabled = "disabled" value = "' + current_company_detail_data.short_name + '">'+
                   '</div>'+
                   '<div class="form-group col-md-3">'+
                     '<label>企业类型</label>'+
-                    '<select class="form-control enterprise_type">'+
+                    '<select class="form-control enterprise_type" disabled = "disabled">'+
                       '<option>--请选择--</option>'+
                       '<option value="1">自运营企业</option>'+
                       '<option value="2">贸易企业</option>'+
@@ -2016,12 +1820,12 @@ function enterprise_management_detail_modal() {
                 '<div class="row">'+
                   '<div class="form-group col-md-6">'+
                     '<label>注册资金(万元)</label>'+
-                    '<input type="text" class="form-control registered_capital" value = "' + current_company_detail_data.registered_capital + '">'+
+                    '<input type="text" class="form-control registered_capital" disabled = "disabled" value = "' + current_company_detail_data.registered_capital + '">'+
                   '</div>'+
                   '<div class="col-md-6">'+
                     '<div class="form-group has-feedback">'+
                       '<label>成立时间</label>'+
-                      '<input type="text" class="form-control widget_datepicker establish_datetime" value = "' + current_company_detail_data.establish_datetime + '">'+
+                      '<input type="text" class="form-control widget_datepicker establish_datetime" disabled = "disabled" value = "' + current_company_detail_data.establish_datetime + '">'+
                       '<span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>'+
                     '</div>'+
                   '</div>'+
@@ -2034,47 +1838,33 @@ function enterprise_management_detail_modal() {
                 '<div class="row">'+
                   '<div class="form-group col-md-6">'+
                     '<label>纳税识别号</label>'+
-                    '<input type="text" class="form-control tax_identification_number" value = "' + current_company_detail_data.tax_identification_number + '">'+
+                    '<input type="text" class="form-control tax_identification_number" disabled = "disabled" value = "' + current_company_detail_data.tax_identification_number + '">'+
                   '</div>'+
                   '<div class="form-group col-md-6">'+
                     '<label>开户银行</label>'+
-                    '<input type="text" class="form-control bank_name" value = "' + current_company_detail_data.bank_name + '">'+
+                    '<input type="text" class="form-control bank_name" disabled = "disabled" value = "' + current_company_detail_data.bank_name + '">'+
                   '</div>'+
                 '</div>'+
                 '<div class="row">'+
                   '<div class="form-group col-md-6">'+
                     '<label>银行账号</label>'+
-                    '<input type="text" class="form-control account" value = "' + current_company_detail_data.account + '">'+
+                    '<input type="text" class="form-control account" disabled = "disabled" value = "' + current_company_detail_data.account + '">'+
                   '</div>'+
                   '<div class="form-group col-md-6">'+
                     '<label>联系电话</label>'+
-                    '<input type="text" class="form-control telephone_number" value = "' + current_company_detail_data.telephone_number + '">'+
+                    '<input type="text" class="form-control telephone_number" disabled = "disabled" value = "' + current_company_detail_data.telephone_number + '">'+
                   '</div>'+
                 '</div>'+
                 '<div class="row">'+
                   '<div class="form-group col-md-12">'+
                     '<label>地址</label>'+
-                    '<input type="text" class="form-control address" value = "' + current_company_detail_data.address + '">'+
+                    '<input type="text" class="form-control address" disabled = "disabled" value = "' + current_company_detail_data.address + '">'+
                   '</div>'+
                 '</div>'+
               '<div class="row">'+
               '<div class="form-group col-md-12">'+
                 '<label>开票信息附件</label>'+
                 '<div class="panel panel-default" id = "enterprise_management_detail_invoice_attch">'+
-                  // '<div class="panel-body attch clearfix invoice_attch">'+
-                  //   '<div class="pull-left has-feedback">'+
-                  //     '<button class="btn bg-default">'+
-                  //       '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
-                  //     '</button>'+
-                  //     '<input class="positionfile file_style" type="file"  value="" />'+
-                  //   '</div>'+
-                  //   /*'<div class="swiper-slide btn_slider position-relative">'+
-                  //     '<img src="img/img2.jpg"/>'+
-                  //     '<button class="btn btn-danger position-absolute ab-btn text-center btn-remove">'+
-                  //     '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
-                  //     '</button>'+
-                  //   '</div>'+*/
-                  // '</div>'+
                 '</div>'+
               '</div>'+
             '</div>'+
@@ -2086,20 +1876,6 @@ function enterprise_management_detail_modal() {
                 '<div class="form-group col-md-12">'+
                   '<label>机构信用代码证</label>'+
                   '<div class="panel panel-default" id = "enterprise_management_detail_institutional_attch">'+
-//                  '<div class="panel-body attch clearfix institutionalCreditCodeAttch">'+
-//                    '<div class="pull-left has-feedback">'+
-//                      '<button class="btn bg-default">'+
-//                        '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
-//                      '</button>'+
-//                      '<input class="positionfile file_style" type="file"  value="" />'+
-//                    '</div>'+
-//                    /*'<div class="swiper-slide btn_slider position-relative">'+
-//                      '<img src="img/img2.jpg"/>'+
-//                      '<button class="btn btn-danger position-absolute ab-btn text-center">'+
-//                      '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
-//                      '</button>'+
-//                    '</div>'+*/
-//                  '</div>'+
                   '</div>'+
                 '</div>'+
               '</div>'+
@@ -2107,20 +1883,6 @@ function enterprise_management_detail_modal() {
                   '<div class="form-group col-md-12">'+
                     '<label>危化品经营许可证</label>'+
                     '<div class="panel panel-default" id = "enterprise_management_detail_hazardous_attch">'+
-//                    '<div class="panel-body attch clearfix HazardousChemicalsAttch">'+
-//                      '<div class="pull-left has-feedback">'+
-//                        '<button class="btn bg-default">'+
-//                          '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
-//                        '</button>'+
-//                        '<input class="positionfile file_style" type="file"  value="" />'+
-//                      '</div>'+
-//                      /*'<div class="swiper-slide btn_slider position-relative">'+
-//                        '<img src="img/img2.jpg"/>'+
-//                        '<button class="btn btn-danger position-absolute ab-btn text-center">'+
-//                          '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
-//                        '</button>'+
-//                      '</div>'+*/
-//                    '</div>'+
                     '</div>'+
                   '</div>'+
                 '</div>'+
@@ -2128,20 +1890,6 @@ function enterprise_management_detail_modal() {
                   '<div class="form-group col-md-12">'+
                     '<label>法人身份证</label>'+
                     '<div class="panel panel-default" id = "enterprise_management_detail_idcard_attch">'+
-//                    '<div class="panel-body attch clearfix IdCardAttch">'+
-//                      '<div class="pull-left has-feedback">'+
-//                        '<button class="btn bg-default">'+
-//                          '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
-//                        '</button>'+
-//                        '<input class="positionfile file_style" type="file"  value="" />'+
-//                      '</div>'+
-//                      /*'<div class="swiper-slide btn_slider position-relative">'+
-//                        '<img src="img/img2.jpg"/>'+
-//                        '<button class="btn btn-danger position-absolute ab-btn text-center">'+
-//                          '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
-//                        '</button>'+
-//                      '</div>'+*/
-//                    '</div>'+
                     '</div>'+
                   '</div>'+
                 '</div>'+
@@ -2149,20 +1897,6 @@ function enterprise_management_detail_modal() {
                   '<div class="form-group col-md-12">'+
                     '<label>开户许可证</label>'+
                     '<div class="panel panel-default" id = "enterprise_management_detail_account_attch">'+
-//                    '<div class="panel-body attch clearfix AccountOpeningPermitAttch">'+
-//                      '<div class="pull-left has-feedback">'+
-//                        '<button class="btn bg-default">'+
-//                          '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
-//                        '</button>'+
-//                        '<input class="positionfile file_style" type="file"  value="" />'+
-//                      '</div>'+
-//                      /*'<div class="swiper-slide btn_slider position-relative">'+
-//                        '<img src="img/img2.jpg"/>'+
-//                        '<button class="btn btn-danger position-absolute ab-btn text-center">'+
-//                          '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
-//                        '</button>'+
-//                      '</div>'+*/
-//                    '</div>'+
                     '</div>'+
                   '</div>'+
                 '</div>'+
@@ -2170,20 +1904,6 @@ function enterprise_management_detail_modal() {
                   '<div class="form-group col-md-12">'+
                     '<label>安全生产许可证</label>'+
                     '<div class="panel panel-default" id = "enterprise_management_detail_safety_attch">'+
-//                    '<div class="panel-body attch clearfix SafetyProductionAttch">'+
-//                      '<div class="pull-left has-feedback">'+
-//                        '<button class="btn bg-default">'+
-//                          '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
-//                        '</button>'+
-//                        '<input class="positionfile file_style" type="file"  value="" />'+
-//                      '</div>'+
-//                      /*'<div class="swiper-slide btn_slider position-relative">'+
-//                        '<img src="img/img2.jpg"/>'+
-//                        '<button class="btn btn-danger position-absolute ab-btn text-center">'+
-//                          '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
-//                        '</button>'+
-//                      ' </div>'+*/
-//                    '</div>'+
                     '</div>'+
                   '</div>'+
                 '</div>'+
@@ -2191,20 +1911,6 @@ function enterprise_management_detail_modal() {
                   '<div class="form-group col-md-12">'+
                     '<label>营业执照</label>'+
                     '<div class="panel panel-default" id = "enterprise_management_detail_business_attch">'+
-//                    '<div class="panel-body attch clearfix BusinessLicenseAttch">'+
-//                      '<div class="pull-left has-feedback">'+
-//                        '<button class="btn bg-default">'+
-//                          '<span class="glyphicon glyphicon-plus" style="font-size:40px;margin-right:0;color:#fff;"></span>'+
-//                        '</button>'+
-//                        '<input class="positionfile file_style" type="file"  value="" />'+
-//                      '</div>'+
-//                      /*'<div class="swiper-slide btn_slider position-relative">'+
-//                        '<img src="img/img2.jpg"/>'+
-//                        '<button class="btn btn-danger position-absolute ab-btn text-center">'+
-//                          '<span class="glyphicon glyphicon-remove  btn-danger font-size12"></span>'+
-//                        '</button>'+
-//                      '</div>'+*/
-//                    '</div>'+
                     '</div>'+
                   '</div>'+
                 '</div>'+

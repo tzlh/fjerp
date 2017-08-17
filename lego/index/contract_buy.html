@@ -224,12 +224,12 @@
         actual_loss_change($(this));
       });
       //合计 应退货款
-      $(document).on("blur",".volume_corresponding,.price_corresponding,.amount_corresponding",function(){
-        all_should_change($(this));
+      $(document).on("blur",".volume_corresponding_a,.price_corresponding_a,.amount_corresponding_a",function(){
+        all_should_change_a($(this));
       });
       //结算量  发票数量的关系
-      $(document).on("blur",".volume_corresponding",function(){
-        volume_corresponding__change($(this));
+      $(document).on("blur",".volume_corresponding_a",function(){
+        volume_corresponding_a_change($(this));
       });
       //添加采购对账单数据
       $(document).on("click", "#settlement_bill_buy_add_data_btn", function() {
@@ -306,6 +306,9 @@
       //结算量  发票数量的关系
       $(document).on("blur",".volume_corresponding",function(){
         volume_corresponding__change($(this));
+      });
+      $(document).on("blur",".volume_corresponding,.price_corresponding,.amount_corresponding",function(){
+        all_should_change($(this));
       });
       //添加物流对账单数据
       $(document).on("click", "#settlement_bill_logistics_add_data_btn", function() {

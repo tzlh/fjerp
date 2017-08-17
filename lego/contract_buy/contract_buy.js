@@ -1413,7 +1413,7 @@ function contract_buy_output(output_id) {
   '                    <div class = "icheckbox_square-blue">'+
   '                      <input type = "checkbox" class = "contract_buy_data_screening_btn" id = "contract_sale_records_checkbox" checked = "checked">'+
   '                    </div>'+
-  '                    <label for = "contract_sale_records_checkbox">收款记录</label>'+
+  '                    <label for = "contract_sale_records_checkbox">付款记录</label>'+
   '                  </td>'+
   '                  <td align = "center">'+
   '                    <div class = "icheckbox_square-blue">'+
