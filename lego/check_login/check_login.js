@@ -24,5 +24,6 @@ function check_login() {
       // 返回true，浏览器不会提示错误信息。
       return true;
     }
-    throw new Error("user_not_login");
+  }
+  throw new Error("user_not_login");
 }
