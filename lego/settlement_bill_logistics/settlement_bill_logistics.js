@@ -271,7 +271,6 @@ function all_should_change(obj) {
 }
 
 function volume_corresponding__change(obj) {
-  alert(1)
   var val_a = obj.val();
   obj.parents(".modal-body").find(".settlement_bill_logistics_invoice_quantity").val(val_a);
 }
