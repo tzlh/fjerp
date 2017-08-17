@@ -21,7 +21,7 @@ var contact_data = [
 /**
  * 分页变量
  */
-var rows = 2;
+var rows = 20;
 var current_offset = 0;
 
 /**
@@ -84,7 +84,7 @@ function contact_management_fill_variable_data() {
     $("#contact_management_list thead").html(contact_content_thead);
     $("#contact_management_list tbody").html(contact_content_tbody);
   } else {
-    $("#contact_management_list thead").html("<p>没有数据</p>");
+    $("#contact_management_list thead").html("<tr><td colspan='5' align='center'>没数据</td></tr>");
     $("#contact_management_list tbody").html("");
   }
 }
@@ -393,7 +393,7 @@ function contact_management_output(output_id) {
 '              </select>'+
 '            </div>'+
 '          </div>'+
-'          <div class = "col-md-1">'+
+'          <div class = "col-md-2">'+
 '            <button type = "button" class = "btn btn-primary pull-left" id = "contact_management_enterprise_search_btn" style = "width: 100px;">搜索</button>'+
 '          </div>'+
 '          <div class = "col-md-3">'+

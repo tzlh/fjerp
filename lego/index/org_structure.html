@@ -21,6 +21,20 @@
 $(document).ready(function() {
   check_login();
   header_output("#header");
+  $(document).on("click", "#header_edit_password_prop", function() {
+    header_edit_password_func();
+  });
+  //保存密码
+  $(document).on("click", "#header_edit_password_btn", function() {
+    header_edit_password_save_func();
+  });
+  //退出
+  $(document).on("click", "#header_log_out_modle", function() {
+    header_edit_log_out_modle_func();
+  });
+  $(document).on("click", "#header_log_out_btn", function() {
+    header_log_out_data_func();
+  });
   nav_menu_output("#nav_menu");
   org_structure_output("#org_structure_content");
   org_structure_clear_raw_data();
@@ -163,12 +177,14 @@ $(document).ready(function() {
 </script>
 <style type="text/css">
 	.org_structure_mt0{
-	  margin-top: 0!important;
-	}
-	.org_structure_mt20{
-	  margin-top: 10px;
+    margin-top: 0!important;
+    margin-right: 0;
+  }
+  .org_structure_mt20{
+    margin-top: 10px;
     padding-left: 0;
-	}
+    padding-right: 0;
+  }
 </style>
 </head>
 <body>

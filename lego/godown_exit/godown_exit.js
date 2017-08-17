@@ -74,7 +74,7 @@ function godown_exit_fill_variable_data(vehicle_information_uuid) {
       $("#godown_exit_content" + vehicle_information_uuid).find("#godown_exit_list tbody").html(godown_exit_tbody);  
     }
   } else {
-    $("#godown_exit_content" + vehicle_information_uuid).find("#godown_exit_list tbody").html('<tr><td colspan="6" align="center">没有数据</td></tr>');
+    $("#godown_exit_content" + vehicle_information_uuid).find("#godown_exit_list tbody").html('<tr><td colspan="6" align="center">没数据</td></tr>');
   }
 }
 
