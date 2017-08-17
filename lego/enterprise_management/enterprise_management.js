@@ -1494,6 +1494,7 @@ function enterprise_management_edit_modal(uuid) {
  * 修改企业信息
  */
 function enterprise_management_edit_info(enterprise_management_edit_uuid) {
+  debugger;
   var uuid = enterprise_management_edit_uuid.data("uuid");
   var invoice_uuid = enterprise_management_edit_uuid.data("invoice_uuid");
   var enterprise_name = $("#enterprise_management_edit_modal .enterprise_name").val();
@@ -1521,6 +1522,15 @@ function enterprise_management_edit_info(enterprise_management_edit_uuid) {
   } else {
     if(null == enterprise_name.match(/^[\u4e00-\u9fffa（）\(\)]{8,32}$/)){
       alert("企业名称格式错误！");
+      return;
+    }
+  }
+  if("" == enterprise_short_name){
+    alert("请输入企业简称");
+    return;
+  } else {
+    if(null == enterprise_short_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)){
+      alert("企业简称格式错误！");
       return;
     }
   }
@@ -1589,6 +1599,7 @@ function enterprise_management_edit_info(enterprise_management_edit_uuid) {
   var enterprise_management_edit_info_url = PROJECT_PATH + "lego/lego_crm?servletName=modifyEnterpriseAndInvoiceInformation";
   var enterprise_management_edit_info_param_data = {};
   enterprise_management_edit_info_param_data["enterprise_uuid"] = uuid;
+  enterprise_management_edit_info_param_data["short_name"] = enterprise_short_name;
   enterprise_management_edit_info_param_data["name"] = enterprise_name;
   enterprise_management_edit_info_param_data["type"] = enterprise_type;
   enterprise_management_edit_info_param_data["registered_capital"] = registered_capital;
