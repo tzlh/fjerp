@@ -10,9 +10,10 @@ var godown_entry_list = new Array();
 var report_boat_ullage_list = new Array();
 //商检单
 var report_shore_tank_list = new Array();
-
+//化验单
+var report_test_list = new Array();
 function add_vehicle_object_list(list, vehicle_information_uuid, object) {
-  if (null == get_buy_object_list(list, vehicle_information_uuid)) {
+  if (null == get_vehicle_object_list(list, vehicle_information_uuid)) {
     list.push({"vehicle_information_uuid": vehicle_information_uuid, "object": object});
   }
 }
@@ -47,6 +48,7 @@ this.vehicle_information_clear_raw_data = function() {
 
 /**
  * 服务器数据
+ * 采购合同
  */
 this.vehicle_information_server_data_cover = function() {
   //获取车船信息
@@ -70,7 +72,44 @@ this.vehicle_information_server_data_cover = function() {
         // 入库单
         add_vehicle_object_list(godown_entry_list, vehicle_information_result[i].uuid, new godownEntry(vehicle_information_result[i].uuid, "#godown_entry_content" + vehicle_information_result[i].uuid, this.warehouse_uuid));
         // 船板单
-        add_vehicle_object_list(report_boat_ullage_list, vehicle_information_result[i].uuid, new reportBoatUllage(vehicle_information_result[i].uuid, "#report_boat_ullage_content" + vehicle_information_result[i].uuid));
+        add_vehicle_object_list(report_boat_ullage_list, vehicle_information_result[i].uuid, new reportBoatUllage(vehicle_information_result[i].uuid, "#report_test_content" + vehicle_information_result[i].uuid));
+        // 商检单
+        add_vehicle_object_list(report_shore_tank_list, vehicle_information_result[i].uuid, new reportShoreTank(vehicle_information_result[i].uuid, "#report_shore_tank_content" + vehicle_information_result[i].uuid));        
+      }
+      this.vehicle_information_data["data"] = tmp_arr;
+    }
+  } else {
+    alert("车船信息数据获取失败");
+  }
+}
+
+/**
+ * 服务器数据
+ * 销售合同
+ */
+this.vehicle_information_server_data_cover_sale = function() {
+  //获取车船信息
+  var server_data = {
+    "contract_code":this.trade_contract_code
+  };
+  var vehicle_information_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getVehicleInformation";
+  var vehicle_information_get_contract = ajax_assistant(vehicle_information_url, server_data, false, true, false);
+  this.vehicle_information_data = {};
+  if (1 == vehicle_information_get_contract.status) {
+    if (0 == vehicle_information_get_contract.count) {
+      this.vehicle_information_data = {};
+    } else {
+      var tmp_arr = new Array();
+      var vehicle_information_result = JSON.parse(vehicle_information_get_contract.result);  
+      console.log(vehicle_information_result);
+      for (var i = 0; i < vehicle_information_result.length; i++) {
+        tmp_arr[i] = {"contract_code":this.trade_contract_code, "name":vehicle_information_result[i].name, "approved_load":vehicle_information_result[i].approved_load, "deliver_quantity":vehicle_information_result[i].deliver_quantity, "contact_name":vehicle_information_result[i].contact_name, "contact_number":vehicle_information_result[i].contact_number, "idcard_number":vehicle_information_result[i].idcard_number, "uuid":vehicle_information_result[i].uuid};
+        // 出库单
+        add_vehicle_object_list(godown_exit_list, vehicle_information_result[i].uuid, new godownExit(vehicle_information_result[i].uuid, "#godown_exit_content" + vehicle_information_result[i].uuid));
+        // 入库单
+        add_vehicle_object_list(godown_entry_list, vehicle_information_result[i].uuid, new godownEntry(vehicle_information_result[i].uuid, "#godown_entry_content" + vehicle_information_result[i].uuid, this.warehouse_uuid));
+        // 化验单
+        add_vehicle_object_list(report_test_list, vehicle_information_result[i].uuid, new reportTest(vehicle_information_result[i].uuid, "#report_test_content" + vehicle_information_result[i].uuid));
         // 商检单
         add_vehicle_object_list(report_shore_tank_list, vehicle_information_result[i].uuid, new reportShoreTank(vehicle_information_result[i].uuid, "#report_shore_tank_content" + vehicle_information_result[i].uuid));        
       }
@@ -232,6 +271,70 @@ this.vehicle_information_add_data_func = function(obj) {
   if ("1" == vehicle_information_add_get.status) {
     this.vehicle_information_clear_raw_data();
     this.vehicle_information_server_data_cover();
+    this.vehicle_information_fill_variable_data(); 
+    $("#vehicle_information_add_modle_prop").modal("hide");
+    $("#vehicle_information_add_modle_prop").on("hidden.bs.modal", function(e) {
+      $(this).remove();
+    });
+  } else {
+    alert("添加车船信息失败");
+  }
+}
+
+/**
+ * 销售合同添加车船信息
+ */
+this.vehicle_information_add_data_func_sale = function(obj) {
+//var contract_code = obj.attr("contract_code");
+//var vehicle_information_warehouse_uuid = obj.attr("warehouse_uuid");
+  var vehicle_information_name = obj.parents("#vehicle_information_add_modle_prop").find(".vehicle_information_name").val();
+  var vehicle_information_approved_load = obj.parents("#vehicle_information_add_modle_prop").find(".vehicle_information_approved_load").val();
+  var vehicle_information_deliver_quantity = obj.parents("#vehicle_information_add_modle_prop").find(".vehicle_information_deliver_quantity").val();
+  var vehicle_information_contact_name = obj.parents("#vehicle_information_add_modle_prop").find(".vehicle_information_contact_name").val();
+  var vehicle_information_contact_number = obj.parents("#vehicle_information_add_modle_prop").find(".vehicle_information_contact_number").val();
+  var vehicle_information_idcard_number = obj.parents("#vehicle_information_add_modle_prop").find(".vehicle_information_idcard_number").val();
+  /*验证*/
+  if(null == vehicle_information_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)){
+    alert("请输入正确的车船名！");
+    return;
+  };
+  if(null == vehicle_information_approved_load.match(/^[0-9]+\.{0,1}[0-9]{0,4}$/)){
+
+    alert("请输入正确的核载量！");
+    return;
+  };
+  if(null == vehicle_information_deliver_quantity.match(/^[0-9]+\.{0,1}[0-9]{0,4}$/)){
+
+    alert("请输入正确的提货数量！");
+    return;
+  };
+  if(null == vehicle_information_contact_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)){
+    alert("请输入正确的联系人名称！");
+    return;
+  };
+  if(null == vehicle_information_contact_number.match(/^[0-9]{6,15}$/)){
+    alert("请输入正确的联系方式！");
+    return;
+  };
+  if(null == vehicle_information_idcard_number.match(/^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/)){
+    alert("请输入正确的身份证号码！");
+    return;
+  };
+  var data = {
+    "contract_code":this.trade_contract_code,
+    "name":vehicle_information_name,
+    "approved_load":vehicle_information_approved_load,
+    "deliver_quantity":vehicle_information_deliver_quantity,
+    "contact_name":vehicle_information_contact_name,
+    "contact_number":vehicle_information_contact_number,
+    "idcard_number":vehicle_information_idcard_number
+  };
+  //调用接口
+  var vehicle_information_add_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=addVehicleInformation";
+  var vehicle_information_add_get = ajax_assistant(vehicle_information_add_url, data, false, true, false);
+  if ("1" == vehicle_information_add_get.status) {
+    this.vehicle_information_clear_raw_data();
+    this.vehicle_information_server_data_cover_sale();
     this.vehicle_information_fill_variable_data(); 
     $("#vehicle_information_add_modle_prop").modal("hide");
     $("#vehicle_information_add_modle_prop").on("hidden.bs.modal", function(e) {
@@ -407,6 +510,72 @@ this.vehicle_information_edit_data_func = function(obj) {
   }   
 }
 
+/**
+ * 销售合同修改车船信息
+ */
+this.vehicle_information_edit_data_func_sale = function(obj) {
+  var uuid = obj.attr("uuid");
+//var vehicle_information_warehouse_uuid = obj.attr("warehouse_uuid");
+//var contract_sales_contract_code_uuid = obj.attr("contract_sales_contract_code_uuid");
+//var contract_code = obj.attr("contract_code");
+  var vehicle_information_name = obj.parents("#vehicle_information_edit_modle_prop").find(".vehicle_information_name").val();
+  var vehicle_information_approved_load = obj.parents("#vehicle_information_edit_modle_prop").find(".vehicle_information_approved_load").val();
+  var vehicle_information_deliver_quantity = obj.parents("#vehicle_information_edit_modle_prop").find(".vehicle_information_deliver_quantity").val();
+  var vehicle_information_contact_name = obj.parents("#vehicle_information_edit_modle_prop").find(".vehicle_information_contact_name").val();
+  var vehicle_information_contact_number = obj.parents("#vehicle_information_edit_modle_prop").find(".vehicle_information_contact_number").val();
+  var vehicle_information_idcard_number = obj.parents("#vehicle_information_edit_modle_prop").find(".vehicle_information_idcard_number").val();
+  /*验证*/
+  if (null == vehicle_information_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)) {
+    alert("请输入正确的车船名！");
+    return;
+  }
+  if (null == vehicle_information_approved_load.match(/^[0-9]+\.{0,1}[0-9]{0,4}$/)) {
+    alert("请输入正确的核载量！");
+    return;
+  }
+  if(null == vehicle_information_deliver_quantity.match(/^[0-9]+\.{0,1}[0-9]{0,4}$/)) {
+    alert("请输入正确的提货数量！");
+    return;
+  }
+  if (null == vehicle_information_contact_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)) {
+    alert("请输入正确的联系人名称！");
+    return;
+  }
+  if (null == vehicle_information_contact_number.match(/^[0-9]{6,15}$/)) {
+    alert("请输入正确的联系方式！");
+    return;
+  }
+  if (null == vehicle_information_idcard_number.match(/^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/)) {
+    alert("请输入正确的身份证号码！");
+    return;
+  }
+  var data={
+    "uuid":uuid,
+    "contract_code":this.trade_contract_code,
+    "name":vehicle_information_name,
+    "approved_load":vehicle_information_approved_load,
+    "deliver_quantity":vehicle_information_deliver_quantity,
+    "contact_name":vehicle_information_contact_name,
+    "contact_number":vehicle_information_contact_number,
+    "idcard_number":vehicle_information_idcard_number
+  };
+  //调数据库
+  var vehicle_information_edit_data_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=modifyVehicleInformation";
+  var vehicle_information_edit_data_get = ajax_assistant(vehicle_information_edit_data_url, data, false, true, false);
+  if ("1" == vehicle_information_edit_data_get.status){
+    this.vehicle_information_clear_raw_data();
+    this.vehicle_information_server_data_cover_sale();
+    this.vehicle_information_fill_variable_data();
+    $("#vehicle_information_edit_modle_prop").modal("hide");
+    $("#vehicle_information_edit_modle_prop").on("hidden.bs.modal", function(e) {
+      $(this).remove();
+    });
+  } else {
+    alert("修改失败");
+  }   
+}
+
+
 this.vehicle_information_delete_modle_func = function(obj) {
   var uuid = obj.attr("uuid");
   var contract_code = obj.attr("contract_code");
@@ -450,6 +619,34 @@ this.vehicle_information_delete_data_func = function(obj) {
     // 更新页面数据
     this.vehicle_information_clear_raw_data();
     this.vehicle_information_server_data_cover();
+    this.vehicle_information_fill_variable_data();
+    $("#vehicle_information_delete_modle_prop").modal("hide");
+    $("#vehicle_information_delete_modle_prop").on("hidden.bs.modal", function(e) {
+      $(this).remove();
+    });
+  }
+}
+
+/**
+ * 销售合同删除车船信息
+ */
+this.vehicle_information_delete_data_func_sale = function(obj) {
+  var uuid = obj.attr("uuid");
+//var contract_code = obj.attr("contract_code");
+//var contract_sales_contract_code_uuid = obj.attr("contract_sales_contract_code_uuid");
+  var data = {
+    "uuid":uuid,
+    "contract_code":this.trade_contract_code
+  };
+  //接口数据
+  var vehicle_information_delete_data_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=removeVehicleInformation";
+  var vehicle_information_delete_data_get = ajax_assistant(vehicle_information_delete_data_url, data, false, true, false);
+  if ("1" != vehicle_information_delete_data_get.status){
+    alert("删除车船信息失败");
+  } else {  
+    // 更新页面数据
+    this.vehicle_information_clear_raw_data();
+    this.vehicle_information_server_data_cover_sale();
     this.vehicle_information_fill_variable_data();
     $("#vehicle_information_delete_modle_prop").modal("hide");
     $("#vehicle_information_delete_modle_prop").on("hidden.bs.modal", function(e) {

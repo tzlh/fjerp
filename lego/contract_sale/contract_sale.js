@@ -15,6 +15,10 @@ var invoice_information_list = new Array();
 var settlement_bill_logistics_list = new Array();
 //物流发票
 var logistics_invoice_information_list = new Array();
+//提货委托函
+var deliver_entrust_letter_list = new Array();
+//提货委托函
+var goods_confirm_letter_list = new Array();
 
 // function add_paid_record_list(contract_code, paid_record) {
 //   if (null != get_paid_record_list(contract_code)) {
@@ -173,7 +177,11 @@ function contract_sale_server_data_cover(contract_type) {
         add_sale_object_list(settlement_bill_sale_list, contract_sale_result[i].contract_code, new SettlementBillSale(contract_sale_result[i].contract_code, contract_sale_result[i].uuid,"#settlement_bill_sale_content" + contract_sale_result[i].uuid, contract_sale_result[i].type, "2"));
         //发票信息
         add_sale_object_list(invoice_information_list, contract_sale_result[i].contract_code, new InvoiceInformation(contract_sale_result[i].contract_code,"#invoice_information_content" + contract_sale_result[i].uuid, contract_sale_result[i].price * contract_sale_result[i].quantity, "1", "lego/lego_fjTrade?servletName=addTradeInvoiceInformation", "lego/lego_fjTrade?servletName=modifyTradeInvoiceInformation"));
-      }
+        // 提货委托函
+        add_sale_object_list(deliver_entrust_letter_list, contract_sale_result[i].contract_code, new deliverEntrustLetter(contract_sale_result[i].contract_code, "#deliver_entrust_letter_content" + contract_sale_result[i].uuid));
+        // 货物确认函
+        add_sale_object_list(goods_confirm_letter_list, contract_sale_result[i].contract_code, new goodsConfirmLetter(contract_sale_result[i].contract_code, "#goods_confirm_letter_content" + contract_sale_result[i].uuid));
+        }
       contract_sale_data["data"] = tmp_arr;
     }
   } else {

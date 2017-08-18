@@ -36,7 +36,7 @@ function deliverEntrustLetter(contract_buy_contract_code, deliver_entrust_letter
    */
   this.deliver_entrust_letter_clear_raw_data = function() {
     $(this.deliver_entrust_letter_content_id).find("#deliver_entrust_letter_list tbody").html("");
-  }
+  };
   
   /**
    * 赋值
@@ -60,7 +60,7 @@ function deliverEntrustLetter(contract_buy_contract_code, deliver_entrust_letter
     } else {
       $(this.deliver_entrust_letter_content_id).find("#deliver_entrust_letter_list tbody").html("<tr><td colspan='3' align='center'>没数据</td></tr>");
     }
-  }
+  };
   
   /**
    * 获取提货委托函
@@ -85,7 +85,7 @@ function deliverEntrustLetter(contract_buy_contract_code, deliver_entrust_letter
         this.deliver_entrust_letter_data = deliver_entrust_letter_data_arr;
       }
     }
-  }
+  };
   
   /**
    * 获取提货委托函详情
@@ -128,7 +128,7 @@ function deliverEntrustLetter(contract_buy_contract_code, deliver_entrust_letter
         this.deliver_entrust_letter_file_data = {}
       }
     }
-  }
+  };
   
   /**
    * 添加提货委托函
@@ -184,7 +184,7 @@ function deliverEntrustLetter(contract_buy_contract_code, deliver_entrust_letter
     $("#deliver_entrust_letter_add_modal").on("hidden.bs.modal", function(e) {
       $(this).remove();
     });
-  }
+  };
   
   this.deliver_entrust_letter_add_data = function() {
     var place = $("#deliver_entrust_letter_add_modal .place").val();
@@ -230,7 +230,7 @@ function deliverEntrustLetter(contract_buy_contract_code, deliver_entrust_letter
     } else {
       alert("添加失败！");
     }
-  }
+  };
   
   /**
    * 修改提货委托函
@@ -286,7 +286,7 @@ function deliverEntrustLetter(contract_buy_contract_code, deliver_entrust_letter
     $("#deliver_entrust_letter_edit_modal").on("hidden.bs.modal", function(e) {
       $(this).remove();
     });
-  }
+  };
   
   this.deliver_entrust_letter_edit_data = function(uuid) {
     console.log(uuid);
@@ -333,7 +333,7 @@ function deliverEntrustLetter(contract_buy_contract_code, deliver_entrust_letter
     } else {
       alert("修改失败！");
     }
-  }
+  };
   
   /**
    * 提货委托函详情
@@ -388,7 +388,7 @@ function deliverEntrustLetter(contract_buy_contract_code, deliver_entrust_letter
     $("#deliver_entrust_letter_detail_modal").on("hidden.bs.modal", function(e) {
       $(this).remove();
     });
-  }
+  };
   
   /**
    * 删除提货委托函
@@ -415,7 +415,7 @@ function deliverEntrustLetter(contract_buy_contract_code, deliver_entrust_letter
     $("#deliver_entrust_letter_delete_modal").on("hidden.bs.modal", function(e) {
       $(this).remove();
     });
-  }
+  };
   
   this.deliver_entrust_letter_delete_data = function(uuid) {
     var delete_deliver_entrust_letter_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=removeDeliverEntrustLetter";
@@ -430,7 +430,7 @@ function deliverEntrustLetter(contract_buy_contract_code, deliver_entrust_letter
     } else {
       alert("删除失败");
     }
-  }
+  };
   
   /**
    * 提货委托函输出
@@ -468,5 +468,5 @@ function deliverEntrustLetter(contract_buy_contract_code, deliver_entrust_letter
   '      </div>'+
   '    </div>';
     $(this.deliver_entrust_letter_content_id).html(content);
-  }
+  };
 }

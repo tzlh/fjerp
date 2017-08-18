@@ -5,7 +5,7 @@
 function godownEntryNotify(contract_buy_contract_code, godown_entry_notify_content_id, warehouse_uuid){
   this.contract_buy_contract_code = contract_buy_contract_code;
   this.godown_entry_notify_content_id = godown_entry_notify_content_id;
-  this.warehouse_uuid = warehouse_uuid
+  this.warehouse_uuid = warehouse_uuid;
   this.godown_entry_notify_data = [
     {"product_name": "原油","quantity": "10","start_datetime": "2017-03-12","end_datetime": "2017-03-12","uuid": "11","contract_code": "ZS-TZGYL-17813261","warehouse_pot_name": "储罐1"},
     {"product_name": "原油1","quantity": "10","start_datetime": "2017-03-12","end_datetime": "2017-03-12","uuid": "11","contract_code": "ZS-TZGYL-17813261","warehouse_pot_name": "储罐2"},
@@ -48,7 +48,7 @@ function godownEntryNotify(contract_buy_contract_code, godown_entry_notify_conte
    */
   this.godown_entry_notify_clear_raw_data = function() {
     $(this.godown_entry_notify_content_id).find("#godown_entry_notify_list tbody").html("");
-  }
+  };
   
   /**
    * 赋值
@@ -75,7 +75,7 @@ function godownEntryNotify(contract_buy_contract_code, godown_entry_notify_conte
     } else {
       $(this.godown_entry_notify_content_id).find("#godown_entry_notify_list tbody").html('<tr><td colspan="6" align="center">没数据</td></tr>');
     }
-  }
+  };
   
   /**
    * 获取入库单通知单
@@ -112,7 +112,7 @@ function godownEntryNotify(contract_buy_contract_code, godown_entry_notify_conte
       }
       this.godown_entry_notify_data = godown_entry_notify_data_arr;
     }
-  }
+  };
   
   
   /**
@@ -157,7 +157,7 @@ function godownEntryNotify(contract_buy_contract_code, godown_entry_notify_conte
         this.godown_entry_notify_file_data = {}
       }
     }
-  }
+  };
   
   /**
    * 获取储罐
@@ -184,7 +184,7 @@ function godownEntryNotify(contract_buy_contract_code, godown_entry_notify_conte
       alert("获取库区失败");
       return;
     } 
-  }
+  };
   
   /**
    * 添加入库单通知单
@@ -281,7 +281,7 @@ function godownEntryNotify(contract_buy_contract_code, godown_entry_notify_conte
     $("#godown_entry_notify_add_modal").on("hidden.bs.modal", function(e) {
       $(this).remove();
     });
-  }
+  };
   
   this.godown_entry_notify_add_data = function() {
     var product_name = $("#godown_entry_notify_add_modal .product_name").val();
@@ -350,7 +350,7 @@ function godownEntryNotify(contract_buy_contract_code, godown_entry_notify_conte
     } else {
       alert("添加失败！");
     }
-  }
+  };
   
   /**
    * 修改入库单通知单
@@ -456,7 +456,7 @@ function godownEntryNotify(contract_buy_contract_code, godown_entry_notify_conte
     $("#godown_entry_notify_edit_modal").on("hidden.bs.modal", function(e) {
       $(this).remove();
     });
-  }
+  };
   
   this.godown_entry_notify_edit_data = function(uuid) {
     var product_name = $("#godown_entry_notify_edit_modal .product_name").val();
@@ -526,7 +526,7 @@ function godownEntryNotify(contract_buy_contract_code, godown_entry_notify_conte
     } else {
       alert("修改失败！");
     }
-  }
+  };
   
   /**
    * 入库单通知单详情
@@ -631,7 +631,7 @@ function godownEntryNotify(contract_buy_contract_code, godown_entry_notify_conte
     $("#godown_entry_notify_detail_modal").on("hidden.bs.modal", function(e) {
       $(this).remove();
     });
-  }
+  };
   
   /**
    * 删除入库单通知单
@@ -658,7 +658,7 @@ function godownEntryNotify(contract_buy_contract_code, godown_entry_notify_conte
     $("#godown_entry_notify_delete_modal").on("hidden.bs.modal", function(e) {
       $(this).remove();
     });
-  }
+  };
   
   this.godown_entry_notify_delete_data = function(uuid) {
     var delete_godown_entry_notify_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=removeGodownEntryNotify";
@@ -675,7 +675,7 @@ function godownEntryNotify(contract_buy_contract_code, godown_entry_notify_conte
     } else {
       alert("删除失败");
     }
-  }
+  };
   
   /**
    * 入库通知单输出
@@ -719,5 +719,5 @@ function godownEntryNotify(contract_buy_contract_code, godown_entry_notify_conte
   '      </div>'+
   '    </div>';
     $(this.godown_entry_notify_content_id).html(content);
-  }
+  };
 }

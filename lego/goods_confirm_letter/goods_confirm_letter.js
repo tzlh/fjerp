@@ -4,6 +4,7 @@
 function goodsConfirmLetter(contract_buy_contract_code, goods_confirm_letter_content_id) {
   this.contract_buy_contract_code = contract_buy_contract_code;
   this.goods_confirm_letter_content_id = goods_confirm_letter_content_id;
+  
   this.goods_confirm_letter_data = [
     {"numerical_order": "1","create_time": "2017-03-12","uuid": "1","contract_code": "ZS-TZGYL-17813261"},
     {"numerical_order": "2","create_time": "2017-03-12","uuid": "2","contract_code": "ZS-TZGYL-17813261"},
@@ -28,7 +29,7 @@ function goodsConfirmLetter(contract_buy_contract_code, goods_confirm_letter_con
    */
   this.goods_confirm_letter_clear_raw_data = function() {
     $(this.goods_confirm_letter_content_id).find("#goods_confirm_letter_list tbody").html("");
-  }
+  };
   
   /**
    * 赋值
@@ -52,7 +53,7 @@ function goodsConfirmLetter(contract_buy_contract_code, goods_confirm_letter_con
     } else {
       $(this.goods_confirm_letter_content_id).find("#goods_confirm_letter_list tbody").html("<tr><td colspan='3' align='center'>没数据</td></tr>");
     }
-  }
+  };
   
   /**
    * 获取货物确认函
@@ -77,7 +78,7 @@ function goodsConfirmLetter(contract_buy_contract_code, goods_confirm_letter_con
         this.goods_confirm_letter_data = goods_confirm_letter_data_arr;
       }
     }
-  }
+  };
   
   /**
    * 获取货物确认函详情
@@ -118,7 +119,7 @@ function goodsConfirmLetter(contract_buy_contract_code, goods_confirm_letter_con
         this.goods_confirm_letter_file_data = {}
       }
     }
-  }
+  };
   
   /**
    * 添加货物确认函
@@ -152,7 +153,7 @@ function goodsConfirmLetter(contract_buy_contract_code, goods_confirm_letter_con
     $("#goods_confirm_letter_add_modal").on("hidden.bs.modal", function(e) {
       $(this).remove();
     });
-  }
+  };
   
   this.goods_confirm_letter_add_data = function() {
     var goods_confirm_letter_li = $("#goods_confirm_letter_add_attch ul").children("li");
@@ -180,7 +181,7 @@ function goodsConfirmLetter(contract_buy_contract_code, goods_confirm_letter_con
     } else {
       alert("添加失败！");
     }
-  }
+  };
   
   /**
    * 修改货物确认函
@@ -215,7 +216,7 @@ function goodsConfirmLetter(contract_buy_contract_code, goods_confirm_letter_con
     $("#goods_confirm_letter_edit_modal").on("hidden.bs.modal", function(e) {
       $(this).remove();
     });
-  }
+  };
   
   this.goods_confirm_letter_edit_data = function(uuid) {
     console.log(uuid);
@@ -245,7 +246,7 @@ function goodsConfirmLetter(contract_buy_contract_code, goods_confirm_letter_con
     } else {
       alert("修改失败！");
     }
-  }
+  };
   
   /**
    * 货物确认函详情
@@ -279,7 +280,7 @@ function goodsConfirmLetter(contract_buy_contract_code, goods_confirm_letter_con
     $("#goods_confirm_letter_detail_modal").on("hidden.bs.modal", function(e) {
       $(this).remove();
     });
-  }
+  };
   
   /**
    * 删除货物确认函
@@ -306,7 +307,7 @@ function goodsConfirmLetter(contract_buy_contract_code, goods_confirm_letter_con
     $("#goods_confirm_letter_delete_modal").on("hidden.bs.modal", function(e) {
       $(this).remove();
     });
-  }
+  };
   
   this.goods_confirm_letter_delete_data = function(uuid) {
     var delete_goods_confirm_letter_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=removeGoodsConfirmLetter";
@@ -321,7 +322,7 @@ function goodsConfirmLetter(contract_buy_contract_code, goods_confirm_letter_con
     } else {
       alert("删除失败");
     }
-  }
+  };
   
   /**
    * 货物确认函输出
@@ -359,5 +360,5 @@ function goodsConfirmLetter(contract_buy_contract_code, goods_confirm_letter_con
   '      </div>'+
   '    </div>';
     $(this.goods_confirm_letter_content_id).html(content);
-  }
+  };
 }

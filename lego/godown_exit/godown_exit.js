@@ -43,9 +43,9 @@ function godownExit(vehicle_information_uuid, godown_exit_content_id) {
   this.godown_exit_clear_raw_data = function() {
     $(this.godown_exit_content_id).find("#godown_exit_list tbody").html("");
     this.godown_exit_plan_quantity_count = 0;
-  this.godown_exit_actual_quantity_count = 0;
+    this.godown_exit_actual_quantity_count = 0;
     $(this.godown_exit_content_id).find("#godown_exit_paid span.paid").html('出库单&nbsp;[计划量总量&nbsp;:&nbsp;0][实发量总量&nbsp;:&nbsp;0]&nbsp;');
-  }
+  };
   
   /**
    * 赋值
@@ -79,7 +79,7 @@ function godownExit(vehicle_information_uuid, godown_exit_content_id) {
     } else {
       $(this.godown_exit_content_id).find("#godown_exit_list tbody").html('<tr><td colspan="6" align="center">没数据</td></tr>');
     }
-  }
+  };
   
   /**
    * 获取出库单
@@ -108,7 +108,7 @@ function godownExit(vehicle_information_uuid, godown_exit_content_id) {
       }
       this.godown_exit_data = godown_exit_data_arr;
     }
-  }
+  };
   
   
   /**
@@ -152,7 +152,7 @@ function godownExit(vehicle_information_uuid, godown_exit_content_id) {
         this.godown_exit_file_data = {};
       }
     }
-  }
+  };
   
   /**
    * 添加出库单
@@ -244,7 +244,7 @@ function godownExit(vehicle_information_uuid, godown_exit_content_id) {
     $("#godown_exit_add_modal").on("hidden.bs.modal", function(e) {
       $(this).remove();
     });
-  }
+  };
   
   this.godown_exit_add_data = function() {
     var plan_quantity = $("#godown_exit_add_modal .plan_quantity").val();
@@ -323,7 +323,7 @@ function godownExit(vehicle_information_uuid, godown_exit_content_id) {
     } else {
       alert("添加失败！");
     }
-  }
+  };
   
   /**
    * 修改出库单
@@ -415,7 +415,7 @@ function godownExit(vehicle_information_uuid, godown_exit_content_id) {
     $("#godown_exit_edit_modal").on("hidden.bs.modal", function(e) {
       $(this).remove();
     });
-  }
+  };
   
   this.godown_exit_edit_data = function(uuid) {
     var plan_quantity = $("#godown_exit_edit_modal .plan_quantity").val();
@@ -495,7 +495,7 @@ function godownExit(vehicle_information_uuid, godown_exit_content_id) {
     } else {
       alert("修改失败！");
     }
-  }
+  };
   
   /**
    * 出库单详情
@@ -586,7 +586,7 @@ function godownExit(vehicle_information_uuid, godown_exit_content_id) {
     $("#godown_exit_detail_modal").on("hidden.bs.modal", function(e) {
       $(this).remove();
     });
-  }
+  };
   
   /**
    * 删除出库单
@@ -613,7 +613,7 @@ function godownExit(vehicle_information_uuid, godown_exit_content_id) {
     $("#godown_exit_delete_modal").on("hidden.bs.modal", function(e) {
       $(this).remove();
     });
-  }
+  };
   
   this.godown_exit_delete_data = function(uuid) {
     var delete_godown_exit_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=removeGodownExit";
@@ -630,7 +630,7 @@ function godownExit(vehicle_information_uuid, godown_exit_content_id) {
     } else {
       alert("删除失败");
     }
-  }
+  };
   
   /**
    * 出库单输出
@@ -674,5 +674,5 @@ function godownExit(vehicle_information_uuid, godown_exit_content_id) {
   '      </div>'+
   '    </div>';
     $(this.godown_exit_content_id).html(content);
-  }
+  };
 }

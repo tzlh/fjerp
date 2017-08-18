@@ -39,7 +39,7 @@ function reportBoatUllage(vehicle_information_uuid, report_boat_ullage_content_i
     $(this.report_boat_ullage_content_id).find("#report_boat_ullage_list tbody").html("");
     this.count = 0;
     $(this.report_boat_ullage_content_id).find("#report_boat_ullage_paid span.paid").html('船板单&nbsp;[总量&nbsp;:&nbsp;0]&nbsp;');
-  }
+  };
   
   /**
    * 赋值
@@ -63,7 +63,7 @@ function reportBoatUllage(vehicle_information_uuid, report_boat_ullage_content_i
     } else {
       $(this.report_boat_ullage_content_id).find("#report_boat_ullage_list tbody").html("tr><td colspan='2' align='center'>没数据</td></tr>");
     }
-  }
+  };
   
   /**
    * 获取船板单
@@ -90,7 +90,7 @@ function reportBoatUllage(vehicle_information_uuid, report_boat_ullage_content_i
         this.report_boat_ullage_data = report_boat_ullage_data_arr;
       }
     }
-  }
+  };
   
   /**
    * 获取船板单详情
@@ -136,7 +136,7 @@ function reportBoatUllage(vehicle_information_uuid, report_boat_ullage_content_i
         this.report_boat_ullage_file_data = {}
       }
     }
-  }
+  };
   
   /**
    * 添加船板单
@@ -179,7 +179,7 @@ function reportBoatUllage(vehicle_information_uuid, report_boat_ullage_content_i
     $("#report_boat_ullage_add_modal").on("hidden.bs.modal", function(e) {
       $(this).remove();
     });
-  }
+  };
   
   this.report_boat_ullage_add_data = function() {
     var quantity = $("#report_boat_ullage_add_modal .quantity").val();
@@ -219,7 +219,7 @@ function reportBoatUllage(vehicle_information_uuid, report_boat_ullage_content_i
     } else {
       alert("添加失败！");
     }
-  }
+  };
   
   /**
    * 修改船板单
@@ -262,7 +262,7 @@ function reportBoatUllage(vehicle_information_uuid, report_boat_ullage_content_i
     $("#report_boat_ullage_edit_modal").on("hidden.bs.modal", function(e) {
       $(this).remove();
     });
-  }
+  };
   
   this.report_boat_ullage_edit_data = function(uuid) {
     console.log(uuid);
@@ -304,7 +304,7 @@ function reportBoatUllage(vehicle_information_uuid, report_boat_ullage_content_i
     } else {
       alert("修改失败！");
     }
-  }
+  };
   
   /**
    * 船板单详情
@@ -346,7 +346,7 @@ function reportBoatUllage(vehicle_information_uuid, report_boat_ullage_content_i
     $("#report_boat_ullage_detail_modal").on("hidden.bs.modal", function(e) {
       $(this).remove();
     });
-  }
+  };
   
   /**
    * 删除船板单
@@ -373,7 +373,7 @@ function reportBoatUllage(vehicle_information_uuid, report_boat_ullage_content_i
     $("#report_boat_ullage_delete_modal").on("hidden.bs.modal", function(e) {
       $(this).remove();
     });
-  }
+  };
   
   this.report_boat_ullage_delete_data = function(uuid) {
     var delete_report_boat_ullage_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=removeBoatUllageReport";
@@ -389,7 +389,7 @@ function reportBoatUllage(vehicle_information_uuid, report_boat_ullage_content_i
     } else {
       alert("删除失败");
     }
-  }
+  };
   
   /**
    * 船板单输出
@@ -441,5 +441,5 @@ function reportBoatUllage(vehicle_information_uuid, report_boat_ullage_content_i
   '      </div>'+
   '    </div>';
     $(this.report_boat_ullage_content_id).html(content);
-  }
+  };
 }

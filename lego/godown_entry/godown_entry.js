@@ -52,7 +52,7 @@ function godownEntry(vehicle_information_uuid, godown_entry_content_id, warehous
     $(this.godown_exit_content_id).find("#godown_entry_list tbody").html("");
     this.net_weight_count = 0;
     $(this.godown_exit_content_id).find("#godown_entry_paid span.paid").html('入库单&nbsp;[净重总量&nbsp;:&nbsp;0]&nbsp;');
-  }
+  };
   
   /**
    * 赋值
@@ -86,7 +86,7 @@ function godownEntry(vehicle_information_uuid, godown_entry_content_id, warehous
     } else {
       $(this.godown_exit_content_id).find("#godown_entry_list tbody").html('<tr><td colspan="6" align="center">没数据</td></tr>');
     }
-  }
+  };
   
   /**
    * 获取入库单
@@ -124,7 +124,7 @@ function godownEntry(vehicle_information_uuid, godown_entry_content_id, warehous
       }
       this.godown_entry_data = godown_entry_data_arr;
     }
-  }
+  };
   
   
   /**
@@ -168,7 +168,7 @@ function godownEntry(vehicle_information_uuid, godown_entry_content_id, warehous
         this.godown_entry_file_data = {}
       }
     }
-  }
+  };
   
   /**
    * 获取储罐
@@ -195,7 +195,7 @@ function godownEntry(vehicle_information_uuid, godown_entry_content_id, warehous
       alert("获取库区失败");
       return;
     } 
-  }
+  };
   
   /**
    * 添加入库单
@@ -293,7 +293,7 @@ function godownEntry(vehicle_information_uuid, godown_entry_content_id, warehous
     $("#godown_entry_add_modal").on("hidden.bs.modal", function(e) {
       $(this).remove();
     });
-  }
+  };
   
   this.godown_entry_add_data = function() {
     var entry_datetime = $("#godown_entry_add_modal .entry_datetime").val() + ' 00:00:00';
@@ -367,7 +367,7 @@ function godownEntry(vehicle_information_uuid, godown_entry_content_id, warehous
     } else {
       alert("添加失败！");
     }
-  }
+  };
   
   /**
    * 修改入库单
@@ -474,7 +474,7 @@ function godownEntry(vehicle_information_uuid, godown_entry_content_id, warehous
     $("#godown_entry_edit_modal").on("hidden.bs.modal", function(e) {
       $(this).remove();
     });
-  }
+  };
   
   this.godown_entry_edit_data = function(uuid) {
     var entry_datetime = $("#godown_entry_edit_modal .entry_datetime").val() + ' 00:00:00';
@@ -549,7 +549,7 @@ function godownEntry(vehicle_information_uuid, godown_entry_content_id, warehous
     } else {
       alert("修改失败！");
     }
-  }
+  };
   
   /**
    * 入库单详情
@@ -655,7 +655,7 @@ function godownEntry(vehicle_information_uuid, godown_entry_content_id, warehous
     $("#godown_entry_detail_modal").on("hidden.bs.modal", function(e) {
       $(this).remove();
     });
-  }
+  };
   
   /**
    * 删除入库单
@@ -682,7 +682,7 @@ function godownEntry(vehicle_information_uuid, godown_entry_content_id, warehous
     $("#godown_entry_delete_modal").on("hidden.bs.modal", function(e) {
       $(this).remove();
     });
-  }
+  };
   
   this.godown_entry_delete_data = function(uuid) {
     var delete_godown_entry_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=removeGodownEntry";
@@ -699,7 +699,7 @@ function godownEntry(vehicle_information_uuid, godown_entry_content_id, warehous
     } else {
       alert("删除失败");
     }
-  }
+  };
   
   /**
    * 入库单输出
@@ -743,5 +743,5 @@ function godownEntry(vehicle_information_uuid, godown_entry_content_id, warehous
   '      </div>'+
   '    </div>';
     $(this.godown_exit_content_id).html(content);
-  }
+  };
 }

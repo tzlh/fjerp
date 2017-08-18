@@ -62,9 +62,9 @@ function contract_sale_open_info_func(obj) {
   
   
   //提货委托函
-  deliver_entrust_letter = new deliverEntrustLetter(contract_sales_contract_code, "#deliver_entrust_letter_content" + contract_sales_contract_code_uuid);
-  deliver_entrust_letter.deliver_entrust_letter_content("#deliver_entrust_letter_content" + contract_sales_contract_code_uuid, contract_sale_all_price);
+  var deliver_entrust_letter = get_sale_object_list(deliver_entrust_letter_list, contract_sales_contract_code);
   deliver_entrust_letter.deliver_entrust_letter_content();
+  $("#deliver_entrust_letter_content" + contract_sales_contract_code_uuid).find("#deliver_entrust_letter_add_modal_btn").attr("trade_contract_code",contract_sales_contract_code);
   // 清空原始数据
   deliver_entrust_letter.deliver_entrust_letter_clear_raw_data();
   // 服务器数据
@@ -73,17 +73,15 @@ function contract_sale_open_info_func(obj) {
   deliver_entrust_letter.deliver_entrust_letter_fill_variable_data();  
   
   //货物确认函
-  goods_confirm_letter_content("#goods_confirm_letter_content" + contract_sales_contract_code_uuid, contract_sale_all_price);
+  var goods_confirm_letter = get_sale_object_list(goods_confirm_letter_list, contract_sales_contract_code);
+  goods_confirm_letter.goods_confirm_letter_content();
   $("#goods_confirm_letter_content" + contract_sales_contract_code_uuid).find("#goods_confirm_letter_add_modal_btn").attr("contract_code",contract_sales_contract_code);
-  $("#goods_confirm_letter_content" + contract_sales_contract_code_uuid).find("#goods_confirm_letter_add_modal_btn").attr("contract_uuid",contract_sales_contract_code_uuid);
   // 清空原始数据
-  goods_confirm_letter_clear_raw_data(contract_sales_contract_code_uuid);
+  goods_confirm_letter.goods_confirm_letter_clear_raw_data();
   // 服务器数据
-  goods_confirm_letter_server_data_cover(contract_sales_contract_code);
+  goods_confirm_letter.goods_confirm_letter_server_data_cover();
   // 加载数据
-  goods_confirm_letter_fill_variable_data(contract_sales_contract_code_uuid);  
-
-
+  goods_confirm_letter.goods_confirm_letter_fill_variable_data();  
 
   //插入物流合同 ////////////////////////////////////////////////////////
   var contract_logistics = get_sale_object_list(contract_logistics_list, contract_sales_contract_code);
@@ -106,7 +104,7 @@ function contract_sale_open_info_func(obj) {
   //清空原始数据
   vehicle_information.vehicle_information_clear_raw_data();
   //服务器数据
-  vehicle_information.vehicle_information_server_data_cover();
+  vehicle_information.vehicle_information_server_data_cover_sale();
   //加载数据
   vehicle_information.vehicle_information_fill_variable_data();
   
