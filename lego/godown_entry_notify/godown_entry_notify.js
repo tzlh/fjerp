@@ -303,7 +303,7 @@ function godownEntryNotify(contract_buy_contract_code, godown_entry_notify_conte
       alert("请输入品类！");
       return;
     } else {
-      if (null == product_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)) {
+      if (null == product_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{1,32}$/)) {
         alert("品类格式不正确！");
         return;
       }
@@ -478,7 +478,7 @@ function godownEntryNotify(contract_buy_contract_code, godown_entry_notify_conte
       alert("请输入品类！");
       return;
     } else {
-      if (null == product_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)) {
+      if (null == product_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{1,32}$/)) {
         alert("品类格式不正确！");
         return;
       }
