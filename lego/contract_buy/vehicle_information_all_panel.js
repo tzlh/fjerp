@@ -32,6 +32,7 @@ function vehicle_information_open_info_func(obj) {
   }
   
   //出库单
+  godown_exit_content = 
   godown_exit_content("#godown_exit_content" + vehicle_information_uuid);
   $("#godown_exit_content" + vehicle_information_uuid).find("#godown_exit_add_modal_btn").attr("vehicle_information_uuid",vehicle_information_uuid);
   // 清空原始数据

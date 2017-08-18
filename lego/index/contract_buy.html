@@ -337,121 +337,132 @@
       //收款记录
       // 添加收付款记录模态框
       $(document).on("click", "#paid_record_add_modle", function() {
-        paid_record_add_modle_func();
+        var trade_contract_code = $(this).attr("trade_contract_code");
+        get_buy_object_list(paid_record_list, trade_contract_code).paid_record_add_modle_func(trade_contract_code);
       });
       // 添加收付款数据
       $(document).on("click", "#paid_record_add_modle_prop_btn", function() {
-        paid_record_add_data_func();
+        var contract_code = $(this).data("contract_code");
+        get_buy_object_list(paid_record_list, contract_code).paid_record_add_data_func();
       });
       // 修改收付款记录模态框
       $(document).on("click", ".paid_record_modle_pencil", function() {
         var uuid = $(this).attr("uuid");
-        paid_record_get_record(uuid);
-        paid_record_edit_modal(uuid);
+        var trade_contract_code = $(this).attr("contract_code");
+        get_buy_object_list(paid_record_list, trade_contract_code).paid_record_get_record(uuid);
+        get_buy_object_list(paid_record_list, trade_contract_code).paid_record_edit_modal(uuid);
       });
       // 修改收付款数据
       $(document).on("click", "#paid_record_edit_modal .edit_btn", function() {
         var uuid = $(this).attr("uuid");
-         paid_record_edit_data(uuid);
+        var contract_code = $(this).attr("contract_code");
+        get_buy_object_list(paid_record_list, contract_code).paid_record_edit_data(uuid);
       });
       // 收付款记录详情模态框
       $(document).on("click", ".paid_record_modle_info", function() {
         var uuid = $(this).attr("uuid");
-        paid_record_get_record(uuid);
-        paid_record_detail_modal();
+        var contract_code = $(this).attr("contract_code");
+        get_buy_object_list(paid_record_list, contract_code).paid_record_get_record(uuid);
+        get_buy_object_list(paid_record_list, contract_code).paid_record_detail_modal();
       });
       // 删除收付款记录模态框
       $(document).on("click", ".paid_record_modle_remove", function() {
         var uuid = $(this).attr("uuid");
-        paid_record_delete_modal(uuid);
+        var contract_code = $(this).attr("contract_code");
+        get_buy_object_list(paid_record_list, contract_code).paid_record_delete_modal(uuid);
       });
       // 删除收付款数据
       $(document).on("click", "#paid_record_delete_modal .remove", function() {
         var uuid = $(this).attr("uuid");
-        paid_record_delete_data(uuid);
+        var contract_code = $(this).attr("contract_code");
+        get_buy_object_list(paid_record_list, contract_code).paid_record_delete_data(uuid);
       });
       // 提货委托函
       // 添加提货委托函模态框
       $(document).on("click", "#deliver_entrust_letter_add_modal_btn", function() {
-        deliver_entrust_letter.deliver_entrust_letter_add_modal();
+        var contract_code = $(this).attr("trade_contract_code");
+        get_buy_object_list(deliver_entrust_letter_list, contract_code).deliver_entrust_letter_add_modal();
       });
       // 添加提货委托函
       $(document).on("click", "#deliver_entrust_letter_add_modal .add_btn", function() {
-        deliver_entrust_letter.deliver_entrust_letter_add_data();
+        var contract_code = $(this).data("contract_code");
+        get_buy_object_list(deliver_entrust_letter_list, contract_code).deliver_entrust_letter_add_data();
       });
       // 修改提货委托函模态框
       $(document).on("click", ".deliver_entrust_letter_edit", function() {
         var uuid = $(this).data("uuid");
-        deliver_entrust_letter.deliver_entrust_letter_get_letter(uuid);
-        deliver_entrust_letter.deliver_entrust_letter_edit_modal(uuid);
+        var contract_code = $(this).data("contract_code");
+        get_buy_object_list(deliver_entrust_letter_list, contract_code).deliver_entrust_letter_get_letter(uuid);
+        get_buy_object_list(deliver_entrust_letter_list, contract_code).deliver_entrust_letter_edit_modal(uuid);
       });
       // 修改提货委托函
       $(document).on("click", "#deliver_entrust_letter_edit_modal .edit_btn", function() {
         var uuid = $(this).data("uuid");
-        console.log(uuid);
-        deliver_entrust_letter.deliver_entrust_letter_edit_data(uuid);
+        var contract_code = $(this).data("contract_code");
+        get_buy_object_list(deliver_entrust_letter_list, contract_code).deliver_entrust_letter_edit_data(uuid);
       });
       // 提货委托函详情模态框
       $(document).on("click", ".deliver_entrust_letter_detail", function() {
         var uuid = $(this).data("uuid");
-        deliver_entrust_letter.deliver_entrust_letter_get_letter(uuid)
-        deliver_entrust_letter.deliver_entrust_letter_detail_modal();
+        var contract_code = $(this).data("contract_code");
+        get_buy_object_list(deliver_entrust_letter_list, contract_code).deliver_entrust_letter_get_letter(uuid)
+        get_buy_object_list(deliver_entrust_letter_list, contract_code).deliver_entrust_letter_detail_modal();
       });
       // 删除提货委托函模态框
       $(document).on("click", ".deliver_entrust_letter_delete", function() {
         var uuid = $(this).data("uuid");
-        deliver_entrust_letter.deliver_entrust_letter_delete_modal(uuid);
+        var contract_code = $(this).data("contract_code");
+        get_buy_object_list(deliver_entrust_letter_list, contract_code).deliver_entrust_letter_delete_modal(uuid);
       });
       // 删除提货委托函
       $(document).on("click", "#deliver_entrust_letter_delete_modal .remove", function() {
         var uuid = $(this).data("uuid");
-        deliver_entrust_letter.deliver_entrust_letter_delete_data(uuid);
+        var contract_code = $(this).data("contract_code");
+        get_buy_object_list(deliver_entrust_letter_list, contract_code).deliver_entrust_letter_delete_data(uuid);
       });
       //货物确认函
       // 添加货物确认函模态框
       $(document).on("click", "#goods_confirm_letter_add_modal_btn", function() {
         var contract_code = $(this).attr("contract_code");
-        var contract_uuid = $(this).attr("contract_uuid");
-        goods_confirm_letter_add_modal(contract_code, contract_uuid);
+        get_buy_object_list(goods_confirm_letter_list, contract_code).goods_confirm_letter_add_modal();
       });
       // 添加货物确认函
       $(document).on("click", "#goods_confirm_letter_add_modal .add_btn", function() {
         var contract_code = $(this).data("contract_code");
-        var contract_uuid = $(this).data("contract_uuid");
-        goods_confirm_letter_add_data(contract_code, contract_uuid);
+        get_buy_object_list(goods_confirm_letter_list, contract_code).goods_confirm_letter_add_data();
       });
       // 修改货物确认函模态框
       $(document).on("click", ".goods_confirm_letter_edit", function() {
         var uuid = $(this).data("uuid");
         var contract_code = $(this).data("contract_code");
-        goods_confirm_letter_get_letter(uuid);
-        goods_confirm_letter_edit_modal(uuid, contract_code);
+        get_buy_object_list(goods_confirm_letter_list, contract_code).goods_confirm_letter_get_letter(uuid);
+        get_buy_object_list(goods_confirm_letter_list, contract_code).goods_confirm_letter_edit_modal(uuid);
       });
       // 修改货物确认函
       $(document).on("click", "#goods_confirm_letter_edit_modal .edit_btn", function() {
         var uuid = $(this).data("uuid");
         var contract_code = $(this).data("contract_code");
-        var contract_uuid = $("#goods_confirm_letter_add_modal_btn").attr("contract_uuid");
-        goods_confirm_letter_edit_data(uuid, contract_code, contract_uuid);
+        get_buy_object_list(goods_confirm_letter_list, contract_code).goods_confirm_letter_edit_data(uuid);
       });
       // 货物确认函详情模态框
       $(document).on("click", ".goods_confirm_letter_detail", function() {
         var uuid = $(this).data("uuid");
-        goods_confirm_letter_get_letter(uuid)
-        goods_confirm_letter_detail_modal();
+        var contract_code = $(this).data("contract_code");
+        get_buy_object_list(goods_confirm_letter_list, contract_code).goods_confirm_letter_get_letter(uuid)
+        get_buy_object_list(goods_confirm_letter_list, contract_code).goods_confirm_letter_detail_modal();
       });
       // 删除货物确认函模态框
       $(document).on("click", ".goods_confirm_letter_delete", function() {
         var uuid = $(this).data("uuid");
         var contract_code = $(this).data("contract_code");
-        goods_confirm_letter_delete_modal(uuid, contract_code);
+        get_buy_object_list(goods_confirm_letter_list, contract_code).goods_confirm_letter_delete_modal(uuid);
       });
       // 删除货物确认函
       $(document).on("click", "#goods_confirm_letter_delete_modal .remove", function() {
         var uuid = $(this).data("uuid");
         var contract_code = $(this).data("contract_code");
         var contract_uuid = $("#goods_confirm_letter_add_modal_btn").attr("contract_uuid");
-        goods_confirm_letter_delete_data(uuid, contract_code, contract_uuid);
+        get_buy_object_list(goods_confirm_letter_list, contract_code).goods_confirm_letter_delete_data(uuid);
       });
       //出库单
       // 添加出库单模态框
@@ -625,47 +636,46 @@
       // 添加入库通知单模态框
       $(document).on("click", "#godown_entry_notify_add_modal_btn", function() {
         var contract_code = $(this).attr("contract_code");
-        var contract_uuid = $(this).attr("contract_uuid");
-        godown_entry_notify_add_modal(contract_code, contract_uuid);
+        get_buy_object_list(godown_entry_notify_list, contract_code).godown_entry_notify_add_modal();
       });
       // 添加入库通知单
       $(document).on("click", "#godown_entry_notify_add_modal .add_btn", function() {
-        var contract_uuid = $(this).data("contract_uuid");
         var contract_code = $(this).data("contract_code");
-        godown_entry_notify_add_data(contract_code, contract_uuid);
+        console.log(contract_code);
+        get_buy_object_list(godown_entry_notify_list, contract_code).godown_entry_notify_add_data();
       });
       // 修改入库通知单模态框
       $(document).on("click", ".godown_entry_notify_edit", function() {
         var uuid = $(this).data("uuid");
+        console.log(uuid);
         var contract_code = $(this).data("contract_code");
-        godown_entry_notify_get_letter(uuid);
-        godown_entry_notify_edit_modal(uuid, contract_code);
+        get_buy_object_list(godown_entry_notify_list, contract_code).godown_entry_notify_get_letter(uuid);
+        get_buy_object_list(godown_entry_notify_list, contract_code).godown_entry_notify_edit_modal(uuid);
       });
       // 修改入库通知单
       $(document).on("click", "#godown_entry_notify_edit_modal .edit_btn", function() {
         var uuid = $(this).data("uuid");
         var contract_code = $(this).data("contract_code");
-        var contract_uuid = $("#goods_confirm_letter_add_modal_btn").attr("contract_uuid");
-        godown_entry_notify_edit_data(uuid, contract_code, contract_uuid);
+        get_buy_object_list(godown_entry_notify_list, contract_code).godown_entry_notify_edit_data(uuid);
       });
       // 入库通知单详情模态框
       $(document).on("click", ".godown_entry_notify_detail", function() {
         var uuid = $(this).data("uuid");
-        godown_entry_notify_get_letter(uuid)
-        godown_entry_notify_detail_modal();
+        var contract_code = $(this).data("contract_code");
+        get_buy_object_list(godown_entry_notify_list, contract_code).godown_entry_notify_get_letter(uuid)
+        get_buy_object_list(godown_entry_notify_list, contract_code).godown_entry_notify_detail_modal();
       });
       // 删除入库通知单模态框
       $(document).on("click", ".godown_entry_notify_delete", function() {
         var uuid = $(this).data("uuid");
         var contract_code = $(this).data("contract_code");
-        godown_entry_notify_delete_modal(uuid, contract_code);
+        get_buy_object_list(godown_entry_notify_list, contract_code).godown_entry_notify_delete_modal(uuid);
       });
       // 删除入库通知单
       $(document).on("click", "#godown_entry_notify_delete_modal .remove", function() {
         var uuid = $(this).data("uuid");
         var contract_code = $(this).data("contract_code");
-        var contract_uuid = $("#goods_confirm_letter_add_modal_btn").attr("contract_uuid");
-        godown_entry_notify_delete_data(uuid, contract_code, contract_uuid);
+        get_buy_object_list(godown_entry_notify_list, contract_code).godown_entry_notify_delete_data(uuid);
       });
     });
   </script>
