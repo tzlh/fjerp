@@ -50,7 +50,7 @@ function reportTest(vehicle_information_uuid, report_test_content_id) {
         $(this.report_test_content_id).find("#report_test_list tbody").html(report_test_tbody);  
       }
     } else {
-      $(this.report_test_content_id).find("#report_test_list tbody").html('<tr><td colspan = "2" algin = "center">没数据</td></tr/>');
+      $(this.report_test_content_id).find("#report_test_list tbody").html('<tr><td colspan = "2" align = "center">没数据</td></tr/>');
     }
   };
   

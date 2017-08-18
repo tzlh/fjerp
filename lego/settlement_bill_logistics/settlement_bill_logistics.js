@@ -216,7 +216,7 @@ function SettlementBillLogistics(trade_contract_code, contract_logistics_code, s
                   '</div>'+
                   '<div class = "col-md-6">'+
                     '<div class = "form-group">'+
-                      '<label for = "">应退货款</label>'+
+                      '<label for = "">应付货款</label>'+
                       '<div class = " input-group">'+
                         '<input type = "text" class = "form-control return_money_should" disabled = "disabled">'+
                         '<span class = "input-group-addon">元</span>'+
@@ -513,7 +513,7 @@ function SettlementBillLogistics(trade_contract_code, contract_logistics_code, s
                   '</div>'+
                   '<div class = "col-md-6">'+
                     '<div class = "form-group">'+
-                      '<label for = "">应退货款</label>'+
+                      '<label for = "">应付货款</label>'+
                       '<div class = " input-group">'+
                         '<input type = "text" class = "form-control return_money_should" disabled = "disabled" value = "' + settlement_bill_logistics_retune_price + '">'+
                         '<span class = "input-group-addon">元</span>'+
@@ -834,7 +834,7 @@ function SettlementBillLogistics(trade_contract_code, contract_logistics_code, s
                   '</div>'+
                   '<div class = "col-md-6">'+
                     '<div class = "form-group">'+
-                      '<label for = "">应退货款</label>'+
+                      '<label for = "">应付货款</label>'+
                       '<div class = " input-group">'+
                         '<input type = "text" class = "form-control return_money_should" disabled = "disabled" value  =  "' + settlement_bill_logistics_retune_price + '">'+
                         '<span class = "input-group-addon">元</span>'+
@@ -881,7 +881,7 @@ function SettlementBillLogistics(trade_contract_code, contract_logistics_code, s
   '                  <th>发票数量</th>'+
   '                  <th>合计价格</th>'+
   '                  <th>已付货款</th>'+
-  '                  <th>应退货款</th>'+
+  '                  <th>应付货款</th>'+
   '                  <th></th>'+
   '                </tr>'+
   '              </thead>'+
