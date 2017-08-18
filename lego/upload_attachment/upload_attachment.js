@@ -1,8 +1,4 @@
 /**
- * @author yuanhang
- */
-
-/**
  * 根据后缀获取图片显示的src
  * @param file_name 文件名
  */
