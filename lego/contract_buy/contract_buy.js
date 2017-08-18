@@ -457,11 +457,11 @@ function contract_buy_add_data_func(obj, contract_buy_type) {
     alert("请选择销售企业！");
     return;
   }
-  if(null == contract_buy_product_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)) {
+  if(null == contract_buy_product_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{1,32}$/)) {
     alert("请输入正确的产品名称！");
     return;
   }
-  if(null == contract_buy_real_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)) {
+  if(null == contract_buy_real_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{1,32}$/)) {
     alert("请输入正确的标记！");
     return;
   }
@@ -863,11 +863,11 @@ function contract_buy_edit_data_func(obj, contract_type) {
     alert("请选择销售企业！");
     return;
   }
-  if(null == contract_buy_product_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)) {
+  if(null == contract_buy_product_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{1,32}$/)) {
     alert("请输入正确的产品名称！");
     return;
   }
-  if(null == contract_buy_real_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)) {
+  if(null == contract_buy_real_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{1,32}$/)) {
     alert("请输入正确的标记！");
     return;
   }
