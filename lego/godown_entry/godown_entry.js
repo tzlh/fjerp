@@ -2,7 +2,6 @@
  * @author yangyongxia
  */
 function godownEntry(vehicle_information_uuid, godown_entry_content_id, warehouse_uuid) {
-  debugger;
   this.vehicle_information_uuid = vehicle_information_uuid;
   this.godown_exit_content_id = godown_entry_content_id;
   this.warehouse_uuid = warehouse_uuid;
@@ -175,7 +174,6 @@ function godownEntry(vehicle_information_uuid, godown_entry_content_id, warehous
    * 获取储罐
    */
   this.godown_entry_get_warehouse_pot = function() {
-    debugger;
     var get_warehouse_pot_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getWarehousePot";
     var get_warehouse_pot_param_data = {};
     get_warehouse_pot_param_data["warehouse_uuid"] = this.warehouse_uuid;

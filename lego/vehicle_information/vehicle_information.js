@@ -71,7 +71,6 @@ function VehicleInformation(trade_contract_code, vehicle_information_content_box
           add_vehicle_object_list(godown_exit_list, vehicle_information_result[i].uuid, new godownExit(vehicle_information_result[i].uuid, "#godown_exit_content" + vehicle_information_result[i].uuid));
           // 入库单
           add_vehicle_object_list(godown_entry_list, vehicle_information_result[i].uuid, new godownEntry(vehicle_information_result[i].uuid, "#godown_entry_content" + vehicle_information_result[i].uuid, this.warehouse_uuid));
-          debugger;
           // 船板单
           add_vehicle_object_list(report_boat_ullage_list, vehicle_information_result[i].uuid, new reportBoatUllage(vehicle_information_result[i].uuid, "#report_boat_ullage_content" + vehicle_information_result[i].uuid));
           // 商检单
