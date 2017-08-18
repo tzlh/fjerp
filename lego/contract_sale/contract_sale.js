@@ -1,6 +1,53 @@
 /**
  * @author wangdi
  */
+
+var paid_record_list = new Array();
+//物流合同
+var contract_logistics_list = new Array();
+//车船信息
+var vehicle_information_list = new Array();
+//销售结算函
+var settlement_bill_sale_list = new Array();
+//发票信息
+var invoice_information_list = new Array();
+//物流对账单
+var contract_logistics_list = new Array();
+
+// function add_paid_record_list(contract_code, paid_record) {
+//   if (null != get_paid_record_list(contract_code)) {
+//     return false;
+//   }
+//   paid_record_list.push({"contract_code": contract_code, "paid_record": paid_record});
+//   return true;
+// }
+// 
+// function get_paid_record_list(contract_code) {
+//   for (var i = 0; i < paid_record_list.length; i++) {
+//     if (contract_code == paid_record_list[i].contract_code) {
+//       return paid_record_list[i]["paid_record"];
+//     }
+//   }
+//   return null;
+// }
+
+function add_sale_object_list(list, contract_code, object) {
+  if (null != get_sale_object_list(list, contract_code)) {
+    return false;
+  }
+  list.push({"contract_code": contract_code, "object": object});
+  return true;
+}
+
+function get_sale_object_list(list, contract_code) {
+  for (var i = 0; i < list.length; i++) {
+    if (contract_code == list[i].contract_code) {
+      return list[i]["object"];
+    }
+  }
+  return null;
+}
+
 /**
  * 附件
  */
@@ -92,6 +139,7 @@ function contract_sale_server_data_cover(contract_type) {
     }
   } else {
     alert("销售合同数据获取失败");
+    return;
   }
   console.log(totalRows);
   //获取销售合同
@@ -115,6 +163,31 @@ function contract_sale_server_data_cover(contract_type) {
       console.log(contract_sale_result);
       for (var i = 0; i < contract_sale_result.length; i++) {
         tmp_arr[i] = {"contract_code":contract_sale_result[i].contract_code, "buyer_uuid":contract_sale_result[i].buyer_uuid, "seller_uuid":contract_sale_result[i].seller_uuid, "product_name":contract_sale_result[i].product_name, "real_name":contract_sale_result[i].real_name, "price":contract_sale_result[i].price, "quantity":contract_sale_result[i].quantity, "deliver_datetime":contract_sale_result[i].deliver_datetime, "warehouse_uuid":contract_sale_result[i].warehouse_uuid, "uuid":contract_sale_result[i].uuid};
+        //收款记录
+        if (!add_sale_object_list(paid_record_list, contract_sale_result[i].contract_code, new PaidRecord(contract_sale_result[i].price * contract_sale_result[i].quantity, contract_sale_result[i].contract_code, {paid_record_name: "收款记录", paid_record_time: "收款时间", paid_record_paid: "收款金额（元）"}, "#paid_record_content" + contract_sale_result[i].uuid))) {
+          alert("生成收款记录失败");
+          return;
+        }
+        //物流合同
+        if (!add_sale_object_list(contract_logistics_list, contract_sale_result[i].contract_code, new ContractLogistics(contract_sale_result[i].contract_code,"#contract_logistics_content" + contract_sale_result[i].uuid))) {
+          alert("生成物流合同失败");
+          return;
+        }
+        //车船信息
+        if (!add_sale_object_list(vehicle_information_list, contract_sale_result[i].contract_code, new VehicleInformation(contract_sale_result[i].contract_code,"#vehicle_information_content" + contract_sale_result[i].uuid))) {
+          alert("生成车船信息失败");
+          return;
+        }
+        //销售结算函
+        if (!add_sale_object_list(settlement_bill_sale_list, contract_sale_result[i].contract_code, new SettlementBillSale(contract_sale_result[i].contract_code, contract_sale_result[i].uuid,"#settlement_bill_sale_content" + contract_sale_result[i].uuid, contract_sale_result[i].type, "2"))) {
+          alert("生成销售结算函失败");
+          return;
+        }
+        //发票信息
+        if (!add_sale_object_list(invoice_information_list, contract_sale_result[i].contract_code, new InvoiceInformation(contract_sale_result[i].contract_code,"#invoice_information_content" + contract_sale_result[i].uuid, contract_sale_result[i].price * contract_sale_result[i].quantity, "1", "lego/lego_fjTrade?servletName=addTradeInvoiceInformation", "lego/lego_fjTrade?servletName=modifyTradeInvoiceInformation"))) {
+          alert("生成发票信息函失败");
+          return;
+        }
       }
       contract_sale_data["data"] = tmp_arr;
     }

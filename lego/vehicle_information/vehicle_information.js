@@ -1,81 +1,80 @@
 /**
  * @author wangdi
  */
-
+function VehicleInformation(trade_contract_code, vehicle_information_content_box){
+this.trade_contract_code = trade_contract_code;
+this.vehicle_information_content_box = vehicle_information_content_box;
 /**
  * 车船信息数据
 
  */
-var vehicle_information_data = {"data":[
+this.vehicle_information_data = {"data":[
     {"contract_code":"fj-xy-111111", "name":"鲁a22222", "approved_load":"12", "deliver_quantity":"1", "contact_name":"战三", "contact_number":"15977777777", "idcard_number":"215478954685215785", "uuid":"11111111111111111111111111111111"},
     {"contract_code":"fj-xy-111111", "name":"鲁a33333", "approved_load":"13", "deliver_quantity":"1", "contact_name":"李四", "contact_number":"15966666666", "idcard_number":"215478954685215785", "uuid":"11111111111111111111111111111112"},
     {"contract_code":"fj-xy-111111", "name":"鲁a44444", "approved_load":"14", "deliver_quantity":"1", "contact_name":"王五", "contact_number":"15999999999", "idcard_number":"215478954685215785", "uuid":"11111111111111111111111111111113"}
   ]
 };
 
-function vehicle_information_clear_raw_data(trade_contract_code_uuid) {
-  $("#vehicle_information_content" + trade_contract_code_uuid).find(".vehicle_information_box").html('<tr><td colspan="8" align="center">没数据</td></tr>');
+this.vehicle_information_clear_raw_data = function() {
+  $(this.vehicle_information_content_box).find(".vehicle_information_box").html('<tr><td colspan="8" align="center">没数据</td></tr>');
 }
 
 /**
  * 服务器数据
  */
-function vehicle_information_server_data_cover(contract_code) {
+this.vehicle_information_server_data_cover = function() {
   //获取车船信息
   var server_data = {
-    "contract_code":contract_code
+    "contract_code":this.trade_contract_code
   };
   var vehicle_information_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getVehicleInformation";
   var vehicle_information_get_contract = ajax_assistant(vehicle_information_url, server_data, false, true, false);
-  vehicle_information_data = {};
+  this.vehicle_information_data = {};
   if (1 == vehicle_information_get_contract.status) {
     if (0 == vehicle_information_get_contract.count) {
-      vehicle_information_data = {};
+      this.vehicle_information_data = {};
     } else {
       var tmp_arr = new Array();
       var vehicle_information_result = JSON.parse(vehicle_information_get_contract.result);  
       console.log(vehicle_information_result);
       for (var i = 0; i < vehicle_information_result.length; i++) {
-        tmp_arr[i] = {"contract_code":contract_code, "name":vehicle_information_result[i].name, "approved_load":vehicle_information_result[i].approved_load, "deliver_quantity":vehicle_information_result[i].deliver_quantity, "contact_name":vehicle_information_result[i].contact_name, "contact_number":vehicle_information_result[i].contact_number, "idcard_number":vehicle_information_result[i].idcard_number, "uuid":vehicle_information_result[i].uuid};
+        tmp_arr[i] = {"contract_code":this.trade_contract_code, "name":vehicle_information_result[i].name, "approved_load":vehicle_information_result[i].approved_load, "deliver_quantity":vehicle_information_result[i].deliver_quantity, "contact_name":vehicle_information_result[i].contact_name, "contact_number":vehicle_information_result[i].contact_number, "idcard_number":vehicle_information_result[i].idcard_number, "uuid":vehicle_information_result[i].uuid};
       }
-      vehicle_information_data["data"] = tmp_arr;
+      this.vehicle_information_data["data"] = tmp_arr;
     }
   } else {
     alert("车船信息数据获取失败");
   }
 }
 
-function vehicle_information_fill_variable_data(trade_contract_code_uuid) {
-  if (isJsonObjectHasData(vehicle_information_data)) {
+this.vehicle_information_fill_variable_data = function() {
+  if (isJsonObjectHasData(this.vehicle_information_data)) {
     var vehicle_information_html = "";
-    for (var i = 0; i < vehicle_information_data.data.length; i++) {
+    for (var i = 0; i < this.vehicle_information_data.data.length; i++) {
       vehicle_information_html +=
         '<tr class = "vehicle_information_tr">'+
-          '<td><button type = "button" class = "btn btn-info btn-xs vehicle_information_open_btn" contract_code = "' + vehicle_information_data.data[i].contract_code + '" uuid = "' + vehicle_information_data.data[i].uuid + '"><span class = "glyphicon glyphicon-chevron-up"></span></button></td>'+
-          '<td>' + vehicle_information_data.data[i].name + '</td>'+
-          '<td>' + vehicle_information_data.data[i].approved_load + '</td>'+
-          '<td>' + vehicle_information_data.data[i].deliver_quantity + '</td>'+
-          '<td>' + vehicle_information_data.data[i].contact_name + '</td>'+
-          '<td>' + vehicle_information_data.data[i].contact_number + '</td>'+
-          '<td>' + vehicle_information_data.data[i].idcard_number + '</td>'+
+          '<td><button type = "button" class = "btn btn-info btn-xs vehicle_information_open_btn" contract_code = "' + this.vehicle_information_data.data[i].contract_code + '" uuid = "' + this.vehicle_information_data.data[i].uuid + '"><span class = "glyphicon glyphicon-chevron-up"></span></button></td>'+
+          '<td>' + this.vehicle_information_data.data[i].name + '</td>'+
+          '<td>' + this.vehicle_information_data.data[i].approved_load + '</td>'+
+          '<td>' + this.vehicle_information_data.data[i].deliver_quantity + '</td>'+
+          '<td>' + this.vehicle_information_data.data[i].contact_name + '</td>'+
+          '<td>' + this.vehicle_information_data.data[i].contact_number + '</td>'+
+          '<td>' + this.vehicle_information_data.data[i].idcard_number + '</td>'+
           '<td>'+
-            '<span class = "glyphicon glyphicon-info-sign vehicle_information_ml15 vehicle_information_modle_info" uuid = "' + vehicle_information_data.data[i].uuid + '" contract_code = "' + vehicle_information_data.data[i].contract_code + '"  warehouse_uuid = "17c2655b819541978281eb40b4d969e4"></span>'+
-            '<span class = "glyphicon glyphicon-pencil vehicle_information_ml15 vehicle_information_modle_pencil" uuid = "' + vehicle_information_data.data[i].uuid + '" contract_code = "' + vehicle_information_data.data[i].contract_code + '"  warehouse_uuid = "17c2655b819541978281eb40b4d969e4"></span>'+
-            '<span class = "glyphicon glyphicon-remove vehicle_information_ml15 vehicle_information_modle_remove" uuid = "' + vehicle_information_data.data[i].uuid + '" contract_code = "' + vehicle_information_data.data[i].contract_code + '"  warehouse_uuid = "17c2655b819541978281eb40b4d969e4"></span>'+
+            '<span class = "glyphicon glyphicon-info-sign vehicle_information_ml15 vehicle_information_modle_info" uuid = "' + this.vehicle_information_data.data[i].uuid + '" contract_code = "' + this.vehicle_information_data.data[i].contract_code + '"  warehouse_uuid = "17c2655b819541978281eb40b4d969e4"></span>'+
+            '<span class = "glyphicon glyphicon-pencil vehicle_information_ml15 vehicle_information_modle_pencil" uuid = "' + this.vehicle_information_data.data[i].uuid + '" contract_code = "' + this.vehicle_information_data.data[i].contract_code + '"  warehouse_uuid = "17c2655b819541978281eb40b4d969e4"></span>'+
+            '<span class = "glyphicon glyphicon-remove vehicle_information_ml15 vehicle_information_modle_remove" uuid = "' + this.vehicle_information_data.data[i].uuid + '" contract_code = "' + this.vehicle_information_data.data[i].contract_code + '"  warehouse_uuid = "17c2655b819541978281eb40b4d969e4"></span>'+
           '</td>'+
         '</tr>';
     }
-    //$("#vehicle_information_content" + trade_contract_code_uuid).find
-    $("#vehicle_information_content" + trade_contract_code_uuid).find(".vehicle_information_box").html(vehicle_information_html);
+    $(this.vehicle_information_content_box).find(".vehicle_information_box").html(vehicle_information_html);
   } else {
-    //$("#vehicle_information_"+trade_contract_code).find(".vehicle_information_box")
-    $("#vehicle_information_content" + trade_contract_code_uuid).find(".vehicle_information_box").html('<tr><td colspan="8" align="center">没数据</td></tr>');
+    $(this.vehicle_information_content_box).find(".vehicle_information_box").html('<tr><td colspan="8" align="center">没数据</td></tr>');
   }
 }
 
-function vehicle_information_add_modle_func(obj) {
+this.vehicle_information_add_modle_func = function(obj) {
   var contract_code = obj.attr("contract_code");
-  var contract_sales_contract_code_uuid = obj.attr("contract_sales_contract_code_uuid");
   var vehicle_information_html = 
     '<div class = "modal fade custom_modal" tabindex = "-1" id = "vehicle_information_add_modle_prop" role = "dialog" aria-labelledby = "myLargeModalLabel">'+
       '<div class = "modal-dialog" role = "document">'+
@@ -135,7 +134,7 @@ function vehicle_information_add_modle_func(obj) {
             '</div>'+
           '</div>'+
           '<div class="modal-footer" style="text-align: center;">'+
-            '<button type="button" class="btn btn-primary" id="vehicle_information_add_data_btn" contract_code = "' + contract_code + '" contract_sales_contract_code_uuid = "' + contract_sales_contract_code_uuid + '">添加</button>'+
+            '<button type="button" class="btn btn-primary" id="vehicle_information_add_data_btn" contract_code = "' + contract_code + '">添加</button>'+
             '<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>'+
           '</div>'+
         '</div>'+
@@ -148,10 +147,9 @@ function vehicle_information_add_modle_func(obj) {
   });
 }
 
-function vehicle_information_add_data_func(obj) {
-  var contract_code = obj.attr("contract_code");
+this.vehicle_information_add_data_func = function(obj) {
+//var contract_code = obj.attr("contract_code");
 //var vehicle_information_warehouse_uuid = obj.attr("warehouse_uuid");
-  var contract_sales_contract_code_uuid = obj.attr("contract_sales_contract_code_uuid");
   var vehicle_information_name = obj.parents("#vehicle_information_add_modle_prop").find(".vehicle_information_name").val();
   var vehicle_information_approved_load = obj.parents("#vehicle_information_add_modle_prop").find(".vehicle_information_approved_load").val();
   var vehicle_information_deliver_quantity = obj.parents("#vehicle_information_add_modle_prop").find(".vehicle_information_deliver_quantity").val();
@@ -186,7 +184,7 @@ function vehicle_information_add_data_func(obj) {
     return;
   };
   var data = {
-    "contract_code":contract_code,
+    "contract_code":this.trade_contract_code,
     "name":vehicle_information_name,
     "approved_load":vehicle_information_approved_load,
     "deliver_quantity":vehicle_information_deliver_quantity,
@@ -198,9 +196,9 @@ function vehicle_information_add_data_func(obj) {
   var vehicle_information_add_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=addVehicleInformation";
   var vehicle_information_add_get = ajax_assistant(vehicle_information_add_url, data, false, true, false);
   if ("1" == vehicle_information_add_get.status) {
-    vehicle_information_clear_raw_data(contract_sales_contract_code_uuid);
-    vehicle_information_server_data_cover(contract_code);
-    vehicle_information_fill_variable_data(contract_sales_contract_code_uuid); 
+    this.vehicle_information_clear_raw_data();
+    this.vehicle_information_server_data_cover();
+    this.vehicle_information_fill_variable_data(); 
     $("#vehicle_information_add_modle_prop").modal("hide");
     $("#vehicle_information_add_modle_prop").on("hidden.bs.modal", function(e) {
       $(this).remove();
@@ -210,10 +208,8 @@ function vehicle_information_add_data_func(obj) {
   }
 }
 
-function vehicle_information_edit_modle_func(obj) {
+this.vehicle_information_edit_modle_func = function(obj) {
   var uuid = obj.attr("uuid");
-//var vehicle_information_warehouse_uuid = obj.attr("warehouse_uuid");
-  var contract_sales_contract_code_uuid = obj.parent().parent().parent().parent().attr("vehicle_information_table_sales_trad_uuid");
   var contract_code = obj.attr("contract_code");
   var vehicle_information_name = "";
   var vehicle_information_approved_load = "";
@@ -302,7 +298,7 @@ function vehicle_information_edit_modle_func(obj) {
               '</div>'+
             '</div>'+
             '<div class = "modal-footer" style = "text-align: center;">'+
-              '<button type = "button" class = "btn btn-warning" id = "vehicle_information_edit_data_btn" contract_code = "' + contract_code + '" uuid = "' + uuid + '" contract_sales_contract_code_uuid = "' + contract_sales_contract_code_uuid + '">修改</button>'+
+              '<button type = "button" class = "btn btn-warning" id = "vehicle_information_edit_data_btn" contract_code = "' + contract_code + '" uuid = "' + uuid + '">修改</button>'+
               '<button type = "button" class = "btn btn-default" data-dismiss = "modal">取消</button>'+
             '</div>'+
           '</div>'+
@@ -315,11 +311,11 @@ function vehicle_information_edit_modle_func(obj) {
   });
 }
 
-function vehicle_information_edit_data_func(obj) {
+this.vehicle_information_edit_data_func = function(obj) {
   var uuid = obj.attr("uuid");
 //var vehicle_information_warehouse_uuid = obj.attr("warehouse_uuid");
-  var contract_sales_contract_code_uuid = obj.attr("contract_sales_contract_code_uuid");
-  var contract_code = obj.attr("contract_code");
+//var contract_sales_contract_code_uuid = obj.attr("contract_sales_contract_code_uuid");
+//var contract_code = obj.attr("contract_code");
   var vehicle_information_name = obj.parents("#vehicle_information_edit_modle_prop").find(".vehicle_information_name").val();
   var vehicle_information_approved_load = obj.parents("#vehicle_information_edit_modle_prop").find(".vehicle_information_approved_load").val();
   var vehicle_information_deliver_quantity = obj.parents("#vehicle_information_edit_modle_prop").find(".vehicle_information_deliver_quantity").val();
@@ -353,7 +349,7 @@ function vehicle_information_edit_data_func(obj) {
   }
   var data={
     "uuid":uuid,
-    "contract_code":contract_code,
+    "contract_code":this.trade_contract_code,
     "name":vehicle_information_name,
     "approved_load":vehicle_information_approved_load,
     "deliver_quantity":vehicle_information_deliver_quantity,
@@ -365,9 +361,9 @@ function vehicle_information_edit_data_func(obj) {
   var vehicle_information_edit_data_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=modifyVehicleInformation";
   var vehicle_information_edit_data_get = ajax_assistant(vehicle_information_edit_data_url, data, false, true, false);
   if ("1" == vehicle_information_edit_data_get.status){
-    vehicle_information_clear_raw_data(contract_sales_contract_code_uuid);
-    vehicle_information_server_data_cover(contract_code);
-    vehicle_information_fill_variable_data(contract_sales_contract_code_uuid);
+    this.vehicle_information_clear_raw_data();
+    this.vehicle_information_server_data_cover();
+    this.vehicle_information_fill_variable_data();
     $("#vehicle_information_edit_modle_prop").modal("hide");
     $("#vehicle_information_edit_modle_prop").on("hidden.bs.modal", function(e) {
       $(this).remove();
@@ -377,10 +373,9 @@ function vehicle_information_edit_data_func(obj) {
   }   
 }
 
-function vehicle_information_delete_modle_func(obj) {
+this.vehicle_information_delete_modle_func = function(obj) {
   var uuid = obj.attr("uuid");
   var contract_code = obj.attr("contract_code");
-  var contract_sales_contract_code_uuid = obj.parent().parent().parent().parent().attr("vehicle_information_table_sales_trad_uuid");
   var vehicle_information_delete_html = 
       '<div class = "modal fade custom_modal" id = "vehicle_information_delete_modle_prop" tabindex = "-1" role = "dialog">'+
         '<div class = "modal-dialog modal-sm" role = "document">'+
@@ -391,26 +386,26 @@ function vehicle_information_delete_modle_func(obj) {
             '</div>'+
             '<div class = "modal-body nopadding-bottom vehicle_information_center">确认要删除吗？</div>'+
             '<div class = "modal-footer noborder nopadding-top" style = "text-align: center;">'+
-            '<button type = "button" class = "btn btn-danger" id = "vehicle_information_delete_modle_prop_btn" contract_code = "' + contract_code + '" uuid = "' + uuid + '" contract_sales_contract_code_uuid = "' + contract_sales_contract_code_uuid + '">删除</button>'+
-                '<button type = "button" class = "btn btn-default" data-dismiss = "modal">取消</button>'+
+            '<button type = "button" class = "btn btn-danger" id = "vehicle_information_delete_modle_prop_btn" contract_code = "' + contract_code + '" uuid = "' + uuid + '">删除</button>'+
+              '<button type = "button" class = "btn btn-default" data-dismiss = "modal">取消</button>'+
             '</div>'+
           '</div>'+
         '</div>'+
     '</div>';
   $("body").append(vehicle_information_delete_html);
   $("#vehicle_information_delete_modle_prop").modal("show");
-  $("#vehicle_information_delete_modle_prop").on("hidden.bs.modal", function (e) {
+  $("#vehicle_information_delete_modle_prop").on("hidden.bs.modal", function(e) {
     $(this).remove();
   });
 }
 
-function vehicle_information_delete_data_func(obj) {
+this.vehicle_information_delete_data_func = function(obj) {
   var uuid = obj.attr("uuid");
-  var contract_code = obj.attr("contract_code");
-  var contract_sales_contract_code_uuid = obj.attr("contract_sales_contract_code_uuid");
+//var contract_code = obj.attr("contract_code");
+//var contract_sales_contract_code_uuid = obj.attr("contract_sales_contract_code_uuid");
   var data = {
     "uuid":uuid,
-    "contract_code":contract_code
+    "contract_code":this.trade_contract_code
   };
   //接口数据
   var vehicle_information_delete_data_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=removeVehicleInformation";
@@ -419,9 +414,9 @@ function vehicle_information_delete_data_func(obj) {
     alert("删除车船信息失败");
   } else {  
     // 更新页面数据
-    vehicle_information_clear_raw_data(contract_sales_contract_code_uuid);
-    vehicle_information_server_data_cover(contract_code);
-    vehicle_information_fill_variable_data(contract_sales_contract_code_uuid);
+    this.vehicle_information_clear_raw_data();
+    this.vehicle_information_server_data_cover();
+    this.vehicle_information_fill_variable_data();
     $("#vehicle_information_delete_modle_prop").modal("hide");
     $("#vehicle_information_delete_modle_prop").on("hidden.bs.modal", function(e) {
       $(this).remove();
@@ -429,10 +424,9 @@ function vehicle_information_delete_data_func(obj) {
   }
 }
 
-function vehicle_information_info_modle_func(obj) {
+this.vehicle_information_info_modle_func = function(obj) {
   var uuid = obj.attr("uuid");
 //var vehicle_information_warehouse_uuid = obj.attr("warehouse_uuid");
-  var contract_code = obj.attr("contract_code");
   var vehicle_information_name = "";
   var vehicle_information_approved_load = "";
   var vehicle_information_deliver_quantity = "";
@@ -533,26 +527,11 @@ function vehicle_information_info_modle_func(obj) {
   });
 }
 
-/*function vehicle_information_open_info_func(obj) {
-  var vehicle_information_contract_code = obj.attr("contract_code");
-  var vehicle_information_html = '<tr class = "vehicle_information_all_panel"><td colspan="8"><div>aaaaaaaaa</div></td></tr>';
-  if (obj.hasClass("active")) {
-    obj.find(".glyphicon").removeClass("glyphicon-chevron-down");
-    obj.removeClass("active");
-    obj.parent().parent().nextUntil(".vehicle_information_tr").remove();
-    vehicle_information_html = "";
-  } else {
-    obj.find(".glyphicon").addClass("glyphicon-chevron-down");
-    obj.addClass("active");
-    obj.parent().parent().after(vehicle_information_html);
-  }
-}*/
-
 /**
  * 输出top_nav
  * @param output_id 输出内容id
  */
-function vehicle_information_output(output_id) {
+this.vehicle_information_output = function() {
   var content = 
     '  <div class = "panel panel-primary contract_sale_transport_checkbox">'+
     '    <div class = "panel-heading clearfix">车船信息<span class = "glyphicon glyphicon-plus pull-right" id = "vehicle_information_add_modle"></span></div>'+
@@ -621,5 +600,6 @@ function vehicle_information_output(output_id) {
     '        </div>'+
     '      </div>'+
     '    </div>';
-    $(output_id).html(content);
+    $(vehicle_information_content_box).html(content);
+}
 }
