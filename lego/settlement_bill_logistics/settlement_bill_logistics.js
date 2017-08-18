@@ -64,14 +64,14 @@ function SettlementBillLogistics(trade_contract_code, contract_logistics_code, s
     if (1 == settlement_bill_logistics_logistics_get_contract.status) {
       if (0 != settlement_bill_logistics_logistics_get_contract.count) {
         var settlement_bill_logistics_logistics_result = JSON.parse(settlement_bill_logistics_logistics_get_contract.result);
-        console.log(settlement_bill_logistics_logistics_result);
+        ////console.log(settlement_bill_logistics_logistics_result);
         if (1 == settlement_bill_logistics_get_contract.status) {
           if (0 == settlement_bill_logistics_get_contract.count) {
             this.settlement_bill_logistics_data = {};
           } else {
             var tmp_arr = new Array();
             var settlement_bill_logistics_result = JSON.parse(settlement_bill_logistics_get_contract.result);  
-            console.log(settlement_bill_logistics_result);
+            //console.log(settlement_bill_logistics_result);
             for (var i = 0; i < settlement_bill_logistics_result.length; i++) {
               tmp_arr[i] = {"trade_contract_code":this.trade_contract_code, "contract_code":settlement_bill_logistics_logistics_result[0].contract_code, "buyer_uuid":settlement_bill_logistics_logistics_result[0].employer_uuid, "seller_uuid":settlement_bill_logistics_logistics_result[0].logistics_uuid, "product_name":settlement_bill_logistics_logistics_result[0].product_name, "load_quantity":settlement_bill_logistics_result[i].load_quantity, "unload_quantity":settlement_bill_logistics_result[i].unload_quantity, "contract_ullage":settlement_bill_logistics_result[i].contract_ullage, "settle_quantity":settlement_bill_logistics_result[i].settle_quantity, "freight":settlement_bill_logistics_result[i].freight, "goods_price":settlement_bill_logistics_result[i].goods_price, "invoice_quantity":settlement_bill_logistics_result[i].invoice_quantity, "paid_amount":settlement_bill_logistics_result[i].paid_amount, "uuid":settlement_bill_logistics_result[i].uuid};
             }
@@ -90,7 +90,7 @@ function SettlementBillLogistics(trade_contract_code, contract_logistics_code, s
   
   this.settlement_bill_logistics_fill_variable_data = function() {
     if(isJsonObjectHasData(this.settlement_bill_logistics_data)) {
-      console.log(this.settlement_bill_logistics_data);
+      //console.log(this.settlement_bill_logistics_data);
       var settlement_bill_logistics_html = "";
       for (var i = 0; i < this.settlement_bill_logistics_data.data.length; i++) {
         var settlement_bill_logistics_actual_ullage = (this.settlement_bill_logistics_data.data[i].load_quantity - this.settlement_bill_logistics_data.data[i].unload_quantity)/this.settlement_bill_logistics_data.data[i].load_quantity;
@@ -216,7 +216,7 @@ function SettlementBillLogistics(trade_contract_code, contract_logistics_code, s
                   '</div>'+
                   '<div class = "col-md-6">'+
                     '<div class = "form-group">'+
-                      '<label for = "">应退货款</label>'+
+                      '<label for = "">应付货款</label>'+
                       '<div class = " input-group">'+
                         '<input type = "text" class = "form-control return_money_should" disabled = "disabled">'+
                         '<span class = "input-group-addon">元</span>'+
@@ -377,7 +377,7 @@ function SettlementBillLogistics(trade_contract_code, contract_logistics_code, s
     var settlement_bill_logistics_get_all_warehouse = ajax_assistant(settlement_bill_logistics_get_all_url, data, false, true, false);
     if ("1" == settlement_bill_logistics_get_all_warehouse.status) {
       var settlement_bill_logistics_edit_data_d = JSON.parse(settlement_bill_logistics_get_all_warehouse.result);
-      console.log(settlement_bill_logistics_edit_data_d);
+      //console.log(settlement_bill_logistics_edit_data_d);
       if (0 < settlement_bill_logistics_edit_data_d.length) {
         settlement_bill_logistics_contract_ullage = settlement_bill_logistics_edit_data_d[0].contract_ullage;
         settlement_bill_logistics_load_quantity = settlement_bill_logistics_edit_data_d[0].load_quantity;
@@ -399,24 +399,24 @@ function SettlementBillLogistics(trade_contract_code, contract_logistics_code, s
     var settlement_bill_logistics_all_price = (settlement_bill_logistics_goods_price * settlement_bill_logistics_settle_quantity).toFixed(2);
     var settlement_bill_logistics_retune_price = ((settlement_bill_logistics_goods_price * settlement_bill_logistics_settle_quantity) - settlement_bill_logistics_paid_amount).toFixed(2);
     //附件
-    console.log(settlement_bill_logistics_cluster_list);
+    //console.log(settlement_bill_logistics_cluster_list);
     if (0 < settlement_bill_logistics_cluster_list.length) {
       var settlement_bill_logistics_file_arr = new Array();
       settlement_bill_logistics_cluster_list = settlement_bill_logistics_cluster_list.substring(0, settlement_bill_logistics_cluster_list.length - 1).split(';');
-      console.log(settlement_bill_logistics_cluster_list)
+      //console.log(settlement_bill_logistics_cluster_list)
       for(var i = 0; i < settlement_bill_logistics_cluster_list.length; i++) {
         var cluster_name_data = {
           "cluster_name":settlement_bill_logistics_cluster_list[i]
         };
         var settlement_bill_logistics_file_name = ajax_assistant(PROJECT_PATH+"lego/lego_storage?servletName=getFileByClusterName",cluster_name_data, false, true, false);//查询文件集群信息
         var settlement_bill_logistics_json = JSON.parse(settlement_bill_logistics_file_name.result);
-        console.log(settlement_bill_logistics_json)
+        //console.log(settlement_bill_logistics_json)
         if(0 != settlement_bill_logistics_file_name.count) {
           settlement_bill_logistics_file_arr[i] = {"file_name":settlement_bill_logistics_json[0].cluster_name+'.'+settlement_bill_logistics_json[0].suffix};
         }
       }
       this.settlement_bill_logistics_file_data = settlement_bill_logistics_file_arr;
-      console.log(this.settlement_bill_logistics_file_data);
+      //console.log(this.settlement_bill_logistics_file_data);
     } else {
       this.settlement_bill_logistics_file_data = [];
     }
@@ -513,7 +513,7 @@ function SettlementBillLogistics(trade_contract_code, contract_logistics_code, s
                   '</div>'+
                   '<div class = "col-md-6">'+
                     '<div class = "form-group">'+
-                      '<label for = "">应退货款</label>'+
+                      '<label for = "">应付货款</label>'+
                       '<div class = " input-group">'+
                         '<input type = "text" class = "form-control return_money_should" disabled = "disabled" value = "' + settlement_bill_logistics_retune_price + '">'+
                         '<span class = "input-group-addon">元</span>'+
@@ -617,7 +617,7 @@ function SettlementBillLogistics(trade_contract_code, contract_logistics_code, s
     //调数据库
     var settlement_bill_logistics_edit_data_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=modifyLogisticsSettlementBill";
     var settlement_bill_logistics_edit_data_get = ajax_assistant(settlement_bill_logistics_edit_data_url, data, false, true, false);
-    console.log(settlement_bill_logistics_edit_data_get);
+    //console.log(settlement_bill_logistics_edit_data_get);
     if ("1" == settlement_bill_logistics_edit_data_get.status){
       this.settlement_bill_logistics_clear_raw_data();
       this.settlement_bill_logistics_server_data_cover();
@@ -699,7 +699,7 @@ function SettlementBillLogistics(trade_contract_code, contract_logistics_code, s
     var settlement_bill_logistics_get_all_warehouse = ajax_assistant(settlement_bill_logistics_get_all_url, data, false, true, false);
     if ("1" == settlement_bill_logistics_get_all_warehouse.status) {
       var settlement_bill_logistics_edit_data_d = JSON.parse(settlement_bill_logistics_get_all_warehouse.result);
-      console.log(settlement_bill_logistics_edit_data_d);
+      //console.log(settlement_bill_logistics_edit_data_d);
       if (0 < settlement_bill_logistics_edit_data_d.length) {
         settlement_bill_logistics_contract_ullage = settlement_bill_logistics_edit_data_d[0].contract_ullage;
         settlement_bill_logistics_load_quantity = settlement_bill_logistics_edit_data_d[0].load_quantity;
@@ -724,20 +724,20 @@ function SettlementBillLogistics(trade_contract_code, contract_logistics_code, s
     if (0 < settlement_bill_logistics_cluster_list.length) {
       var settlement_bill_logistics_file_arr = new Array();
       settlement_bill_logistics_cluster_list = settlement_bill_logistics_cluster_list.substring(0, settlement_bill_logistics_cluster_list.length - 1).split(';');
-      console.log(settlement_bill_logistics_cluster_list)
+      //console.log(settlement_bill_logistics_cluster_list)
       for(var i = 0; i < settlement_bill_logistics_cluster_list.length; i++) {
         var cluster_name_data = {
           "cluster_name":settlement_bill_logistics_cluster_list[i]
         };
         var settlement_bill_logistics_file_name = ajax_assistant(PROJECT_PATH+"lego/lego_storage?servletName=getFileByClusterName",cluster_name_data, false, true, false);//查询文件集群信息
         var settlement_bill_logistics_json = JSON.parse(settlement_bill_logistics_file_name.result);
-        console.log(settlement_bill_logistics_json)
+        //console.log(settlement_bill_logistics_json)
         if(0 != settlement_bill_logistics_file_name.count) {
           settlement_bill_logistics_file_arr[i] = {"file_name":settlement_bill_logistics_json[0].cluster_name+'.'+settlement_bill_logistics_json[0].suffix};
         }
       }
       this.settlement_bill_logistics_file_data = settlement_bill_logistics_file_arr;
-      console.log(this.settlement_bill_logistics_file_data);
+      //console.log(this.settlement_bill_logistics_file_data);
     } else {
       this.settlement_bill_logistics_file_data = [];
     }
@@ -834,7 +834,7 @@ function SettlementBillLogistics(trade_contract_code, contract_logistics_code, s
                   '</div>'+
                   '<div class = "col-md-6">'+
                     '<div class = "form-group">'+
-                      '<label for = "">应退货款</label>'+
+                      '<label for = "">应付货款</label>'+
                       '<div class = " input-group">'+
                         '<input type = "text" class = "form-control return_money_should" disabled = "disabled" value  =  "' + settlement_bill_logistics_retune_price + '">'+
                         '<span class = "input-group-addon">元</span>'+
@@ -881,7 +881,7 @@ function SettlementBillLogistics(trade_contract_code, contract_logistics_code, s
   '                  <th>发票数量</th>'+
   '                  <th>合计价格</th>'+
   '                  <th>已付货款</th>'+
-  '                  <th>应退货款</th>'+
+  '                  <th>应付货款</th>'+
   '                  <th></th>'+
   '                </tr>'+
   '              </thead>'+

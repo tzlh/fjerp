@@ -145,7 +145,7 @@ function contract_sale_server_data_cover(contract_type) {
     alert("销售合同数据获取失败");
     return;
   }
-  console.log(totalRows);
+  //console.log(totalRows);
   //获取销售合同
   contract_sale_search_condition["type"] = contract_type;
   var contract_sale_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getContractTrade";
@@ -164,7 +164,7 @@ function contract_sale_server_data_cover(contract_type) {
     } else {
       var tmp_arr = new Array();
       var contract_sale_result = JSON.parse(contract_sale_get_contract.result);  
-      console.log(contract_sale_result);
+      //console.log(contract_sale_result);
       for (var i = 0; i < contract_sale_result.length; i++) {
         tmp_arr[i] = {"contract_code":contract_sale_result[i].contract_code, "buyer_uuid":contract_sale_result[i].buyer_uuid, "seller_uuid":contract_sale_result[i].seller_uuid, "product_name":contract_sale_result[i].product_name, "real_name":contract_sale_result[i].real_name, "price":contract_sale_result[i].price, "quantity":contract_sale_result[i].quantity, "deliver_datetime":contract_sale_result[i].deliver_datetime, "warehouse_uuid":contract_sale_result[i].warehouse_uuid, "uuid":contract_sale_result[i].uuid};
         //收款记录
@@ -399,7 +399,7 @@ function contract_sales_add_modle_func() {
                   '</div>'+
                 '</div>'+
                 '<div class = "col-md-12">'+
-                  '<label class = "margin15">采购合同附件</label>'+
+                  '<label class = "margin15">销售合同附件</label>'+
                   '<div class="panel panel-default clearfix" id = "contract_sales_add_modle_attch">'+
                   '</div>'+
                 '</div>'+
@@ -472,11 +472,11 @@ function contract_sales_add_data_func(obj, contract_sales_type) {
     alert("请选择销售企业！");
     return;
   }
-  if(null == contract_sales_product_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)) {
+  if(null == contract_sales_product_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{1,32}$/)) {
     alert("请输入正确的产品名称！");
     return;
   }
-  if(null == contract_sales_real_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)) {
+  if(null == contract_sales_real_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{1,32}$/)) {
     alert("请输入正确的标记！");
     return;
   }
@@ -509,7 +509,7 @@ function contract_sales_add_data_func(obj, contract_sales_type) {
     return;
   }
   if(null == contract_sales_cluster_list.match(/^([0-9a-zA-Z]{32};)+$/)) {
-    alert("请添加采购合同附件！");
+    alert("请添加销售合同附件！");
     return;
   }
   var contract_sales_data = {
@@ -550,7 +550,7 @@ function contract_sales_add_data_func(obj, contract_sales_type) {
   //调用接口
   var contract_sales_add_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=addContractTrade";
   var contract_sales_add_get = ajax_assistant(contract_sales_add_url, contract_sales_data, false, true, false);
-  console.log(contract_sales_add_get);
+  //console.log(contract_sales_add_get);
   if (1 == contract_sales_add_get.status) {
     contract_sale_clear_raw_data();
     contract_sale_server_data_cover("1");
@@ -603,7 +603,7 @@ function contract_sales_edit_modle_func(obj, contract_type) {
   var contract_sales_edit_get_warehouse = ajax_assistant(contract_sales_edit_url, contract_sales_edit_data, false, true, false);
   if (1 == contract_sales_edit_get_warehouse.status) {
   var contract_warehouse_edit_data = JSON.parse(contract_sales_edit_get_warehouse.result);
-  console.log(contract_warehouse_edit_data);
+  //console.log(contract_warehouse_edit_data);
     if (0 < contract_warehouse_edit_data.length) {
       contract_sales_buyer_uuid = contract_warehouse_edit_data[0].buyer_uuid;
       contract_sales_seller_uuid = contract_warehouse_edit_data[0].seller_uuid;
@@ -655,20 +655,20 @@ function contract_sales_edit_modle_func(obj, contract_type) {
   if(0 < contract_sales_cluster_list.length){
     var contract_sale_file_arr = new Array();
     contract_sales_cluster_list = contract_sales_cluster_list.substring(0, contract_sales_cluster_list.length - 1).split(';');
-    console.log(contract_sales_cluster_list)
+    //console.log(contract_sales_cluster_list)
     for(var i = 0; i < contract_sales_cluster_list.length; i++){
       var cluster_name_data = {
             "cluster_name":contract_sales_cluster_list[i]
           };
       var contract_sales_file_name=ajax_assistant(PROJECT_PATH+"lego/lego_storage?servletName=getFileByClusterName",cluster_name_data, false, true, false);//查询文件集群信息
       var contract_sales_json=JSON.parse(contract_sales_file_name.result);
-      console.log(contract_sales_json)
+      //console.log(contract_sales_json)
       if(0 != contract_sales_file_name.count) {
         contract_sale_file_arr[i] = {"file_name":contract_sales_json[0].cluster_name+'.'+contract_sales_json[0].suffix};
       }
     }
     contract_sale_file_data = contract_sale_file_arr;
-    console.log(contract_sale_file_data);
+    //console.log(contract_sale_file_data);
   } else {
     contract_sale_file_data = [];
   }
@@ -805,7 +805,7 @@ function contract_sales_edit_modle_func(obj, contract_type) {
                 '</div>'+
               '</div>'+
               '<div class = "col-md-12">'+
-                '<label class = "margin15">采购合同附件</label>'+
+                '<label class = "margin15">销售合同附件</label>'+
                 '<div class="panel panel-default clearfix" id = "contract_sales_edit_attch">'+
                 '</div>'+
               '</div>'+
@@ -879,11 +879,11 @@ function contract_sales_edit_data_func(obj, contract_type) {
     alert("请选择销售企业！");
     return;
   }
-  if(null == contract_sales_product_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)) {
+  if(null == contract_sales_product_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{1,32}$/)) {
     alert("请输入正确的产品名称！");
     return;
   }
-  if(null == contract_sales_real_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)) {
+  if(null == contract_sales_real_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{1,32}$/)) {
     alert("请输入正确的标记！");
     return;
   }
@@ -932,7 +932,7 @@ function contract_sales_edit_data_func(obj, contract_type) {
   };
   if(0 < contract_sales_cluster_list.length) {
     if(null == contract_sales_cluster_list.match(/^([0-9a-zA-Z]{32};)+$/)) {
-      alert("请添加采购合同附件！");
+      alert("请添加销售合同附件！");
       return;
     }
     data["normal_newClusterList"] = contract_sales_cluster_list;
@@ -1063,7 +1063,7 @@ function contract_sales_info_modle_func(obj, contract_type) {
   var contract_sales_info_get_warehouse = ajax_assistant(contract_sales_info_url, contract_sales_info_data, false, true, false);
   if (1 == contract_sales_info_get_warehouse.status) {
   var contract_warehouse_edit_data = JSON.parse(contract_sales_info_get_warehouse.result);
-  console.log(contract_warehouse_edit_data);
+  //console.log(contract_warehouse_edit_data);
     if (0 < contract_warehouse_edit_data.length) {
       contract_sales_buyer_uuid = contract_warehouse_edit_data[0].buyer_uuid;
       contract_sales_seller_uuid = contract_warehouse_edit_data[0].seller_uuid;
@@ -1115,14 +1115,14 @@ function contract_sales_info_modle_func(obj, contract_type) {
   if(0 < contract_sales_cluster_list.length){
     var contract_sale_file_arr = new Array();
     contract_sales_cluster_list = contract_sales_cluster_list.substring(0, contract_sales_cluster_list.length - 1).split(';');
-    console.log(contract_sales_cluster_list)
+    //console.log(contract_sales_cluster_list)
     for(var i = 0; i < contract_sales_cluster_list.length; i++){
       var cluster_name_data = {
             "cluster_name":contract_sales_cluster_list[i]
           };
       var contract_sales_file_name=ajax_assistant(PROJECT_PATH+"lego/lego_storage?servletName=getFileByClusterName",cluster_name_data, false, true, false);//查询文件集群信息
       var contract_sales_json=JSON.parse(contract_sales_file_name.result);
-      console.log(contract_sales_json)
+      //console.log(contract_sales_json)
       if(0 != contract_sales_file_name.count) {
         contract_sale_file_arr[i] = {"file_name":contract_sales_json[0].cluster_name+'.'+contract_sales_json[0].suffix};
       }
@@ -1258,7 +1258,7 @@ function contract_sales_info_modle_func(obj, contract_type) {
                 '</div>'+
               '</div>'+
               '<div class = "col-md-12">'+
-                '<label class = "margin15">采购合同附件</label>'+
+                '<label class = "margin15">销售合同附件</label>'+
                 '<div class="panel panel-default clearfix" id = "contract_sales_delete_attch">'+
                 '</div>'+
               '</div>'+

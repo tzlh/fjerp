@@ -64,7 +64,7 @@ function VehicleInformation(trade_contract_code, vehicle_information_content_box
       } else {
         var tmp_arr = new Array();
         var vehicle_information_result = JSON.parse(vehicle_information_get_contract.result);  
-        console.log(vehicle_information_result);
+        ////console.log(vehicle_information_result);
         for (var i = 0; i < vehicle_information_result.length; i++) {
           tmp_arr[i] = {"contract_code":this.trade_contract_code, "name":vehicle_information_result[i].name, "approved_load":vehicle_information_result[i].approved_load, "deliver_quantity":vehicle_information_result[i].deliver_quantity, "contact_name":vehicle_information_result[i].contact_name, "contact_number":vehicle_information_result[i].contact_number, "idcard_number":vehicle_information_result[i].idcard_number, "uuid":vehicle_information_result[i].uuid};
           // 出库单
@@ -102,7 +102,7 @@ function VehicleInformation(trade_contract_code, vehicle_information_content_box
       } else {
         var tmp_arr = new Array();
         var vehicle_information_result = JSON.parse(vehicle_information_get_contract.result);  
-        console.log(vehicle_information_result);
+        //console.log(vehicle_information_result);
         for (var i = 0; i < vehicle_information_result.length; i++) {
           tmp_arr[i] = {"contract_code":this.trade_contract_code, "name":vehicle_information_result[i].name, "approved_load":vehicle_information_result[i].approved_load, "deliver_quantity":vehicle_information_result[i].deliver_quantity, "contact_name":vehicle_information_result[i].contact_name, "contact_number":vehicle_information_result[i].contact_number, "idcard_number":vehicle_information_result[i].idcard_number, "uuid":vehicle_information_result[i].uuid};
           // 出库单
@@ -363,7 +363,7 @@ function VehicleInformation(trade_contract_code, vehicle_information_content_box
     var vehicle_information_edit_get_warehouse = ajax_assistant(vehicle_information_edit_url, vehicle_information_edit_data, false, true, false);
     if ("1" == vehicle_information_edit_get_warehouse.status) {
       var vehicle_information_edit_data_d = JSON.parse(vehicle_information_edit_get_warehouse.result);
-      console.log(vehicle_information_edit_data_d);
+      //console.log(vehicle_information_edit_data_d);
       if (0 < vehicle_information_edit_data_d.length) {
         vehicle_information_name = vehicle_information_edit_data_d[0].name;
         vehicle_information_approved_load = vehicle_information_edit_data_d[0].approved_load;
@@ -674,7 +674,7 @@ function VehicleInformation(trade_contract_code, vehicle_information_content_box
     var vehicle_information_edit_get_warehouse = ajax_assistant(vehicle_information_edit_url, vehicle_information_edit_data, false, true, false);
     if ("1" == vehicle_information_edit_get_warehouse.status) {
       var vehicle_information_edit_data_d = JSON.parse(vehicle_information_edit_get_warehouse.result);
-      console.log(vehicle_information_edit_data_d);
+      //console.log(vehicle_information_edit_data_d);
       if (0 < vehicle_information_edit_data_d.length) {
         vehicle_information_name = vehicle_information_edit_data_d[0].name;
         vehicle_information_approved_load = vehicle_information_edit_data_d[0].approved_load;

@@ -63,7 +63,7 @@ function warehouse_management_server_data_cover() {
     } else {
       var tmp_arr_pot = new Array();
       var result_pot = JSON.parse(warehouse_pot_get_warehouse.result);  
-      console.log(result_pot);
+      //console.log(result_pot);
       for (var i = 0; i < result_pot.length; i++) {
         // name id uuid
         tmp_arr_pot[i] = {"storage_tank_name":result_pot[i].name, "uuid":result_pot[i].uuid, "type":result_pot[i].type, "warehouse_uuid":result_pot[i].warehouse_uuid, "effective_capacity":result_pot[i].effective_capacity, "charge_capacity":result_pot[i].charge_capacity};
@@ -154,7 +154,7 @@ function warehouse_management_add_warehouse_data(obj) {
   // 调用后台添加接口
   var warehouse_add_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=addWarehouse";
   var warehouse_add_get_warehouse = ajax_assistant(warehouse_add_url, warehouse_add_data, false, true, false);
-  console.log(warehouse_add_get_warehouse);
+  //console.log(warehouse_add_get_warehouse);
   if (1 != warehouse_add_get_warehouse.status) {
     alert("添加仓库失败");
   } else {
@@ -226,7 +226,7 @@ function warehouse_management_edit_warehouse_data(obj) {
   // 调用后台添加接口
   var warehouse_edit_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=modifyWarehouse";
   var warehouse_edit_get_warehouse = ajax_assistant(warehouse_edit_url, warehouse_edit_data, false, true, false);
-  console.log(warehouse_edit_get_warehouse);
+  //console.log(warehouse_edit_get_warehouse);
   if (1 != warehouse_edit_get_warehouse.status) {
     alert("修改仓库失败");
   } else {    
@@ -412,7 +412,7 @@ function warehouse_management_edit_warehouse_pot_modal(obj, warehouse_uuid) {
     var warehouse_pot_edit_get_warehouse = ajax_assistant(warehouse_pot_edit_url, data, false, true, false);
     if(1 == warehouse_pot_edit_get_warehouse.status){
       var reslut_pot_json = JSON.parse(warehouse_pot_edit_get_warehouse.result);
-      console.log(reslut_pot_json);
+      //console.log(reslut_pot_json);
       if(0 < reslut_pot_json.length){
         storage_tank_style = reslut_pot_json[0].type;
         storage_tank_name = reslut_pot_json[0].name;
@@ -515,7 +515,7 @@ function warehouse_management_edit_warehouse_pot_data(obj) {
   // 调用后台添加接口
   var warehouse_pot_edit_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=modifyWarehousePot";
   var warehouse_pot_edit_get_warehouse = ajax_assistant(warehouse_pot_edit_url, warehouse_m_pot_data, false, true, false);
-  console.log(warehouse_pot_edit_get_warehouse);
+  //console.log(warehouse_pot_edit_get_warehouse);
   if(1 != warehouse_pot_edit_get_warehouse.status){
     alert("修改储罐失败");
   } else {    

@@ -60,7 +60,7 @@ function InvoiceInformation(trade_contract_code, invoice_information_content_box
       } else {
         var tmp_arr = new Array();
         var invoice_information_result = JSON.parse(invoice_information_get_contract.result);  
-        console.log(invoice_information_result);
+        ////console.log(invoice_information_result);
         for (var i = 0; i < invoice_information_result.length; i++) {
           tmp_arr[i] = {"contract_code":invoice_information_result[i].contract_code, "type":invoice_information_result[i].type, "product_name":invoice_information_result[i].product_name, "price":invoice_information_result[i].price, "quantity":invoice_information_result[i].quantity, "unit":invoice_information_result[i].unit, "freight":invoice_information_result[i].freight, "tax_rate":invoice_information_result[i].tax_rate, "invoice_datetime":invoice_information_result[i].invoice_datetime, "remark":invoice_information_result[i].remark, "uuid":invoice_information_result[i].uuid};
         }
@@ -210,7 +210,7 @@ function InvoiceInformation(trade_contract_code, invoice_information_content_box
   this.all_should_change_price = function(obj) {
     var invoice_information_price = obj.parents(".modal-body").find(".invoice_information_price").val();
     var invoice_information_quantity = obj.parents(".modal-body").find(".invoice_information_quantity").val();
-    console.log(!isNaN(invoice_information_price)+';'+!isNaN(invoice_information_quantity));
+    //console.log(!isNaN(invoice_information_price)+';'+!isNaN(invoice_information_quantity));
     if (0 < invoice_information_price.length && 0 < invoice_information_quantity.length && !isNaN(invoice_information_price) && !isNaN(invoice_information_quantity)){
       var val_b = (invoice_information_price * invoice_information_quantity).toFixed(2);
       obj.parents(".modal-body").find('.total_price').val(val_b);
@@ -243,7 +243,7 @@ function InvoiceInformation(trade_contract_code, invoice_information_content_box
     var invoice_information_remark = obj.parents("#invoice_information_add_modle_prop").find(".invoice_information_remark").val();
     
     //验证
-    if (null == invoice_information_product_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)) {
+    if (null == invoice_information_product_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{1,32}$/)) {
       alert("请输入正确的产品名称！");
       return;
     }
@@ -292,7 +292,7 @@ function InvoiceInformation(trade_contract_code, invoice_information_content_box
     //调用接口
     var invoice_information_add_url = PROJECT_PATH + trade_add_url;
     var invoice_information_add_get = ajax_assistant(invoice_information_add_url, data, false, true, false);
-    console.log(invoice_information_add_get);
+    //console.log(invoice_information_add_get);
     if ("1" == invoice_information_add_get.status) {
       this.invoice_information_clear_raw_data();
       this.invoice_information_server_data_cover();
@@ -328,7 +328,7 @@ function InvoiceInformation(trade_contract_code, invoice_information_content_box
     var invoice_information_edit_get_warehouse = ajax_assistant(invoice_information_edit_url, invoice_information_edit_data, false, true, false);
     if ("1" == invoice_information_edit_get_warehouse.status) {
       var invoice_information_edit_data_d = JSON.parse(invoice_information_edit_get_warehouse.result);
-      console.log(invoice_information_edit_data_d);
+      //console.log(invoice_information_edit_data_d);
       if (0 < invoice_information_edit_data_d.length) {
         invoice_information_product_name = invoice_information_edit_data_d[0].product_name;
         invoice_information_price = invoice_information_edit_data_d[0].price;
@@ -353,20 +353,20 @@ function InvoiceInformation(trade_contract_code, invoice_information_content_box
     if (0 < invoice_information_cluster_list.length) {
       var invoice_information_file_arr = new Array();
       invoice_information_cluster_list = invoice_information_cluster_list.substring(0, invoice_information_cluster_list.length - 1).split(';');
-      console.log(invoice_information_cluster_list)
+      //console.log(invoice_information_cluster_list)
       for(var i = 0; i < invoice_information_cluster_list.length; i++) {
         var cluster_name_data = {
           "cluster_name":invoice_information_cluster_list[i]
         };
         var invoice_information_file_name = ajax_assistant(PROJECT_PATH+"lego/lego_storage?servletName=getFileByClusterName",cluster_name_data, false, true, false);//查询文件集群信息
         var invoice_information_json = JSON.parse(invoice_information_file_name.result);
-        console.log(invoice_information_json)
+        //console.log(invoice_information_json)
         if(0 != invoice_information_file_name.count) {
           invoice_information_file_arr[i] = {"file_name":invoice_information_json[0].cluster_name+'.'+invoice_information_json[0].suffix};
         }
       }
       this.invoice_information_file_data = invoice_information_file_arr;
-      console.log(this.invoice_information_file_data);
+      //console.log(this.invoice_information_file_data);
     } else {
       this.invoice_information_file_data = [];
     }
@@ -478,7 +478,7 @@ function InvoiceInformation(trade_contract_code, invoice_information_content_box
       }    
     }
     //验证
-    if (null == invoice_information_product_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)) {
+    if (null == invoice_information_product_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{1,32}$/)) {
       alert("请输入正确的产品名称！");
       return;
     }
@@ -534,7 +534,7 @@ function InvoiceInformation(trade_contract_code, invoice_information_content_box
     //调数据库
     var invoice_information_edit_data_url = PROJECT_PATH + trade_edit_url;
     var invoice_information_edit_data_get = ajax_assistant(invoice_information_edit_data_url, data, false, true, false);
-    console.log(invoice_information_edit_data_get);
+    //console.log(invoice_information_edit_data_get);
     if ("1" == invoice_information_edit_data_get.status){
       this.invoice_information_clear_raw_data();
       this.invoice_information_server_data_cover();
@@ -620,7 +620,7 @@ function InvoiceInformation(trade_contract_code, invoice_information_content_box
     var invoice_information_edit_get_warehouse = ajax_assistant(invoice_information_edit_url, invoice_information_edit_data, false, true, false);
     if ("1" == invoice_information_edit_get_warehouse.status) {
       var invoice_information_edit_data_d = JSON.parse(invoice_information_edit_get_warehouse.result);
-      console.log(invoice_information_edit_data_d);
+      //console.log(invoice_information_edit_data_d);
       if (0 < invoice_information_edit_data_d.length) {
         invoice_information_product_name = invoice_information_edit_data_d[0].product_name;
         invoice_information_price = invoice_information_edit_data_d[0].price;
@@ -645,20 +645,20 @@ function InvoiceInformation(trade_contract_code, invoice_information_content_box
     if (0 < invoice_information_cluster_list.length) {
       var invoice_information_file_arr = new Array();
       invoice_information_cluster_list = invoice_information_cluster_list.substring(0, invoice_information_cluster_list.length - 1).split(';');
-      console.log(invoice_information_cluster_list)
+      //console.log(invoice_information_cluster_list)
       for(var i = 0; i < invoice_information_cluster_list.length; i++) {
         var cluster_name_data = {
           "cluster_name":invoice_information_cluster_list[i]
         };
         var invoice_information_file_name = ajax_assistant(PROJECT_PATH+"lego/lego_storage?servletName=getFileByClusterName",cluster_name_data, false, true, false);//查询文件集群信息
         var invoice_information_json = JSON.parse(invoice_information_file_name.result);
-        console.log(invoice_information_json)
+        //console.log(invoice_information_json)
         if(0 != invoice_information_file_name.count) {
           invoice_information_file_arr[i] = {"file_name":invoice_information_json[0].cluster_name+'.'+invoice_information_json[0].suffix};
         }
       }
       this.invoice_information_file_data = invoice_information_file_arr;
-      console.log(this.invoice_information_file_data);
+      //console.log(this.invoice_information_file_data);
     } else {
       this.invoice_information_file_data = [];
     }

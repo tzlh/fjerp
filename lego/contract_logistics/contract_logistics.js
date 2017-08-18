@@ -385,7 +385,7 @@ function ContractLogistics(sale_contract_code, contract_logistics_content_box) {
       alert("请选择载体类型！");
       return;
     }
-    if (null == contract_logistics_product_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)) {
+    if (null == contract_logistics_product_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{1,32}$/)) {
       alert("请输入正确的产品名称！");
       return;
     }
@@ -784,7 +784,7 @@ function ContractLogistics(sale_contract_code, contract_logistics_content_box) {
       alert("请选择载体类型！");
       return;
     }
-    if (null == contract_logistics_product_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)) {
+    if (null == contract_logistics_product_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{1,32}$/)) {
       alert("请输入正确的产品名称！");
       return;
     }
