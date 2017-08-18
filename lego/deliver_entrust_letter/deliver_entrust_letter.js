@@ -50,9 +50,9 @@ function deliverEntrustLetter(contract_buy_contract_code, deliver_entrust_letter
             '<td>' + this.deliver_entrust_letter_data[i].place + '</td>'+
             '<td>' + this.deliver_entrust_letter_data[i].deliver_datetime + '</td>'+
             '<td>'+
-              '<span class = "glyphicon glyphicon-info-sign deliver_entrust_letter_ml15 deliver_entrust_letter_detail" data-uuid = "' + this.deliver_entrust_letter_data[i].uuid + '"></span>'+
-              '<span class = "glyphicon glyphicon-pencil deliver_entrust_letter_ml15 deliver_entrust_letter_edit" data-uuid = "' + this.deliver_entrust_letter_data[i].uuid + '"></span>'+
-              '<span class = "glyphicon glyphicon-remove deliver_entrust_letter_ml15 deliver_entrust_letter_delete" data-uuid = "' + this.deliver_entrust_letter_data[i].uuid + '"></span>'+
+              '<span class = "glyphicon glyphicon-info-sign deliver_entrust_letter_ml15 deliver_entrust_letter_detail" data-uuid = "' + this.deliver_entrust_letter_data[i].uuid + '" data-contract_code = "' + this.deliver_entrust_letter_data[i].contract_code + '"></span>'+
+              '<span class = "glyphicon glyphicon-pencil deliver_entrust_letter_ml15 deliver_entrust_letter_edit" data-uuid = "' + this.deliver_entrust_letter_data[i].uuid + '" data-contract_code = "' + this.deliver_entrust_letter_data[i].contract_code + '"></span>'+
+              '<span class = "glyphicon glyphicon-remove deliver_entrust_letter_ml15 deliver_entrust_letter_delete" data-uuid = "' + this.deliver_entrust_letter_data[i].uuid + '" data-contract_code = "' + this.deliver_entrust_letter_data[i].contract_code + '"></span>'+
             '</td>'+
           '</tr>';
         $(this.deliver_entrust_letter_content_id).find("#deliver_entrust_letter_list tbody").html(deliver_entrust_letter_tbody);  
@@ -172,7 +172,7 @@ function deliverEntrustLetter(contract_buy_contract_code, deliver_entrust_letter
   '               </div>'+
   '           </div>'+
   '           <div class = "modal-footer">'+
-  '             <button type = "button" class = "btn btn-primary add_btn">添加</button>'+
+  '             <button type = "button" class = "btn btn-primary add_btn" data-contract_code = "' + this.contract_buy_contract_code + '">添加</button>'+
   '             <button type = "button" class = "btn btn-default" data-dismiss = "modal">取消</button>'+
   '           </div>'+
   '         </div>'+
@@ -274,7 +274,7 @@ function deliverEntrustLetter(contract_buy_contract_code, deliver_entrust_letter
   '               </div>'+
   '           </div>'+
   '           <div class = "modal-footer">'+
-  '             <button type = "button" class = "btn btn-warning edit_btn" data-uuid = "' + uuid + '">修改</button>'+
+  '             <button type = "button" class = "btn btn-warning edit_btn" data-uuid = "' + uuid + '" data-contract_code = "' + this.contract_buy_contract_code + '">修改</button>'+
   '             <button type = "button" class = "btn btn-default" data-dismiss = "modal">取消</button>'+
   '           </div>'+
   '         </div>'+
@@ -404,7 +404,7 @@ function deliverEntrustLetter(contract_buy_contract_code, deliver_entrust_letter
             '</div>'+
             '<div class="modal-body nopadding-bottom" style="text-align: center;margin-bottom: 15px;">确认要删除提货委托函吗？</div>'+
             '<div class="modal-footer">'+
-              '<button type="button" class="btn btn-danger remove" data-uuid = "' + uuid + '">删除</button>'+
+              '<button type="button" class="btn btn-danger remove" data-uuid = "' + uuid + '"  data-contract_code = "' + this.contract_buy_contract_code + '">删除</button>'+
               '<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>'+
             '</div>'+
           '</div>'+

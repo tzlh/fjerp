@@ -1,9 +1,35 @@
 /**
  * @author wangdi
  */
-function VehicleInformation(trade_contract_code, vehicle_information_content_box){
+
+//出库单
+var godown_exit_list = new Array();
+//入库单
+var godown_entry_list = new Array();
+//船板单
+var report_boat_ullage_list = new Array();
+//商检单
+var report_shore_tank_list = new Array();
+
+function add_vehicle_object_list(list, vehicle_information_uuid, object) {
+  if (null == get_buy_object_list(list, vehicle_information_uuid)) {
+    list.push({"vehicle_information_uuid": vehicle_information_uuid, "object": object});
+  }
+}
+
+function get_vehicle_object_list(list, vehicle_information_uuid) {
+  for (var i = 0; i < list.length; i++) {
+    if (vehicle_information_uuid == list[i].vehicle_information_uuid) {
+      return list[i]["object"];
+    }
+  }
+  return null;
+}
+
+function VehicleInformation(trade_contract_code, vehicle_information_content_box, warehouse_uuid){
 this.trade_contract_code = trade_contract_code;
 this.vehicle_information_content_box = vehicle_information_content_box;
+this.warehouse_uuid = warehouse_uuid;
 /**
  * 车船信息数据
 
@@ -39,6 +65,14 @@ this.vehicle_information_server_data_cover = function() {
       console.log(vehicle_information_result);
       for (var i = 0; i < vehicle_information_result.length; i++) {
         tmp_arr[i] = {"contract_code":this.trade_contract_code, "name":vehicle_information_result[i].name, "approved_load":vehicle_information_result[i].approved_load, "deliver_quantity":vehicle_information_result[i].deliver_quantity, "contact_name":vehicle_information_result[i].contact_name, "contact_number":vehicle_information_result[i].contact_number, "idcard_number":vehicle_information_result[i].idcard_number, "uuid":vehicle_information_result[i].uuid};
+        // 出库单
+        add_vehicle_object_list(godown_exit_list, vehicle_information_result[i].uuid, new godownExit(vehicle_information_result[i].uuid, "#godown_exit_content" + vehicle_information_result[i].uuid));
+        // 入库单
+        add_vehicle_object_list(godown_entry_list, vehicle_information_result[i].uuid, new godownEntry(vehicle_information_result[i].uuid, "#godown_entry_content" + vehicle_information_result[i].uuid, this.warehouse_uuid));
+        // 船板单
+        add_vehicle_object_list(report_boat_ullage_list, vehicle_information_result[i].uuid, new reportBoatUllage(vehicle_information_result[i].uuid, "#report_boat_ullage_content" + vehicle_information_result[i].uuid));
+        // 商检单
+        add_vehicle_object_list(report_shore_tank_list, vehicle_information_result[i].uuid, new reportShoreTank(vehicle_information_result[i].uuid, "#report_shore_tank_content" + vehicle_information_result[i].uuid));        
       }
       this.vehicle_information_data["data"] = tmp_arr;
     }
