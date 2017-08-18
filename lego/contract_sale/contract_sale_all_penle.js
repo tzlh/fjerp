@@ -51,7 +51,7 @@ function contract_sale_open_info_func(obj) {
     paid_record_paid: "收款金额（元）"
   }
   // var paid_record = new PaidRecord(contract_sale_all_price, contract_sales_contract_code, paid_record_title, "#paid_record_content" + contract_sales_contract_code_uuid);
-  var paid_record = get_paid_record_list(contract_sales_contract_code);
+  var paid_record = get_sale_object_list(paid_record_list, contract_sales_contract_code);
   paid_record.paid_record_output();
   $("#paid_record_content" + contract_sales_contract_code_uuid).find("#paid_record_add_modle").attr("trade_contract_code",contract_sales_contract_code);
   // $("#paid_record_content" + contract_sales_contract_code_uuid).find("#paid_record_add_modle").attr("contract_sale_all_price",contract_sale_all_price);
