@@ -78,7 +78,7 @@ function SettlementBillSale(trade_contract_code, trade_contract_code_uuid, settl
       } else {
         var tmp_arr = new Array();
         var settlement_bill_sale_result = JSON.parse(settlement_bill_sale_get_contract.result);  
-        console.log(settlement_bill_sale_result);
+        ////console.log(settlement_bill_sale_result);
         for (var i = 0; i < settlement_bill_sale_result.length; i++) {
           tmp_arr[i] = {"contract_code":this.trade_contract_code, "type":this.bill_sale_type, "buyer_uuid":settlement_bill_contract_sale_buyer_uuid, "seller_uuid":settlement_bill_contract_sale_seller_uuid, "product_name":settlement_bill_sale_result[i].product_name, "load_quantity":settlement_bill_sale_result[i].load_quantity, "unload_quantity":settlement_bill_sale_result[i].unload_quantity, "contract_ullage":settlement_bill_contract_sale_contract_ullage, "settle_quantity":settlement_bill_sale_result[i].settle_quantity, "goods_price":settlement_bill_sale_result[i].goods_price, "invoice_quantity":settlement_bill_sale_result[i].invoice_quantity, "paid_amount":settlement_bill_sale_result[i].paid_amount, "uuid":settlement_bill_sale_result[i].uuid, "contract_code_uuid":settlement_bill_contract_sale_contract_code_uuid};
         }
@@ -352,7 +352,7 @@ function SettlementBillSale(trade_contract_code, trade_contract_code_uuid, settl
     var settlement_bill_sale_get_all_warehouse = ajax_assistant(settlement_bill_sale_get_all_url, data, false, true, false);
     if ("1" == settlement_bill_sale_get_all_warehouse.status) {
       var settlement_bill_sale_edit_data_d = JSON.parse(settlement_bill_sale_get_all_warehouse.result);
-      console.log(settlement_bill_sale_edit_data_d);
+      //console.log(settlement_bill_sale_edit_data_d);
       if (0 < settlement_bill_sale_edit_data_d.length) {
           settlement_bill_sale_product_name = settlement_bill_sale_edit_data_d[0].product_name;
           settlement_bill_sale_load_quantity = settlement_bill_sale_edit_data_d[0].load_quantity;
@@ -372,24 +372,24 @@ function SettlementBillSale(trade_contract_code, trade_contract_code_uuid, settl
     var settlement_bill_sale_all_price = (settlement_bill_sale_goods_price * settlement_bill_sale_settle_quantity).toFixed(2);
     var settlement_bill_sale_retune_price = ((settlement_bill_sale_goods_price * settlement_bill_sale_settle_quantity) - settlement_bill_sale_paid_amount).toFixed(2);
     //附件
-    console.log(settlement_bill_sale_cluster_list);
+    //console.log(settlement_bill_sale_cluster_list);
     if (0 < settlement_bill_sale_cluster_list.length) {
       var settlement_bill_sale_file_arr = new Array();
       settlement_bill_sale_cluster_list = settlement_bill_sale_cluster_list.substring(0, settlement_bill_sale_cluster_list.length - 1).split(';');
-      console.log(settlement_bill_sale_cluster_list)
+      //console.log(settlement_bill_sale_cluster_list)
       for(var i = 0; i < settlement_bill_sale_cluster_list.length; i++) {
         var cluster_name_data = {
           "cluster_name":settlement_bill_sale_cluster_list[i]
         };
         var settlement_bill_sale_file_name = ajax_assistant(PROJECT_PATH+"lego/lego_storage?servletName=getFileByClusterName",cluster_name_data, false, true, false);//查询文件集群信息
         var settlement_bill_sale_json = JSON.parse(settlement_bill_sale_file_name.result);
-        console.log(settlement_bill_sale_json)
+        //console.log(settlement_bill_sale_json)
         if(0 != settlement_bill_sale_file_name.count) {
           settlement_bill_sale_file_arr[i] = {"file_name":settlement_bill_sale_json[0].cluster_name + '.' + settlement_bill_sale_json[0].suffix};
         }
       }
       this.settlement_bill_sale_file_data = settlement_bill_sale_file_arr;
-      console.log(this.settlement_bill_sale_file_data);
+      //console.log(this.settlement_bill_sale_file_data);
     } else {
       this.settlement_bill_sale_file_data = [];
     }
@@ -663,7 +663,7 @@ function SettlementBillSale(trade_contract_code, trade_contract_code_uuid, settl
     var settlement_bill_sale_get_all_warehouse = ajax_assistant(settlement_bill_sale_get_all_url, data, false, true, false);
     if ("1" == settlement_bill_sale_get_all_warehouse.status) {
       var settlement_bill_sale_edit_data_d = JSON.parse(settlement_bill_sale_get_all_warehouse.result);
-      console.log(settlement_bill_sale_edit_data_d);
+      //console.log(settlement_bill_sale_edit_data_d);
       if (0 < settlement_bill_sale_edit_data_d.length) {
           settlement_bill_sale_product_name = settlement_bill_sale_edit_data_d[0].product_name;
           settlement_bill_sale_load_quantity = settlement_bill_sale_edit_data_d[0].load_quantity;
@@ -683,24 +683,24 @@ function SettlementBillSale(trade_contract_code, trade_contract_code_uuid, settl
     var settlement_bill_sale_all_price = (settlement_bill_sale_goods_price * settlement_bill_sale_settle_quantity).toFixed(2);
     var settlement_bill_sale_retune_price = ((settlement_bill_sale_goods_price * settlement_bill_sale_settle_quantity) - settlement_bill_sale_paid_amount).toFixed(2);
     //附件
-    console.log(settlement_bill_sale_cluster_list);
+    //console.log(settlement_bill_sale_cluster_list);
     if (0 < settlement_bill_sale_cluster_list.length) {
       var settlement_bill_sale_file_arr = new Array();
       settlement_bill_sale_cluster_list = settlement_bill_sale_cluster_list.substring(0, settlement_bill_sale_cluster_list.length - 1).split(';');
-      console.log(settlement_bill_sale_cluster_list)
+      //console.log(settlement_bill_sale_cluster_list)
       for(var i = 0; i < settlement_bill_sale_cluster_list.length; i++) {
         var cluster_name_data = {
           "cluster_name":settlement_bill_sale_cluster_list[i]
         };
         var settlement_bill_sale_file_name = ajax_assistant(PROJECT_PATH+"lego/lego_storage?servletName=getFileByClusterName",cluster_name_data, false, true, false);//查询文件集群信息
         var settlement_bill_sale_json = JSON.parse(settlement_bill_sale_file_name.result);
-        console.log(settlement_bill_sale_json)
+        //console.log(settlement_bill_sale_json)
         if(0 != settlement_bill_sale_file_name.count) {
           settlement_bill_sale_file_arr[i] = {"file_name":settlement_bill_sale_json[0].cluster_name+'.'+settlement_bill_sale_json[0].suffix};
         }
       }
       this.settlement_bill_sale_file_data = settlement_bill_sale_file_arr;
-      console.log(this.settlement_bill_sale_file_data);
+      //console.log(this.settlement_bill_sale_file_data);
     } else {
       this.settlement_bill_sale_file_data = [];
     }

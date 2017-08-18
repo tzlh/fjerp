@@ -354,20 +354,20 @@ function contract_warehouse_edit_modle(obj) {
   if(0 < contract_warehouse_culster_list.length){
     var contract_warehouse_file_arr = new Array();
     contract_warehouse_culster_list = contract_warehouse_culster_list.substring(0, contract_warehouse_culster_list.length - 1).split(';');
-    console.log(contract_warehouse_culster_list)
+    //console.log(contract_warehouse_culster_list)
     for(var i = 0; i < contract_warehouse_culster_list.length; i++){
       var cluster_name_data = {
         "cluster_name":contract_warehouse_culster_list[i]
       };
       var contract_warehouse_file_name=ajax_assistant(PROJECT_PATH+"lego/lego_storage?servletName=getFileByClusterName",cluster_name_data, false, true, false);//查询文件集群信息
       var contract_warehouse_json=JSON.parse(contract_warehouse_file_name.result);
-      console.log(contract_warehouse_json)
+      //console.log(contract_warehouse_json)
       if(0 != contract_warehouse_file_name.count) {
         contract_warehouse_file_arr[i] = {"file_name":contract_warehouse_json[0].cluster_name+'.'+contract_warehouse_json[0].suffix};
       }
     }
     contract_warehouse_file_data = contract_warehouse_file_arr;
-    console.log(contract_warehouse_file_data);
+    //console.log(contract_warehouse_file_data);
   } else {
     contract_warehouse_file_data = [];
   }
@@ -601,14 +601,14 @@ function contract_warehouse_info_modle(obj) {
   if(0 < contract_warehouse_culster_list.length){
     var contract_warehouse_file_arr = new Array();
     contract_warehouse_culster_list = contract_warehouse_culster_list.substring(0, contract_warehouse_culster_list.length - 1).split(';');
-    console.log(contract_warehouse_culster_list)
+    //console.log(contract_warehouse_culster_list)
     for(var i = 0; i < contract_warehouse_culster_list.length; i++){
       var cluster_name_data = {
         "cluster_name":contract_warehouse_culster_list[i]
       };
       var contract_warehouse_file_name=ajax_assistant(PROJECT_PATH+"lego/lego_storage?servletName=getFileByClusterName",cluster_name_data, false, true, false);//查询文件集群信息
       var contract_warehouse_json=JSON.parse(contract_warehouse_file_name.result);
-      console.log(contract_warehouse_json)
+      //console.log(contract_warehouse_json)
       if(0 != contract_warehouse_file_name.count) {
         contract_warehouse_file_arr[i] = {"file_name":contract_warehouse_json[0].cluster_name+'.'+contract_warehouse_json[0].suffix};
       }
