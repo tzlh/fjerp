@@ -70,13 +70,13 @@ function deliverEntrustLetter(contract_buy_contract_code, deliver_entrust_letter
     var get_deliver_entrust_letter_param_data = {};
     get_deliver_entrust_letter_param_data["contract_code"] = this.contract_buy_contract_code;
     var deliver_entrust_letter_get= ajax_assistant(get_deliver_entrust_letter_url, get_deliver_entrust_letter_param_data, false, true, false);
-    console.log(deliver_entrust_letter_get);
+    ////console.log(deliver_entrust_letter_get);
     if (1 == deliver_entrust_letter_get.status) {
       if (0 == deliver_entrust_letter_get.count) {
         this.deliver_entrust_letter_data = {};
       } else {
         var result = JSON.parse(deliver_entrust_letter_get.result);
-        console.log(result);
+        ////console.log(result);
         var deliver_entrust_letter_data_arr = new Array();
         for (var i = 0; i < result.length; i++) {
           var deliver_datetime = result[i].deliver_datetime.substring(0,result[i].deliver_datetime.indexOf(" "));
@@ -91,32 +91,32 @@ function deliverEntrustLetter(contract_buy_contract_code, deliver_entrust_letter
    * 获取提货委托函详情
    */
   this.deliver_entrust_letter_get_letter = function(uuid) {
-    console.log(uuid);
+    ////console.log(uuid);
     var get_deliver_entrust_letter_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getDeliverEntrustLetter";
     var get_deliver_entrust_letter_param_data = {};
     get_deliver_entrust_letter_param_data["uuid"] = uuid;
     var deliver_entrust_letter_get= ajax_assistant(get_deliver_entrust_letter_url, get_deliver_entrust_letter_param_data, false, true, false);
-    console.log(deliver_entrust_letter_get);
+    ////console.log(deliver_entrust_letter_get);
     if (1 == deliver_entrust_letter_get.status) {
       var result = JSON.parse(deliver_entrust_letter_get.result);
-      console.log(result);
+      //console.log(result);
       var deliver_datetime = result[0].deliver_datetime.substring(0,result[0].deliver_datetime.indexOf(" "));
       this.current_deliver_entrust_letter_data = {"place": result[0].place,"deliver_datetime": deliver_datetime,"uuid": result[0].uuid,"contract_code": result[0].contract_code};
       var deliver_entrust_letter_file_arr =new Array();
       var cluster_list_all = result[0].cluster_list;
       if (null != cluster_list_all) {
         var cluster_list = result[0].cluster_list.substring(0,result[0].cluster_list.lastIndexOf(";")).split(";");
-        console.log(cluster_list);
+        //console.log(cluster_list);
         var deliver_entrust_letter_file = "";
         for (var j = 0; j < cluster_list.length; j++) {
           var enterprise_management_get_deliver_entrust_letter_file_url = PROJECT_PATH + "lego/lego_storage?servletName=getFileByClusterName";
           var enterprise_management_get_deliver_entrust_letter_file_param_data = {};
           enterprise_management_get_deliver_entrust_letter_file_param_data["cluster_name"] = cluster_list[j];
           var enterprise_management_get_deliver_entrust_letter_file = ajax_assistant(enterprise_management_get_deliver_entrust_letter_file_url, enterprise_management_get_deliver_entrust_letter_file_param_data, false, true, false);
-          console.log(enterprise_management_get_deliver_entrust_letter_file);
+          //console.log(enterprise_management_get_deliver_entrust_letter_file);
           if (1 == enterprise_management_get_deliver_entrust_letter_file.status) {
             var deliver_entrust_letter_file_result = JSON.parse(enterprise_management_get_deliver_entrust_letter_file.result);
-            console.log(deliver_entrust_letter_file_result);
+            //console.log(deliver_entrust_letter_file_result);
             var deliver_entrust_letter_cluster_name = deliver_entrust_letter_file_result[0].cluster_name;
             var deliver_entrust_letter_suffix = deliver_entrust_letter_file_result[0].suffix;
             var file_name = deliver_entrust_letter_cluster_name + '.' + deliver_entrust_letter_suffix;
@@ -198,8 +198,8 @@ function deliverEntrustLetter(contract_buy_contract_code, deliver_entrust_letter
        deliver_entrust_letter_list += deliver_entrust_letter + ";"; 
       }    
     }
-    console.log(deliver_datetime);
-    console.log(deliver_entrust_letter_list);
+    //console.log(deliver_datetime);
+    //console.log(deliver_entrust_letter_list);
     if ("" == place) {
       alert("请输入提货地点！");
       return;
@@ -222,7 +222,7 @@ function deliverEntrustLetter(contract_buy_contract_code, deliver_entrust_letter
       add_deliver_entrust_letter_param_data["cluster_list"] = deliver_entrust_letter_list;
     }
     var deliver_entrust_letter_add = ajax_assistant(add_deliver_entrust_letter_url, add_deliver_entrust_letter_param_data, false, true, false);
-    console.log(deliver_entrust_letter_add);
+    //console.log(deliver_entrust_letter_add);
     if (1 == deliver_entrust_letter_add.status) {
       $("#deliver_entrust_letter_add_modal").modal("hide");
       this.deliver_entrust_letter_server_data_cover();
@@ -289,7 +289,7 @@ function deliverEntrustLetter(contract_buy_contract_code, deliver_entrust_letter
   };
   
   this.deliver_entrust_letter_edit_data = function(uuid) {
-    console.log(uuid);
+    //console.log(uuid);
     var place = $("#deliver_entrust_letter_edit_modal .place").val();
     var deliver_datetime = $("#deliver_entrust_letter_edit_modal .start_deliver_datetime").val() + ' 00:00:00';
     var deliver_entrust_letter_li = $("#deliver_entrust_letter_edit_attch ul").children("li");
@@ -301,7 +301,7 @@ function deliverEntrustLetter(contract_buy_contract_code, deliver_entrust_letter
         deliver_entrust_letter_list += deliver_entrust_letter + ";"; 
       }    
     }
-    console.log(deliver_entrust_letter_list);
+    //console.log(deliver_entrust_letter_list);
     if ("" == place) {
       alert("请输入提货地点！");
       return;
@@ -325,7 +325,7 @@ function deliverEntrustLetter(contract_buy_contract_code, deliver_entrust_letter
       edit_deliver_entrust_letter_param_data["newClusterList"] = deliver_entrust_letter_list;
     }
     var deliver_entrust_letter_edit= ajax_assistant(edit_deliver_entrust_letter_url, edit_deliver_entrust_letter_param_data, false, true, false);
-    console.log(deliver_entrust_letter_edit);
+    //console.log(deliver_entrust_letter_edit);
     if (1 == deliver_entrust_letter_edit.status) {
       $("#deliver_entrust_letter_edit_modal").modal("hide");
       this.deliver_entrust_letter_server_data_cover();
@@ -422,7 +422,7 @@ function deliverEntrustLetter(contract_buy_contract_code, deliver_entrust_letter
     var delete_deliver_entrust_letter_param_data = {};
     delete_deliver_entrust_letter_param_data["idColumnValue"] = uuid;
     var org_structure_delete_deliver_entrust_letter= ajax_assistant(delete_deliver_entrust_letter_url, delete_deliver_entrust_letter_param_data, false, true, false);
-    console.log(org_structure_delete_deliver_entrust_letter);
+    //console.log(org_structure_delete_deliver_entrust_letter);
     if (1 == org_structure_delete_deliver_entrust_letter.status) {
       $("#deliver_entrust_letter_delete_modal").modal("hide");
       this.deliver_entrust_letter_server_data_cover();

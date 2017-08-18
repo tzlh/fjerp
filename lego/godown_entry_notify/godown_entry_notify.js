@@ -85,13 +85,13 @@ function godownEntryNotify(contract_buy_contract_code, godown_entry_notify_conte
     var get_godown_entry_notify_param_data = {};
     get_godown_entry_notify_param_data["contract_code"] = this.contract_buy_contract_code;
     var godown_entry_notify_get= ajax_assistant(get_godown_entry_notify_url, get_godown_entry_notify_param_data, false, true, false);
-    console.log(godown_entry_notify_get);
+    // console.log(godown_entry_notify_get);
     if (1 == godown_entry_notify_get.status) {
       if (0 == godown_entry_notify_get.count) {
         this.godown_entry_notify_data = {};
       } else {
         var result = JSON.parse(godown_entry_notify_get.result);
-        console.log(result);
+        // console.log(result);
         var godown_entry_notify_data_arr = new Array();
         for (var i = 0; i < result.length; i++) {
           var start_datetime = result[i].start_datetime.substring(0,result[i].start_datetime.indexOf(" "));
@@ -102,10 +102,10 @@ function godownEntryNotify(contract_buy_contract_code, godown_entry_notify_conte
           var get_warehouse_pot_param_data = {};
           get_warehouse_pot_param_data["uuid"] = warehouse_pot_uuid;
           var godown_entry_notify_get_warehouse_pot = ajax_assistant(get_warehouse_pot_url, get_warehouse_pot_param_data, false, true, false);
-          console.log(godown_entry_notify_get_warehouse_pot);
+          // console.log(godown_entry_notify_get_warehouse_pot);
           if (1 == godown_entry_notify_get_warehouse_pot.status) {
             var result_warehouse_pot = JSON.parse(godown_entry_notify_get_warehouse_pot.result); 
-            console.log(result_warehouse_pot);
+            // console.log(result_warehouse_pot);
             godown_entry_notify_data_arr.push({"product_name": result[i].product_name,"quantity": result[i].quantity,"start_datetime": start_datetime,"end_datetime": end_datetime,"uuid": result[i].uuid,"contract_code": result[i].contract_code,"warehouse_pot_name": result_warehouse_pot[0].name});
           }
         }
@@ -119,15 +119,15 @@ function godownEntryNotify(contract_buy_contract_code, godown_entry_notify_conte
    * 获取入库单通知单详情
    */
   this.godown_entry_notify_get_letter = function(uuid) {
-    console.log(uuid);
+    // console.log(uuid);
     var get_godown_entry_notify_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getGodownEntryNotify";
     var get_godown_entry_notify_param_data = {};
     get_godown_entry_notify_param_data["uuid"] = uuid;
     var godown_entry_notify_get= ajax_assistant(get_godown_entry_notify_url, get_godown_entry_notify_param_data, false, true, false);
-    console.log(godown_entry_notify_get);
+    // console.log(godown_entry_notify_get);
     if (1 == godown_entry_notify_get.status) {
       var result = JSON.parse(godown_entry_notify_get.result);
-      console.log(result);
+      // console.log(result);
       var start_datetime = result[0].start_datetime.substring(0,result[0].start_datetime.indexOf(" "));
       var end_datetime = result[0].end_datetime.substring(0,result[0].end_datetime.indexOf(" "));
       this.current_godown_entry_notify_data = {"product_name": result[0].product_name,"quantity": result[0].quantity,"start_datetime": start_datetime,"end_datetime": end_datetime,"uuid": result[0].uuid,"contract_code": result[0].contract_code,"warehouse_pot_uuid": result[0].warehouse_pot_uuid,};
@@ -135,17 +135,17 @@ function godownEntryNotify(contract_buy_contract_code, godown_entry_notify_conte
       var cluster_list_all = result[0].cluster_list;
       if (null != cluster_list_all) {
         var cluster_list = result[0].cluster_list.substring(0,result[0].cluster_list.lastIndexOf(";")).split(";");
-        console.log(cluster_list);
+        // console.log(cluster_list);
         var godown_entry_notify_file = "";
         for (var j = 0; j < cluster_list.length; j++) {
           var enterprise_management_get_godown_entry_notify_file_url = PROJECT_PATH + "lego/lego_storage?servletName=getFileByClusterName";
           var enterprise_management_get_godown_entry_notify_file_param_data = {};
           enterprise_management_get_godown_entry_notify_file_param_data["cluster_name"] = cluster_list[j];
           var enterprise_management_get_godown_entry_notify_file = ajax_assistant(enterprise_management_get_godown_entry_notify_file_url, enterprise_management_get_godown_entry_notify_file_param_data, false, true, false);
-          console.log(enterprise_management_get_godown_entry_notify_file);
+          // console.log(enterprise_management_get_godown_entry_notify_file);
           if (1 == enterprise_management_get_godown_entry_notify_file.status) {
             var godown_entry_notify_file_result = JSON.parse(enterprise_management_get_godown_entry_notify_file.result);
-            console.log(godown_entry_notify_file_result);
+            // console.log(godown_entry_notify_file_result);
             var godown_entry_notify_cluster_name = godown_entry_notify_file_result[0].cluster_name;
             var godown_entry_notify_suffix = godown_entry_notify_file_result[0].suffix;
             var file_name = godown_entry_notify_cluster_name + '.' + godown_entry_notify_suffix;
@@ -167,14 +167,14 @@ function godownEntryNotify(contract_buy_contract_code, godown_entry_notify_conte
     var get_warehouse_pot_param_data = {};
     get_warehouse_pot_param_data["warehouse_uuid"] = this.warehouse_uuid;
     var godown_entry_notify_get_warehouse_pot = ajax_assistant(get_warehouse_pot_url, get_warehouse_pot_param_data, false, true, false);
-    console.log(godown_entry_notify_get_warehouse_pot);
+    // console.log(godown_entry_notify_get_warehouse_pot);
     if (1 == godown_entry_notify_get_warehouse_pot.status) {
       if (0 == godown_entry_notify_get_warehouse_pot.count) {
         this.godown_entry_notify_warehouse_pot_data = {};
       } else {
         var warehouse_pot_arr = new Array();
         var result = JSON.parse(godown_entry_notify_get_warehouse_pot.result); 
-        console.log(result);
+        // console.log(result);
         for (var i = 0; i < result.length; i++) {
           warehouse_pot_arr.push({"warehouse_pot_name":result[i].name, "warehouse_pot_uuid":result[i].uuid});
         }
@@ -298,7 +298,7 @@ function godownEntryNotify(contract_buy_contract_code, godown_entry_notify_conte
        godown_entry_notify_list += godown_entry_notify + ";"; 
       }    
     }
-    console.log(godown_entry_notify_list);
+    // console.log(godown_entry_notify_list);
     if ("" == product_name) {
       alert("请输入品类！");
       return;
@@ -341,7 +341,7 @@ function godownEntryNotify(contract_buy_contract_code, godown_entry_notify_conte
       add_godown_entry_notify_param_data["cluster_list"] = godown_entry_notify_list;
     }
     var godown_entry_notify_add = ajax_assistant(add_godown_entry_notify_url, add_godown_entry_notify_param_data, false, true, false);
-    console.log(godown_entry_notify_add);
+    // console.log(godown_entry_notify_add);
     if (1 == godown_entry_notify_add.status) {
       $("#godown_entry_notify_add_modal").modal("hide");
       this.godown_entry_notify_clear_raw_data(this.godown_entry_notify_content_id);
@@ -445,7 +445,7 @@ function godownEntryNotify(contract_buy_contract_code, godown_entry_notify_conte
     for (var i = 0; i < $("#godown_entry_notify_edit_modal select option").length; i++) {
       var warehouse_pot_uuid = this.current_godown_entry_notify_data.warehouse_pot_uuid;
       var value = $("#godown_entry_notify_edit_modal select option").eq(i).val();
-      console.log(warehouse_pot_uuid);
+      // console.log(warehouse_pot_uuid);
       if($("#godown_entry_notify_edit_modal select option").eq(i).val() == warehouse_pot_uuid) {
         $("#godown_entry_notify_edit_modal select option").eq(i).prop('selected','selected');
         break;
@@ -473,7 +473,7 @@ function godownEntryNotify(contract_buy_contract_code, godown_entry_notify_conte
        godown_entry_notify_list += godown_entry_notify + ";"; 
       }    
     }
-    console.log(godown_entry_notify_list);
+    // console.log(godown_entry_notify_list);
     if ("" == product_name) {
       alert("请输入品类！");
       return;
@@ -517,7 +517,7 @@ function godownEntryNotify(contract_buy_contract_code, godown_entry_notify_conte
       edit_godown_entry_notify_param_data["newClusterList"] = godown_entry_notify_list;
     }
     var godown_entry_notify_edit = ajax_assistant(edit_godown_entry_notify_url, edit_godown_entry_notify_param_data, false, true, false);
-    console.log(godown_entry_notify_edit);
+    // console.log(godown_entry_notify_edit);
     if (1 == godown_entry_notify_edit.status) {
       $("#godown_entry_notify_edit_modal").modal("hide");
       this.godown_entry_notify_clear_raw_data(this.godown_entry_notify_content_id);
@@ -620,7 +620,7 @@ function godownEntryNotify(contract_buy_contract_code, godown_entry_notify_conte
     for (var i = 0; i < $("#godown_entry_notify_detail_modal select option").length; i++) {
       var warehouse_pot_uuid = this.current_godown_entry_notify_data.warehouse_pot_uuid;
       var value = $("#godown_entry_notify_detail_modal select option").eq(i).val();
-      console.log(warehouse_pot_uuid);
+      // console.log(warehouse_pot_uuid);
       if ($("#godown_entry_notify_detail_modal select option").eq(i).val() == warehouse_pot_uuid) {
         $("#godown_entry_notify_detail_modal select option").eq(i).prop('selected','selected');
         break;
@@ -666,7 +666,7 @@ function godownEntryNotify(contract_buy_contract_code, godown_entry_notify_conte
     delete_godown_entry_notify_param_data["idColumnValue"] = uuid;
     delete_godown_entry_notify_param_data["contract_code"] = this.contract_buy_contract_code;
     var godown_entry_notify_delete_godown_entry_notify= ajax_assistant(delete_godown_entry_notify_url, delete_godown_entry_notify_param_data, false, true, false);
-    console.log(godown_entry_notify_delete_godown_entry_notify);
+    // console.log(godown_entry_notify_delete_godown_entry_notify);
     if (1 == godown_entry_notify_delete_godown_entry_notify.status) {
       $("#godown_entry_notify_delete_modal").modal("hide");
       this.godown_entry_notify_clear_raw_data(this.godown_entry_notify_content_id);

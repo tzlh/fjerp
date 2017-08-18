@@ -73,21 +73,21 @@ function reportShoreTank(vehicle_information_uuid, report_shore_tank_content_id)
     var get_report_shore_tank_param_data = {};
     get_report_shore_tank_param_data["vehicle_information_uuid"] = this.vehicle_information_uuid;
     var report_shore_tank_get= ajax_assistant(get_report_shore_tank_url, get_report_shore_tank_param_data, false, true, false);
-    console.log(report_shore_tank_get);
+    //console.log(report_shore_tank_get);
     if (1 == report_shore_tank_get.status) {
       if (0 == report_shore_tank_get.count) {
         this.report_shore_tank_data = {};
         count = 0;
       } else {
         var result = JSON.parse(report_shore_tank_get.result);
-        console.log(result);
+        //console.log(result);
         var report_shore_tank_data_arr = new Array();
         for (var i = 0; i < result.length; i++) {
           count_one = Number(result[i].quantity);
           report_shore_tank_data_arr.push({"quantity": result[i].quantity,"uuid": result[i].uuid,"vehicle_information_uuid": result[i].vehicle_information_uuid});
           count = count + count_one;
-          console.log(count);
-          console.log(typeof(count));
+          //console.log(count);
+          //console.log(typeof(count));
         }
         this.report_shore_tank_data = report_shore_tank_data_arr;
       }
@@ -98,15 +98,15 @@ function reportShoreTank(vehicle_information_uuid, report_shore_tank_content_id)
    * 获取商检单详情
    */
   this.report_shore_tank_get_letter = function(uuid) {
-    console.log(uuid);
+    //console.log(uuid);
     var get_report_shore_tank_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getShoreTankReport";
     var get_report_shore_tank_param_data = {};
     get_report_shore_tank_param_data["uuid"] = uuid;
     var report_shore_tank_get= ajax_assistant(get_report_shore_tank_url, get_report_shore_tank_param_data, false, true, false);
-    console.log(report_shore_tank_get);
+    //console.log(report_shore_tank_get);
     if (1 == report_shore_tank_get.status) {
       var result = JSON.parse(report_shore_tank_get.result);
-      console.log(result);
+      //console.log(result);
       this.current_report_shore_tank_data = {
         "quantity": result[0].quantity,
         "uuid": result[0].uuid,
@@ -116,17 +116,17 @@ function reportShoreTank(vehicle_information_uuid, report_shore_tank_content_id)
       var cluster_list_all = result[0].cluster_list;
       if (null != cluster_list_all) {
         var cluster_list = result[0].cluster_list.substring(0,result[0].cluster_list.lastIndexOf(";")).split(";");
-        console.log(cluster_list);
+        //console.log(cluster_list);
         var report_shore_tank_file = "";
         for (var j = 0; j < cluster_list.length; j++) {
           var enterprise_management_get_report_shore_tank_file_url = PROJECT_PATH + "lego/lego_storage?servletName=getFileByClusterName";
           var enterprise_management_get_report_shore_tank_file_param_data = {};
           enterprise_management_get_report_shore_tank_file_param_data["cluster_name"] = cluster_list[j];
           var enterprise_management_get_report_shore_tank_file = ajax_assistant(enterprise_management_get_report_shore_tank_file_url, enterprise_management_get_report_shore_tank_file_param_data, false, true, false);
-          console.log(enterprise_management_get_report_shore_tank_file);
+          //console.log(enterprise_management_get_report_shore_tank_file);
           if (1 == enterprise_management_get_report_shore_tank_file.status) {
             var report_shore_tank_file_result = JSON.parse(enterprise_management_get_report_shore_tank_file.result);
-            console.log(report_shore_tank_file_result);
+            //console.log(report_shore_tank_file_result);
             var report_shore_tank_cluster_name = report_shore_tank_file_result[0].cluster_name;
             var report_shore_tank_suffix = report_shore_tank_file_result[0].suffix;
             var file_name = report_shore_tank_cluster_name + '.' + report_shore_tank_suffix;
@@ -194,7 +194,7 @@ function reportShoreTank(vehicle_information_uuid, report_shore_tank_content_id)
        report_shore_tank_list += report_shore_tank + ";"; 
       }    
     }
-    console.log(report_shore_tank_list);
+    //console.log(report_shore_tank_list);
     if ("" == quantity) {
       alert("请输入数量！");
       return;
@@ -212,7 +212,7 @@ function reportShoreTank(vehicle_information_uuid, report_shore_tank_content_id)
       add_report_shore_tank_param_data["cluster_list"] = report_shore_tank_list;
     }
     var report_shore_tank_add = ajax_assistant(add_report_shore_tank_url, add_report_shore_tank_param_data, false, true, false);
-    console.log(report_shore_tank_add);
+    //console.log(report_shore_tank_add);
     if (1 == report_shore_tank_add.status) {
       $("#report_shore_tank_add_modal").modal("hide");
       this.report_shore_tank_clear_raw_data(this.vehicle_information_uuid);
@@ -267,7 +267,7 @@ function reportShoreTank(vehicle_information_uuid, report_shore_tank_content_id)
   };
   
   this.report_shore_tank_edit_data = function(uuid) {
-    console.log(uuid);
+    //console.log(uuid);
     var quantity = $("#report_shore_tank_edit_modal .quantity").val();
     var report_shore_tank_li = $("#report_shore_tank_edit_attch ul").children("li");
     var report_shore_tank_list = "";
@@ -278,7 +278,7 @@ function reportShoreTank(vehicle_information_uuid, report_shore_tank_content_id)
         report_shore_tank_list += report_shore_tank + ";"; 
       }    
     }
-    console.log(report_shore_tank_list);
+    //console.log(report_shore_tank_list);
     if ("" == quantity) {
       alert("请输入数量！");
       return;
@@ -297,7 +297,7 @@ function reportShoreTank(vehicle_information_uuid, report_shore_tank_content_id)
       edit_report_shore_tank_param_data["newClusterList"] = report_shore_tank_list;
     }
     var report_shore_tank_edit= ajax_assistant(edit_report_shore_tank_url, edit_report_shore_tank_param_data, false, true, false);
-    console.log(report_shore_tank_edit);
+    //console.log(report_shore_tank_edit);
     if (1 == report_shore_tank_edit.status) {
       $("#report_shore_tank_edit_modal").modal("hide");
       this.report_shore_tank_clear_raw_data(this.vehicle_information_uuid);
@@ -383,7 +383,7 @@ function reportShoreTank(vehicle_information_uuid, report_shore_tank_content_id)
     delete_report_shore_tank_param_data["idColumnValue"] = uuid;
     delete_report_shore_tank_param_data["vehicle_information_uuid"] = this.vehicle_information_uuid;
     var org_structure_delete_report_shore_tank= ajax_assistant(delete_report_shore_tank_url, delete_report_shore_tank_param_data, false, true, false);
-    console.log(org_structure_delete_report_shore_tank);
+    //console.log(org_structure_delete_report_shore_tank);
     if (1 == org_structure_delete_report_shore_tank.status) {
       $("#report_shore_tank_delete_modal").modal("hide");
       this.report_shore_tank_clear_raw_data(this.vehicle_information_uuid);

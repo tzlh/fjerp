@@ -62,13 +62,13 @@ function reportTest(vehicle_information_uuid, report_test_content_id) {
     var get_report_test_param_data = {};
     get_report_test_param_data["vehicle_information_uuid"] = this.vehicle_information_uuid;
     var report_test_get= ajax_assistant(get_report_test_url, get_report_test_param_data, false, true, false);
-    console.log(report_test_get);
+    //console.log(report_test_get);
     if (1 == report_test_get.status) {
       if (0 == report_test_get.count) {
         this.report_test_data = {};
       } else {
         var result = JSON.parse(report_test_get.result);
-        console.log(result);
+        //console.log(result);
         var report_test_data_arr = new Array();
         for (var i = 0; i < result.length; i++) {
           report_test_data_arr.push({"numerical_order": i+1,"uuid": result[i].uuid,"vehicle_information_uuid": result[i].vehicle_information_uuid});
@@ -82,30 +82,30 @@ function reportTest(vehicle_information_uuid, report_test_content_id) {
    * 获取化验单详情
    */
   this.report_test_get_letter = function(uuid) {
-    console.log(uuid);
+    //console.log(uuid);
     var get_report_test_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getTestReport";
     var get_report_test_param_data = {};
     get_report_test_param_data["uuid"] = uuid;
     var report_test_get= ajax_assistant(get_report_test_url, get_report_test_param_data, false, true, false);
-    console.log(report_test_get);
+    //console.log(report_test_get);
     if (1 == report_test_get.status) {
       var result = JSON.parse(report_test_get.result);
-      console.log(result);
+      //console.log(result);
       var report_test_file_arr =new Array();
       var cluster_list_all = result[0].cluster_list;
       if (null != cluster_list_all) {
         var cluster_list = result[0].cluster_list.substring(0, result[0].cluster_list.lastIndexOf(";")).split(";");
-        console.log(cluster_list);
+        //console.log(cluster_list);
         var report_test_file = "";
         for (var j = 0; j < cluster_list.length; j++) {
           var enterprise_management_get_report_test_file_url = PROJECT_PATH + "lego/lego_storage?servletName=getFileByClusterName";
           var enterprise_management_get_report_test_file_param_data = {};
           enterprise_management_get_report_test_file_param_data["cluster_name"] = cluster_list[j];
           var enterprise_management_get_report_test_file = ajax_assistant(enterprise_management_get_report_test_file_url, enterprise_management_get_report_test_file_param_data, false, true, false);
-          console.log(enterprise_management_get_report_test_file);
+          //console.log(enterprise_management_get_report_test_file);
           if (1 == enterprise_management_get_report_test_file.status) {
             var report_test_file_result = JSON.parse(enterprise_management_get_report_test_file.result);
-            console.log(report_test_file_result);
+            //console.log(report_test_file_result);
             var report_test_cluster_name = report_test_file_result[0].cluster_name;
             var report_test_suffix = report_test_file_result[0].suffix;
             var file_name = report_test_cluster_name + '.' + report_test_suffix;
@@ -163,7 +163,7 @@ function reportTest(vehicle_information_uuid, report_test_content_id) {
        report_test_list += report_test + ";"; 
       }    
     }
-    console.log(report_test_list);
+    //console.log(report_test_list);
     var add_report_test_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=addTestReport";
     var add_report_test_param_data = {};
     add_report_test_param_data["vehicle_information_uuid"] = this.vehicle_information_uuid;
@@ -171,7 +171,7 @@ function reportTest(vehicle_information_uuid, report_test_content_id) {
       add_report_test_param_data["cluster_list"] = report_test_list;
     }
     var report_test_add = ajax_assistant(add_report_test_url, add_report_test_param_data, false, true, false);
-    console.log(report_test_add);
+    //console.log(report_test_add);
     if (1 == report_test_add.status) {
       $("#report_test_add_modal").modal("hide");
       this.report_test_server_data_cover(this.vehicle_information_uuid);
@@ -217,7 +217,7 @@ function reportTest(vehicle_information_uuid, report_test_content_id) {
   };
   
   this.report_test_edit_data = function(uuid) {
-    console.log(uuid);
+    //console.log(uuid);
     var report_test_li = $("#report_test_edit_attch ul").children("li");
     var report_test_list = "";
     for (var i = 0; i < report_test_li.length; i++) {
@@ -227,7 +227,7 @@ function reportTest(vehicle_information_uuid, report_test_content_id) {
         report_test_list += report_test + ";"; 
       }    
     }
-    console.log(report_test_list);
+    //console.log(report_test_list);
     var edit_report_test_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=modifyTestReport";
     var edit_report_test_param_data = {};
     edit_report_test_param_data["idColumnValue"] = uuid;
@@ -236,7 +236,7 @@ function reportTest(vehicle_information_uuid, report_test_content_id) {
       edit_report_test_param_data["newClusterList"] = report_test_list;
     }
     var report_test_edit= ajax_assistant(edit_report_test_url, edit_report_test_param_data, false, true, false);
-    console.log(report_test_edit);
+    //console.log(report_test_edit);
     if (1 == report_test_edit.status) {
       $("#report_test_edit_modal").modal("hide");
       this.report_test_server_data_cover(this.vehicle_information_uuid);
@@ -313,7 +313,7 @@ function reportTest(vehicle_information_uuid, report_test_content_id) {
     delete_report_test_param_data["idColumnValue"] = uuid;
     delete_report_test_param_data["vehicle_information_uuid"] = this.vehicle_information_uuid;
     var org_structure_delete_report_test= ajax_assistant(delete_report_test_url, delete_report_test_param_data, false, true, false);
-    console.log(org_structure_delete_report_test);
+    //console.log(org_structure_delete_report_test);
     if (1 == org_structure_delete_report_test.status) {
       $("#report_test_delete_modal").modal("hide");
       this.report_test_server_data_cover(this.vehicle_information_uuid);

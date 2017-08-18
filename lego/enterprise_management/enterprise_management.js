@@ -250,7 +250,7 @@ function enterprise_management_server_data_cover() {
       $("#enterprise_management_pages").html("");
     } else {
       var result = JSON.parse(enterprise_management_get_enterprise.result);
-      console.log(result);
+      //console.log(result);
       totalRows = result[0].count;
       generate_bootstrap_pagination_ctrl("#enterprise_management_pages", current_offset, rows, 3, totalRows);
       enterprise_management_search_condition["rows"] = rows;
@@ -262,13 +262,13 @@ function enterprise_management_server_data_cover() {
   //获取企业信息
   var enterprise_management_url = PROJECT_PATH + "lego/lego_crm?servletName=getEnterpriseInformation";
   var enterprise_management_get_enterprise = ajax_assistant(enterprise_management_url, enterprise_management_search_condition, false, true, false);
-  console.log(enterprise_management_get_enterprise);
+  //console.log(enterprise_management_get_enterprise);
   if (1 == enterprise_management_get_enterprise.status) {
     if (0 == enterprise_management_get_enterprise.count) {
       company_data = {};
     } else {
       var result = JSON.parse(enterprise_management_get_enterprise.result);
-      console.log(result);
+      //console.log(result);
       var company_data_arr = new Array();
       for (var i = 0; i < result.length; i++) {
         //获取开票信息
@@ -277,16 +277,16 @@ function enterprise_management_server_data_cover() {
         var enterprise_management_get_invoice_param_data = {};
         enterprise_management_get_invoice_param_data["parent_uuid"] = uuid;
         var enterprise_management_get_invoice = ajax_assistant(enterprise_management_get_invoice_url, enterprise_management_get_invoice_param_data, false, true, false);
-        console.log(enterprise_management_get_invoice);
+        //console.log(enterprise_management_get_invoice);
         if (1 == enterprise_management_get_invoice.status) {
           result_invoice = JSON.parse(enterprise_management_get_invoice.result);
-          console.log(result_invoice);
+          //console.log(result_invoice);
         }
         var establish_datetime = result[i].establish_datetime.substring(0,result[i].establish_datetime.indexOf(" "));
         company_data_arr.push({"name": result[i].name,"short_name": result[i].short_name,"registered_capital": result[i].registered_capital,"establish_datetime": establish_datetime,"tax_identification_number": result_invoice[0].tax_identification_number,"bank_name": result_invoice[0].bank_name,"account": result_invoice[0].account,"telephone_number": result_invoice[0].telephone_number,"address": result_invoice[0].address,"uuid": result[i].uuid});
       }
       company_data["data"] = company_data_arr;
-      console.log(company_data);
+      //console.log(company_data);
     }
   } else {
     alert("企业信息获取失败");
@@ -539,7 +539,7 @@ function enterprise_management_add_info() {
      invoice_cluster_list += invoice_cluster + ";"; 
     }    
   }
-  console.log(invoice_cluster_list);
+  //console.log(invoice_cluster_list);
   if("" == enterprise_name){
     alert("请输入企业名称");
     return;
@@ -625,7 +625,7 @@ function enterprise_management_add_info() {
   var check_enterprise_name_exist_param_data = {};
   check_enterprise_name_exist_param_data["name"] = enterprise_name;
   var check_enterprise_name_exist = ajax_assistant(check_enterprise_name_exist_url, check_enterprise_name_exist_param_data, false, true, false);
-  console.log(check_enterprise_name_exist);
+  //console.log(check_enterprise_name_exist);
   if (1 != check_enterprise_name_exist.status) {
     alert("该企业已存在");
     return;
@@ -646,7 +646,7 @@ function enterprise_management_add_info() {
     enterprise_management_add_info_param_data["cluster_list"] = invoice_cluster_list;
   }
   var enterprise_management_add_info = ajax_assistant(enterprise_management_add_info_url, enterprise_management_add_info_param_data, false, true, false);
-  console.log(enterprise_management_add_info);
+  //console.log(enterprise_management_add_info);
   if (1 == enterprise_management_add_info.status) {
     var result = JSON.parse(enterprise_management_add_info.result);
     var enterprise_name = result[0].name;
@@ -669,7 +669,7 @@ function enterprise_management_add_info() {
       enterprise_management_add_institutional_param_data["cluster_list"] = institutional_cluster_list;
     }
     var enterprise_management_add_institutional = ajax_assistant(enterprise_management_add_institutional_url, enterprise_management_add_institutional_param_data, false, true, false);
-    console.log(enterprise_management_add_institutional);
+    //console.log(enterprise_management_add_institutional);
     if (1 != enterprise_management_add_institutional.status) {
       alert("机构信用代码证添加失败！")
     }
@@ -691,7 +691,7 @@ function enterprise_management_add_info() {
       enterprise_management_add_hazardous_param_data["cluster_list"] = hazardous_cluster_list;
     }
     var enterprise_management_add_hazardous= ajax_assistant(enterprise_management_add_hazardous_url, enterprise_management_add_hazardous_param_data, false, true, false);
-    console.log(enterprise_management_add_hazardous);
+    //console.log(enterprise_management_add_hazardous);
     if (1 != enterprise_management_add_hazardous.status) {
       alert("危化品经营许可证添加失败！")
     }
@@ -712,7 +712,7 @@ function enterprise_management_add_info() {
       enterprise_management_add_idcard_param_data["cluster_list"] = idcard_cluster_list;
     }
     var enterprise_management_add_idcard= ajax_assistant(enterprise_management_add_idcard_url, enterprise_management_add_idcard_param_data, false, true, false);
-    console.log(enterprise_management_add_idcard);
+    //console.log(enterprise_management_add_idcard);
     if (1 != enterprise_management_add_idcard.status) {
       alert("法人身份证添加失败！")
     }
@@ -734,7 +734,7 @@ function enterprise_management_add_info() {
       enterprise_management_add_account_param_data["cluster_list"] = account_cluster_list;
     }
     var enterprise_management_add_account= ajax_assistant(enterprise_management_add_account_url, enterprise_management_add_account_param_data, false, true, false);
-    console.log(enterprise_management_add_account);
+    //console.log(enterprise_management_add_account);
     if (1 != enterprise_management_add_account.status) {
       alert("开户许可证添加失败！")
     }
@@ -756,7 +756,7 @@ function enterprise_management_add_info() {
       enterprise_management_add_safety_param_data["cluster_list"] = safety_cluster_list;
     }
     var enterprise_management_add_safety= ajax_assistant(enterprise_management_add_safety_url, enterprise_management_add_safety_param_data, false, true, false);
-    console.log(enterprise_management_add_safety);
+    //console.log(enterprise_management_add_safety);
     if (1 != enterprise_management_add_safety.status) {
       alert("安全生产许可证添加失败！")
     }
@@ -778,7 +778,7 @@ function enterprise_management_add_info() {
       enterprise_management_add_business_param_data["cluster_list"] = business_cluster_list;
     }
     var enterprise_management_add_business= ajax_assistant(enterprise_management_add_business_url, enterprise_management_add_business_param_data, false, true, false);
-    console.log(enterprise_management_add_business);
+    //console.log(enterprise_management_add_business);
     if (1 != enterprise_management_add_business.status) {
       alert("营业执照添加失败！")
     }
@@ -803,7 +803,7 @@ function enterprise_management_get_certificate(uuid) {
   delete enterprise_management_search_condition["offset"];  
   enterprise_management_search_condition["uuid"] = uuid; 
   var enterprise_management_get_enterprise = ajax_assistant(enterprise_management_url, enterprise_management_search_condition, false, true, false);
-  console.log(enterprise_management_get_enterprise);
+  //console.log(enterprise_management_get_enterprise);
   if (1 == enterprise_management_get_enterprise.status) {
     var result = JSON.parse(enterprise_management_get_enterprise.result);
     for (var i = 0; i < result.length; i++){
@@ -822,17 +822,17 @@ function enterprise_management_get_certificate(uuid) {
     var enterprise_management_get_invoice_param_data = {};
     enterprise_management_get_invoice_param_data["parent_uuid"] = parent_uuid;
     var enterprise_management_get_invoice = ajax_assistant(enterprise_management_get_invoice_url, enterprise_management_get_invoice_param_data, false, true, false);
-    console.log(enterprise_management_get_invoice);
+    //console.log(enterprise_management_get_invoice);
     if (1 == enterprise_management_get_invoice.status) {
       var invoice_result = JSON.parse(enterprise_management_get_invoice.result);
-      console.log(invoice_result);
+      //console.log(invoice_result);
       if (0 < invoice_result.length) {
         for (var i = 0; i < invoice_result.length; i++) {
           invoice_uuid = invoice_result[i].uuid;
           var invoice_cluster_list  = invoice_result[i].cluster_list;
           if (null != invoice_cluster_list){
             var invoice_cluster  = invoice_cluster_list.substring(0,invoice_cluster_list.lastIndexOf(";")).split(";");
-            console.log(invoice_cluster);
+            //console.log(invoice_cluster);
             var invoice_file = "";
             var invoice_file_arr = new Array();
             for (var j = 0; j < invoice_cluster.length; j++) {
@@ -840,10 +840,10 @@ function enterprise_management_get_certificate(uuid) {
               var enterprise_management_get_invoice_file_param_data = {};
               enterprise_management_get_invoice_file_param_data["cluster_name"] = invoice_cluster[j];
               var enterprise_management_get_invoice_file = ajax_assistant(enterprise_management_get_invoice_file_url, enterprise_management_get_invoice_file_param_data, false, true, false);
-              console.log(enterprise_management_get_invoice_file);
+              //console.log(enterprise_management_get_invoice_file);
               if (1 == enterprise_management_get_invoice_file.status) {
                 var invoice_file_result = JSON.parse(enterprise_management_get_invoice_file.result);
-                console.log(invoice_file_result);
+                //console.log(invoice_file_result);
                 var invoice_cluster_name = invoice_file_result[0].cluster_name;
                 var invoice_suffix = invoice_file_result[0].suffix;
                 var file_name = invoice_cluster_name + '.' + invoice_suffix;
@@ -864,17 +864,17 @@ function enterprise_management_get_certificate(uuid) {
     var enterprise_management_get_institutional_param_data = {};
     enterprise_management_get_institutional_param_data["parent_uuid"] = parent_uuid;
     var enterprise_management_get_institutional = ajax_assistant(enterprise_management_get_institutional_url, enterprise_management_get_institutional_param_data, false, true, false);
-    console.log(enterprise_management_get_institutional);
+    //console.log(enterprise_management_get_institutional);
     if (1 == enterprise_management_get_institutional.status) {
       var institutional_result = JSON.parse(enterprise_management_get_institutional.result);
-      console.log(institutional_result);
+      //console.log(institutional_result);
       if (0 < institutional_result.length) {
         for (var i = 0; i < institutional_result.length; i++) {
           institutional_uuid = institutional_result[i].uuid;
           var institutional_cluster_list  = institutional_result[i].cluster_list;
           if (null != institutional_cluster_list){
             var institutional_cluster  = institutional_cluster_list.substring(0,institutional_cluster_list.lastIndexOf(";")).split(";");
-            console.log(institutional_cluster);
+            //console.log(institutional_cluster);
             var institutional_file = "";
             var institutional_file_arr = new Array();
             for (var j = 0; j < institutional_cluster.length; j++) {
@@ -882,10 +882,10 @@ function enterprise_management_get_certificate(uuid) {
               var enterprise_management_get_institutional_file_param_data = {};
               enterprise_management_get_institutional_file_param_data["cluster_name"] = institutional_cluster[j];
               var enterprise_management_get_institutional_file = ajax_assistant(enterprise_management_get_institutional_file_url, enterprise_management_get_institutional_file_param_data, false, true, false);
-              console.log(enterprise_management_get_institutional_file);
+              //console.log(enterprise_management_get_institutional_file);
               if (1 == enterprise_management_get_institutional_file.status) {
                 var institutional_file_result = JSON.parse(enterprise_management_get_institutional_file.result);
-                console.log(institutional_file_result);
+                //console.log(institutional_file_result);
                 var institutional_cluster_name = institutional_file_result[0].cluster_name;
                 var institutional_suffix = institutional_file_result[0].suffix;
                 var file_name = institutional_cluster_name + '.' + institutional_suffix;
@@ -906,17 +906,17 @@ function enterprise_management_get_certificate(uuid) {
     var enterprise_management_get_hazardous_param_data = {};
     enterprise_management_get_hazardous_param_data["parent_uuid"] = parent_uuid;
     var enterprise_management_get_hazardous = ajax_assistant(enterprise_management_get_hazardous_url, enterprise_management_get_hazardous_param_data, false, true, false);
-    console.log(enterprise_management_get_hazardous);
+    //console.log(enterprise_management_get_hazardous);
     if (1 == enterprise_management_get_hazardous.status) {
       var hazardous_result = JSON.parse(enterprise_management_get_hazardous.result);
-      console.log(hazardous_result);
+      //console.log(hazardous_result);
       if (0 < hazardous_result.length) {
         for (var i = 0; i < hazardous_result.length; i++) {
           hazardous_uuid = hazardous_result[i].uuid;
           var hazardous_cluster_list  = hazardous_result[i].cluster_list;
           if (null != hazardous_cluster_list){
             var hazardous_cluster  = hazardous_cluster_list.substring(0,hazardous_cluster_list.lastIndexOf(";")).split(";");
-            console.log(hazardous_cluster);
+            //console.log(hazardous_cluster);
             var hazardous_file = "";
             var hazardous_file_arr = new Array();
             for (var j = 0; j < hazardous_cluster.length; j++) {
@@ -924,10 +924,10 @@ function enterprise_management_get_certificate(uuid) {
               var enterprise_management_get_hazardous_file_param_data = {};
               enterprise_management_get_hazardous_file_param_data["cluster_name"] = hazardous_cluster[j];
               var enterprise_management_get_hazardous_file = ajax_assistant(enterprise_management_get_hazardous_file_url, enterprise_management_get_hazardous_file_param_data, false, true, false);
-              console.log(enterprise_management_get_hazardous_file);
+              //console.log(enterprise_management_get_hazardous_file);
               if (1 == enterprise_management_get_hazardous_file.status) {
                 var hazardous_file_result = JSON.parse(enterprise_management_get_hazardous_file.result);
-                console.log(hazardous_file_result);
+                //console.log(hazardous_file_result);
                 var hazardous_cluster_name = hazardous_file_result[0].cluster_name;
                 var hazardous_suffix = hazardous_file_result[0].suffix;
                 var file_name = hazardous_cluster_name + '.' + hazardous_suffix;
@@ -948,17 +948,17 @@ function enterprise_management_get_certificate(uuid) {
     var enterprise_management_get_idcard_param_data = {};
     enterprise_management_get_idcard_param_data["parent_uuid"] = parent_uuid;
     var enterprise_management_get_idcard = ajax_assistant(enterprise_management_get_idcard_url, enterprise_management_get_idcard_param_data, false, true, false);
-    console.log(enterprise_management_get_idcard);
+    //console.log(enterprise_management_get_idcard);
     if (1 == enterprise_management_get_idcard.status) {
       var idcard_result = JSON.parse(enterprise_management_get_idcard.result);
-      console.log(idcard_result);
+      //console.log(idcard_result);
       if (0 < idcard_result.length) {
         for (var i = 0; i < idcard_result.length; i++) {
           idcard_uuid = idcard_result[i].uuid;
           var idcard_cluster_list  = idcard_result[i].cluster_list;
           if (null != idcard_cluster_list){
             var idcard_cluster  = idcard_cluster_list.substring(0,idcard_cluster_list.lastIndexOf(";")).split(";");
-            console.log(idcard_cluster);
+            //console.log(idcard_cluster);
             var idcard_file = "";
             var idcard_file_arr = new Array();
             for (var j = 0; j < idcard_cluster.length; j++) {
@@ -966,10 +966,10 @@ function enterprise_management_get_certificate(uuid) {
               var enterprise_management_get_idcard_file_param_data = {};
               enterprise_management_get_idcard_file_param_data["cluster_name"] = idcard_cluster[j];
               var enterprise_management_get_idcard_file = ajax_assistant(enterprise_management_get_idcard_file_url, enterprise_management_get_idcard_file_param_data, false, true, false);
-              console.log(enterprise_management_get_idcard_file);
+              //console.log(enterprise_management_get_idcard_file);
               if (1 == enterprise_management_get_idcard_file.status) {
                 var idcard_file_result = JSON.parse(enterprise_management_get_idcard_file.result);
-                console.log(idcard_file_result);
+                //console.log(idcard_file_result);
                 var idcard_cluster_name = idcard_file_result[0].cluster_name;
                 var idcard_suffix = idcard_file_result[0].suffix;
                 var file_name = idcard_cluster_name + '.' + idcard_suffix;
@@ -990,17 +990,17 @@ function enterprise_management_get_certificate(uuid) {
     var enterprise_management_get_account_param_data = {};
     enterprise_management_get_account_param_data["parent_uuid"] = parent_uuid;
     var enterprise_management_get_account = ajax_assistant(enterprise_management_get_account_url, enterprise_management_get_account_param_data, false, true, false);
-    console.log(enterprise_management_get_account);
+    //console.log(enterprise_management_get_account);
     if (1 == enterprise_management_get_account.status) {
       var account_result = JSON.parse(enterprise_management_get_account.result);
-      console.log(account_result);
+      //console.log(account_result);
       if (0 < account_result.length) {
         for (var i = 0; i < account_result.length; i++) {
           account_uuid = account_result[i].uuid;
           var account_cluster_list  = account_result[i].cluster_list;
           if (null != account_cluster_list){
             var account_cluster  = account_cluster_list.substring(0,account_cluster_list.lastIndexOf(";")).split(";");
-            console.log(account_cluster);
+            //console.log(account_cluster);
             var account_file = "";
             var account_file_arr = new Array();
             for (var j = 0; j < account_cluster.length; j++) {
@@ -1008,10 +1008,10 @@ function enterprise_management_get_certificate(uuid) {
               var enterprise_management_get_account_file_param_data = {};
               enterprise_management_get_account_file_param_data["cluster_name"] = account_cluster[j];
               var enterprise_management_get_account_file = ajax_assistant(enterprise_management_get_account_file_url, enterprise_management_get_account_file_param_data, false, true, false);
-              console.log(enterprise_management_get_account_file);
+              //console.log(enterprise_management_get_account_file);
               if (1 == enterprise_management_get_account_file.status) {
                 var account_file_result = JSON.parse(enterprise_management_get_account_file.result);
-                console.log(account_file_result);
+                //console.log(account_file_result);
                 var account_cluster_name = account_file_result[0].cluster_name;
                 var account_suffix = account_file_result[0].suffix;
                 var file_name = account_cluster_name + '.' + account_suffix;
@@ -1032,17 +1032,17 @@ function enterprise_management_get_certificate(uuid) {
     var enterprise_management_get_safety_param_data = {};
     enterprise_management_get_safety_param_data["parent_uuid"] = parent_uuid;
     var enterprise_management_get_safety = ajax_assistant(enterprise_management_get_safety_url, enterprise_management_get_safety_param_data, false, true, false);
-    console.log(enterprise_management_get_safety);
+    //console.log(enterprise_management_get_safety);
     if (1 == enterprise_management_get_safety.status) {
       var safety_result = JSON.parse(enterprise_management_get_safety.result);
-      console.log(safety_result);
+      //console.log(safety_result);
       if (0 < safety_result.length) {
         for (var i = 0; i < safety_result.length; i++) {
           safety_uuid = safety_result[i].uuid;
           var safety_cluster_list  = safety_result[i].cluster_list;
           if (null != safety_cluster_list){
             var safety_cluster  = safety_cluster_list.substring(0,safety_cluster_list.lastIndexOf(";")).split(";");
-            console.log(safety_cluster);
+            //console.log(safety_cluster);
             var safety_file = "";
             var safety_file_arr = new Array();
             for (var j = 0; j < safety_cluster.length; j++) {
@@ -1050,10 +1050,10 @@ function enterprise_management_get_certificate(uuid) {
               var enterprise_management_get_safety_file_param_data = {};
               enterprise_management_get_safety_file_param_data["cluster_name"] = safety_cluster[j];
               var enterprise_management_get_safety_file = ajax_assistant(enterprise_management_get_safety_file_url, enterprise_management_get_safety_file_param_data, false, true, false);
-              console.log(enterprise_management_get_safety_file);
+              //console.log(enterprise_management_get_safety_file);
               if (1 == enterprise_management_get_safety_file.status) {
                 var safety_file_result = JSON.parse(enterprise_management_get_safety_file.result);
-                console.log(safety_file_result);
+                //console.log(safety_file_result);
                 var safety_cluster_name = safety_file_result[0].cluster_name;
                 var safety_suffix = safety_file_result[0].suffix;
                 var file_name = safety_cluster_name + '.' + safety_suffix;
@@ -1074,17 +1074,17 @@ function enterprise_management_get_certificate(uuid) {
     var enterprise_management_get_business_param_data = {};
     enterprise_management_get_business_param_data["parent_uuid"] = parent_uuid;
     var enterprise_management_get_business = ajax_assistant(enterprise_management_get_business_url, enterprise_management_get_business_param_data, false, true, false);
-    console.log(enterprise_management_get_business);
+    //console.log(enterprise_management_get_business);
     if (1 == enterprise_management_get_business.status) {
       var business_result = JSON.parse(enterprise_management_get_business.result);
-      console.log(business_result);
+      //console.log(business_result);
       if (0 < business_result.length) {
         for (var i = 0; i < business_result.length; i++) {
           business_uuid = business_result[i].uuid;
           var business_cluster_list  = business_result[i].cluster_list;
           if (null != business_cluster_list){
             var business_cluster  = business_cluster_list.substring(0,business_cluster_list.lastIndexOf(";")).split(";");
-            console.log(business_cluster);
+            //console.log(business_cluster);
             var business_file = "";
             var business_file_arr = new Array();
             for (var j = 0; j < business_cluster.length; j++) {
@@ -1092,10 +1092,10 @@ function enterprise_management_get_certificate(uuid) {
               var enterprise_management_get_business_file_param_data = {};
               enterprise_management_get_business_file_param_data["cluster_name"] = business_cluster[j];
               var enterprise_management_get_business_file = ajax_assistant(enterprise_management_get_business_file_url, enterprise_management_get_business_file_param_data, false, true, false);
-              console.log(enterprise_management_get_business_file);
+              //console.log(enterprise_management_get_business_file);
               if (1 == enterprise_management_get_business_file.status) {
                 var business_file_result = JSON.parse(enterprise_management_get_business_file.result);
-                console.log(business_file_result);
+                //console.log(business_file_result);
                 var business_cluster_name = business_file_result[0].cluster_name;
                 var business_suffix = business_file_result[0].suffix;
                 var file_name = business_cluster_name + '.' + business_suffix;
@@ -1286,7 +1286,7 @@ function enterprise_management_edit_modal(uuid) {
   //企业类型
   for(var i = 0; i < $("#enterprise_management_edit_modal select option").length; i++){
     var type = current_company_detail_data.type;
-    console.log(type);
+    //console.log(type);
     if($("#enterprise_management_edit_modal select option").eq(i).val() == type) {
       $("#enterprise_management_edit_modal select option").eq(i).prop('selected','selected');
       break;
@@ -1418,16 +1418,16 @@ function enterprise_management_edit_info(enterprise_management_edit_uuid) {
     enterprise_management_edit_info_param_data["newClusterList"] = invoice_cluster_list;
   }
   var enterprise_management_edit_info = ajax_assistant(enterprise_management_edit_info_url, enterprise_management_edit_info_param_data, false, true, false);
-  console.log(enterprise_management_edit_info);
+  //console.log(enterprise_management_edit_info);
   //获取机构信用代码证
   var enterprise_management_get_institutional_url = PROJECT_PATH + "lego/lego_certificate?servletName=getInstitutionalCreditCode";
   var enterprise_management_get_institutional_param_data = {};
   enterprise_management_get_institutional_param_data["parent_uuid"] = uuid;
   var enterprise_management_get_institutional = ajax_assistant(enterprise_management_get_institutional_url, enterprise_management_get_institutional_param_data, false, true, false);
-  console.log(enterprise_management_get_institutional);
+  //console.log(enterprise_management_get_institutional);
   if (1 == enterprise_management_get_institutional.status) {
     var institutional_result = JSON.parse(enterprise_management_get_institutional.result);
-    console.log(institutional_result);
+    //console.log(institutional_result);
     if (0 < institutional_result.length) {
       //修改机构信用代码证
       var institutional_uuid = institutional_result[0].uuid;
@@ -1449,7 +1449,7 @@ function enterprise_management_edit_info(enterprise_management_edit_uuid) {
         enterprise_management_edit_institutional_param_data["newClusterList"] = institutional_cluster_list;
       }
       var enterprise_management_edit_institutional = ajax_assistant(enterprise_management_edit_institutional_url, enterprise_management_edit_institutional_param_data, false, true, false);
-      console.log(enterprise_management_edit_institutional);
+      //console.log(enterprise_management_edit_institutional);
       if (1 != enterprise_management_edit_institutional.status) {
         alert("机构信用代码证修改失败！")
       }
@@ -1472,7 +1472,7 @@ function enterprise_management_edit_info(enterprise_management_edit_uuid) {
         enterprise_management_add_institutional_param_data["cluster_list"] = institutional_cluster_list;
       }
       var enterprise_management_add_institutional = ajax_assistant(enterprise_management_add_institutional_url, enterprise_management_add_institutional_param_data, false, true, false);
-      console.log(enterprise_management_add_institutional);
+      //console.log(enterprise_management_add_institutional);
       if (1 != enterprise_management_add_institutional.status) {
         alert("机构信用代码证添加失败！")
       }
@@ -1483,10 +1483,10 @@ function enterprise_management_edit_info(enterprise_management_edit_uuid) {
   var enterprise_management_get_hazardous_param_data = {};
   enterprise_management_get_hazardous_param_data["parent_uuid"] = uuid;
   var enterprise_management_get_hazardous = ajax_assistant(enterprise_management_get_hazardous_url, enterprise_management_get_hazardous_param_data, false, true, false);
-  console.log(enterprise_management_get_hazardous);
+  //console.log(enterprise_management_get_hazardous);
   if (1 == enterprise_management_get_hazardous.status) {
     var hazardous_result = JSON.parse(enterprise_management_get_hazardous.result);
-    console.log(hazardous_result);
+    //console.log(hazardous_result);
     if (0 < hazardous_result.length) {
       //修改危化品经营许可证
       var hazardous_uuid = hazardous_result[0].uuid;
@@ -1508,7 +1508,7 @@ function enterprise_management_edit_info(enterprise_management_edit_uuid) {
         enterprise_management_edit_hazardous_param_data["newClusterList"] = hazardous_cluster_list;
       }
       var enterprise_management_edit_hazardous = ajax_assistant(enterprise_management_edit_hazardous_url, enterprise_management_edit_hazardous_param_data, false, true, false);
-      console.log(enterprise_management_edit_hazardous);
+      //console.log(enterprise_management_edit_hazardous);
       if (1 != enterprise_management_edit_hazardous.status) {
         alert("危化品经营许可证修改失败！")
       }
@@ -1531,7 +1531,7 @@ function enterprise_management_edit_info(enterprise_management_edit_uuid) {
         enterprise_management_add_hazardous_param_data["cluster_list"] = hazardous_cluster_list;
       }
       var enterprise_management_add_hazardous= ajax_assistant(enterprise_management_add_hazardous_url, enterprise_management_add_hazardous_param_data, false, true, false);
-      console.log(enterprise_management_add_hazardous);
+      //console.log(enterprise_management_add_hazardous);
       if (1 != enterprise_management_add_hazardous.status) {
         alert("危化品经营许可证修改失败！")
       }
@@ -1542,10 +1542,10 @@ function enterprise_management_edit_info(enterprise_management_edit_uuid) {
   var enterprise_management_get_idcard_param_data = {};
   enterprise_management_get_idcard_param_data["parent_uuid"] = uuid;
   var enterprise_management_get_idcard = ajax_assistant(enterprise_management_get_idcard_url, enterprise_management_get_idcard_param_data, false, true, false);
-  console.log(enterprise_management_get_idcard);
+  //console.log(enterprise_management_get_idcard);
   if (1 == enterprise_management_get_idcard.status) {
     var idcard_result = JSON.parse(enterprise_management_get_idcard.result);
-    console.log(idcard_result);
+    //console.log(idcard_result);
     if (0 < idcard_result.length) {
       //修改法人身份证
       var idcard_uuid = idcard_result[0].uuid;
@@ -1566,7 +1566,7 @@ function enterprise_management_edit_info(enterprise_management_edit_uuid) {
         enterprise_management_edit_idcard_param_data["newClusterList"] = idcard_cluster_list;
       }
       var enterprise_management_edit_idcard = ajax_assistant(enterprise_management_edit_idcard_url, enterprise_management_edit_idcard_param_data, false, true, false);
-      console.log(enterprise_management_edit_idcard);
+      //console.log(enterprise_management_edit_idcard);
       if (1 != enterprise_management_edit_idcard.status) {
         alert("法人身份证修改失败！")
       }
@@ -1588,7 +1588,7 @@ function enterprise_management_edit_info(enterprise_management_edit_uuid) {
         enterprise_management_add_idcard_param_data["cluster_list"] = idcard_cluster_list;
       }
       var enterprise_management_add_idcard= ajax_assistant(enterprise_management_add_idcard_url, enterprise_management_add_idcard_param_data, false, true, false);
-      console.log(enterprise_management_add_idcard);
+      //console.log(enterprise_management_add_idcard);
       if (1 != enterprise_management_add_idcard.status) {
         alert("法人身份证修改失败！")
       }
@@ -1599,10 +1599,10 @@ function enterprise_management_edit_info(enterprise_management_edit_uuid) {
   var enterprise_management_get_account_param_data = {};
   enterprise_management_get_account_param_data["parent_uuid"] = uuid;
   var enterprise_management_get_account = ajax_assistant(enterprise_management_get_account_url, enterprise_management_get_account_param_data, false, true, false);
-  console.log(enterprise_management_get_account);
+  //console.log(enterprise_management_get_account);
   if (1 == enterprise_management_get_account.status) {
     var account_result = JSON.parse(enterprise_management_get_account.result);
-    console.log(account_result);
+    //console.log(account_result);
     if (0 < account_result.length) {
       //修改开户许可证
       var account_uuid = account_result[0].uuid;
@@ -1624,7 +1624,7 @@ function enterprise_management_edit_info(enterprise_management_edit_uuid) {
         enterprise_management_edit_account_param_data["newClusterList"] = account_cluster_list;
       }
       var enterprise_management_edit_account = ajax_assistant(enterprise_management_edit_account_url, enterprise_management_edit_account_param_data, false, true, false);
-      console.log(enterprise_management_edit_account);
+      //console.log(enterprise_management_edit_account);
       if (1 != enterprise_management_edit_account.status) {
         alert("开户许可证修改失败！")
       }
@@ -1647,7 +1647,7 @@ function enterprise_management_edit_info(enterprise_management_edit_uuid) {
         enterprise_management_add_account_param_data["cluster_list"] = account_cluster_list;
       }
       var enterprise_management_add_account= ajax_assistant(enterprise_management_add_account_url, enterprise_management_add_account_param_data, false, true, false);
-      console.log(enterprise_management_add_account);
+      //console.log(enterprise_management_add_account);
       if (1 != enterprise_management_add_account.status) {
         alert("开户许可证修改失败！")
       }
@@ -1658,10 +1658,10 @@ function enterprise_management_edit_info(enterprise_management_edit_uuid) {
   var enterprise_management_get_safety_param_data = {};
   enterprise_management_get_safety_param_data["parent_uuid"] = uuid;
   var enterprise_management_get_safety = ajax_assistant(enterprise_management_get_safety_url, enterprise_management_get_safety_param_data, false, true, false);
-  console.log(enterprise_management_get_safety);
+  //console.log(enterprise_management_get_safety);
   if (1 == enterprise_management_get_safety.status) {
     var safety_result = JSON.parse(enterprise_management_get_safety.result);
-    console.log(safety_result);
+    //console.log(safety_result);
     if (0 < safety_result.length) {
       //修改安全生产许可证
       var safety_uuid = safety_result[0].uuid;
@@ -1683,7 +1683,7 @@ function enterprise_management_edit_info(enterprise_management_edit_uuid) {
         enterprise_management_edit_safety_param_data["newClusterList"] = safety_cluster_list;
       }
       var enterprise_management_edit_safety = ajax_assistant(enterprise_management_edit_safety_url, enterprise_management_edit_safety_param_data, false, true, false);
-      console.log(enterprise_management_edit_safety);
+      //console.log(enterprise_management_edit_safety);
       if (1 != enterprise_management_edit_safety.status) {
         alert("安全生产许可证修改失败！")
       }
@@ -1706,7 +1706,7 @@ function enterprise_management_edit_info(enterprise_management_edit_uuid) {
         enterprise_management_add_safety_param_data["cluster_list"] = safety_cluster_list;
       }
       var enterprise_management_add_safety= ajax_assistant(enterprise_management_add_safety_url, enterprise_management_add_safety_param_data, false, true, false);
-      console.log(enterprise_management_add_safety);
+      //console.log(enterprise_management_add_safety);
       if (1 != enterprise_management_add_safety.status) {
         alert("安全生产许可证修改失败！")
       }
@@ -1717,10 +1717,10 @@ function enterprise_management_edit_info(enterprise_management_edit_uuid) {
   var enterprise_management_get_business_param_data = {};
   enterprise_management_get_business_param_data["parent_uuid"] = uuid;
   var enterprise_management_get_business = ajax_assistant(enterprise_management_get_business_url, enterprise_management_get_business_param_data, false, true, false);
-  console.log(enterprise_management_get_business);
+  //console.log(enterprise_management_get_business);
   if (1 == enterprise_management_get_business.status) {
     var business_result = JSON.parse(enterprise_management_get_business.result);
-    console.log(business_result);
+    //console.log(business_result);
     if (0 < business_result.length) {
       //修改营业执照
       var business_uuid = business_result[0].uuid;
@@ -1742,7 +1742,7 @@ function enterprise_management_edit_info(enterprise_management_edit_uuid) {
         enterprise_management_edit_business_param_data["newClusterList"] = business_cluster_list;
       }
       var enterprise_management_edit_business = ajax_assistant(enterprise_management_edit_business_url, enterprise_management_edit_business_param_data, false, true, false);
-      console.log(enterprise_management_edit_business);
+      //console.log(enterprise_management_edit_business);
       if (1 != enterprise_management_edit_business.status) {
         alert("营业执照修改失败！")
       }
@@ -1765,7 +1765,7 @@ function enterprise_management_edit_info(enterprise_management_edit_uuid) {
         enterprise_management_add_business_param_data["cluster_list"] = business_cluster_list;
       }
       var enterprise_management_add_business= ajax_assistant(enterprise_management_add_business_url, enterprise_management_add_business_param_data, false, true, false);
-      console.log(enterprise_management_add_business);
+      //console.log(enterprise_management_add_business);
       if (1 != enterprise_management_add_business.status) {
         alert("营业执照修改失败！")
       }
@@ -1937,7 +1937,7 @@ function enterprise_management_detail_modal() {
   });
   for(var i = 0; i < $("#enterprise_management_detail_modal select option").length; i++){
     var type = current_company_detail_data.type;
-    console.log(type);
+    //console.log(type);
     if($("#enterprise_management_detail_modal select option").eq(i).val() == type) {
       $("#enterprise_management_detail_modal select option").eq(i).prop('selected','selected');
       break;
@@ -1978,7 +1978,7 @@ function enterprise_management_delete_info(uuid) {
   var delete_enterprise_param_data = {};
   delete_enterprise_param_data["uuid"] = uuid;
   var enterprise_management_delete_enterprise = ajax_assistant(delete_enterprise_url, delete_enterprise_param_data, false, true, false);
-  console.log(enterprise_management_delete_enterprise);
+  //console.log(enterprise_management_delete_enterprise);
   if (1 == enterprise_management_delete_enterprise.status) {
     $("#enterprise_management_delete_modal").modal("hide");
     enterprise_management_search_condition = {};
