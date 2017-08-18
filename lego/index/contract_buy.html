@@ -182,36 +182,43 @@
         contract_logistics_open_info_func($(this));
       });
       
-      //车船信息/////////////////////////////////////
       $(document).on("click", "#vehicle_information_add_modle", function() {
-        vehicle_information_add_modle_func($(this));
+        var trade_contract_code = $(this).attr("contract_code");
+        get_buy_object_list(vehicle_information_list, trade_contract_code).vehicle_information_add_modle_func($(this));
       });
       //添加车船信息数据
       $(document).on("click", "#vehicle_information_add_data_btn", function() {
-        vehicle_information_add_data_func($(this));
+        var trade_contract_code = $(this).attr("contract_code");
+        get_buy_object_list(vehicle_information_list, trade_contract_code).vehicle_information_add_data_func($(this));
       });
       //修改车船信息模态框
       $(document).on("click", ".vehicle_information_modle_pencil", function() {
-        vehicle_information_edit_modle_func($(this));
+        var trade_contract_code = $(this).parent().parent().parent().parent().attr("contract_code");
+        get_buy_object_list(vehicle_information_list, trade_contract_code).vehicle_information_edit_modle_func($(this));
       });
       //修改车船信息数据
       $(document).on("click", "#vehicle_information_edit_data_btn", function() {
-        vehicle_information_edit_data_func($(this));
+        var trade_contract_code = $(this).attr("contract_code");
+        get_buy_object_list(vehicle_information_list, trade_contract_code).vehicle_information_edit_data_func($(this));
       });
       //删除车船信息模态框
       $(document).on("click", ".vehicle_information_modle_remove", function() {
-        vehicle_information_delete_modle_func($(this));
+        var trade_contract_code = $(this).parent().parent().parent().parent().attr("contract_code");
+        get_buy_object_list(vehicle_information_list, trade_contract_code).vehicle_information_delete_modle_func($(this));
       });
       //删除车船信息数据
       $(document).on("click", "#vehicle_information_delete_modle_prop_btn", function() {
-        vehicle_information_delete_data_func($(this));
+        var trade_contract_code = $(this).attr("contract_code");
+        get_buy_object_list(vehicle_information_list, trade_contract_code).vehicle_information_delete_data_func($(this));
       });
       //详情
       $(document).on("click", ".vehicle_information_modle_info", function() {
-        vehicle_information_info_modle_func($(this));
+        var trade_contract_code = $(this).parent().parent().parent().parent().attr("contract_code");
+        get_buy_object_list(vehicle_information_list, trade_contract_code).vehicle_information_info_modle_func($(this));
       });
       //合同展开详情按钮
       $(document).on("click", ".vehicle_information_open_btn", function() {
+        var trade_contract_code = $(this).attr("contract_code");
         vehicle_information_open_info_func($(this));
       });
       //采购对账单/////////////////////////////////////////
@@ -468,169 +475,173 @@
       // 添加出库单模态框
       $(document).on("click", "#godown_exit_add_modal_btn", function() {
         var vehicle_information_uuid = $(this).attr("vehicle_information_uuid");
-        godown_exit_add_modal(vehicle_information_uuid);
+        get_vehicle_object_list(godown_exit_list, vehicle_information_uuid).godown_exit_add_modal();
       });
       // 添加出库单
       $(document).on("click", "#godown_exit_add_modal .add_btn", function() {
         var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
-        godown_exit_add_data(vehicle_information_uuid);
+        get_vehicle_object_list(godown_exit_list, vehicle_information_uuid).godown_exit_add_data();
       });
       // 修改出库单模态框
       $(document).on("click", ".godown_exit_edit", function() {
         var uuid = $(this).data("uuid");
         var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
-        godown_exit_get_letter(uuid);
-        godown_exit_edit_modal(uuid, vehicle_information_uuid);
+        get_vehicle_object_list(godown_exit_list, vehicle_information_uuid).godown_exit_get_letter(uuid);
+        get_vehicle_object_list(godown_exit_list, vehicle_information_uuid).godown_exit_edit_modal(uuid);
       });
       // 修改出库单
       $(document).on("click", "#godown_exit_edit_modal .edit_btn", function() {
         var uuid = $(this).data("uuid");
         var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
-        godown_exit_edit_data(uuid, vehicle_information_uuid);
+        get_vehicle_object_list(godown_exit_list, vehicle_information_uuid).godown_exit_edit_data(uuid);
       });
       // 出库单详情模态框
       $(document).on("click", ".godown_exit_detail", function() {
         var uuid = $(this).data("uuid");
-        godown_exit_get_letter(uuid)
-        godown_exit_detail_modal();
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        get_vehicle_object_list(godown_exit_list, vehicle_information_uuid).godown_exit_get_letter(uuid)
+        get_vehicle_object_list(godown_exit_list, vehicle_information_uuid).godown_exit_detail_modal();
       });
       // 删除出库单模态框
       $(document).on("click", ".godown_exit_delete", function() {
         var uuid = $(this).data("uuid");
         var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
-        godown_exit_delete_modal(uuid, vehicle_information_uuid);
+        get_vehicle_object_list(godown_exit_list, vehicle_information_uuid).godown_exit_delete_modal(uuid);
       });
       // 删除出库单
       $(document).on("click", "#godown_exit_delete_modal .remove", function() {
         var uuid = $(this).data("uuid");
         var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
-        godown_exit_delete_data(uuid, vehicle_information_uuid);
+        get_vehicle_object_list(godown_exit_list, vehicle_information_uuid).godown_exit_delete_data(uuid);
       });
       //入库单
       // 添加入库单模态框
       $(document).on("click", "#godown_entry_add_modal_btn", function() {
         var vehicle_information_uuid = $(this).attr("vehicle_information_uuid");
-        godown_entry_add_modal(vehicle_information_uuid);
+        get_vehicle_object_list(godown_entry_list, vehicle_information_uuid).godown_entry_add_modal();
       });
       // 添加入库单
       $(document).on("click", "#godown_entry_add_modal .add_btn", function() {
         var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
-        godown_entry_add_data(vehicle_information_uuid);
+        get_vehicle_object_list(godown_entry_list, vehicle_information_uuid).godown_entry_add_data();
       });
       // 修改入库单模态框
       $(document).on("click", ".godown_entry_edit", function() {
         var uuid = $(this).data("uuid");
         var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
-        godown_entry_get_letter(uuid);
-        godown_entry_edit_modal(uuid, vehicle_information_uuid);
+        get_vehicle_object_list(godown_entry_list, vehicle_information_uuid).godown_entry_get_letter(uuid);
+        get_vehicle_object_list(godown_entry_list, vehicle_information_uuid).godown_entry_edit_modal(uuid,);
       });
       // 修改入库单
       $(document).on("click", "#godown_entry_edit_modal .edit_btn", function() {
         var uuid = $(this).data("uuid");
         var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
-        godown_entry_edit_data(uuid, vehicle_information_uuid);
+        get_vehicle_object_list(godown_entry_list, vehicle_information_uuid).godown_entry_edit_data(uuid);
       });
       // 入库单详情模态框
       $(document).on("click", ".godown_entry_detail", function() {
         var uuid = $(this).data("uuid");
-        godown_entry_get_letter(uuid)
-        godown_entry_detail_modal();
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        get_vehicle_object_list(godown_entry_list, vehicle_information_uuid).godown_entry_get_letter(uuid)
+        get_vehicle_object_list(godown_entry_list, vehicle_information_uuid).godown_entry_detail_modal();
       });
       // 删除入库单模态框
       $(document).on("click", ".godown_entry_delete", function() {
         var uuid = $(this).data("uuid");
         var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
-        godown_entry_delete_modal(uuid, vehicle_information_uuid);
+        get_vehicle_object_list(godown_entry_list, vehicle_information_uuid).godown_entry_delete_modal(uuid);
       });
       // 删除入库单
       $(document).on("click", "#godown_entry_delete_modal .remove", function() {
         var uuid = $(this).data("uuid");
         var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
-        godown_entry_delete_data(uuid, vehicle_information_uuid);
+        get_vehicle_object_list(godown_entry_list, vehicle_information_uuid).godown_entry_delete_data(uuid);
       });
       //船板单
       // 添加船板单模态框
       $(document).on("click", "#report_boat_ullage_add_modle_btn", function() {
         var vehicle_information_uuid = $(this).attr("vehicle_information_uuid");
-        report_boat_ullage_add_modal(vehicle_information_uuid);
+        get_vehicle_object_list(report_boat_ullage_list, vehicle_information_uuid).report_boat_ullage_add_modal();
       });
       // 添加船板单
       $(document).on("click", "#report_boat_ullage_add_modal .add_btn", function() {
         var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
-        report_boat_ullage_add_data(vehicle_information_uuid);
+        get_vehicle_object_list(report_boat_ullage_list, vehicle_information_uuid).report_boat_ullage_add_data();
       });
       // 修改船板单模态框
       $(document).on("click", ".report_boat_ullage_edit", function() {
         var uuid = $(this).data("uuid");
         var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
-        report_boat_ullage_get_letter(uuid);
-        report_boat_ullage_edit_modal(uuid, vehicle_information_uuid);
+        get_vehicle_object_list(report_boat_ullage_list, vehicle_information_uuid).report_boat_ullage_get_letter(uuid);
+        get_vehicle_object_list(report_boat_ullage_list, vehicle_information_uuid).report_boat_ullage_edit_modal(uuid);
       });
       // 修改船板单
       $(document).on("click", "#report_boat_ullage_edit_modal .edit_btn", function() {
         var uuid = $(this).data("uuid");
         var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
-        report_boat_ullage_edit_data(uuid, vehicle_information_uuid);
+        get_vehicle_object_list(report_boat_ullage_list, vehicle_information_uuid).report_boat_ullage_edit_data(uuid);
       });
       // 船板单详情模态框
       $(document).on("click", ".report_boat_ullage_detail", function() {
         var uuid = $(this).data("uuid");
-        report_boat_ullage_get_letter(uuid)
-        report_boat_ullage_detail_modal();
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        get_vehicle_object_list(report_boat_ullage_list, vehicle_information_uuid).report_boat_ullage_get_letter(uuid)
+        get_vehicle_object_list(report_boat_ullage_list, vehicle_information_uuid).report_boat_ullage_detail_modal();
       });
       // 删除船板单模态框
       $(document).on("click", ".report_boat_ullage_delete", function() {
         var uuid = $(this).data("uuid");
         var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
-        report_boat_ullage_delete_modal(uuid, vehicle_information_uuid);
+        get_vehicle_object_list(report_boat_ullage_list, vehicle_information_uuid).report_boat_ullage_delete_modal(uuid);
       });
       // 删除船板单
       $(document).on("click", "#report_boat_ullage_delete_modal .remove", function() {
         var uuid = $(this).data("uuid");
         var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
-        report_boat_ullage_delete_data(uuid, vehicle_information_uuid);
+        get_vehicle_object_list(report_boat_ullage_list, vehicle_information_uuid).report_boat_ullage_delete_data(uuid);
       });
       // 商检单
       // 添加商检单模态框
       $(document).on("click", "#report_shore_tank_add_modle_btn", function() {
         var vehicle_information_uuid = $(this).attr("vehicle_information_uuid");
-        report_shore_tank_add_modal(vehicle_information_uuid);
+        get_vehicle_object_list(report_shore_tank_list, vehicle_information_uuid).report_shore_tank_add_modal();
       });
       // 添加商检单
       $(document).on("click", "#report_shore_tank_add_modal .add_btn", function() {
         var vehicle_information_uuid = $(this).attr("vehicle_information_uuid");
-        report_shore_tank_add_data(vehicle_information_uuid);
+        get_vehicle_object_list(report_shore_tank_list, vehicle_information_uuid).report_shore_tank_add_data();
       });
       // 修改商检单模态框
       $(document).on("click", ".report_shore_tank_edit", function() {
         var uuid = $(this).data("uuid");
         var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
-        report_shore_tank_get_letter(uuid);
-        report_shore_tank_edit_modal(uuid);
+        get_vehicle_object_list(report_shore_tank_list, vehicle_information_uuid).report_shore_tank_get_letter(uuid);
+        get_vehicle_object_list(report_shore_tank_list, vehicle_information_uuid).report_shore_tank_edit_modal(uuid);
       });
       // 修改商检单
       $(document).on("click", "#report_shore_tank_edit_modal .edit_btn", function() {
         var uuid = $(this).data("uuid");
         var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
-        report_shore_tank_edit_data(uuid);
+        get_vehicle_object_list(report_shore_tank_list, vehicle_information_uuid).report_shore_tank_edit_data(uuid);
       });
       // 商检单详情模态框
       $(document).on("click", ".report_shore_tank_detail", function() {
         var uuid = $(this).data("uuid");
-        report_shore_tank_get_letter(uuid)
-        report_shore_tank_detail_modal();
+        var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
+        get_vehicle_object_list(report_shore_tank_list, vehicle_information_uuid).report_shore_tank_get_letter(uuid)
+        get_vehicle_object_list(report_shore_tank_list, vehicle_information_uuid).report_shore_tank_detail_modal();
       });
       // 删除商检单模态框
       $(document).on("click", ".report_shore_tank_delete", function() {
         var uuid = $(this).data("uuid");
         var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
-        report_shore_tank_delete_modal(uuid, vehicle_information_uuid);
+        get_vehicle_object_list(report_shore_tank_list, vehicle_information_uuid).report_shore_tank_delete_modal(uuid, vehicle_information_uuid);
       });
       // 删除商检单
       $(document).on("click", "#report_shore_tank_delete_modal .remove", function() {
         var uuid = $(this).data("uuid");
         var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
-        report_shore_tank_delete_data(uuid, vehicle_information_uuid);
+        get_vehicle_object_list(report_shore_tank_list, vehicle_information_uuid).report_shore_tank_delete_data(uuid, vehicle_information_uuid);
       });
       // 入库通知单
       // 添加入库通知单模态框

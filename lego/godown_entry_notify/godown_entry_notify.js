@@ -459,7 +459,6 @@ function godownEntryNotify(contract_buy_contract_code, godown_entry_notify_conte
   }
   
   this.godown_entry_notify_edit_data = function(uuid) {
-    debugger;
     var product_name = $("#godown_entry_notify_edit_modal .product_name").val();
     var quantity = $("#godown_entry_notify_edit_modal .quantity").val();
     var start_datetime = $("#godown_entry_notify_edit_modal .start_datetime").val() + ' 00:00:00';

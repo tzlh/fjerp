@@ -2,8 +2,9 @@
  * @author yangyongxia
  */
 
-function godownExit(vehicle_information_uuid) {
+function godownExit(vehicle_information_uuid, godown_exit_content_id) {
   this.vehicle_information_uuid = vehicle_information_uuid;
+  this.godown_exit_content_id = godown_exit_content_id;
   this.godown_exit_data = [
     {"plan_quantity": "10","actual_quantity": "10","tare_weight": "10","gross_weight": "10","exit_datetime": "2017-03-25","uuid": "11","vehicle_information_uuid": "ZS-TZGYL-17813261"},
     {"plan_quantity": "10","actual_quantity": "10","tare_weight": "10","gross_weight": "10","exit_datetime": "2017-03-25","uuid": "11","vehicle_information_uuid": "ZS-TZGYL-17813261"},
@@ -40,17 +41,17 @@ function godownExit(vehicle_information_uuid) {
    * 初始化
    */
   this.godown_exit_clear_raw_data = function() {
-    $("#godown_exit_content" + vehicle_information_uuid).find("#godown_exit_list tbody").html("");
-    godown_exit_plan_quantity_count = 0;
-    godown_exit_actual_quantity_count = 0;
-    $(this.vehicle_information_uuid).find("#godown_exit_paid span.paid").html('出库单&nbsp;[计划量总量&nbsp;:&nbsp;0][实发量总量&nbsp;:&nbsp;0]&nbsp;');
+    $(this.godown_exit_content_id).find("#godown_exit_list tbody").html("");
+    this.godown_exit_plan_quantity_count = 0;
+  this.godown_exit_actual_quantity_count = 0;
+    $(this.godown_exit_content_id).find("#godown_exit_paid span.paid").html('出库单&nbsp;[计划量总量&nbsp;:&nbsp;0][实发量总量&nbsp;:&nbsp;0]&nbsp;');
   }
   
   /**
    * 赋值
    */
   this.godown_exit_fill_variable_data = function() {
-    $(this.vehicle_information_uuid).find("#godown_exit_paid span.paid").html('出库单&nbsp;[计划量总量&nbsp;:&nbsp;' + godown_exit_plan_quantity_count + '][实发量总量&nbsp;:&nbsp;' + godown_exit_actual_quantity_count + ']&nbsp;');
+    $(this.godown_exit_content_id).find("#godown_exit_paid span.paid").html('出库单&nbsp;[计划量总量&nbsp;:&nbsp;' + this.godown_exit_plan_quantity_count + '][实发量总量&nbsp;:&nbsp;' + this.godown_exit_actual_quantity_count + ']&nbsp;');
     if (isJsonObjectHasData(this.godown_exit_data)) {
   //  var godown_exit_thead  = 
   //    '<tr>'+
@@ -73,10 +74,10 @@ function godownExit(vehicle_information_uuid) {
               '<span class = "glyphicon glyphicon-remove godown_exit_ml15 godown_exit_delete" data-uuid = "' + this.godown_exit_data[i].uuid + '" data-vehicle_information_uuid = "' + this.godown_exit_data[i].vehicle_information_uuid + '"></span>'+
             '</td>'+
           '</tr>';
-        $(this.vehicle_information_uuid).find("#godown_exit_list tbody").html(godown_exit_tbody);  
+        $(this.godown_exit_content_id).find("#godown_exit_list tbody").html(godown_exit_tbody);  
       }
     } else {
-      $(this.vehicle_information_uuid).find("#godown_exit_list tbody").html('<tr><td colspan="6" align="center">没数据</td></tr>');
+      $(this.godown_exit_content_id).find("#godown_exit_list tbody").html('<tr><td colspan="6" align="center">没数据</td></tr>');
     }
   }
   
@@ -99,8 +100,8 @@ function godownExit(vehicle_information_uuid) {
         for (var i = 0; i < result.length; i++) {
           var godown_exit_plan_quantity_count_one = Number(result[i].plan_quantity);
           var godown_exit_actual_quantity_count_one = Number(result[i].actual_quantity);
-          godown_exit_plan_quantity_count = godown_exit_plan_quantity_count + godown_exit_plan_quantity_count_one;
-          godown_exit_actual_quantity_count = godown_exit_actual_quantity_count + godown_exit_actual_quantity_count_one
+          this.godown_exit_plan_quantity_count = this.godown_exit_plan_quantity_count + godown_exit_plan_quantity_count_one;
+          this.godown_exit_actual_quantity_count = this.godown_exit_actual_quantity_count + godown_exit_actual_quantity_count_one
           var exit_datetime = result[i].exit_datetime.substring(0,result[i].exit_datetime.indexOf(" "));
           godown_exit_data_arr.push({"plan_quantity": result[i].plan_quantity,"actual_quantity": result[i].actual_quantity,"tare_weight": result[i].tare_weight,"gross_weight": result[i].gross_weight,"exit_datetime": exit_datetime,"uuid": result[i].uuid,"vehicle_information_uuid": result[i].vehicle_information_uuid});
         }
@@ -580,7 +581,7 @@ function godownExit(vehicle_information_uuid) {
   '       </div>'+
   '     </div>';
     $("body").append(content);
-    upload_attachment_preview_output("#godown_exit_detail_attch", godown_exit_file_data);
+    upload_attachment_preview_output("#godown_exit_detail_attch", this.godown_exit_file_data);
     $("#godown_exit_detail_modal").modal("show");
     $("#godown_exit_detail_modal").on("hidden.bs.modal", function(e) {
       $(this).remove();
@@ -635,7 +636,7 @@ function godownExit(vehicle_information_uuid) {
    * 出库单输出
    * @param output_id
    */
-  this.godown_exit_content() {
+  this.godown_exit_content = function() {
     var content = 
   '   <div class = "panel panel-primary ">'+
   '    <div class = "panel-heading clearfix" id = "godown_exit_paid"><span class = "paid">出库单&nbsp;[净重总量&nbsp;:&nbsp;0]&nbsp;</span><span class = "glyphicon glyphicon-plus pull-right" id = "godown_exit_add_modal_btn"></span></div>'+
@@ -672,6 +673,6 @@ function godownExit(vehicle_information_uuid) {
   '        </div>'+
   '      </div>'+
   '    </div>';
-    $(this.vehicle_information_uuid).html(content);
+    $(this.godown_exit_content_id).html(content);
   }
 }
