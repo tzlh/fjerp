@@ -1,5 +1,5 @@
-var paid_record = null;
-var contract_sale_all_penle_uuid = "";
+// var contract_sale_all_penle_uuid = "";
+
 function contract_sale_open_info_func(obj) {
   var contract_sales_contract_code = obj.attr("contract_code");
   var contract_sales_contract_code_uuid = obj.attr("contract_sales_contract_code_uuid");
@@ -50,9 +50,10 @@ function contract_sale_open_info_func(obj) {
     paid_record_time: "收款时间",
     paid_record_paid: "收款金额（元）"
   }
-  paid_record = new PaidRecord(contract_sale_all_price, contract_sales_contract_code, paid_record_title, "#paid_record_content" + contract_sales_contract_code_uuid);
+  // var paid_record = new PaidRecord(contract_sale_all_price, contract_sales_contract_code, paid_record_title, "#paid_record_content" + contract_sales_contract_code_uuid);
+  var paid_record = get_paid_record_list(contract_sales_contract_code);
   paid_record.paid_record_output();
-  // $("#paid_record_content" + contract_sales_contract_code_uuid).find("#paid_record_add_modle").attr("trade_contract_code",contract_sales_contract_code);
+  $("#paid_record_content" + contract_sales_contract_code_uuid).find("#paid_record_add_modle").attr("trade_contract_code",contract_sales_contract_code);
   // $("#paid_record_content" + contract_sales_contract_code_uuid).find("#paid_record_add_modle").attr("contract_sale_all_price",contract_sale_all_price);
   // $("#paid_record_content" + contract_sales_contract_code_uuid).find("#paid_record_add_modle").attr("contract_sales_contract_code_uuid",contract_sales_contract_code_uuid);
   // $("#paid_record_content" + contract_sales_contract_code_uuid).find(".settlement_bill_table_sales_trad_uuid").attr("contract_sales_contract_code_uuid",contract_sales_contract_code_uuid);

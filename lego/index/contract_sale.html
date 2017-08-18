@@ -321,18 +321,20 @@
       });
       // 添加收付款记录模态框
       $(document).on("click", "#paid_record_add_modle", function() {
-        // var trade_contract_code = $(this).attr("trade_contract_code");
+        var trade_contract_code = $(this).attr("trade_contract_code");
         // var contract_sale_all_price = $(this).attr("contract_sale_all_price");
         // var contract_sales_contract_code_uuid = $(this).attr("contract_sales_contract_code_uuid");
-        paid_record.paid_record_add_modle_func();
+        // paid_record.paid_record_add_modle_func();
+        get_paid_record_list(trade_contract_code).paid_record_add_modle_func(trade_contract_code);
       });
       // 添加收付款数据
       $(document).on("click", "#paid_record_add_modle_prop_btn", function() {
-        // var contract_code = $(this).attr("contract_code");
+        var contract_code = $(this).data("contract_code");
         // var contract_sale_all_price = $(this).attr("contract_sale_all_price");
         // var contract_uuid = $(this).attr("contract_uuid");
         // var contract_sale_all_price = $("#paid_record_add_modle").attr("contract_sale_all_price");
-        paid_record.paid_record_add_data_func();
+        // paid_record.paid_record_add_data_func();
+        get_paid_record_list(contract_code).paid_record_add_data_func();
       });
       // 修改收付款记录模态框
       $(document).on("click", ".paid_record_modle_pencil", function() {

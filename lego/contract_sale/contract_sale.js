@@ -1,6 +1,26 @@
 /**
  * @author wangdi
  */
+
+var paid_record_list = new Array();
+
+function add_paid_record_list(contract_code, paid_record) {
+  if (null != get_paid_record_list(contract_code)) {
+    return false;
+  }
+  paid_record_list.push({"contract_code": contract_code, "paid_record": paid_record});
+  return true;
+}
+
+function get_paid_record_list(contract_code) {
+  for (var i = 0; i < paid_record_list.length; i++) {
+    if (contract_code == paid_record_list[i].contract_code) {
+      return paid_record_list[i]["paid_record"];
+    }
+  }
+  return null;
+}
+
 /**
  * 附件
  */
@@ -92,6 +112,7 @@ function contract_sale_server_data_cover(contract_type) {
     }
   } else {
     alert("销售合同数据获取失败");
+    return;
   }
   console.log(totalRows);
   //获取销售合同
@@ -115,6 +136,10 @@ function contract_sale_server_data_cover(contract_type) {
       console.log(contract_sale_result);
       for (var i = 0; i < contract_sale_result.length; i++) {
         tmp_arr[i] = {"contract_code":contract_sale_result[i].contract_code, "buyer_uuid":contract_sale_result[i].buyer_uuid, "seller_uuid":contract_sale_result[i].seller_uuid, "product_name":contract_sale_result[i].product_name, "real_name":contract_sale_result[i].real_name, "price":contract_sale_result[i].price, "quantity":contract_sale_result[i].quantity, "deliver_datetime":contract_sale_result[i].deliver_datetime, "warehouse_uuid":contract_sale_result[i].warehouse_uuid, "uuid":contract_sale_result[i].uuid};
+        if (!add_paid_record_list(contract_sale_result[i].contract_code, new PaidRecord(contract_sale_result[i].price * contract_sale_result[i].quantity, contract_sale_result[i].contract_code, {paid_record_name: "收款记录", paid_record_time: "收款时间", paid_record_paid: "收款金额（元）"}, "#paid_record_content" + contract_sale_result[i].uuid))) {
+          alert("生成收款记录失败");
+          return;
+        }
       }
       contract_sale_data["data"] = tmp_arr;
     }

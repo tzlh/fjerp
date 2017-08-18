@@ -158,7 +158,7 @@ function PaidRecord(all_paid, sale_contract_code, title_object, paid_record_cont
   /**
    * 添加收款记录
    */
-  this.paid_record_add_modle_func = function() {
+  this.paid_record_add_modle_func = function(contract_code) {
     var paid_record_html = 
       '<div class = "modal fade custom_modal" tabindex = "-1" id = "paid_record_add_modle_prop" role = "dialog" aria-labelledby = "myLargeModalLabel">'+
         '<div class = "modal-dialog" role = "document">'+
@@ -190,7 +190,7 @@ function PaidRecord(all_paid, sale_contract_code, title_object, paid_record_cont
               '</div>'+
             '</div>'+
             '<div class = "modal-footer"  style = "text-align: center;">'+
-                '<button type = "button" class = "btn btn-primary" id = "paid_record_add_modle_prop_btn">添加</button>'+
+                '<button type = "button" class = "btn btn-primary" id = "paid_record_add_modle_prop_btn" data-contract_code = "' + contract_code + '">添加</button>'+
                 '<button type = "button" class = "btn btn-default" data-dismiss = "modal">取消</button>'+
             '</div>'+
           '</div>'+
