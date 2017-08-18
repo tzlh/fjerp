@@ -1,6 +1,8 @@
 /**
  * @author wangdi
  */
+function ContractLogistics(contract_logistics_code, contract_logistics_content_box, contract_logistics_buyer, contract_logistics_seller, contract_logistics_product_name) {
+  
 
 /**
  * 附件
@@ -977,4 +979,5 @@ function settlement_bill_logistics_output(output_id) {
 '      </div>'+
 '    </div>';
     $(output_id).html(content);
+}
 }
