@@ -1,4 +1,6 @@
 var paid_record = null;
+//物流合同
+var contract_logistics = null;
 var contract_sale_all_penle_uuid = "";
 function contract_sale_open_info_func(obj) {
   var contract_sales_contract_code = obj.attr("contract_code");
@@ -87,17 +89,20 @@ function contract_sale_open_info_func(obj) {
   goods_confirm_letter_fill_variable_data(contract_sales_contract_code_uuid);  
 
   //插入物流合同 ////////////////////////////////////////////////////////
-  contract_logistics_output("#contract_logistics_content" + contract_sales_contract_code_uuid);
-  $("#contract_logistics_content" + contract_sales_contract_code_uuid).find("#contract_logistics_add_modle").attr("trade_contract_code",contract_sales_contract_code);
-  $("#contract_logistics_content" + contract_sales_contract_code_uuid).find("#contract_logistics_add_modle").attr("trade_contract_code_uuid",contract_sales_contract_code_uuid);
-  $("#contract_logistics_content" + contract_sales_contract_code_uuid).find("#contract_logistics_table_sales_trad_uuid").attr("trade_contract_code_uuid",contract_sales_contract_code_uuid);
-  $("#contract_logistics_content" + contract_sales_contract_code_uuid).find("#contract_logistics_table_sales_trad_uuid").attr("trade_contract_code",contract_sales_contract_code);
+  
+  contract_logistics = new contract_logistics_func(contract_sales_contract_code, "#contract_logistics_content" + contract_sales_contract_code_uuid);
+  contract_logistics.contract_logistics_output();
+//contract_logistics_output("#contract_logistics_content" + contract_sales_contract_code_uuid);
+//$("#contract_logistics_content" + contract_sales_contract_code_uuid).find("#contract_logistics_add_modle").attr("trade_contract_code",contract_sales_contract_code);
+//$("#contract_logistics_content" + contract_sales_contract_code_uuid).find("#contract_logistics_add_modle").attr("trade_contract_code_uuid",contract_sales_contract_code_uuid);
+//$("#contract_logistics_content" + contract_sales_contract_code_uuid).find("#contract_logistics_table_sales_trad_uuid").attr("trade_contract_code_uuid",contract_sales_contract_code_uuid);
+//$("#contract_logistics_content" + contract_sales_contract_code_uuid).find("#contract_logistics_table_sales_trad_uuid").attr("trade_contract_code",contract_sales_contract_code);
   //清空原始数据
-  contract_logistics_clear_raw_data(contract_sales_contract_code_uuid);
+  contract_logistics.contract_logistics_clear_raw_data();
   //服务器数据
-  contract_logistics_server_data_cover(contract_sales_contract_code);
+  contract_logistics.contract_logistics_server_data_cover();
   //加载数据
-  contract_logistics_fill_variable_data(contract_sales_contract_code_uuid);
+  contract_logistics.contract_logistics_fill_variable_data();
   
   
   //车船信息 ///////////////////////////////////////////////////////////
