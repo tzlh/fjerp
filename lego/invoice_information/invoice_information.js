@@ -243,7 +243,7 @@ function InvoiceInformation(trade_contract_code, invoice_information_content_box
     var invoice_information_remark = obj.parents("#invoice_information_add_modle_prop").find(".invoice_information_remark").val();
     
     //验证
-    if (null == invoice_information_product_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)) {
+    if (null == invoice_information_product_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{1,32}$/)) {
       alert("请输入正确的产品名称！");
       return;
     }
@@ -478,7 +478,7 @@ function InvoiceInformation(trade_contract_code, invoice_information_content_box
       }    
     }
     //验证
-    if (null == invoice_information_product_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)) {
+    if (null == invoice_information_product_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{1,32}$/)) {
       alert("请输入正确的产品名称！");
       return;
     }

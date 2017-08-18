@@ -399,7 +399,7 @@ function contract_sales_add_modle_func() {
                   '</div>'+
                 '</div>'+
                 '<div class = "col-md-12">'+
-                  '<label class = "margin15">采购合同附件</label>'+
+                  '<label class = "margin15">销售合同附件</label>'+
                   '<div class="panel panel-default clearfix" id = "contract_sales_add_modle_attch">'+
                   '</div>'+
                 '</div>'+
@@ -472,11 +472,11 @@ function contract_sales_add_data_func(obj, contract_sales_type) {
     alert("请选择销售企业！");
     return;
   }
-  if(null == contract_sales_product_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)) {
+  if(null == contract_sales_product_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{1,32}$/)) {
     alert("请输入正确的产品名称！");
     return;
   }
-  if(null == contract_sales_real_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)) {
+  if(null == contract_sales_real_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{1,32}$/)) {
     alert("请输入正确的标记！");
     return;
   }
@@ -509,7 +509,7 @@ function contract_sales_add_data_func(obj, contract_sales_type) {
     return;
   }
   if(null == contract_sales_cluster_list.match(/^([0-9a-zA-Z]{32};)+$/)) {
-    alert("请添加采购合同附件！");
+    alert("请添加销售合同附件！");
     return;
   }
   var contract_sales_data = {
@@ -805,7 +805,7 @@ function contract_sales_edit_modle_func(obj, contract_type) {
                 '</div>'+
               '</div>'+
               '<div class = "col-md-12">'+
-                '<label class = "margin15">采购合同附件</label>'+
+                '<label class = "margin15">销售合同附件</label>'+
                 '<div class="panel panel-default clearfix" id = "contract_sales_edit_attch">'+
                 '</div>'+
               '</div>'+
@@ -879,11 +879,11 @@ function contract_sales_edit_data_func(obj, contract_type) {
     alert("请选择销售企业！");
     return;
   }
-  if(null == contract_sales_product_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)) {
+  if(null == contract_sales_product_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{1,32}$/)) {
     alert("请输入正确的产品名称！");
     return;
   }
-  if(null == contract_sales_real_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)) {
+  if(null == contract_sales_real_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{1,32}$/)) {
     alert("请输入正确的标记！");
     return;
   }
@@ -932,7 +932,7 @@ function contract_sales_edit_data_func(obj, contract_type) {
   };
   if(0 < contract_sales_cluster_list.length) {
     if(null == contract_sales_cluster_list.match(/^([0-9a-zA-Z]{32};)+$/)) {
-      alert("请添加采购合同附件！");
+      alert("请添加销售合同附件！");
       return;
     }
     data["normal_newClusterList"] = contract_sales_cluster_list;
@@ -1258,7 +1258,7 @@ function contract_sales_info_modle_func(obj, contract_type) {
                 '</div>'+
               '</div>'+
               '<div class = "col-md-12">'+
-                '<label class = "margin15">采购合同附件</label>'+
+                '<label class = "margin15">销售合同附件</label>'+
                 '<div class="panel panel-default clearfix" id = "contract_sales_delete_attch">'+
                 '</div>'+
               '</div>'+

@@ -272,7 +272,7 @@ function SettlementBillSale(trade_contract_code, trade_contract_code_uuid, settl
       }    
     }
     //验证
-    if (null == settlement_bill_sale_product_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)) {
+    if (null == settlement_bill_sale_product_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{1,32}$/)) {
       alert("请输入正确的品名！");
       return;
     }
@@ -533,7 +533,7 @@ function SettlementBillSale(trade_contract_code, trade_contract_code_uuid, settl
       }    
     }
     //验证
-    if (null == settlement_bill_sale_product_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)) {
+    if (null == settlement_bill_sale_product_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{1,32}$/)) {
       alert("请输入正确的品名！");
       return;
     }
