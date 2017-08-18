@@ -126,7 +126,7 @@ function contract_buy_server_data_cover(contract_type) {
   } else {
     alert("采购合同数据获取失败");
   }
-  console.log(totalRows);
+  //console.log(totalRows);
   //获取采购合同
   contract_buy_search_condition["type"] = contract_type;
   var contract_buy_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getContractTrade";
@@ -145,7 +145,7 @@ function contract_buy_server_data_cover(contract_type) {
     } else {
       var tmp_arr = new Array();
       var contract_buy_result = JSON.parse(contract_buy_get_contract.result);  
-      console.log(contract_buy_result);
+      //console.log(contract_buy_result);
       for (var i = 0; i < contract_buy_result.length; i++) {
         tmp_arr[i] = {"contract_code":contract_buy_result[i].contract_code, "buyer_uuid":contract_buy_result[i].buyer_uuid, "seller_uuid":contract_buy_result[i].seller_uuid, "product_name":contract_buy_result[i].product_name, "real_name":contract_buy_result[i].real_name, "price":contract_buy_result[i].price, "quantity":contract_buy_result[i].quantity, "deliver_datetime":contract_buy_result[i].deliver_datetime, "warehouse_uuid":contract_buy_result[i].warehouse_uuid, "uuid":contract_buy_result[i].uuid};
         // 收款记录
@@ -587,7 +587,7 @@ function contract_buy_edit_modle_func(obj, contract_type) {
   var contract_buy_edit_get_warehouse = ajax_assistant(contract_buy_edit_url, contract_buy_edit_data, false, true, false);
   if (1 == contract_buy_edit_get_warehouse.status) {
   var contract_warehouse_edit_data = JSON.parse(contract_buy_edit_get_warehouse.result);
-  console.log(contract_warehouse_edit_data);
+  //console.log(contract_warehouse_edit_data);
     if (0 < contract_warehouse_edit_data.length) {
       contract_buy_buyer_uuid = contract_warehouse_edit_data[0].buyer_uuid;
       contract_buy_seller_uuid = contract_warehouse_edit_data[0].seller_uuid;
@@ -639,20 +639,20 @@ function contract_buy_edit_modle_func(obj, contract_type) {
   if(0 < contract_buy_cluster_list.length){
     var contract_buy_file_arr = new Array();
     contract_buy_cluster_list = contract_buy_cluster_list.substring(0, contract_buy_cluster_list.length - 1).split(';');
-    console.log(contract_buy_cluster_list)
+    //console.log(contract_buy_cluster_list)
     for(var i = 0; i < contract_buy_cluster_list.length; i++){
       var cluster_name_data = {
             "cluster_name":contract_buy_cluster_list[i]
           };
       var contract_buy_file_name=ajax_assistant(PROJECT_PATH+"lego/lego_storage?servletName=getFileByClusterName",cluster_name_data, false, true, false);//查询文件集群信息
       var contract_buy_json=JSON.parse(contract_buy_file_name.result);
-      console.log(contract_buy_json)
+      //console.log(contract_buy_json)
       if(0 != contract_buy_file_name.count) {
         contract_buy_file_arr[i] = {"file_name":contract_buy_json[0].cluster_name+'.'+contract_buy_json[0].suffix};
       }
     }
     contract_buy_file_data = contract_buy_file_arr;
-    console.log(contract_buy_file_data);
+    //console.log(contract_buy_file_data);
   } else {
     contract_buy_file_data = [];
   }
@@ -1047,7 +1047,7 @@ function contract_buy_info_modle_func(obj, contract_type) {
   var contract_buy_info_get_warehouse = ajax_assistant(contract_buy_info_url, contract_buy_info_data, false, true, false);
   if (1 == contract_buy_info_get_warehouse.status) {
   var contract_warehouse_edit_data = JSON.parse(contract_buy_info_get_warehouse.result);
-  console.log(contract_warehouse_edit_data);
+  //console.log(contract_warehouse_edit_data);
     if (0 < contract_warehouse_edit_data.length) {
       contract_buy_buyer_uuid = contract_warehouse_edit_data[0].buyer_uuid;
       contract_buy_seller_uuid = contract_warehouse_edit_data[0].seller_uuid;
@@ -1099,14 +1099,14 @@ function contract_buy_info_modle_func(obj, contract_type) {
   if(0 < contract_buy_cluster_list.length){
     var contract_buy_file_arr = new Array();
     contract_buy_cluster_list = contract_buy_cluster_list.substring(0, contract_buy_cluster_list.length - 1).split(';');
-    console.log(contract_buy_cluster_list)
+    //console.log(contract_buy_cluster_list)
     for(var i = 0; i < contract_buy_cluster_list.length; i++){
       var cluster_name_data = {
             "cluster_name":contract_buy_cluster_list[i]
           };
       var contract_buy_file_name=ajax_assistant(PROJECT_PATH+"lego/lego_storage?servletName=getFileByClusterName",cluster_name_data, false, true, false);//查询文件集群信息
       var contract_buy_json=JSON.parse(contract_buy_file_name.result);
-      console.log(contract_buy_json)
+      //console.log(contract_buy_json)
       if(0 != contract_buy_file_name.count) {
         contract_buy_file_arr[i] = {"file_name":contract_buy_json[0].cluster_name+'.'+contract_buy_json[0].suffix};
       }

@@ -619,7 +619,7 @@
         var uuid = $(this).data("uuid");
         var vehicle_information_uuid = $(this).data("vehicle_information_uuid");
         get_vehicle_object_list(godown_entry_list, vehicle_information_uuid).godown_entry_get_letter(uuid);
-        get_vehicle_object_list(godown_entry_list, vehicle_information_uuid).godown_entry_edit_modal(uuid,);
+        get_vehicle_object_list(godown_entry_list, vehicle_information_uuid).godown_entry_edit_modal(uuid);
       });
       // 修改入库单
       $(document).on("click", "#godown_entry_edit_modal .edit_btn", function() {

@@ -144,7 +144,7 @@ $("#invoice_information_content" + contract_sales_contract_code_uuid).find(".inv
   
   invoice_information.invoice_information_fill_variable_data();
   for (var i = 0; i < $(".contract_sale_data_screening_btn").length; i++) {
-    console.log();
+    //console.log();
     if($(".contract_sale_data_screening_btn").eq(i).prop("checked") == false) {
       var contract_sale_idd = $(".contract_sale_data_screening_btn").eq(i).attr("id");
       $("#contract_sales_box").find("." + contract_sale_idd).addClass("contract_sales_none");
