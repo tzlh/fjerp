@@ -49,20 +49,17 @@ function contract_sale_open_info_func(obj) {
     paid_record_time: "收款时间",
     paid_record_paid: "收款金额（元）"
   }
-  // var paid_record = new PaidRecord(contract_sale_all_price, contract_sales_contract_code, paid_record_title, "#paid_record_content" + contract_sales_contract_code_uuid);
   var paid_record = get_sale_object_list(paid_record_list, contract_sales_contract_code);
   paid_record.paid_record_output();
   $("#paid_record_content" + contract_sales_contract_code_uuid).find("#paid_record_add_modle").attr("trade_contract_code",contract_sales_contract_code);
-  // $("#paid_record_content" + contract_sales_contract_code_uuid).find("#paid_record_add_modle").attr("contract_sale_all_price",contract_sale_all_price);
-  // $("#paid_record_content" + contract_sales_contract_code_uuid).find("#paid_record_add_modle").attr("contract_sales_contract_code_uuid",contract_sales_contract_code_uuid);
-  // $("#paid_record_content" + contract_sales_contract_code_uuid).find(".settlement_bill_table_sales_trad_uuid").attr("contract_sales_contract_code_uuid",contract_sales_contract_code_uuid);
-  // $("#paid_record_content" + contract_sales_contract_code_uuid).find("#paid_record_add_modle").attr("contract_uuid",contract_sales_contract_code_uuid);
   // 清空原始数据
   paid_record.paid_record_clear_raw_data();
   // 服务器数据
   paid_record.paid_record_server_data_cover();
   // 加载数据
   paid_record.paid_record_fill_variable_data();
+  
+  
   
   //提货委托函
   deliver_entrust_letter = new deliverEntrustLetter(contract_sales_contract_code, "#deliver_entrust_letter_content" + contract_sales_contract_code_uuid);
@@ -86,6 +83,8 @@ function contract_sale_open_info_func(obj) {
   // 加载数据
   goods_confirm_letter_fill_variable_data(contract_sales_contract_code_uuid);  
 
+
+
   //插入物流合同 ////////////////////////////////////////////////////////
   var contract_logistics = get_sale_object_list(contract_logistics_list, contract_sales_contract_code);
   contract_logistics.contract_logistics_output();
@@ -103,11 +102,7 @@ function contract_sale_open_info_func(obj) {
   var vehicle_information = get_sale_object_list(vehicle_information_list, contract_sales_contract_code);
   vehicle_information.vehicle_information_output();
   $("#vehicle_information_content" + contract_sales_contract_code_uuid).find("#vehicle_information_add_modle").attr("contract_code",contract_sales_contract_code);
-//$("#vehicle_information_content" + contract_sales_contract_code_uuid).find("#vehicle_information_add_modle").attr("contract_sales_contract_code_uuid",contract_sales_contract_code_uuid);
   $("#vehicle_information_content" + contract_sales_contract_code_uuid).find("#vehicle_information_table_sales_trad_uuid").attr("contract_code",contract_sales_contract_code);
-//$("#vehicle_information_content" + contract_sales_contract_code_uuid).find("#vehicle_information_add_modle").attr("contract_sale_warehouse_uuid",contract_sale_warehouse_uuid);
-//$("#vehicle_information_content" + contract_sales_contract_code_uuid).find("#vehicle_information_table_sales_trad_uuid").attr("vehicle_information_table_sales_trad_uuid",contract_sales_contract_code_uuid);
-  
   //清空原始数据
   vehicle_information.vehicle_information_clear_raw_data();
   //服务器数据
@@ -136,14 +131,14 @@ function contract_sale_open_info_func(obj) {
   var invoice_information = get_sale_object_list(invoice_information_list, contract_sales_contract_code);
   invoice_information.invoice_information_output();
 //invoice_information_output("#invoice_information_content" + contract_sales_contract_code_uuid, contract_sale_all_price, "1");
-  $("#invoice_information_content" + contract_sales_contract_code_uuid).find("#invoice_information_add_modle").attr("contract_code",contract_sales_contract_code);
-//$("#invoice_information_content" + contract_sales_contract_code_uuid).find("#invoice_information_add_modle").attr("invoice_type","1");
+  $("#invoice_information_content" + contract_sales_contract_code_uuid).find(".invoice_information_add_modle").attr("contract_code",contract_sales_contract_code);
+$("#invoice_information_content" + contract_sales_contract_code_uuid).find(".invoice_information_add_modle").attr("invoice_type","1");
 //$("#invoice_information_content" + contract_sales_contract_code_uuid).find("#invoice_information_add_modle").attr("contract_logistics_trad_add_url",contract_trad_add_url);
 //$("#invoice_information_content" + contract_sales_contract_code_uuid).find("#invoice_information_add_modle").attr("contract_code_uuid",contract_sales_contract_code_uuid);
 //$("#invoice_information_content" + contract_sales_contract_code_uuid).find("#invoice_information_add_modle").attr("contract_sale_all_price",contract_sale_all_price);
 //$("#invoice_information_content" + contract_sales_contract_code_uuid).find(".invoice_information_table_sales_trad_uuid").attr("contract_code_uuid",contract_sales_contract_code_uuid);
 //$("#invoice_information_content" + contract_sales_contract_code_uuid).find(".invoice_information_table_sales_trad_uuid").attr("contract_sale_all_price",contract_sale_all_price);
-//$("#invoice_information_content" + contract_sales_contract_code_uuid).find(".invoice_information_table_sales_trad_uuid").attr("invoice_type","1");
+$("#invoice_information_content" + contract_sales_contract_code_uuid).find(".invoice_information_table_sales_trad_uuid").attr("invoice_type","1");
 //$("#invoice_information_content" + contract_sales_contract_code_uuid).find(".invoice_information_table_sales_trad_uuid").attr("contract_logistics_trad_edit_url",contract_trad_edit_url);
   //清空原始数据
   invoice_information.invoice_information_clear_raw_data();
