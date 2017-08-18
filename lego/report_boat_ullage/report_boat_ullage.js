@@ -61,7 +61,7 @@ function reportBoatUllage(vehicle_information_uuid, report_boat_ullage_content_i
         $(this.report_boat_ullage_content_id).find("#report_boat_ullage_list tbody").html(report_boat_ullage_tbody);  
       }
     } else {
-      $(this.report_boat_ullage_content_id).find("#report_boat_ullage_list tbody").html("tr><td colspan='2' align='center'>没数据</td></tr>");
+      $(this.report_boat_ullage_content_id).find("#report_boat_ullage_list tbody").html("<tr><td colspan='2' align='center'>没数据</td></tr>");
     }
   };
   
