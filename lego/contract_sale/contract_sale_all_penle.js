@@ -65,15 +65,15 @@ function contract_sale_open_info_func(obj) {
   paid_record.paid_record_fill_variable_data();
   
   //提货委托函
-  deliver_entrust_letter_content("#deliver_entrust_letter_content" + contract_sales_contract_code_uuid, contract_sale_all_price);
-  $("#deliver_entrust_letter_content" + contract_sales_contract_code_uuid).find("#deliver_entrust_letter_add_modal_btn").attr("contract_code",contract_sales_contract_code);
-  $("#deliver_entrust_letter_content" + contract_sales_contract_code_uuid).find("#deliver_entrust_letter_add_modal_btn").attr("contract_uuid",contract_sales_contract_code_uuid);
+  deliver_entrust_letter = new deliverEntrustLetter(contract_sales_contract_code, "#deliver_entrust_letter_content" + contract_sales_contract_code_uuid);
+  deliver_entrust_letter.deliver_entrust_letter_content("#deliver_entrust_letter_content" + contract_sales_contract_code_uuid, contract_sale_all_price);
+  deliver_entrust_letter.deliver_entrust_letter_content();
   // 清空原始数据
-  deliver_entrust_letter_clear_raw_data(contract_sales_contract_code_uuid);
+  deliver_entrust_letter.deliver_entrust_letter_clear_raw_data();
   // 服务器数据
-  deliver_entrust_letter_server_data_cover(contract_sales_contract_code);
+  deliver_entrust_letter.deliver_entrust_letter_server_data_cover();
   // 加载数据
-  deliver_entrust_letter_fill_variable_data(contract_sales_contract_code_uuid);  
+  deliver_entrust_letter.deliver_entrust_letter_fill_variable_data();  
   
   //货物确认函
   goods_confirm_letter_content("#goods_confirm_letter_content" + contract_sales_contract_code_uuid, contract_sale_all_price);
