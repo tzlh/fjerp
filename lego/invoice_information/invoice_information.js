@@ -12,7 +12,6 @@ this.trade_edit_url = trade_edit_url;
 /**
  * 应开发票、已收发票、未开发票
  */
-//var invoice_information_should_be_obj = 12.00;
 this.invoice_information_already_obj = 0;
 this.invoice_information_no_objvar  = 0;
 
@@ -103,13 +102,11 @@ this.invoice_information_fill_variable_data = function() {
     $(this.invoice_information_content_box).find(".invoice_information_box").html(invoice_information_html);
     $(this.invoice_information_content_box).find(".invoice_information_already").html(Number(this.invoice_information_already_obj).toFixed(2));
     var no_obj = Number(this.trade_all_price) - Number(this.invoice_information_already_obj);
-//  var no_obj = (invoice_information_should_be_obj - this.invoice_information_already_obj;
     $(this.invoice_information_content_box).find(".invoice_information_no").html((no_obj.toFixed(2)));
   } else {
     $(this.invoice_information_content_box).find(".invoice_information_box").html('<tr><td colspan="9" align="center">没数据</td></tr>');
     $(this.invoice_information_content_box).find(".invoice_information_already").html("0");
     var no_obj = Number(this.trade_all_price);
-//  var no_obj = invoice_information_should_be_obj;
     $(this.invoice_information_content_box).find(".invoice_information_no").html((no_obj.toFixed(2)));
   }
 }
@@ -125,11 +122,8 @@ this.invoice_information_tax_blur_change = function(obj) {
 }
 
 this.invoice_information_add_modle_func = function(obj) {
-//var contract_logistics_trad_add_url = obj.attr("contract_logistics_trad_add_url");
-//var contract_sale_all_price = obj.attr("contract_sale_all_price");
-//var type_in = obj.attr("invoice_type");
+  var type_in = obj.attr("invoice_type");
   var contract_code = obj.attr("contract_code");
-//var contract_code_uuid = obj.attr("contract_code_uuid");
   var invoice_information_html = 
     '<div class = "modal fade custom_modal" tabindex = "-1" id = "invoice_information_add_modle_prop" role = "dialog" aria-labelledby = "myLargeModalLabel">'+
       '<div class = "modal-dialog" role = "document">'+
@@ -200,7 +194,7 @@ this.invoice_information_add_modle_func = function(obj) {
             '</div>'+
           '</div>'+
           '<div class = "modal-footer text-center">'+
-            '<button type = "button" class = "btn btn-primary btn_code" id = "invoice_information_add_data_btn" contract_code = "' + contract_code + '">添加</button>'+
+            '<button type = "button" class = "btn btn-primary btn_code" id = "invoice_information_add_data_btn" contract_code = "' + contract_code + '" invoice_type = "' + type_in + '">添加</button>'+
             '<button type = "button" class = "btn btn-default close_model" data-dismiss = "modal">取消</button>'+
           '</div>'+
         '</div>'+
@@ -227,11 +221,7 @@ this.all_should_change_price = function(obj) {
 }
 
 this.invoice_information_add_data_func = function(obj) {
-//var contract_logistics_trad_add_url = obj.attr("contract_logistics_trad_add_url");
-//var type_out = obj.attr("invoice_type");
   var contract_code = obj.attr("contract_code");
-//var contract_code_uuid = obj.attr("contract_code_uuid");
-//var contract_sale_all_price = obj.attr("contract_sale_all_price");
   var invoice_information_product_name = obj.parents("#invoice_information_add_modle_prop").find(".invoice_information_product_name").val();
   var invoice_information_price = obj.parents("#invoice_information_add_modle_prop").find(".invoice_information_price").val();
   var invoice_information_quantity = obj.parents("#invoice_information_add_modle_prop").find(".invoice_information_quantity").val();
@@ -318,12 +308,9 @@ this.invoice_information_add_data_func = function(obj) {
 }
 
 this.invoice_information_edit_modle_func = function(obj) {
-//var type_in = obj.parent().parent().parent().parent().attr("invoice_type");
-//var contract_logistics_trad_edit_url = obj.parent().parent().parent().parent().attr("contract_logistics_trad_edit_url");
+  var type_in = obj.parent().parent().parent().parent().attr("invoice_type");
   var uuid = obj.attr("uuid");
   var contract_code = obj.attr("contract_code");
-//var contract_code_uuid = obj.parent().parent().parent().parent().attr("contract_code_uuid");
-//var contract_sale_all_price = obj.parent().parent().parent().parent().attr("contract_sale_all_price");
   var invoice_information_product_name = "";
   var invoice_information_price = "";
   var invoice_information_quantity = "";
@@ -454,7 +441,7 @@ this.invoice_information_edit_modle_func = function(obj) {
               '</div>'+
             '</div>'+
             '<div class = "modal-footer text-center">'+
-              '<button type = "button" class = "btn btn-warning btn_code" id = "invoice_information_edit_data_btn" contract_code = "' + contract_code + '" uuid = "' + uuid + '">修改</button>'+
+              '<button type = "button" class = "btn btn-warning btn_code" id = "invoice_information_edit_data_btn" contract_code = "' + contract_code + '" uuid = "' + uuid + '" invoice_type = "' + type_in + '">修改</button>'+
               '<button type = "button" class = "btn btn-default close_model" data-dismiss = "modal">取消</button>'+
             '</div>'+
           '</div>'+
@@ -469,12 +456,8 @@ this.invoice_information_edit_modle_func = function(obj) {
 }
 
 this.invoice_information_edit_data_func = function(obj) {
-//var contract_logistics_trad_edit_url = obj.attr("contract_logistics_trad_edit_url");
-//var type_off = obj.attr("invoice_type");
   var uuid = obj.attr("uuid");
   var contract_code = obj.attr("contract_code");
-//var contract_code_uuid = obj.attr("contract_code_uuid");
-//var contract_sale_all_price = obj.attr("contract_sale_all_price");
   var invoice_information_product_name = obj.parents("#invoice_information_edit_modle_prop").find(".invoice_information_product_name").val();
   var invoice_information_price = obj.parents("#invoice_information_edit_modle_prop").find(".invoice_information_price").val();
   var invoice_information_quantity = obj.parents("#invoice_information_edit_modle_prop").find(".invoice_information_quantity").val();
@@ -567,11 +550,9 @@ this.invoice_information_edit_data_func = function(obj) {
 }
 
 this.invoice_information_delete_modle_func = function(obj) {
-//var type_in = obj.parent().parent().parent().parent().attr("invoice_type");
+  var type_in = obj.parent().parent().parent().parent().attr("invoice_type");
   var uuid = obj.attr("uuid");
   var contract_code = obj.attr("contract_code");
-//var contract_code_uuid = obj.parent().parent().parent().parent().attr("contract_code_uuid");
-//var contract_sale_all_price = obj.parent().parent().parent().parent().attr("contract_sale_all_price");
   var invoice_information_delete_html = 
       '<div class="modal fade custom_modal" id="invoice_information_delete_modle_prop" tabindex="-1" role="dialog">'+
         '<div class="modal-dialog modal-sm" role="document">'+
@@ -582,7 +563,7 @@ this.invoice_information_delete_modle_func = function(obj) {
             '</div>'+
             '<div class="modal-body nopadding-bottom invoice_information_center">确认要删除吗？</div>'+
             '<div class="modal-footer noborder nopadding-top" style="text-align: center;">'+
-            '<button type="button" class="btn btn-danger" id="invoice_information_delete_modle_prop_btn" contract_code = "' + contract_code + '" uuid = "' + uuid + '">删除</button>'+
+            '<button type="button" class="btn btn-danger" id="invoice_information_delete_modle_prop_btn" contract_code = "' + contract_code + '" uuid = "' + uuid + '" invoice_type = "' + type_in + '">删除</button>'+
                 '<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>'+
             '</div>'+
           '</div>'+
@@ -596,11 +577,8 @@ this.invoice_information_delete_modle_func = function(obj) {
 }
 
 this.invoice_information_delete_data_func = function(obj) {
-//var type_in = obj.attr("invoice_type");
   var uuid = obj.attr("uuid");
   var contract_code = obj.attr("contract_code");
-//var contract_code_uuid = obj.attr("contract_code_uuid");
-//var contract_sale_all_price = obj.attr("contract_sale_all_price");
   var data = {
     "idColumnValue":uuid,
     "contract_code":this.trade_contract_code
@@ -623,7 +601,6 @@ this.invoice_information_delete_data_func = function(obj) {
 }
 
 this.invoice_information_info_modle_func = function(obj) {
-//var type_in = obj.parent().parent().parent().parent().attr("invoice_type");
   var uuid = obj.attr("uuid");
   var contract_code = obj.attr("contract_code");
   var invoice_information_product_name = "";
@@ -772,7 +749,7 @@ this.invoice_information_info_modle_func = function(obj) {
 this.invoice_information_output = function() {
   var content = 
   '  <div class = "panel panel-primary ">'+
-  '    <div class = "panel-heading clearfix">发票信息  [应开发票:<span class="invoice_information_should_be">' + this.trade_all_price + '</span>] [已开发票:<span class="invoice_information_already">0</span>] [未开发票:<span class="invoice_information_no">0</span>]<span class = "glyphicon glyphicon-plus pull-right" id = "invoice_information_add_modle"></span></div>'+
+  '    <div class = "panel-heading clearfix">发票信息  [应开发票:<span class="invoice_information_should_be">' + this.trade_all_price + '</span>] [已开发票:<span class="invoice_information_already">0</span>] [未开发票:<span class="invoice_information_no">0</span>]<span class = "glyphicon glyphicon-plus pull-right invoice_information_add_modle"></span></div>'+
   '    <div class = "panel-body">'+
   '        <div class = "row">'+
   '          <div class = "col-lg-12">'+

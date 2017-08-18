@@ -84,10 +84,11 @@ this.contract_logistics_server_data_cover = function() {
       for (var i = 0; i < contract_logistics_result.length; i++) {
         tmp_arr[i] = {"trade_contract_code":this.sale_contract_code, "contract_code":contract_logistics_result[i].contract_code, "employer_uuid":contract_logistics_result[i].employer_uuid, "logistics_uuid":contract_logistics_result[i].logistics_uuid, "carrier_type":contract_logistics_result[i].carrier_type, "product_name":contract_logistics_result[i].product_name, "load_place":contract_logistics_result[i].load_place, "unload_place":contract_logistics_result[i].unload_place, "contract_ullage":contract_logistics_result[i].contract_ullage, "freight":contract_logistics_result[i].freight, "quantity":contract_logistics_result[i].quantity, "uuid":contract_logistics_result[i].uuid};
         //物流对账单
-        if (!add_sale_object_list(contract_logistics_list, this.sale_contract_code, new ContractLogistics(contract_logistics_result[i].contract_code, "#contract_logistics_content" + contract_logistics_result[i].uuid, contract_logistics_result[i].employer_uuid, contract_logistics_result[i].logistics_uuid, contract_logistics_result[i].product_name, "", ""))) {
-          alert("生成发票信息函失败");
-          return;
-        }
+        add_sale_object_list(settlement_bill_logistics_list, contract_logistics_result[i].contract_code, new SettlementBillLogistics(this.sale_contract_code, contract_logistics_result[i].contract_code, "#contract_logistics_content" + contract_logistics_result[i].uuid, contract_logistics_result[i].employer_uuid, contract_logistics_result[i].logistics_uuid, contract_logistics_result[i].product_name, "lego/lego_fjTrade?servletName=addLogisticsInvoiceInformation", "lego/lego_fjTrade?servletName=modifyLogisticsInvoiceInformation"));
+        
+        //发票信息
+        add_sale_object_list(logistics_invoice_information_list, contract_logistics_result[i].contract_code, new InvoiceInformation(contract_logistics_result[i].contract_code,"#invoice_information_content" + contract_logistics_result[i].uuid, contract_logistics_result[i].price * contract_logistics_result[i].quantity, "0", "lego/lego_fjTrade?servletName=addLogisticsInvoiceInformation", "lego/lego_fjTrade?servletName=modifyLogisticsInvoiceInformation"));
+         
       }
       this.contract_logistics_data["data"] = tmp_arr;
     }
@@ -430,8 +431,8 @@ this.contract_logistics_add_data_func = function (obj){
   };
   console.log(contract_logistics_remark);
   //调用接口
-  var contract_logistics_add_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=addContractLogistics";
-  var contract_logistics_add_get = ajax_assistant(contract_logistics_add_url, data, false, true, false);
+  var contract_logistics_add_url_s = PROJECT_PATH + "lego/lego_fjTrade?servletName=addContractLogistics";
+  var contract_logistics_add_get = ajax_assistant(contract_logistics_add_url_s, data, false, true, false);
   if ("1" == contract_logistics_add_get.status) {
     this.contract_logistics_clear_raw_data();
     this.contract_logistics_server_data_cover();
