@@ -59,8 +59,6 @@ function contract_sale_open_info_func(obj) {
   // 加载数据
   paid_record.paid_record_fill_variable_data();
   
-  
-  
   //提货委托函
   var deliver_entrust_letter = get_sale_object_list(deliver_entrust_letter_list, contract_sales_contract_code);
   deliver_entrust_letter.deliver_entrust_letter_content();

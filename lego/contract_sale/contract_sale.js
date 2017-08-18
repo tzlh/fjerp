@@ -221,8 +221,6 @@ function contract_sale_server_data_cover(contract_type) {
   }
 }
 
-
-
 function contract_sale_fill_variable_data() {
   if(isJsonObjectHasData(contract_sale_data)) {
     var contract_sale_html = "";

@@ -2,6 +2,9 @@ function DemoObject(name, age, job) {
     this.name = name;
     this.age = age;
     this.job = job;
+
+    alert("11111111111111111111");
+
     this.alert_msg = function() {
       alert("kkkkkkkkkkkk");
     };

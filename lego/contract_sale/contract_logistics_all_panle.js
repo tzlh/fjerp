@@ -41,23 +41,18 @@ function contract_logistics_open_info_func(obj) {
   settlement_bill_logistics.settlement_bill_logistics_server_data_cover();
   //加载数据
   settlement_bill_logistics.settlement_bill_logistics_fill_variable_data();
-  
-  
-  
   //发票信息///////////////////////////////////////////////////////////////////////
   var logistics_invoice_information = get_sale_object_list(logistics_invoice_information_list, contract_logistics_contract_code);
   logistics_invoice_information.invoice_information_output();
-$("#invoice_information_content" + contract_logistics_contract_code_uuid).find(".panel-heading").html('发票信息<span class = "glyphicon glyphicon-plus pull-right invoice_information_add_modle" ></span>');
-$("#invoice_information_content" + contract_logistics_contract_code_uuid).find(".invoice_information_add_modle").attr("contract_code",contract_logistics_contract_code);
-$("#invoice_information_content" + contract_logistics_contract_code_uuid).find(".invoice_information_add_modle").attr("invoice_type","0");
-$("#invoice_information_content" + contract_logistics_contract_code_uuid).find(".invoice_information_table_sales_trad_uuid").attr("contract_code",contract_logistics_contract_code);
-
-$("#invoice_information_content" + contract_logistics_contract_code_uuid).find(".invoice_information_table_sales_trad_uuid").attr("invoice_type","0");
+  $("#invoice_information_content" + contract_logistics_contract_code_uuid).find(".panel-heading").html('发票信息<span class = "glyphicon glyphicon-plus pull-right invoice_information_add_modle" ></span>');
+  $("#invoice_information_content" + contract_logistics_contract_code_uuid).find(".invoice_information_add_modle").attr("contract_code",contract_logistics_contract_code);
+  $("#invoice_information_content" + contract_logistics_contract_code_uuid).find(".invoice_information_add_modle").attr("invoice_type","0");
+  $("#invoice_information_content" + contract_logistics_contract_code_uuid).find(".invoice_information_table_sales_trad_uuid").attr("contract_code",contract_logistics_contract_code);
+  $("#invoice_information_content" + contract_logistics_contract_code_uuid).find(".invoice_information_table_sales_trad_uuid").attr("invoice_type","0");
   //清空原始数据
   logistics_invoice_information.invoice_information_clear_raw_data();
   //服务器数据
   logistics_invoice_information.invoice_information_server_data_cover();
   //加载数据  0  入库
   logistics_invoice_information.invoice_information_fill_variable_data();
-
 }

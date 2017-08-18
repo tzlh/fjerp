@@ -6,9 +6,7 @@ function contract_logistics_open_info_func(obj) {
   var settlement_bill_logistics_add_seller_uuid = obj.attr("seller_uuid");
   var settlement_bill_logistics_add_product_name = obj.attr("product_name");
   var contract_logistics_trad_add_url = "lego/lego_fjTrade?servletName=addLogisticsInvoiceInformation";
-  var contract_logistics_trad_edit_url = "lego/lego_fjTrade?servletName=modifyLogisticsInvoiceInformation";
-  
-  
+  var contract_logistics_trad_edit_url = "lego/lego_fjTrade?servletName=modifyLogisticsInvoiceInformation"; 
   var contract_logistics_all_panle_html =
   '<tr>'+
     '<td colspan="11">'+
@@ -34,37 +32,32 @@ function contract_logistics_open_info_func(obj) {
     obj.parent().parent().after(contract_logistics_html);
   }
   //插入物流对账单合同 ////////////////////////////////////////////////////////
-  settlement_bill_logistics_output("#contract_logistics_content" + contract_logistics_contract_code_uuid);
-  $("#contract_logistics_content" + contract_logistics_contract_code_uuid).find("#settlement_bill_logistics_add_modle").attr("trade_contract_code",trade_contract_code);
+  var settlement_bill_logistics = get_sale_object_list(settlement_bill_logistics_list, contract_logistics_contract_code);
+  settlement_bill_logistics.settlement_bill_logistics_output();
   $("#contract_logistics_content" + contract_logistics_contract_code_uuid).find("#settlement_bill_logistics_add_modle").attr("contract_logistics_code",contract_logistics_contract_code);
-  $("#contract_logistics_content" + contract_logistics_contract_code_uuid).find("#settlement_bill_logistics_add_modle").attr("contract_logistics_code_uuid",contract_logistics_contract_code_uuid);
-  $("#contract_logistics_content" + contract_logistics_contract_code_uuid).find("#settlement_bill_logistics_add_modle").attr("buyer_uuid",settlement_bill_logistics_add_buyer_uuid);
-  $("#contract_logistics_content" + contract_logistics_contract_code_uuid).find("#settlement_bill_logistics_add_modle").attr("seller_uuid",settlement_bill_logistics_add_seller_uuid);
-  $("#contract_logistics_content" + contract_logistics_contract_code_uuid).find("#settlement_bill_logistics_add_modle").attr("product_name",settlement_bill_logistics_add_product_name);
-  $("#contract_logistics_content" + contract_logistics_contract_code_uuid).find(".settlement_bill_table_sales_trad_uuid").attr("contract_logistics_code_uuid",contract_logistics_contract_code_uuid);
   //清空原始数据
-  settlement_bill_logistics_clear_raw_data(contract_logistics_contract_code_uuid);
+  settlement_bill_logistics.settlement_bill_logistics_clear_raw_data();
   //服务器数据
-  settlement_bill_logistics_server_data_cover(trade_contract_code, contract_logistics_contract_code);
+  settlement_bill_logistics.settlement_bill_logistics_server_data_cover();
   //加载数据
-  settlement_bill_logistics_fill_variable_data(contract_logistics_contract_code_uuid);
+  settlement_bill_logistics.settlement_bill_logistics_fill_variable_data();
+  
   
   
   //发票信息///////////////////////////////////////////////////////////////////////
-  invoice_information_output("#invoice_information_content" + contract_logistics_contract_code_uuid, "", "0");
-  $("#invoice_information_content" + contract_logistics_contract_code_uuid).find(".panel-heading").html('发票信息<span class = "glyphicon glyphicon-plus pull-right" id = "invoice_information_add_modle"></span>');
-  $("#invoice_information_content" + contract_logistics_contract_code_uuid).find("#invoice_information_add_modle").attr("contract_code",contract_logistics_contract_code);
-  $("#invoice_information_content" + contract_logistics_contract_code_uuid).find("#invoice_information_add_modle").attr("contract_logistics_trad_add_url",contract_logistics_trad_add_url);
-  $("#invoice_information_content" + contract_logistics_contract_code_uuid).find("#invoice_information_add_modle").attr("invoice_type","0");
-  $("#invoice_information_content" + contract_logistics_contract_code_uuid).find("#invoice_information_add_modle").attr("contract_code_uuid",contract_logistics_contract_code_uuid);
-  $("#invoice_information_content" + contract_logistics_contract_code_uuid).find(".invoice_information_table_sales_trad_uuid").attr("contract_code_uuid",contract_logistics_contract_code_uuid);
-  $("#invoice_information_content" + contract_logistics_contract_code_uuid).find(".invoice_information_table_sales_trad_uuid").attr("contract_logistics_trad_edit_url",contract_logistics_trad_edit_url);
-  $("#invoice_information_content" + contract_logistics_contract_code_uuid).find(".invoice_information_table_sales_trad_uuid").attr("invoice_type","0");
+  var logistics_invoice_information = get_sale_object_list(logistics_invoice_information_list, contract_logistics_contract_code);
+  logistics_invoice_information.invoice_information_output();
+$("#invoice_information_content" + contract_logistics_contract_code_uuid).find(".panel-heading").html('发票信息<span class = "glyphicon glyphicon-plus pull-right invoice_information_add_modle" ></span>');
+$("#invoice_information_content" + contract_logistics_contract_code_uuid).find(".invoice_information_add_modle").attr("contract_code",contract_logistics_contract_code);
+$("#invoice_information_content" + contract_logistics_contract_code_uuid).find(".invoice_information_add_modle").attr("invoice_type","0");
+$("#invoice_information_content" + contract_logistics_contract_code_uuid).find(".invoice_information_table_sales_trad_uuid").attr("contract_code",contract_logistics_contract_code);
+
+$("#invoice_information_content" + contract_logistics_contract_code_uuid).find(".invoice_information_table_sales_trad_uuid").attr("invoice_type","0");
   //清空原始数据
-  invoice_information_clear_raw_data(contract_logistics_contract_code_uuid);
+  logistics_invoice_information.invoice_information_clear_raw_data();
   //服务器数据
-  invoice_information_server_data_cover(contract_logistics_contract_code);
+  logistics_invoice_information.invoice_information_server_data_cover();
   //加载数据  0  入库
-  invoice_information_fill_variable_data(contract_logistics_contract_code_uuid, "", "0");
+  logistics_invoice_information.invoice_information_fill_variable_data();
 
 }
