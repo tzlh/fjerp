@@ -1,11 +1,13 @@
 /**
  * @author wangdi
  */
-//var contract_logistics_trade_contract_code = "";
+function ContractLogistics(sale_contract_code, contract_logistics_content_box) {
+this.contract_logistics_content_box = contract_logistics_content_box;
+this.sale_contract_code = sale_contract_code;
 /**
  * 附件
  */
-var contract_logistics_file_data = [
+this.contract_logistics_file_data = [
   {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
   {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
   {"file_name": "e53fe82722af4d69879d0b7e02a492be.jpg"},
@@ -19,7 +21,7 @@ var contract_logistics_file_data = [
 /**
  * 企业数据
  */
-var contract_logistics_enterprise_data = {"data":[
+this.contract_logistics_enterprise_data = {"data":[
     {"short_name":"腾智联合", "uuid":"00000000000000000000000000000001"},
     {"short_name":"腾智联", "uuid":"00000000000000000000000000000002"},
     {"short_name":"腾智", "uuid":"00000000000000000000000000000003"},
@@ -41,7 +43,7 @@ var contract_logistics_enterprise_data = {"data":[
  * freight:运费
  * quantity:运量
  */
-var contract_logistics_data = {"data":[
+this.contract_logistics_data = {"data":[
     {"trade_contract_code":"fj-xy-170604", "contract_code":"fj-xy-111111", "employer_uuid":"00000000000000000000000000000004", "logistics_uuid":"00000000000000000000000000000001", "carrier_type":"1", "product_name":"富纪有限公司", "load_place":"德国法国", "unload_place":"高合金钢", "contract_ullage":"0.1", "freight":"200", "quantity":"100", "uuid":"11111111111111111111111111111111"},
     {"trade_contract_code":"fj-xy-170604", "contract_code":"fj-xy-111111", "employer_uuid":"00000000000000000000000000000001", "logistics_uuid":"00000000000000000000000000000003", "carrier_type":"2", "product_name":"富纪有限公司", "load_place":"退换货比v", "unload_place":"阿斯顿发放", "contract_ullage":"0.2", "freight":"200", "quantity":"100", "uuid":"11111111111111111111111111111112"},
     {"trade_contract_code":"fj-xy-170604", "contract_code":"fj-xy-111111", "employer_uuid":"00000000000000000000000000000002", "logistics_uuid":"00000000000000000000000000000001", "carrier_type":"3", "product_name":"富纪有限公司", "load_place":"会根据", "unload_place":"多个梵蒂冈", "contract_ullage":"0.3", "freight":"200", "quantity":"100", "uuid":"11111111111111111111111111111113"},
@@ -51,109 +53,111 @@ var contract_logistics_data = {"data":[
 };
 
 //载体类型
-var contract_logistics_type_arr = ["轮船 ","汽车 ","火车"];
+this.contract_logistics_type_arr = ["轮船 ","汽车 ","火车"];
 
-function contract_logistics_clear_raw_data(trade_contract_code_uuid) {
- 
-  $("#contract_logistics_content"+trade_contract_code_uuid).find(".contract_logistics_box").html('<tr><td colspan="11" align="center">没数据</td></tr>');
+this.contract_logistics_clear_raw_data = function() {
+  $(this.contract_logistics_content_box).find(".contract_logistics_box").html('<tr><td colspan="11" align="center">没数据</td></tr>');
 }
 
 /**
  * 服务器数据
  */
-function contract_logistics_server_data_cover(contract_logistics_trade_contract_code) {
+
+this.contract_logistics_server_data_cover = function() {
   //获取物流合同
   var server_data = {
-    "trade_contract_code":contract_logistics_trade_contract_code
+    "trade_contract_code":this.sale_contract_code
   };
   var contract_logistics_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getContractLogistics";
   var contract_logistics_get_contract = ajax_assistant(contract_logistics_url, server_data, false, true, false);
   //获取企业信息
   var contract_logistics_enterprise_url = PROJECT_PATH + "lego/lego_crm?servletName=getEnterpriseInformation";
   var contract_logistics_enterprise_get_contract = ajax_assistant(contract_logistics_enterprise_url, "", false, true, false);
-  contract_logistics_data = {};
+  this.contract_logistics_data = {};
   if (1 == contract_logistics_get_contract.status) {
     if (0 == contract_logistics_get_contract.count) {
-      contract_logistics_data = {};
+      this.contract_logistics_data = {};
     } else {
       var tmp_arr = new Array();
       var contract_logistics_result = JSON.parse(contract_logistics_get_contract.result);  
       console.log(contract_logistics_result);
       for (var i = 0; i < contract_logistics_result.length; i++) {
-        tmp_arr[i] = {"trade_contract_code":contract_logistics_trade_contract_code, "contract_code":contract_logistics_result[i].contract_code, "employer_uuid":contract_logistics_result[i].employer_uuid, "logistics_uuid":contract_logistics_result[i].logistics_uuid, "carrier_type":contract_logistics_result[i].carrier_type, "product_name":contract_logistics_result[i].product_name, "load_place":contract_logistics_result[i].load_place, "unload_place":contract_logistics_result[i].unload_place, "contract_ullage":contract_logistics_result[i].contract_ullage, "freight":contract_logistics_result[i].freight, "quantity":contract_logistics_result[i].quantity, "uuid":contract_logistics_result[i].uuid};
+        tmp_arr[i] = {"trade_contract_code":this.sale_contract_code, "contract_code":contract_logistics_result[i].contract_code, "employer_uuid":contract_logistics_result[i].employer_uuid, "logistics_uuid":contract_logistics_result[i].logistics_uuid, "carrier_type":contract_logistics_result[i].carrier_type, "product_name":contract_logistics_result[i].product_name, "load_place":contract_logistics_result[i].load_place, "unload_place":contract_logistics_result[i].unload_place, "contract_ullage":contract_logistics_result[i].contract_ullage, "freight":contract_logistics_result[i].freight, "quantity":contract_logistics_result[i].quantity, "uuid":contract_logistics_result[i].uuid};
+        //物流对账单
+        add_sale_object_list(settlement_bill_logistics_list, contract_logistics_result[i].contract_code, new SettlementBillLogistics(this.sale_contract_code, contract_logistics_result[i].contract_code, "#contract_logistics_content" + contract_logistics_result[i].uuid, contract_logistics_result[i].employer_uuid, contract_logistics_result[i].logistics_uuid, contract_logistics_result[i].product_name, "lego/lego_fjTrade?servletName=addLogisticsInvoiceInformation", "lego/lego_fjTrade?servletName=modifyLogisticsInvoiceInformation"));
+        
+        //发票信息
+        add_sale_object_list(logistics_invoice_information_list, contract_logistics_result[i].contract_code, new InvoiceInformation(contract_logistics_result[i].contract_code,"#invoice_information_content" + contract_logistics_result[i].uuid, contract_logistics_result[i].price * contract_logistics_result[i].quantity, "0", "lego/lego_fjTrade?servletName=addLogisticsInvoiceInformation", "lego/lego_fjTrade?servletName=modifyLogisticsInvoiceInformation"));
+         
       }
-      contract_logistics_data["data"] = tmp_arr;
+      this.contract_logistics_data["data"] = tmp_arr;
     }
   } else {
     alert("物流合同数据获取失败");
   }
   //企业
-  contract_logistics_enterprise_data = {};
+  this.contract_logistics_enterprise_data = {};
   if (1 == contract_logistics_enterprise_get_contract.status) {
     if (0 == contract_logistics_enterprise_get_contract.count) {
-      contract_logistics_enterprise_data = {};
+      this.contract_logistics_enterprise_data = {};
     } else {
       var tmp_enterprise_arr = new Array();
       var contract_logistics_enterprise_result = JSON.parse(contract_logistics_enterprise_get_contract.result);
       for (var i = 0; i < contract_logistics_enterprise_result.length; i++) {
         tmp_enterprise_arr[i] = {"short_name":contract_logistics_enterprise_result[i].short_name, "uuid":contract_logistics_enterprise_result[i].uuid};
       }
-      contract_logistics_enterprise_data["data"] = tmp_enterprise_arr;
+      this.contract_logistics_enterprise_data["data"] = tmp_enterprise_arr;
     }
   } else {
     alert("企业信息数据获取失败");
   }
 }
 
-function contract_logistics_fill_variable_data(trade_contract_uuid) {
-  if(isJsonObjectHasData(contract_logistics_data)) {
+this.contract_logistics_fill_variable_data = function() {
+  if(isJsonObjectHasData(this.contract_logistics_data)) {
     var contract_logistics_html = "";
-    for (var i = 0; i < contract_logistics_data.data.length; i++) {
+    for (var i = 0; i < this.contract_logistics_data.data.length; i++) {
       var employer_uuid = "";
       var logistics_uuid = "";
-      if (isJsonObjectHasData(contract_logistics_enterprise_data)) {
-        for (var j = 0; j < contract_logistics_enterprise_data.data.length; j++) {
+      if (isJsonObjectHasData(this.contract_logistics_enterprise_data)) {
+        for (var j = 0; j < this.contract_logistics_enterprise_data.data.length; j++) {
           //雇佣
-          if(contract_logistics_enterprise_data.data[j].uuid == contract_logistics_data.data[i].employer_uuid) {
-            employer_uuid = contract_logistics_enterprise_data.data[j].short_name;
+          if(this.contract_logistics_enterprise_data.data[j].uuid == this.contract_logistics_data.data[i].employer_uuid) {
+            employer_uuid = this.contract_logistics_enterprise_data.data[j].short_name;
           }
           //物流
-          if(contract_logistics_enterprise_data.data[j].uuid == contract_logistics_data.data[i].logistics_uuid){
-            logistics_uuid = contract_logistics_enterprise_data.data[j].short_name;
+          if(this.contract_logistics_enterprise_data.data[j].uuid == this.contract_logistics_data.data[i].logistics_uuid){
+            logistics_uuid = this.contract_logistics_enterprise_data.data[j].short_name;
           }
         }
       }
       contract_logistics_html +=
         '<tr class = "contract_logistics_tr">'+
-          '<td><button type = "button" class = "btn btn-info btn-xs contract_logistics_open_btn" contract_code = "' + contract_logistics_data.data[i].contract_code + '" contract_logistics_uuid = "' + contract_logistics_data.data[i].uuid + '" buyer_uuid = "' + contract_logistics_data.data[i].employer_uuid + '" seller_uuid = "' + contract_logistics_data.data[i].logistics_uuid + '" product_name = "' + contract_logistics_data.data[i].product_name + '"><span class = "glyphicon glyphicon-chevron-up"></span></button></td>'+
+          '<td><button type = "button" class = "btn btn-info btn-xs contract_logistics_open_btn" contract_code = "' + this.contract_logistics_data.data[i].contract_code + '" contract_logistics_uuid = "' + this.contract_logistics_data.data[i].uuid + '" buyer_uuid = "' + this.contract_logistics_data.data[i].employer_uuid + '" seller_uuid = "' + this.contract_logistics_data.data[i].logistics_uuid + '" product_name = "' + this.contract_logistics_data.data[i].product_name + '"><span class = "glyphicon glyphicon-chevron-up"></span></button></td>'+
           '<td>' + employer_uuid + '</td>'+
           '<td>' + logistics_uuid + '</td>'+
-          '<td>' + contract_logistics_type_arr[contract_logistics_data.data[i].carrier_type-1] + '</td>'+
-          '<td>' + contract_logistics_data.data[i].product_name + '</td>'+
-          '<td>' + contract_logistics_data.data[i].load_place + '</td>'+
-          '<td>' + contract_logistics_data.data[i].unload_place + '</td>'+
-          '<td>' + contract_logistics_data.data[i].contract_ullage + '</td>'+
-          '<td>' + contract_logistics_data.data[i].freight + '</td>'+
-          '<td>' + contract_logistics_data.data[i].quantity + '</td>'+
+          '<td>' + this.contract_logistics_type_arr[this.contract_logistics_data.data[i].carrier_type-1] + '</td>'+
+          '<td>' + this.contract_logistics_data.data[i].product_name + '</td>'+
+          '<td>' + this.contract_logistics_data.data[i].load_place + '</td>'+
+          '<td>' + this.contract_logistics_data.data[i].unload_place + '</td>'+
+          '<td>' + this.contract_logistics_data.data[i].contract_ullage + '</td>'+
+          '<td>' + this.contract_logistics_data.data[i].freight + '</td>'+
+          '<td>' + this.contract_logistics_data.data[i].quantity + '</td>'+
           '<td>'+
-            '<span class = "glyphicon glyphicon-info-sign contract_logistics_ml15 contract_logistics_modle_info" uuid = "' + contract_logistics_data.data[i].uuid + '" trade_contract_code = "' + contract_logistics_data.data[i].trade_contract_code + '" contract_code = "' + contract_logistics_data.data[i].contract_code + '"></span>'+
-            '<span class = "glyphicon glyphicon-pencil contract_logistics_ml15 contract_logistics_modle_pencil" uuid = "' + contract_logistics_data.data[i].uuid + '" trade_contract_code = "' + contract_logistics_data.data[i].trade_contract_code + '" contract_code = "' + contract_logistics_data.data[i].contract_code + '"></span>'+
-            '<span class = "glyphicon glyphicon-remove contract_logistics_ml15 contract_logistics_modle_remove" uuid = "' + contract_logistics_data.data[i].uuid + '" trade_contract_code = "' + contract_logistics_data.data[i].trade_contract_code + '" contract_code = "' + contract_logistics_data.data[i].contract_code + '"></span>'+
+            '<span class = "glyphicon glyphicon-info-sign contract_logistics_ml15 contract_logistics_modle_info" uuid = "' + this.contract_logistics_data.data[i].uuid + '" trade_contract_code = "' + this.contract_logistics_data.data[i].trade_contract_code + '" contract_code = "' + this.contract_logistics_data.data[i].contract_code + '"></span>'+
+            '<span class = "glyphicon glyphicon-pencil contract_logistics_ml15 contract_logistics_modle_pencil" uuid = "' + this.contract_logistics_data.data[i].uuid + '" trade_contract_code = "' + this.contract_logistics_data.data[i].trade_contract_code + '" contract_code = "' + this.contract_logistics_data.data[i].contract_code + '"></span>'+
+            '<span class = "glyphicon glyphicon-remove contract_logistics_ml15 contract_logistics_modle_remove" uuid = "' + this.contract_logistics_data.data[i].uuid + '" trade_contract_code = "' + this.contract_logistics_data.data[i].trade_contract_code + '" contract_code = "' + this.contract_logistics_data.data[i].contract_code + '"></span>'+
           '</td>'+
         '</tr>';
     }
-    //$("#contract_logistics_"+trade_contract_code).find(".contract_logistics_box")
-   
-    $("#contract_logistics_content"+trade_contract_uuid).find(".contract_logistics_box").html(contract_logistics_html);
+    $(this.contract_logistics_content_box).find(".contract_logistics_box").html(contract_logistics_html);
   } else {
-    //$("#contract_logistics_"+trade_contract_code).find(".contract_logistics_box")
-    $("#contract_logistics_content"+trade_contract_uuid).find(".contract_logistics_box").html('<tr><td colspan="11" align="center">没数据</td></tr>');
+    $(this.contract_logistics_content_box).find(".contract_logistics_box").html('<tr><td colspan="11" align="center">没数据</td></tr>');
   }
 }
 
-function contract_logistics_add_modle_func(obj) {
+this.contract_logistics_add_modle_func = function (obj){
   var trade_contract_code = obj.attr("trade_contract_code");
-  var trade_contract_code_uuid = obj.attr("trade_contract_code_uuid");
   var contract_logistics_html = 
       '<div class = "modal fade custom_modal" tabindex = "-1" id = "contract_logistics_add_modle_prop" role = "dialog" aria-labelledby = "myLargeModalLabel">'+
         '<div class = "modal-dialog modal-lg" role = "document">'+
@@ -175,9 +179,9 @@ function contract_logistics_add_modle_func(obj) {
                     '<label for = "">使用企业</label>'+
                     '<select class = "form-control contract_logistics_employer_uuid" value = "">'+
                       '<option value = "">--请选择--</option>';
-                      if(isJsonObjectHasData(contract_logistics_enterprise_data)) {
-                        for (var i = 0; i < contract_logistics_enterprise_data.data.length; i++) {
-                          contract_logistics_html += '<option value = "' + contract_logistics_enterprise_data.data[i].uuid + '">' + contract_logistics_enterprise_data.data[i].short_name + '</option>'; 
+                      if(isJsonObjectHasData(this.contract_logistics_enterprise_data)) {
+                        for (var i = 0; i < this.contract_logistics_enterprise_data.data.length; i++) {
+                          contract_logistics_html += '<option value = "' + this.contract_logistics_enterprise_data.data[i].uuid + '">' + this.contract_logistics_enterprise_data.data[i].short_name + '</option>'; 
                         }
                       }
                       contract_logistics_html +=
@@ -189,9 +193,9 @@ function contract_logistics_add_modle_func(obj) {
                     '<label for = "">物流企业</label>'+
                     '<select class = "form-control contract_logistics_logistics_uuid" value = "">'+
                       '<option value = "">--请选择--</option>';
-                      if(isJsonObjectHasData(contract_logistics_enterprise_data)) {
-                        for (var i = 0; i < contract_logistics_enterprise_data.data.length; i++) {
-                          contract_logistics_html += '<option value = "' + contract_logistics_enterprise_data.data[i].uuid + '">' + contract_logistics_enterprise_data.data[i].short_name + '</option>'; 
+                      if(isJsonObjectHasData(this.contract_logistics_enterprise_data)) {
+                        for (var i = 0; i < this.contract_logistics_enterprise_data.data.length; i++) {
+                          contract_logistics_html += '<option value = "' + this.contract_logistics_enterprise_data.data[i].uuid + '">' + this.contract_logistics_enterprise_data.data[i].short_name + '</option>'; 
                         }
                       }
                       contract_logistics_html +=
@@ -289,7 +293,7 @@ function contract_logistics_add_modle_func(obj) {
               '</div>'+
             '</div>'+
             '<div class = "modal-footer" style = "text-align: center;">'+
-                '<button type = "button" class = "btn btn-primary" id = "contract_logistics_add_data_btn" trade_contract_code = "' + trade_contract_code + '" trade_contract_code_uuid = "' + trade_contract_code_uuid + '">添加</button>'+
+                '<button type = "button" class = "btn btn-primary" id = "contract_logistics_add_data_btn" trade_contract_code = "' + trade_contract_code + '">添加</button>'+
                 '<button type = "button" class = "btn btn-default" data-dismiss = "modal">取消</button>'+
             '</div>'+
           '</div>'+
@@ -303,9 +307,7 @@ function contract_logistics_add_modle_func(obj) {
   });
 }
 
-function contract_logistics_add_data_func(obj) {
-  var trade_contract_code = obj.attr("trade_contract_code");
-  var trade_contract_code_uuid = obj.attr("trade_contract_code_uuid");
+this.contract_logistics_add_data_func = function (obj){
   //物流企业的
   var contract_logistics_logistics_uuid = obj.parents("#contract_logistics_add_modle_prop").find(".contract_logistics_logistics_uuid").val();
   //雇主企业的
@@ -406,7 +408,7 @@ function contract_logistics_add_data_func(obj) {
   }
   var data = {
     "cluster_list":contract_logistics_cluster_list,
-    "trade_contract_code":trade_contract_code,
+    "trade_contract_code":this.sale_contract_code,
     "logistics_uuid":contract_logistics_logistics_uuid,
     "employer_uuid":contract_logistics_employer_uuid,
     "carrier_type":contract_logistics_carrier_type,
@@ -429,12 +431,12 @@ function contract_logistics_add_data_func(obj) {
   };
   console.log(contract_logistics_remark);
   //调用接口
-  var contract_logistics_add_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=addContractLogistics";
-  var contract_logistics_add_get = ajax_assistant(contract_logistics_add_url, data, false, true, false);
+  var contract_logistics_add_url_s = PROJECT_PATH + "lego/lego_fjTrade?servletName=addContractLogistics";
+  var contract_logistics_add_get = ajax_assistant(contract_logistics_add_url_s, data, false, true, false);
   if ("1" == contract_logistics_add_get.status) {
-    contract_logistics_clear_raw_data(trade_contract_code_uuid);
-    contract_logistics_server_data_cover(trade_contract_code);
-    contract_logistics_fill_variable_data(trade_contract_code_uuid); 
+    this.contract_logistics_clear_raw_data();
+    this.contract_logistics_server_data_cover();
+    this.contract_logistics_fill_variable_data(); 
     $("#contract_logistics_add_modle_prop").modal("hide");
     $("#contract_logistics_add_modle_prop").on("hidden.bs.modal", function(e) {
       $(this).remove();
@@ -444,11 +446,10 @@ function contract_logistics_add_data_func(obj) {
   }
 }
 
-function contract_logistics_edit_modle_func(obj) {
-  var uuid = obj.attr("uuid");
-  var trade_contract_code = obj.attr("trade_contract_code");
-  var trade_contract_code_uuid = obj.parent().parent().parent().parent().attr("trade_contract_code_uuid");
+this.contract_logistics_edit_modle_func = function(obj) {
+  var trade_contract_code = obj.parent().parent().parent().parent().attr("trade_contract_code");
   var contract_code = obj.attr("contract_code");
+  var uuid = obj.attr("uuid");
   //物流企业的
   var contract_logistics_logistics_uuid = "";
   //雇主企业的
@@ -479,7 +480,7 @@ function contract_logistics_edit_modle_func(obj) {
   var contract_logistics_cluster_list = "";
   var contract_logistics_edit_data = {
     "uuid":uuid,
-    "trade_contract_code":trade_contract_code,
+    "trade_contract_code":this.sale_contract_code,
     "contract_code":contract_code
   };
   //调接口  查询数据
@@ -532,10 +533,10 @@ function contract_logistics_edit_modle_func(obj) {
         contract_logistics_file_arr[i] = {"file_name":contract_logistics_json[0].cluster_name+'.'+contract_logistics_json[0].suffix};
       }
     }
-    contract_logistics_file_data = contract_logistics_file_arr;
-    console.log(contract_logistics_file_data);
+    this.contract_logistics_file_data = contract_logistics_file_arr;
+    console.log(this.contract_logistics_file_data);
   } else {
-    contract_logistics_file_data = [];
+    this.contract_logistics_file_data = [];
   }
   var contract_logistics_edit_html = 
     '<div class = "modal fade custom_modal" tabindex = "-1" id = "contract_logistics_edit_modle_prop" role = "dialog" aria-labelledby = "myLargeModalLabel">'+
@@ -558,12 +559,12 @@ function contract_logistics_edit_modle_func(obj) {
                     '<label for = "">使用企业</label>'+
                     '<select class = "form-control contract_logistics_employer_uuid" disabled = "disabled" value = "' + contract_logistics_employer_uuid + '">'+
                       '<option value = "">--请选择--</option>';
-                      if(isJsonObjectHasData(contract_logistics_enterprise_data)) {
-                        for (var i = 0; i < contract_logistics_enterprise_data.data.length; i++) {
-                          if(contract_logistics_employer_uuid == contract_logistics_enterprise_data.data[i].uuid) {
-                            contract_logistics_edit_html += '<option value = "' + contract_logistics_enterprise_data.data[i].uuid + '" selected = "selected">' + contract_logistics_enterprise_data.data[i].short_name + '</option>';
+                      if(isJsonObjectHasData(this.contract_logistics_enterprise_data)) {
+                        for (var i = 0; i < this.contract_logistics_enterprise_data.data.length; i++) {
+                          if(contract_logistics_employer_uuid == this.contract_logistics_enterprise_data.data[i].uuid) {
+                            contract_logistics_edit_html += '<option value = "' + this.contract_logistics_enterprise_data.data[i].uuid + '" selected = "selected">' + this.contract_logistics_enterprise_data.data[i].short_name + '</option>';
                           } else {
-                            contract_logistics_edit_html += '<option value = "' + contract_logistics_enterprise_data.data[i].uuid + '">' + contract_logistics_enterprise_data.data[i].short_name + '</option>';
+                            contract_logistics_edit_html += '<option value = "' + this.contract_logistics_enterprise_data.data[i].uuid + '">' + this.contract_logistics_enterprise_data.data[i].short_name + '</option>';
                           }
                         }
                       }
@@ -576,12 +577,12 @@ function contract_logistics_edit_modle_func(obj) {
                     '<label for = "">物流企业</label>'+
                     '<select class = "form-control contract_logistics_logistics_uuid" disabled = "disabled" value = "' + contract_logistics_logistics_uuid + '">'+
                       '<option value = "">--请选择--</option>';
-                      if(isJsonObjectHasData(contract_logistics_enterprise_data)) {
-                        for (var i = 0; i < contract_logistics_enterprise_data.data.length; i++) {
-                          if(contract_logistics_logistics_uuid == contract_logistics_enterprise_data.data[i].uuid) {
-                            contract_logistics_edit_html += '<option value = "' + contract_logistics_enterprise_data.data[i].uuid + '" selected = "selected">' + contract_logistics_enterprise_data.data[i].short_name + '</option>';
+                      if(isJsonObjectHasData(this.contract_logistics_enterprise_data)) {
+                        for (var i = 0; i < this.contract_logistics_enterprise_data.data.length; i++) {
+                          if(contract_logistics_logistics_uuid == this.contract_logistics_enterprise_data.data[i].uuid) {
+                            contract_logistics_edit_html += '<option value = "' + this.contract_logistics_enterprise_data.data[i].uuid + '" selected = "selected">' + this.contract_logistics_enterprise_data.data[i].short_name + '</option>';
                           } else {
-                            contract_logistics_edit_html += '<option value = "' + contract_logistics_enterprise_data.data[i].uuid + '">' + contract_logistics_enterprise_data.data[i].short_name + '</option>';
+                            contract_logistics_edit_html += '<option value = "' + this.contract_logistics_enterprise_data.data[i].uuid + '">' + this.contract_logistics_enterprise_data.data[i].short_name + '</option>';
                           }
                         }
                       }
@@ -593,17 +594,17 @@ function contract_logistics_edit_modle_func(obj) {
                   '<div class = "form-group">'+
                     '<label for = "">物流载体类型</label>'+
                     '<select class = "form-control contract_logistics_carrier_type" value = "' + contract_logistics_carrier_type + '">';
-                      if(contract_logistics_carrier_type==1) {
+                      if(contract_logistics_carrier_type == 1) {
                         contract_logistics_edit_html += 
                           '<option value="1" selected="selected">轮船</option>'+
                           '<option value="2" >汽车</option>'+
                           '<option value="3" >火车</option>';
-                      } else if(contract_logistics_carrier_type==2) {
+                      } else if(contract_logistics_carrier_type == 2) {
                         contract_logistics_edit_html += 
                           '<option value="2" selected="selected">汽车</option>'+
                           '<option value="1" >轮船</option>'+
                           '<option value="3" >火车</option>';
-                      } else if(contract_logistics_carrier_type==3) {
+                      } else if(contract_logistics_carrier_type == 3) {
                         contract_logistics_edit_html += 
                           '<option value="3" selected="selected">火车</option>'+
                           '<option value="1" >轮船</option>'+
@@ -693,24 +694,22 @@ function contract_logistics_edit_modle_func(obj) {
               '</div>'+
             '</div>'+
             '<div class = "modal-footer" style = "text-align: center;">'+
-                '<button type = "button" class = "btn btn-warning" id = "contract_logistics_edit_data_btn" trade_contract_code = "' + trade_contract_code + '" contract_code = "' + contract_code + '" uuid = "' + uuid + '" trade_contract_code_uuid = "' + trade_contract_code_uuid + '">修改</button>'+
+                '<button type = "button" class = "btn btn-warning" id = "contract_logistics_edit_data_btn" uuid = "' + uuid + '" trade_contract_code = "' + trade_contract_code + '">修改</button>'+
                 '<button type = "button" class = "btn btn-default" data-dismiss = "modal">取消</button>'+
             '</div>'+
           '</div>'+
         '</div>'+
       '</div>';
   $("body").append(contract_logistics_edit_html);
-  upload_attachment_edit_output("#contract_logistics_edit_attch", contract_logistics_file_data);
+  upload_attachment_edit_output("#contract_logistics_edit_attch", this.contract_logistics_file_data);
   $("#contract_logistics_edit_modle_prop").modal("show");
   $("#contract_logistics_edit_modle_prop").on("hidden.bs.modal", function(e) {
     $(this).remove();
   });
 }
 
-function contract_logistics_edit_data_func(obj) {
+this.contract_logistics_edit_data_func = function(obj) {
   var uuid = obj.attr("uuid");
-  var trade_contract_code = obj.attr("trade_contract_code");
-  var trade_contract_code_uuid = obj.attr("trade_contract_code_uuid");
   var contract_code = obj.attr("contract_code");
   //物流企业的
   var contract_logistics_logistics_uuid = obj.parents("#contract_logistics_edit_modle_prop").find(".contract_logistics_logistics_uuid").val();
@@ -808,7 +807,7 @@ function contract_logistics_edit_data_func(obj) {
   }
   var data = {
     "idColumnValue":uuid,
-    "trade_contract_code":trade_contract_code,
+    "trade_contract_code":this.sale_contract_code,
     "logistics_uuid":contract_logistics_logistics_uuid,
     "employer_uuid":contract_logistics_employer_uuid,
     "carrier_type":contract_logistics_carrier_type,
@@ -843,9 +842,9 @@ function contract_logistics_edit_data_func(obj) {
   var contract_logistics_edit_data_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=modifyContractLogistics";
   var contract_logistics_edit_data_get = ajax_assistant(contract_logistics_edit_data_url, data, false, true, false);
   if ("1" == contract_logistics_edit_data_get.status){
-    contract_logistics_clear_raw_data(trade_contract_code_uuid);
-    contract_logistics_server_data_cover(trade_contract_code);
-    contract_logistics_fill_variable_data(trade_contract_code_uuid);
+    this.contract_logistics_clear_raw_data();
+    this.contract_logistics_server_data_cover();
+    this.contract_logistics_fill_variable_data();
     $("#contract_logistics_edit_modle_prop").modal("hide");
     $("#contract_logistics_edit_modle_prop").on("hidden.bs.modal", function(e) {
       $(this).remove();
@@ -855,10 +854,9 @@ function contract_logistics_edit_data_func(obj) {
   }   
 }
 
-function contract_logistics_delete_modle_func(obj) {
+this.contract_logistics_delete_modle_func = function(obj) {
   var uuid = obj.attr("uuid");
-  var trade_contract_code = obj.attr("trade_contract_code");
-  var trade_contract_code_uuid = obj.parent().parent().parent().parent().attr("trade_contract_code_uuid");
+  var trade_contract_code = obj.parent().parent().parent().parent().attr("trade_contract_code");
   var contract_code = obj.attr("contract_code");
   var contract_logistics_delete_html = 
       '<div class="modal fade custom_modal" id="contract_logistics_delete_modle_prop" tabindex="-1" role="dialog">'+
@@ -870,7 +868,7 @@ function contract_logistics_delete_modle_func(obj) {
             '</div>'+
             '<div class="modal-body nopadding-bottom contract_logistics_center">确认要删除吗？</div>'+
             '<div class="modal-footer noborder nopadding-top" style="text-align: center;">'+
-            '<button type="button" class="btn btn-danger" id="contract_logistics_delete_modle_prop_btn" trade_contract_code = "' + trade_contract_code + '" contract_code = "' + contract_code + '" uuid = "' + uuid + '" trade_contract_code_uuid = "' + trade_contract_code_uuid + '">删除</button>'+
+            '<button type="button" class="btn btn-danger" id="contract_logistics_delete_modle_prop_btn" uuid = "' + uuid + '" contract_code = "' + contract_code + '" trade_contract_code = "' + trade_contract_code + '">删除</button>'+
                 '<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>'+
             '</div>'+
           '</div>'+
@@ -883,10 +881,9 @@ function contract_logistics_delete_modle_func(obj) {
   });
 }
 
-function contract_logistics_delete_data_func(obj) {
+this.contract_logistics_delete_data_func = function(obj) {
   var uuid = obj.attr("uuid");
   var trade_contract_code = obj.attr("trade_contract_code");
-  var trade_contract_code_uuid = obj.attr("trade_contract_code_uuid");
   var contract_code = obj.attr("contract_code");
   var data = {
     "idColumnValue":uuid,
@@ -899,9 +896,9 @@ function contract_logistics_delete_data_func(obj) {
     alert("删除物流合同失败");
   } else {  
     // 更新页面数据
-    contract_logistics_clear_raw_data(trade_contract_code_uuid);
-    contract_logistics_server_data_cover(trade_contract_code);
-    contract_logistics_fill_variable_data(trade_contract_code_uuid);
+    this.contract_logistics_clear_raw_data();
+    this.contract_logistics_server_data_cover();
+    this.contract_logistics_fill_variable_data();
     $("#contract_logistics_delete_modle_prop").modal("hide");
     $("#contract_logistics_delete_modle_prop").on("hidden.bs.modal", function(e) {
       $(this).remove();
@@ -909,9 +906,9 @@ function contract_logistics_delete_data_func(obj) {
   }
 }
 
-function contract_logistics_info_modle_func(obj) {
+this.contract_logistics_info_modle_func = function(obj) {
   var uuid = obj.attr("uuid");
-  var trade_contract_code = obj.attr("trade_contract_code");
+  var trade_contract_code = this.sale_contract_code;
   var contract_code = obj.attr("contract_code");
   //物流企业的
   var contract_logistics_logistics_uuid = "";
@@ -995,10 +992,10 @@ function contract_logistics_info_modle_func(obj) {
         contract_logistics_file_arr[i] = {"file_name":contract_logistics_json[0].cluster_name+'.'+contract_logistics_json[0].suffix};
       }
     }
-    contract_logistics_file_data = contract_logistics_file_arr;
-    console.log(contract_logistics_file_data);
+    this.contract_logistics_file_data = contract_logistics_file_arr;
+    console.log(this.contract_logistics_file_data);
   } else {
-    contract_logistics_file_data = [];
+    this.contract_logistics_file_data = [];
   }
   var contract_logistics_info_html = 
     '<div class = "modal fade custom_modal" tabindex = "-1" id = "contract_logistics_info_modle_prop" role = "dialog" aria-labelledby = "myLargeModalLabel">'+
@@ -1021,9 +1018,9 @@ function contract_logistics_info_modle_func(obj) {
                     '<label for = "">使用企业</label>'+
                     '<select class = "form-control contract_logistics_employer_uuid"  disabled = "disabled" value = "' + contract_logistics_employer_uuid + '">';
                       
-                      if(isJsonObjectHasData(contract_logistics_enterprise_data)) {
-                        for (var i = 0; i < contract_logistics_enterprise_data.data.length; i++) {
-                          contract_logistics_info_html += '<option value = "' + contract_logistics_enterprise_data.data[i].uuid + '" selected = "selected">' + contract_logistics_enterprise_data.data[i].short_name + '</option>';
+                      if(isJsonObjectHasData(this.contract_logistics_enterprise_data)) {
+                        for (var i = 0; i < this.contract_logistics_enterprise_data.data.length; i++) {
+                          contract_logistics_info_html += '<option value = "' + this.contract_logistics_enterprise_data.data[i].uuid + '" selected = "selected">' + this.contract_logistics_enterprise_data.data[i].short_name + '</option>';
                         }
                       }
                       contract_logistics_info_html +=
@@ -1035,9 +1032,9 @@ function contract_logistics_info_modle_func(obj) {
                     '<label for = "">物流企业</label>'+
                     '<select class = "form-control contract_logistics_logistics_uuid" value = "' + contract_logistics_logistics_uuid + '" disabled = "disabled">'+
                       '<option value = "">--请选择--</option>';
-                      if(isJsonObjectHasData(contract_logistics_enterprise_data)) {
-                        for (var i = 0; i < contract_logistics_enterprise_data.data.length; i++) {
-                          contract_logistics_info_html += '<option value = "' + contract_logistics_enterprise_data.data[i].uuid + '" selected = "selected">' + contract_logistics_enterprise_data.data[i].short_name + '</option>';
+                      if(isJsonObjectHasData(this.contract_logistics_enterprise_data)) {
+                        for (var i = 0; i < this.contract_logistics_enterprise_data.data.length; i++) {
+                          contract_logistics_info_html += '<option value = "' + this.contract_logistics_enterprise_data.data[i].uuid + '" selected = "selected">' + this.contract_logistics_enterprise_data.data[i].short_name + '</option>';
                         }
                       }
                       contract_logistics_info_html +=
@@ -1048,15 +1045,15 @@ function contract_logistics_info_modle_func(obj) {
                   '<div class = "form-group">'+
                     '<label for = "">物流载体类型</label>'+
                     '<select class = "form-control contract_logistics_carrier_type" value = "' + contract_logistics_carrier_type + '" disabled = "disabled">';
-                      if(contract_logistics_carrier_type==1){
+                      if(contract_logistics_carrier_type == 1){
                         contract_logistics_info_html += 
-                          '<option value="1" selected="selected">轮船</option>';
-                      }else if(contract_logistics_carrier_type==2){
+                        '<option value="1" selected="selected">轮船</option>';
+                      }else if(contract_logistics_carrier_type == 2){
                         contract_logistics_info_html += 
-                          '<option value="2" selected="selected">汽车</option>';
-                      }else if(contract_logistics_carrier_type==3){
+                        '<option value="2" selected="selected">汽车</option>';
+                      }else if(contract_logistics_carrier_type == 3){
                         contract_logistics_info_html += 
-                          '<option value="3" selected="selected">火车</option>';
+                        '<option value="3" selected="selected">火车</option>';
                       }
                       contract_logistics_info_html +=
                     '</select>'+
@@ -1148,108 +1145,94 @@ function contract_logistics_info_modle_func(obj) {
         '</div>'+
       '</div>';
   $("body").append(contract_logistics_info_html);
-  upload_attachment_preview_output("#contract_logistics_info_attch", contract_logistics_file_data);
+  upload_attachment_preview_output("#contract_logistics_info_attch", this.contract_logistics_file_data);
   $("#contract_logistics_info_modle_prop").modal("show");
   $("#contract_logistics_info_modle_prop").on("hidden.bs.modal", function(e) {
     $(this).remove();
   });
 }
 
-//function contract_logistics_open_info_func(obj) {
-//var contract_logistics_contract_code = obj.attr("contract_code");
-//var contract_logistics_html = '<tr class = "contract_logistics_all_panel"><td colspan="11"><div>物流对账单</div></td></tr>';
-//if (obj.hasClass("active")) {
-//  obj.find(".glyphicon").removeClass("glyphicon-chevron-down");
-//  obj.removeClass("active");
-//  obj.parent().parent().nextUntil(".contract_logistics_tr").remove();
-//  contract_logistics_html = "";
-//} else {
-//  obj.find(".glyphicon").addClass("glyphicon-chevron-down");
-//  obj.addClass("active");
-//  obj.parent().parent().after(contract_logistics_html);
-//}
-//}
-
-function contract_logistics_output(output_id) {
-  var content = 
-    '<div class = "panel panel-primary contract_sale_logistics_checkbox">'+
-'    <div class = "panel-heading clearfix">物流合同<span class = "glyphicon glyphicon-plus pull-right" id = "contract_logistics_add_modle"></span></div>'+
-'    <div class = "panel-body">'+
-'        <div class = "row">'+
-'          <div class = "col-lg-12">'+
-'            <table cellpadding = "0" cellspacing = "0" border = "0" width = "100%" class = "table" id = "contract_logistics_table_sales_trad_uuid">'+
-'              <thead>'+
-'                <tr>'+
-'                  <th>展开详情</th>'+
-'                  <th>使用企业</th>'+
-'                  <th>物流企业</th>'+
-'                  <th>物流载体</th>'+
-'                  <th>货品</th>'+
-'                  <th>装货地点</th>'+
-'                  <th>卸货地点</th>'+
-'                  <th>合同损耗（‰）</th>'+
-'                  <th>运费（元）</th>'+
-'                  <th>运量（吨）</th>'+
-'                  <th>&nbsp;</th>'+
-'                </tr>'+
-'              </thead>'+
-'              <tbody class = "contract_logistics_box">'+
-'                <tr>'+
-'                  <td><button type = "button" class = "btn btn-info btn-xs"><span class = "glyphicon glyphicon-chevron-up"></span></button></td>'+
-'                  <td>福记</td>'+
-'                  <td>细语</td>'+
-'                  <td>加技术</td>'+
-'                  <td>METB</td>'+
-'                  <td>舟山</td>'+
-'                  <td>上海</td>'+
-'                  <td>2</td>'+
-'                  <td>3600</td>'+
-'                  <td>3600</td>'+
-'                  <td>'+
-'                    <span class = "glyphicon glyphicon-info-sign contract_logistics_ml15"></span>'+
-'                    <span class = "glyphicon glyphicon-pencil contract_logistics_ml15"></span>'+
-'                    <span class = "glyphicon glyphicon-remove contract_logistics_ml15"></span>'+
-'                  </td>'+
-'                </tr>'+
-'                <tr>'+
-'                  <td><button type = "button" class = "btn btn-info btn-xs"><span class = "glyphicon glyphicon-chevron-up"></span></button></td>'+
-'                  <td>福记</td>'+
-'                  <td>细语</td>'+
-'                  <td>加技术</td>'+
-'                  <td>METB</td>'+
-'                  <td>舟山</td>'+
-'                  <td>上海</td>'+
-'                  <td>2</td>'+
-'                  <td>3600</td>'+
-'                  <td>3600</td>'+
-'                  <td>'+
-'                    <span class = "glyphicon glyphicon-info-sign contract_logistics_ml15"></span>'+
-'                    <span class = "glyphicon glyphicon-pencil contract_logistics_ml15"></span>'+
-'                    <span class = "glyphicon glyphicon-remove contract_logistics_ml15"></span>'+
-'                  </td>'+
-'                </tr>'+
-'                <tr>'+
-'                  <td><button type = "button" class = "btn btn-info btn-xs"><span class = "glyphicon glyphicon-chevron-up"></span></button></td>'+
-'                  <td>福记</td>'+
-'                  <td>细语</td>'+
-'                  <td>加技术</td>'+
-'                  <td>METB</td>'+
-'                  <td>舟山</td>'+
-'                  <td>上海</td>'+
-'                  <td>2</td>'+
-'                  <td>3600</td>'+
-'                  <td>3600</td>'+
-'                  <td>'+
-'                    <span class = "glyphicon glyphicon-info-sign contract_logistics_ml15"></span>'+
-'                    <span class = "glyphicon glyphicon-pencil contract_logistics_ml15"></span>'+
-'                    <span class = "glyphicon glyphicon-remove contract_logistics_ml15"></span>'+
-'                  </td>'+
-'                </tr>'+
-'              </tbody>'+
-'            </table>'+
-'          </div>'+
-'        </div>'+
-'      </div>'+
-'    </div>';
-    $(output_id).html(content);
+this.contract_logistics_output = function() {
+    var content = 
+      '<div class = "panel panel-primary contract_sale_logistics_checkbox">'+
+  '    <div class = "panel-heading clearfix">物流合同<span class = "glyphicon glyphicon-plus pull-right" id = "contract_logistics_add_modle"></span></div>'+
+  '    <div class = "panel-body">'+
+  '        <div class = "row">'+
+  '          <div class = "col-lg-12">'+
+  '            <table cellpadding = "0" cellspacing = "0" border = "0" width = "100%" class = "table" id = "contract_logistics_table_sales_trad_uuid">'+
+  '              <thead>'+
+  '                <tr>'+
+  '                  <th>展开详情</th>'+
+  '                  <th>使用企业</th>'+
+  '                  <th>物流企业</th>'+
+  '                  <th>物流载体</th>'+
+  '                  <th>货品</th>'+
+  '                  <th>装货地点</th>'+
+  '                  <th>卸货地点</th>'+
+  '                  <th>合同损耗（‰）</th>'+
+  '                  <th>运费（元）</th>'+
+  '                  <th>运量（吨）</th>'+
+  '                  <th>&nbsp;</th>'+
+  '                </tr>'+
+  '              </thead>'+
+  '              <tbody class = "contract_logistics_box">'+
+  '                <tr>'+
+  '                  <td><button type = "button" class = "btn btn-info btn-xs"><span class = "glyphicon glyphicon-chevron-up"></span></button></td>'+
+  '                  <td>福记</td>'+
+  '                  <td>细语</td>'+
+  '                  <td>加技术</td>'+
+  '                  <td>METB</td>'+
+  '                  <td>舟山</td>'+
+  '                  <td>上海</td>'+
+  '                  <td>2</td>'+
+  '                  <td>3600</td>'+
+  '                  <td>3600</td>'+
+  '                  <td>'+
+  '                    <span class = "glyphicon glyphicon-info-sign contract_logistics_ml15"></span>'+
+  '                    <span class = "glyphicon glyphicon-pencil contract_logistics_ml15"></span>'+
+  '                    <span class = "glyphicon glyphicon-remove contract_logistics_ml15"></span>'+
+  '                  </td>'+
+  '                </tr>'+
+  '                <tr>'+
+  '                  <td><button type = "button" class = "btn btn-info btn-xs"><span class = "glyphicon glyphicon-chevron-up"></span></button></td>'+
+  '                  <td>福记</td>'+
+  '                  <td>细语</td>'+
+  '                  <td>加技术</td>'+
+  '                  <td>METB</td>'+
+  '                  <td>舟山</td>'+
+  '                  <td>上海</td>'+
+  '                  <td>2</td>'+
+  '                  <td>3600</td>'+
+  '                  <td>3600</td>'+
+  '                  <td>'+
+  '                    <span class = "glyphicon glyphicon-info-sign contract_logistics_ml15"></span>'+
+  '                    <span class = "glyphicon glyphicon-pencil contract_logistics_ml15"></span>'+
+  '                    <span class = "glyphicon glyphicon-remove contract_logistics_ml15"></span>'+
+  '                  </td>'+
+  '                </tr>'+
+  '                <tr>'+
+  '                  <td><button type = "button" class = "btn btn-info btn-xs"><span class = "glyphicon glyphicon-chevron-up"></span></button></td>'+
+  '                  <td>福记</td>'+
+  '                  <td>细语</td>'+
+  '                  <td>加技术</td>'+
+  '                  <td>METB</td>'+
+  '                  <td>舟山</td>'+
+  '                  <td>上海</td>'+
+  '                  <td>2</td>'+
+  '                  <td>3600</td>'+
+  '                  <td>3600</td>'+
+  '                  <td>'+
+  '                    <span class = "glyphicon glyphicon-info-sign contract_logistics_ml15"></span>'+
+  '                    <span class = "glyphicon glyphicon-pencil contract_logistics_ml15"></span>'+
+  '                    <span class = "glyphicon glyphicon-remove contract_logistics_ml15"></span>'+
+  '                  </td>'+
+  '                </tr>'+
+  '              </tbody>'+
+  '            </table>'+
+  '          </div>'+
+  '        </div>'+
+  '      </div>'+
+  '    </div>';
+      $(this.contract_logistics_content_box).html(content);
+  }
 }

@@ -1,6 +1,29 @@
 /**
  * @author wangdi
  */
+
+var paid_record_list = new Array();
+var deliver_entrust_letter_list = new Array();
+var godown_entry_notify_list = new Array();
+var goods_confirm_letter_list = new Array();
+//车船信息
+var vehicle_information_list = new Array();
+
+function add_buy_object_list(list, contract_code, object) {
+  if (null == get_buy_object_list(list, contract_code)) {
+    list.push({"contract_code": contract_code, "object": object});
+  }
+}
+
+function get_buy_object_list(list, contract_code) {
+  for (var i = 0; i < list.length; i++) {
+    if (contract_code == list[i].contract_code) {
+      return list[i]["object"];
+    }
+  }
+  return null;
+}
+
 /**
  * 附件
  */
@@ -115,6 +138,16 @@ function contract_buy_server_data_cover(contract_type) {
       console.log(contract_buy_result);
       for (var i = 0; i < contract_buy_result.length; i++) {
         tmp_arr[i] = {"contract_code":contract_buy_result[i].contract_code, "buyer_uuid":contract_buy_result[i].buyer_uuid, "seller_uuid":contract_buy_result[i].seller_uuid, "product_name":contract_buy_result[i].product_name, "real_name":contract_buy_result[i].real_name, "price":contract_buy_result[i].price, "quantity":contract_buy_result[i].quantity, "deliver_datetime":contract_buy_result[i].deliver_datetime, "warehouse_uuid":contract_buy_result[i].warehouse_uuid, "uuid":contract_buy_result[i].uuid};
+        // 收款记录
+        add_buy_object_list(paid_record_list, contract_buy_result[i].contract_code, new PaidRecord(contract_buy_result[i].price * contract_buy_result[i].quantity, contract_buy_result[i].contract_code, {paid_record_name: "付款记录", paid_record_time: "付款时间", paid_record_paid: "付款金额（元）"}, "#paid_record_content" + contract_buy_result[i].uuid));
+        // 提货委托函
+        add_buy_object_list(deliver_entrust_letter_list, contract_buy_result[i].contract_code, new deliverEntrustLetter(contract_buy_result[i].contract_code, "#deliver_entrust_letter_content" + contract_buy_result[i].uuid));
+        // 入库通知单
+        add_buy_object_list(godown_entry_notify_list, contract_buy_result[i].contract_code, new godownEntryNotify(contract_buy_result[i].contract_code, "#godown_entry_notify_content" + contract_buy_result[i].uuid, contract_buy_result[i].warehouse_uuid));
+        // 货物确认函
+        add_buy_object_list(goods_confirm_letter_list, contract_buy_result[i].contract_code, new goodsConfirmLetter(contract_buy_result[i].contract_code, "#goods_confirm_letter_content" + contract_buy_result[i].uuid));
+        //车船信息
+        add_buy_object_list(vehicle_information_list, contract_buy_result[i].contract_code, new VehicleInformation(contract_buy_result[i].contract_code,"#vehicle_information_content" + contract_buy_result[i].uuid, contract_buy_result[i].warehouse_uuid));
       }
       contract_buy_data["data"] = tmp_arr;
     }

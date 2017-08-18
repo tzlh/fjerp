@@ -153,7 +153,7 @@ function PaidRecord(all_paid, sale_contract_code, title_object, paid_record_cont
         this.paid_record_file_data = {};
       }
     }
-  }
+  };
   
   /**
    * 添加收款记录
@@ -190,7 +190,7 @@ function PaidRecord(all_paid, sale_contract_code, title_object, paid_record_cont
               '</div>'+
             '</div>'+
             '<div class = "modal-footer"  style = "text-align: center;">'+
-                '<button type = "button" class = "btn btn-primary" id = "paid_record_add_modle_prop_btn" data-contract_code = "' + contract_code + '">添加</button>'+
+                '<button type = "button" class = "btn btn-primary" id = "paid_record_add_modle_prop_btn" data-contract_code = "' + this.sale_contract_code + '">添加</button>'+
                 '<button type = "button" class = "btn btn-default" data-dismiss = "modal">取消</button>'+
             '</div>'+
           '</div>'+
@@ -303,7 +303,7 @@ function PaidRecord(all_paid, sale_contract_code, title_object, paid_record_cont
     $("#paid_record_edit_modal").on("hidden.bs.modal", function(e) {
       $(this).remove();
     });
-  }
+  };
   
   this.paid_record_edit_data = function(uuid) {
     console.log(uuid);
@@ -350,7 +350,7 @@ function PaidRecord(all_paid, sale_contract_code, title_object, paid_record_cont
     } else {
       alert("修改失败！");
     }
-  }
+  };
   
   /**
    * 收付款记录详情
@@ -432,7 +432,7 @@ function PaidRecord(all_paid, sale_contract_code, title_object, paid_record_cont
     $("#paid_record_delete_modal").on("hidden.bs.modal", function(e) {
       $(this).remove();
     });
-  }
+  };
   
   this.paid_record_delete_data = function(uuid) {
     var delete_paid_record_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=removePaidRecord";
@@ -447,7 +447,7 @@ function PaidRecord(all_paid, sale_contract_code, title_object, paid_record_cont
     } else {
       alert("删除失败");
     }
-  }
+  };
   
   this.paid_record_output = function() {
     var content =
@@ -499,5 +499,5 @@ function PaidRecord(all_paid, sale_contract_code, title_object, paid_record_cont
   '      </div>'+
   '    </div>';
     $(this.paid_record_content_id).html(content);
-  }
+  };
 }
