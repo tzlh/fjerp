@@ -3,11 +3,21 @@
  */
 
 var paid_record_list = new Array();
+//物流合同
+var contract_logistics_list = new Array();
 var deliver_entrust_letter_list = new Array();
 var godown_entry_notify_list = new Array();
 var goods_confirm_letter_list = new Array();
 //车船信息
 var vehicle_information_list = new Array();
+//采购对账单
+var settlement_bill_buy_list = new Array();
+//发票信息
+var invoice_information_list = new Array();
+//物流对账单
+var settlement_bill_logistics_list = new Array();
+//物流发票
+var logistics_invoice_information_list = new Array();
 
 function add_buy_object_list(list, contract_code, object) {
   if (null == get_buy_object_list(list, contract_code)) {
@@ -148,6 +158,12 @@ function contract_buy_server_data_cover(contract_type) {
         add_buy_object_list(goods_confirm_letter_list, contract_buy_result[i].contract_code, new goodsConfirmLetter(contract_buy_result[i].contract_code, "#goods_confirm_letter_content" + contract_buy_result[i].uuid));
         //车船信息
         add_buy_object_list(vehicle_information_list, contract_buy_result[i].contract_code, new VehicleInformation(contract_buy_result[i].contract_code,"#vehicle_information_content" + contract_buy_result[i].uuid, contract_buy_result[i].warehouse_uuid));
+        //物流合同
+        add_buy_object_list(contract_logistics_list, contract_buy_result[i].contract_code, new ContractLogistics(contract_buy_result[i].contract_code,"#contract_logistics_content" + contract_buy_result[i].uuid));
+        //采购对账单
+        add_buy_object_list(settlement_bill_buy_list, contract_buy_result[i].contract_code, new SettlementBillBuy(contract_buy_result[i].contract_code, contract_buy_result[i].uuid,"#settlement_bill_buy_content" + contract_buy_result[i].uuid, contract_buy_result[i].type, "1"));
+        //发票信息
+        add_buy_object_list(invoice_information_list, contract_buy_result[i].contract_code, new InvoiceInformation(contract_buy_result[i].contract_code,"#invoice_information_content" + contract_buy_result[i].uuid, contract_buy_result[i].price * contract_buy_result[i].quantity, "0", "lego/lego_fjTrade?servletName=addTradeInvoiceInformation", "lego/lego_fjTrade?servletName=modifyTradeInvoiceInformation"));
       }
       contract_buy_data["data"] = tmp_arr;
     }
