@@ -170,7 +170,7 @@ function upload_attachment_preview_output(output_id, file_data) {
     '<div class = "upload_attachment_area">'+
     '  <div class = "upload_attachment_btn upload_attachment_btn_left"><span class = "glyphicon glyphicon-chevron-left"></span></div>'+
     '  <div class = "upload_attachment_content">'+
-    '    <input class = "upload_attachment_file_choose" type = "file" multiple = "multiple" accept = "image/png, aplication/zip, text/plain, application/pdf,  image/jpeg, image/jpeg, image/jpeg, image/jp2, image/gif" />'+
+    '    <input class = "upload_attachment_file_choose" type = "file" multiple = "multiple" accept = "image/png, aplication/zip, text/plain, application/pdf, accept=application/rtf, application/msword, application/msexcel, image/jpeg, image/jpeg, image/jpeg, image/jp2, image/gif" />'+
     '    <div class = "upload_attachment_box">' + data + '</div>'+
     '  </div>'+
     '  <div class = "upload_attachment_btn upload_attachment_btn_right"><span class = "glyphicon glyphicon-chevron-right"></span></div>'+
