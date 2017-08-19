@@ -58,7 +58,7 @@ function PaidRecord(all_paid, sale_contract_code, title_object, paid_record_cont
   
   this.paid_record_fill_variable_data = function() {
     unreceived = this.all_paid - received;
-    $(this.paid_record_content_id).find("#paid_record_paid span.paid").html(this.title_object.paid_record_name + '&nbsp;[应收货款&nbsp;:&nbsp;' + this.all_paid + ']&nbsp;[已收货款&nbsp;:&nbsp;' + received + ']&nbsp;[未收货款&nbsp;:&nbsp;' + unreceived + ']');
+    $(this.paid_record_content_id).find("#paid_record_paid span.paid").html(this.title_object.paid_record_name + '&nbsp;[应收货款&nbsp;:&nbsp;' + this.all_paid.toFixed(2) + ']&nbsp;[已收货款&nbsp;:&nbsp;' + received.toFixed(2) + ']&nbsp;[未收货款&nbsp;:&nbsp;' + unreceived.toFixed(2) + ']');
     if(isJsonObjectHasData(this.paid_record_data)) {
       var paid_record_html = "";
       for (var i = 0; i < this.paid_record_data.length; i++) {
