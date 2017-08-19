@@ -24,7 +24,7 @@
   .contract_warehouse_mt20{margin-top: 20px;}
   .contract_warehouse_mr0{margin-right: 0 !important;}
   .contract_warehouse_row{margin: 0 !important;}
-
+  .contract_warehouse_pl_pr{padding-left: 0 !important;padding-right: 0 !important;}
 </style>
 <script>
   $(document).ready(function() {
@@ -36,8 +36,6 @@
     contract_warehouse_clear_raw_data();
     // 服务器数据
     contract_warehouse_server_data_cover();
-    //分页
-//  pages('', current_page);
     //加载数据
     contract_warehouse_fill_variable_data();
     //搜索获取出租方和承租方
@@ -93,8 +91,8 @@
 </script>
 </head>
 <body>
-  <div class = "row">
-    <div id = "contract_content" class = "col-lg-12">        
+  <div class = "row contract_warehouse_row">
+    <div id = "contract_content" class = "col-lg-12 contract_warehouse_pl_pr">        
     </div>
   </div>
 </body>
