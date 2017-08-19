@@ -58,7 +58,7 @@ function godownEntry(vehicle_information_uuid, godown_entry_content_id, warehous
    * 赋值
    */
   this.godown_entry_fill_variable_data = function() {
-    $(this.godown_exit_content_id).find("#godown_entry_paid span.paid").html('入库单&nbsp;[净重总量&nbsp;:&nbsp;' + this.net_weight_count + ']&nbsp;');
+    $(this.godown_exit_content_id).find("#godown_entry_paid span.paid").html('入库单&nbsp;[净重总量&nbsp;:&nbsp;' + this.net_weight_count.toFixed(2) + ']&nbsp;');
     if (isJsonObjectHasData(this.godown_entry_data)) {
   //  var godown_entry_thead  = 
   //    '<tr>'+

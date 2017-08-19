@@ -51,7 +51,7 @@ function godownExit(vehicle_information_uuid, godown_exit_content_id) {
    * 赋值
    */
   this.godown_exit_fill_variable_data = function() {
-    $(this.godown_exit_content_id).find("#godown_exit_paid span.paid").html('出库单&nbsp;[计划量总量&nbsp;:&nbsp;' + this.godown_exit_plan_quantity_count + '][实发量总量&nbsp;:&nbsp;' + this.godown_exit_actual_quantity_count + ']&nbsp;');
+    $(this.godown_exit_content_id).find("#godown_exit_paid span.paid").html('出库单&nbsp;[计划量总量&nbsp;:&nbsp;' + this.godown_exit_plan_quantity_count.toFixed(2) + '][实发量总量&nbsp;:&nbsp;' + this.godown_exit_actual_quantity_count.toFixed(2) + ']&nbsp;');
     if (isJsonObjectHasData(this.godown_exit_data)) {
   //  var godown_exit_thead  = 
   //    '<tr>'+
