@@ -95,7 +95,7 @@ function ContractLogistics(sale_contract_code, contract_logistics_content_box) {
       } else {
         var tmp_arr = new Array();
         var contract_logistics_result = JSON.parse(contract_logistics_get_contract.result);  
-        console.log(contract_logistics_result);
+//      console.log(contract_logistics_result);
         for (var i = 0; i < contract_logistics_result.length; i++) {
           tmp_arr[i] = {"trade_contract_code":this.sale_contract_code, "contract_code":contract_logistics_result[i].contract_code, "employer_uuid":contract_logistics_result[i].employer_uuid, "logistics_uuid":contract_logistics_result[i].logistics_uuid, "carrier_type":contract_logistics_result[i].carrier_type, "product_name":contract_logistics_result[i].product_name, "load_place":contract_logistics_result[i].load_place, "unload_place":contract_logistics_result[i].unload_place, "contract_ullage":contract_logistics_result[i].contract_ullage, "freight":contract_logistics_result[i].freight, "quantity":contract_logistics_result[i].quantity, "uuid":contract_logistics_result[i].uuid};
           //物流对账单
