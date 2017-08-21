@@ -13,10 +13,22 @@ var report_shore_tank_list = new Array();
 //化验单
 var report_test_list = new Array();
 
-function add_vehicle_object_list(list, vehicle_information_uuid, object) {
+/*function add_vehicle_object_list(list, vehicle_information_uuid, object) {
   if (null == get_vehicle_object_list(list, vehicle_information_uuid)) {
     list.push({"vehicle_information_uuid": vehicle_information_uuid, "object": object});
   }
+}*/
+
+function add_vehicle_object_list(list, vehicle_information_uuid, object) {
+  for (var i = 0; i < list.length; i++) {
+    if (vehicle_information_uuid == list[i].vehicle_information_uuid) {
+      debugger;
+      list.splice(0, i + 1);
+      list.push({"vehicle_information_uuid": vehicle_information_uuid, "object": object});
+      return;
+    }
+  }
+  list.push({"vehicle_information_uuid": vehicle_information_uuid, "object": object});
 }
 
 function get_vehicle_object_list(list, vehicle_information_uuid) {
