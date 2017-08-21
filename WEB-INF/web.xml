@@ -8,6 +8,6 @@
         <description>ERP For FuJi</description>
         <display-name>FJERP</display-name>
         <welcome-file-list>
-                <welcome-file>lego/index/index.html</welcome-file>
+                <welcome-file>/lego/index/index.html</welcome-file>
         </welcome-file-list>
 </web-app>
