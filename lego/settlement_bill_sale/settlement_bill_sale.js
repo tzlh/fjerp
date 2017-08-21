@@ -184,7 +184,7 @@ function SettlementBillSale(trade_contract_code, trade_contract_code_uuid, settl
                       '<label for = "">装货量</label>'+
                       '<div class = " input-group">'+
                         '<input type = "text" class = "form-control settlement_bill_sale_load_quantity" value = "">'+
-                        '<span class = "input-group-addon">元</span>'+
+                        '<span class = "input-group-addon">吨</span>'+
                       '</div>'+
                    '</div>'+
                   '</div>'+
@@ -193,7 +193,7 @@ function SettlementBillSale(trade_contract_code, trade_contract_code_uuid, settl
                       '<label for = "">卸货量</label>'+
                       '<div class = " input-group">'+
                         '<input type = "text" class = "form-control settlement_bill_sale_unload_quantity" value = "">'+
-                        '<span class = "input-group-addon">元</span>'+
+                        '<span class = "input-group-addon">吨</span>'+
                       '</div>'+
                     '</div>'+
                   '</div>'+
@@ -459,7 +459,7 @@ function SettlementBillSale(trade_contract_code, trade_contract_code_uuid, settl
                       '<label for = "">装货量</label>'+
                       '<div class = " input-group">'+
                         '<input type = "text" class = "form-control settlement_bill_sale_load_quantity" value = "' + settlement_bill_sale_load_quantity + '">'+
-                        '<span class = "input-group-addon">元</span>'+
+                        '<span class = "input-group-addon">吨</span>'+
                       '</div>'+
                    '</div>'+
                   '</div>'+
@@ -468,7 +468,7 @@ function SettlementBillSale(trade_contract_code, trade_contract_code_uuid, settl
                       '<label for = "">卸货量</label>'+
                       '<div class = " input-group">'+
                         '<input type = "text" class = "form-control settlement_bill_sale_unload_quantity" value = "' + settlement_bill_sale_unload_quantity + '">'+
-                        '<span class = "input-group-addon">元</span>'+
+                        '<span class = "input-group-addon">吨</span>'+
                       '</div>'+
                     '</div>'+
                   '</div>'+
@@ -770,7 +770,7 @@ function SettlementBillSale(trade_contract_code, trade_contract_code_uuid, settl
                       '<label for = "">装货量</label>'+
                       '<div class = " input-group">'+
                         '<input type = "text" class = "form-control settlement_bill_sale_load_quantity" value = "' + settlement_bill_sale_load_quantity + '" disabled = "disabled">'+
-                        '<span class = "input-group-addon">元</span>'+
+                        '<span class = "input-group-addon">吨</span>'+
                       '</div>'+
                    '</div>'+
                   '</div>'+
@@ -779,7 +779,7 @@ function SettlementBillSale(trade_contract_code, trade_contract_code_uuid, settl
                       '<label for = "">卸货量</label>'+
                       '<div class = " input-group">'+
                         '<input type = "text" class = "form-control settlement_bill_sale_unload_quantity" value = "' + settlement_bill_sale_unload_quantity + '" disabled = "disabled">'+
-                        '<span class = "input-group-addon">元</span>'+
+                        '<span class = "input-group-addon">吨</span>'+
                       '</div>'+
                     '</div>'+
                   '</div>'+
