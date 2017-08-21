@@ -101,13 +101,13 @@ function SettlementBillLogistics(trade_contract_code, contract_logistics_code, s
             '<td>' + this.settlement_bill_logistics_data.data[i].load_quantity + '</td>'+
             '<td>' + this.settlement_bill_logistics_data.data[i].unload_quantity + '</td>'+
             '<td>' + this.settlement_bill_logistics_data.data[i].contract_ullage + '‰</td>'+
-            '<td>' + ((settlement_bill_logistics_actual_ullage)*1000).toFixed(4) + '‰</td>'+
+            '<td>' + ((settlement_bill_logistics_actual_ullage)*1000).toFixed(2) + '‰</td>'+
             '<td>' + this.settlement_bill_logistics_data.data[i].settle_quantity + '</td>'+
             '<td>' + this.settlement_bill_logistics_data.data[i].goods_price + '</td>'+
             '<td>' + this.settlement_bill_logistics_data.data[i].invoice_quantity + '</td>'+
-            '<td>' + settlement_bill_logistics_all_price.toFixed(4) + '</td>'+
+            '<td>' + settlement_bill_logistics_all_price.toFixed(2) + '</td>'+
             '<td>' + this.settlement_bill_logistics_data.data[i].paid_amount + '</td>'+
-            '<td>' + settlement_bill_logistics_returned.toFixed(4) + '</td>'+
+            '<td>' + settlement_bill_logistics_returned.toFixed(2) + '</td>'+
             '<td>'+
               '<span class = "glyphicon glyphicon-info-sign settlement_bill_logistics_ml15 settlement_bill_logistics_modle_info" uuid = "' + this.settlement_bill_logistics_data.data[i].uuid + '" contract_code = "' + this.settlement_bill_logistics_data.data[i].contract_code + '"></span>'+
               '<span class = "glyphicon glyphicon-pencil settlement_bill_logistics_ml15 settlement_bill_logistics_modle_pencil" uuid = "' + this.settlement_bill_logistics_data.data[i].uuid + '" contract_code = "' + this.settlement_bill_logistics_data.data[i].contract_code + '"></span>'+
@@ -249,7 +249,7 @@ function SettlementBillLogistics(trade_contract_code, contract_logistics_code, s
     var load_quantity_blur = obj.parents(".modal-body").find(".load_quantity_blur_logistics").val();
     var unload_quantity_blur = obj.parents(".modal-body").find(".unload_quantity_blur_logistics").val();
     if(0 < load_quantity_blur.length && 0 < unload_quantity_blur.length && !isNaN(load_quantity_blur) && !isNaN(unload_quantity_blur)){
-      var val_b = (((load_quantity_blur - unload_quantity_blur)/load_quantity_blur) * 1000).toFixed(4);
+      var val_b = (((load_quantity_blur - unload_quantity_blur)/load_quantity_blur) * 1000).toFixed(2);
       obj.parents(".modal-body").find('.actual_loss_change').val(val_b);
     }else{
       obj.parents(".modal-body").find('.actual_loss_change').val("");
@@ -395,7 +395,7 @@ function SettlementBillLogistics(trade_contract_code, contract_logistics_code, s
     } else {
       alert("查询数据失败");
     }
-    var settlement_bill_logistics_actual_loss_ = ((settlement_bill_logistics_load_quantity - settlement_bill_logistics_unload_quantity)/settlement_bill_logistics_load_quantity).toFixed(4)*1000;
+    var settlement_bill_logistics_actual_loss_ = ((settlement_bill_logistics_load_quantity - settlement_bill_logistics_unload_quantity)/settlement_bill_logistics_load_quantity).toFixed(2)*1000;
     var settlement_bill_logistics_all_price = (settlement_bill_logistics_goods_price * settlement_bill_logistics_settle_quantity).toFixed(2);
     var settlement_bill_logistics_retune_price = ((settlement_bill_logistics_goods_price * settlement_bill_logistics_settle_quantity) - settlement_bill_logistics_paid_amount).toFixed(2);
     //附件
@@ -717,7 +717,7 @@ function SettlementBillLogistics(trade_contract_code, contract_logistics_code, s
     } else {
       alert("查询数据失败");
     }
-    var settlement_bill_logistics_actual_loss_ = ((settlement_bill_logistics_load_quantity - settlement_bill_logistics_unload_quantity)/settlement_bill_logistics_load_quantity).toFixed(4)*1000;
+    var settlement_bill_logistics_actual_loss_ = ((settlement_bill_logistics_load_quantity - settlement_bill_logistics_unload_quantity)/settlement_bill_logistics_load_quantity).toFixed(2)*1000;
     var settlement_bill_logistics_all_price = (settlement_bill_logistics_goods_price * settlement_bill_logistics_settle_quantity).toFixed(2);
     var settlement_bill_logistics_retune_price = ((settlement_bill_logistics_goods_price * settlement_bill_logistics_settle_quantity) - settlement_bill_logistics_paid_amount).toFixed(2);
     //附件
