@@ -281,7 +281,7 @@ function reportBoatUllage(vehicle_information_uuid, report_boat_ullage_content_i
       alert("请输入数量！");
       return;
     } else {
-      if (null == quantity.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)) {
+      if (null == quantity.match(/^(\d+)(\.\d+)?$/)) {
         alert("数量格式不正确！");
         return;
       }
