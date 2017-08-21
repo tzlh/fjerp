@@ -270,7 +270,7 @@ function godownEntryNotify(contract_buy_contract_code, godown_entry_notify_conte
   '     </div>';
     $("body").append(content);
     //储罐
-    this.godown_entry_notify_get_warehouse_pot();
+    this.godown_entry_notify_get_warehouse_pot(this.warehouse_uuid);
     var workhouse_pot_select = '<option value = "">--请选择--</option>';
     for (var i = 0; i < this.godown_entry_notify_warehouse_pot_data.length; i++) {
       workhouse_pot_select += '<option value = "' + this.godown_entry_notify_warehouse_pot_data[i].warehouse_pot_uuid + '">' + this.godown_entry_notify_warehouse_pot_data[i].warehouse_pot_name + '</option>'
@@ -436,7 +436,7 @@ function godownEntryNotify(contract_buy_contract_code, godown_entry_notify_conte
   '     </div>';
     $("body").append(content);
     //储罐
-    this.godown_entry_notify_get_warehouse_pot();
+    this.godown_entry_notify_get_warehouse_pot(this.warehouse_uuid);
     var workhouse_pot_select = '<option value = "">--请选择--</option>';
     for (var i = 0; i < this.godown_entry_notify_warehouse_pot_data.length; i++) {
       workhouse_pot_select += '<option value = "' + this.godown_entry_notify_warehouse_pot_data[i].warehouse_pot_uuid + '">' + this.godown_entry_notify_warehouse_pot_data[i].warehouse_pot_name + '</option>'

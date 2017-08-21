@@ -24,16 +24,28 @@ var settlement_bill_logistics_list = new Array();
 var logistics_invoice_information_list = new Array();
 
 function add_buy_object_list(list, contract_code, object) {
-  if (null == get_buy_object_list(list, contract_code)) {
-    list.push({"contract_code": contract_code, "object": object});
+  for (var i = 0; i < list.length; i++) {
+    if (contract_code == list[i].contract_code) {
+      debugger;
+      list.splice(0, i + 1);
+      list.push({"contract_code": contract_code, "object": object});
+      return;
+    }
   }
+  list.push({"contract_code": contract_code, "object": object});
 }
+
+//function add_buy_object_list(list, contract_code, object) {
+//if (null == get_buy_object_list(list, contract_code)) {
+//  list.push({"contract_code": contract_code, "object": object});
+//}
+//}
 
 function get_buy_object_list(list, contract_code) {
   for (var i = 0; i < list.length; i++) {
-    if (contract_code == list[i].contract_code) {
-      return list[i]["object"];
-    }
+      if (contract_code == list[i].contract_code) {
+        return list[i]["object"];
+      }
   }
   return null;
 }
