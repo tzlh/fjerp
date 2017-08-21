@@ -179,7 +179,7 @@ function calc_data(loan_capital, start_sign_datetime, end_sign_datetime) {
     if (0 == i) {
       warehouse_payment_detail_data[i]["capital_occupying"] = loan_capital;
     } else {
-      warehouse_payment_detail_data[i]["capital_occupying"] = new Number((warehouse_payment_detail_data[i - 1]["capital_occupying"] + warehouse_payment_detail_data[i]["payment"] - warehouse_payment_detail_data[i]["receipt"]).toFixed(2));
+      warehouse_payment_detail_data[i]["capital_occupying"] = new Number((warehouse_payment_detail_data[i - 1]["capital_occupying"] + warehouse_payment_detail_data[i]["receipt"] - warehouse_payment_detail_data[i]["payment"]).toFixed(2));
     }
     warehouse_payment_detail_data[i]["interest"] = new Number((warehouse_payment_detail_data[i]["capital_occupying"] * 0.1 / 12 / 30).toFixed(2));
   }
