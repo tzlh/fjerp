@@ -105,7 +105,7 @@ function SettlementBillBuy(trade_contract_code, trade_contract_code_uuid, settle
             '<td>' + this.settlement_bill_buy_data.data[i].invoice_quantity + '</td>'+
             '<td>' + settlement_bill_buy_all_price.toFixed(2) + '</td>'+
             '<td>' + this.settlement_bill_buy_data.data[i].paid_amount + '</td>'+
-            '<td>' + settlement_bill_buy_returned.toFixed(2) + '</td>'+
+            '<td>' + Math.abs(settlement_bill_buy_returned).toFixed(2) + '</td>'+
             '<td>'+
               '<span class = "glyphicon glyphicon-info-sign settlement_bill_buy_ml15 settlement_bill_buy_modle_info" uuid = "' + this.settlement_bill_buy_data.data[i].uuid + '" contract_code = "' + this.settlement_bill_buy_data.data[i].contract_code + '" contract_code_uuid = "' + this.settlement_bill_buy_data.data[i].contract_code_uuid + '"></span>'+
               '<span class = "glyphicon glyphicon-pencil settlement_bill_buy_ml15 settlement_bill_buy_modle_pencil" uuid = "' + this.settlement_bill_buy_data.data[i].uuid + '" contract_code = "' + this.settlement_bill_buy_data.data[i].contract_code + '" contract_code_uuid = "' + this.settlement_bill_buy_data.data[i].contract_code_uuid + '"></span>'+
@@ -414,9 +414,9 @@ function SettlementBillBuy(trade_contract_code, trade_contract_code_uuid, settle
     } else {
       alert("查询数据失败");
     }
-    var settlement_bill_buy_actual_loss_ = ((settlement_bill_buy_load_quantity - settlement_bill_buy_unload_quantity)/settlement_bill_buy_load_quantity).toFixed(2)*1000;
+    var settlement_bill_buy_actual_loss_ = (((settlement_bill_buy_load_quantity - settlement_bill_buy_unload_quantity)/settlement_bill_buy_load_quantity) * 1000).toFixed(2);
     var settlement_bill_buy_all_price = (settlement_bill_buy_goods_price * settlement_bill_buy_settle_quantity).toFixed(2);
-    var settlement_bill_buy_retune_price = ((settlement_bill_buy_goods_price * settlement_bill_buy_settle_quantity) - settlement_bill_buy_paid_amount).toFixed(2);
+    var settlement_bill_buy_retune_price = Math.abs(((settlement_bill_buy_goods_price * settlement_bill_buy_settle_quantity) - settlement_bill_buy_paid_amount)).toFixed(2);
     //附件
     //console.log(settlement_bill_buy_cluster_list);
     if (0 < settlement_bill_buy_cluster_list.length) {
@@ -754,9 +754,9 @@ function SettlementBillBuy(trade_contract_code, trade_contract_code_uuid, settle
     } else {
       alert("查询数据失败");
     }
-    var settlement_bill_buy_actual_loss_ = ((settlement_bill_buy_load_quantity - settlement_bill_buy_unload_quantity)/settlement_bill_buy_load_quantity).toFixed(2)*1000;
+    var settlement_bill_buy_actual_loss_ = (((settlement_bill_buy_load_quantity - settlement_bill_buy_unload_quantity)/settlement_bill_buy_load_quantity) * 1000).toFixed(2);
     var settlement_bill_buy_all_price = (settlement_bill_buy_goods_price * settlement_bill_buy_settle_quantity).toFixed(2);
-    var settlement_bill_buy_retune_price = ((settlement_bill_buy_goods_price * settlement_bill_buy_settle_quantity) - settlement_bill_buy_paid_amount).toFixed(2);
+    var settlement_bill_buy_retune_price = Math.abs(((settlement_bill_buy_goods_price * settlement_bill_buy_settle_quantity) - settlement_bill_buy_paid_amount)).toFixed(2);
     //附件
     if (0 < settlement_bill_buy_cluster_list.length) {
       var settlement_bill_buy_file_arr = new Array();
