@@ -96,7 +96,7 @@ function warehouse_payment_detail_get_contract(warehouse, start_sign_datetime, e
   get_contract_param_data["start_sign_datetime"] = start_sign_datetime;
   get_contract_param_data["end_sign_datetime"] = end_sign_datetime;
   var get_contract = ajax_assistant(get_contract_url, get_contract_param_data, false, true, false);
-   console.log(get_contract);
+   //console.log(get_contract);
   if(1 == get_contract.status) {
     var result = JSON.parse(get_contract.result);
     contact_search_list = new Array();
@@ -111,7 +111,7 @@ function warehouse_payment_detail_get_contract(warehouse, start_sign_datetime, e
         "type": result[i].type,
       });
     }
-    // console.log(contact_search_list);
+    // //console.log(contact_search_list);
   } else {
     alert("合同获取失败");
   }
@@ -160,10 +160,10 @@ function calc_data(loan_capital, start_sign_datetime, end_sign_datetime) {
   // 找到自营企业合同数据中，所有销售合同且添加至receipt，所有采购合同且添加至payment
   for (var i = 0; i < owner_enterpirse_contract.length; i++) {
     var contract_datetime = new Date(get_contract_uuid(owner_enterpirse_contract[i]).sign_datetime);
-    console.log(contract_datetime.toLocaleDateString());
+    //console.log(contract_datetime.toLocaleDateString());
     for (var j = 0; j < warehouse_payment_detail_data.length; j++) {
       var display_datetime = new Date(warehouse_payment_detail_data[j].sign_datetime);
-      console.log(display_datetime.toLocaleDateString());
+      //console.log(display_datetime.toLocaleDateString());
       if ((display_datetime.getFullYear() == contract_datetime.getFullYear()) && (display_datetime.getMonth() == contract_datetime.getMonth()) && (display_datetime.getDate() == contract_datetime.getDate())) {
         // 时间节点相同的情况下
         if (1 == get_contract_uuid(owner_enterpirse_contract[i]).type) {
@@ -222,7 +222,7 @@ function warehouse_payment_detail_get_warehouse() {
         warehouse_arr.push({"work_area_name":result[i].name, "work_area_uuid":result[i].uuid});
       }
       warehouse_payment_detail_work_area_data["data"] = warehouse_arr;
-      console.log(warehouse_payment_detail_work_area_data["data"]);
+      //console.log(warehouse_payment_detail_work_area_data["data"]);
     }
   } else {
     alert("获取库区失败");

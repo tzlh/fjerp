@@ -97,10 +97,10 @@ function contact_management_server_enterprise_data_cover() {
   var contact_management_enterprise_url = PROJECT_PATH + "lego/lego_crm?servletName=getEnterpriseInformation";
   var contact_management_enterprise_param_data = {};
   var contact_management_enterprise = ajax_assistant(contact_management_enterprise_url, contact_management_enterprise_param_data, false, true, false);
-  console.log(contact_management_enterprise);
+  //////console.log(contact_management_enterprise);
   if (1 == contact_management_enterprise.status) {
     var enterprise_result = JSON.parse(contact_management_enterprise.result);
-    console.log(enterprise_result);
+    //////console.log(enterprise_result);
     var enterprise_data_arr = new Array();
     for (var i = 0; i < enterprise_result.length; i++) {
       enterprise_data_arr.push({"short_name": enterprise_result[i].short_name, "uuid": enterprise_result[i].uuid});
@@ -121,13 +121,13 @@ function contact_management_server_data_cover() {
   delete contact_management_search_condition["rows"];
   delete contact_management_search_condition["offset"];  
   var contact_management_get_contact = ajax_assistant(contact_management_get_contact_url, contact_management_search_condition, false, true, false);
-  console.log(contact_management_get_contact);
+  ////console.log(contact_management_get_contact);
   if (1 == contact_management_get_contact.status) {
     var get_contact_result = JSON.parse(contact_management_get_contact.result);
     if (0 == get_contact_result[0].count) {
       $("#contact_management_pages").html("");
     } else {
-      console.log(get_contact_result);
+      ////console.log(get_contact_result);
       totalRows = get_contact_result[0].count;
       generate_bootstrap_pagination_ctrl("#contact_management_pages", current_offset, rows, 3, totalRows);
       contact_management_search_condition["rows"] = rows;
@@ -139,13 +139,13 @@ function contact_management_server_data_cover() {
   // 获取联系人
   var contact_management_get_contact_url = PROJECT_PATH + "lego/lego_crm?servletName=getContact";
   var contact_management_get_contact = ajax_assistant(contact_management_get_contact_url, contact_management_search_condition, false, true, false);
-  console.log(contact_management_get_contact);
+  ////console.log(contact_management_get_contact);
   if (1 == contact_management_get_contact.status) {
     if (0 == contact_management_get_contact.count) {
       contact_data = {};
     } else {
       var get_contact_result = JSON.parse(contact_management_get_contact.result);
-      console.log(get_contact_result);
+      ////console.log(get_contact_result);
       var contact_data_arr = new Array();
       for (var i = 0; i < get_contact_result.length; i++) {
         var contact = get_contact_result[i].contact_information_list.substring(0,get_contact_result[i].contact_information_list.indexOf(";"));
@@ -155,15 +155,15 @@ function contact_management_server_data_cover() {
         var contact_management_get_enterprise_param_data = {};
         contact_management_get_enterprise_param_data["uuid"] = enterprise_uuid;
         var contact_management_get_enterprise = ajax_assistant(contact_management_get_enterprise_url, contact_management_get_enterprise_param_data, false, true, false);
-        console.log(contact_management_get_enterprise);
+        ////console.log(contact_management_get_enterprise);
         if (1 == contact_management_get_enterprise.status) {
           var get_enterprise_result = JSON.parse(contact_management_get_enterprise.result);
-          console.log(get_enterprise_result);
+          ////console.log(get_enterprise_result);
           contact_data_arr.push({"name": get_contact_result[i].name,"position": get_contact_result[i].position,"contact": contact,"enterprise": get_enterprise_result[0].short_name,"uuid": get_contact_result[i].uuid});
         }
       }
       contact_data = contact_data_arr;
-      console.log(contact_data);
+      ////console.log(contact_data);
     }
   } else {
     alert("联系人获取失败！");
@@ -228,7 +228,7 @@ function contact_management_add_contact() {
   var position = $("#contact_management_position").val();
   var contact_information_list = $("#contact_management_contact").val() + ':' + $("#contact_management_contact_way").val() + ';';
   var contact_way = $("#contact_management_contact_way").val();
-  console.log(contact_information_list);
+  ////console.log(contact_information_list);
   if ("" == enterprise_uuid){
     alert("请选择企业！");
     return;
@@ -267,7 +267,7 @@ function contact_management_add_contact() {
   contact_management_add_contact_param_data["position"] = position;
   contact_management_add_contact_param_data["contact_information_list"] = contact_information_list;
   var contact_management_add_contact = ajax_assistant(contact_management_add_contact_url, contact_management_add_contact_param_data, false, true, false);
-  console.log(contact_management_add_contact);
+  ////console.log(contact_management_add_contact);
   if(1 == contact_management_add_contact.status) {
     $("#contact_management_success").show().delay (2000).fadeOut ();
     $("#contact_management_enterprise_add").val("");
@@ -312,7 +312,7 @@ function contact_management_delete_data(uuid) {
   var delete_contact_param_data = {};
   delete_contact_param_data["uuid"] = uuid;
   var contact_management_delete_contact= ajax_assistant(delete_contact_url, delete_contact_param_data, false, true, false);
-  console.log(contact_management_delete_contact);
+  ////console.log(contact_management_delete_contact);
   if (1 == contact_management_delete_contact.status) {
     $("#contact_management_delete_modal").modal("hide");
     contact_management_server_data_cover();

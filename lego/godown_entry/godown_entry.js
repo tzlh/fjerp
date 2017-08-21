@@ -96,13 +96,13 @@ function godownEntry(vehicle_information_uuid, godown_entry_content_id, warehous
     var get_godown_entry_param_data = {};
     get_godown_entry_param_data["vehicle_information_uuid"] = this.vehicle_information_uuid;
     var godown_entry_get= ajax_assistant(get_godown_entry_url, get_godown_entry_param_data, false, true, false);
-    console.log(godown_entry_get);
+    // console.log(godown_entry_get);
     if (1 == godown_entry_get.status) {
       if (0 == godown_entry_get.count) {
         this.godown_entry_data = {};
       } else {
         var result = JSON.parse(godown_entry_get.result);
-        console.log(result);
+        // console.log(result);
         var godown_entry_data_arr = new Array();
         for (var i = 0; i < result.length; i++) {
           var net_weight_count_one = Number(result[i].net_weight);
@@ -114,10 +114,10 @@ function godownEntry(vehicle_information_uuid, godown_entry_content_id, warehous
           var get_warehouse_pot_param_data = {};
           get_warehouse_pot_param_data["uuid"] = warehouse_pot_uuid;
           var godown_entry_get_warehouse_pot = ajax_assistant(get_warehouse_pot_url, get_warehouse_pot_param_data, false, true, false);
-          console.log(godown_entry_get_warehouse_pot);
+          // console.log(godown_entry_get_warehouse_pot);
           if (1 == godown_entry_get_warehouse_pot.status) {
             var result_warehouse_pot = JSON.parse(godown_entry_get_warehouse_pot.result); 
-            console.log(result_warehouse_pot);
+            // console.log(result_warehouse_pot);
             godown_entry_data_arr.push({"entry_datetime": entry_datetime,"tare_weight": result[i].tare_weight,"gross_weight": result[i].gross_weight,"net_weight": result[i].net_weight,"uuid": result[i].uuid,"vehicle_information_uuid": result[i].vehicle_information_uuid,"warehouse_pot_name": result_warehouse_pot[0].name,});
           }
         } 
@@ -131,32 +131,32 @@ function godownEntry(vehicle_information_uuid, godown_entry_content_id, warehous
    * 获取入库单详情
    */
   this.godown_entry_get_letter = function(uuid) {
-    console.log(uuid);
+    // console.log(uuid);
     var get_godown_entry_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getGodownEntry";
     var get_godown_entry_param_data = {};
     get_godown_entry_param_data["uuid"] = uuid;
     var godown_entry_get= ajax_assistant(get_godown_entry_url, get_godown_entry_param_data, false, true, false);
-    console.log(godown_entry_get);
+    // console.log(godown_entry_get);
     if (1 == godown_entry_get.status) {
       var result = JSON.parse(godown_entry_get.result);
-      console.log(result);
+      // console.log(result);
       var entry_datetime = result[0].entry_datetime.substring(0,result[0].entry_datetime.indexOf(" "));
       this.current_godown_entry_data = {"entry_datetime": entry_datetime,"tare_weight": result[0].tare_weight,"gross_weight": result[0].gross_weight,"net_weight": result[0].net_weight,"uuid": result[0].uuid,"vehicle_information_uuid": result[0].vehicle_information_uuid,"warehouse_pot_uuid": result[0].warehouse_pot_uuid};
       var godown_entry_file_arr = new Array();
       var cluster_list_all = result[0].cluster_list;
       if (null != cluster_list_all) {
         var cluster_list = result[0].cluster_list.substring(0,result[0].cluster_list.lastIndexOf(";")).split(";");
-        console.log(cluster_list);
+        // console.log(cluster_list);
         var godown_entry_file = "";
         for (var j = 0; j < cluster_list.length; j++) {
           var enterprise_management_get_godown_entry_file_url = PROJECT_PATH + "lego/lego_storage?servletName=getFileByClusterName";
           var enterprise_management_get_godown_entry_file_param_data = {};
           enterprise_management_get_godown_entry_file_param_data["cluster_name"] = cluster_list[j];
           var enterprise_management_get_godown_entry_file = ajax_assistant(enterprise_management_get_godown_entry_file_url, enterprise_management_get_godown_entry_file_param_data, false, true, false);
-          console.log(enterprise_management_get_godown_entry_file);
+          // console.log(enterprise_management_get_godown_entry_file);
           if (1 == enterprise_management_get_godown_entry_file.status) {
             var godown_entry_file_result = JSON.parse(enterprise_management_get_godown_entry_file.result);
-            console.log(godown_entry_file_result);
+            // console.log(godown_entry_file_result);
             var godown_entry_cluster_name = godown_entry_file_result[0].cluster_name;
             var godown_entry_suffix = godown_entry_file_result[0].suffix;
             var file_name = godown_entry_cluster_name + '.' + godown_entry_suffix;
@@ -178,14 +178,14 @@ function godownEntry(vehicle_information_uuid, godown_entry_content_id, warehous
     var get_warehouse_pot_param_data = {};
     get_warehouse_pot_param_data["warehouse_uuid"] = this.warehouse_uuid;
     var godown_entry_get_warehouse_pot = ajax_assistant(get_warehouse_pot_url, get_warehouse_pot_param_data, false, true, false);
-    console.log(godown_entry_get_warehouse_pot);
+    // console.log(godown_entry_get_warehouse_pot);
     if (1 == godown_entry_get_warehouse_pot.status) {
       if (0 == godown_entry_get_warehouse_pot.count) {
         this.godown_entry_warehouse_pot_data = {};
       } else {
         var warehouse_pot_arr = new Array();
         var result = JSON.parse(godown_entry_get_warehouse_pot.result); 
-        console.log(result);
+        // console.log(result);
         for (var i = 0; i < result.length; i++) {
           warehouse_pot_arr.push({"warehouse_pot_name":result[i].name, "warehouse_pot_uuid":result[i].uuid});
         }
@@ -310,7 +310,7 @@ function godownEntry(vehicle_information_uuid, godown_entry_content_id, warehous
        godown_entry_list += godown_entry + ";"; 
       }    
     }
-    console.log(godown_entry_list);
+    // console.log(godown_entry_list);
     if (null == entry_datetime.match(/^(?:(?!0000)[0-9]{4}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[0-9]{2}(?:0[48]|[2468][048]|[13579][26])|(?:0[48]|[2468][048]|[13579][26])00)-02-29)\s+([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/)) {
       alert("请选择入库日期！");
       return;
@@ -358,7 +358,7 @@ function godownEntry(vehicle_information_uuid, godown_entry_content_id, warehous
       add_godown_entry_param_data["cluster_list"] = godown_entry_list;
     }
     var godown_entry_add = ajax_assistant(add_godown_entry_url, add_godown_entry_param_data, false, true, false);
-    console.log(godown_entry_add);
+    // console.log(godown_entry_add);
     if (1 == godown_entry_add.status) {
       $("#godown_entry_add_modal").modal("hide");
       this.godown_entry_clear_raw_data(this.vehicle_information_uuid);
@@ -463,7 +463,7 @@ function godownEntry(vehicle_information_uuid, godown_entry_content_id, warehous
     for (var i = 0; i < $("#godown_entry_edit_modal select option").length; i++) {
       var warehouse_pot_uuid = this.current_godown_entry_data.warehouse_pot_uuid;
       var value = $("#godown_entry_edit_modal select option").eq(i).val();
-      console.log(warehouse_pot_uuid);
+      // console.log(warehouse_pot_uuid);
       if($("#godown_entry_edit_modal select option").eq(i).val() == warehouse_pot_uuid) {
         $("#godown_entry_edit_modal select option").eq(i).prop('selected','selected');
         break;
@@ -491,7 +491,7 @@ function godownEntry(vehicle_information_uuid, godown_entry_content_id, warehous
        godown_entry_list += godown_entry + ";"; 
       }    
     }
-    console.log(godown_entry_list);
+    // console.log(godown_entry_list);
     if (null == entry_datetime.match(/^(?:(?!0000)[0-9]{4}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[0-9]{2}(?:0[48]|[2468][048]|[13579][26])|(?:0[48]|[2468][048]|[13579][26])00)-02-29)\s+([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/)) {
       alert("请选择入库日期！");
       return;
@@ -540,7 +540,7 @@ function godownEntry(vehicle_information_uuid, godown_entry_content_id, warehous
       edit_godown_entry_param_data["newClusterList"] = godown_entry_list;
     }
     var godown_entry_edit = ajax_assistant(edit_godown_entry_url, edit_godown_entry_param_data, false, true, false);
-    console.log(godown_entry_edit);
+    // console.log(godown_entry_edit);
     if (1 == godown_entry_edit.status) {
       $("#godown_entry_edit_modal").modal("hide");
       this.godown_entry_clear_raw_data(this.vehicle_information_uuid);
@@ -644,7 +644,7 @@ function godownEntry(vehicle_information_uuid, godown_entry_content_id, warehous
     for (var i = 0; i < $("#godown_entry_detail_modal select option").length; i++) {
       var warehouse_pot_uuid = this.current_godown_entry_data.warehouse_pot_uuid;
       var value = $("#godown_entry_detail_modal select option").eq(i).val();
-      console.log(warehouse_pot_uuid);
+      // console.log(warehouse_pot_uuid);
       if ($("#godown_entry_detail_modal select option").eq(i).val() == warehouse_pot_uuid) {
         $("#godown_entry_detail_modal select option").eq(i).prop('selected','selected');
         break;
@@ -690,7 +690,7 @@ function godownEntry(vehicle_information_uuid, godown_entry_content_id, warehous
     delete_godown_entry_param_data["idColumnValue"] = uuid;
     delete_godown_entry_param_data["vehicle_information_uuid"] = this.vehicle_information_uuid;
     var godown_entry_delete_godown_entry= ajax_assistant(delete_godown_entry_url, delete_godown_entry_param_data, false, true, false);
-    console.log(godown_entry_delete_godown_entry);
+    // console.log(godown_entry_delete_godown_entry);
     if (1 == godown_entry_delete_godown_entry.status) {
       $("#godown_entry_delete_modal").modal("hide");
       this.godown_entry_clear_raw_data(this.vehicle_information_uuid);

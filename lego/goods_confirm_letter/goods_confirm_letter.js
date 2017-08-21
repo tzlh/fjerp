@@ -63,13 +63,13 @@ function goodsConfirmLetter(contract_buy_contract_code, goods_confirm_letter_con
     var get_goods_confirm_letter_param_data = {};
     get_goods_confirm_letter_param_data["contract_code"] = this.contract_buy_contract_code;
     var goods_confirm_letter_get= ajax_assistant(get_goods_confirm_letter_url, get_goods_confirm_letter_param_data, false, true, false);
-    console.log(goods_confirm_letter_get);
+    //console.log(goods_confirm_letter_get);
     if (1 == goods_confirm_letter_get.status) {
       if (0 == goods_confirm_letter_get.count) {
         this.goods_confirm_letter_data = {};
       } else {
         var result = JSON.parse(goods_confirm_letter_get.result);
-        console.log(result);
+        //console.log(result);
         var goods_confirm_letter_data_arr = new Array();
         for (var i = 0; i < result.length; i++) {
           var create_datetime = result[i].create_datetime.substring(0,result[i].create_datetime.indexOf(" "));
@@ -84,30 +84,30 @@ function goodsConfirmLetter(contract_buy_contract_code, goods_confirm_letter_con
    * 获取货物确认函详情
    */
   this.goods_confirm_letter_get_letter = function(uuid) {
-    console.log(uuid);
+    //console.log(uuid);
     var get_goods_confirm_letter_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getGoodsConfirmLetter";
     var get_goods_confirm_letter_param_data = {};
     get_goods_confirm_letter_param_data["uuid"] = uuid;
     var goods_confirm_letter_get= ajax_assistant(get_goods_confirm_letter_url, get_goods_confirm_letter_param_data, false, true, false);
-    console.log(goods_confirm_letter_get);
+    //console.log(goods_confirm_letter_get);
     if (1 == goods_confirm_letter_get.status) {
       var result = JSON.parse(goods_confirm_letter_get.result);
-      console.log(result);
+      //console.log(result);
       var goods_confirm_letter_file_arr =new Array();
       var cluster_list_all = result[0].cluster_list;
       if (null != cluster_list_all) {
         var cluster_list = result[0].cluster_list.substring(0,result[0].cluster_list.lastIndexOf(";")).split(";");
-        console.log(cluster_list);
+        //console.log(cluster_list);
         var goods_confirm_letter_file = "";
         for (var j = 0; j < cluster_list.length; j++) {
           var get_goods_confirm_letter_file_url = PROJECT_PATH + "lego/lego_storage?servletName=getFileByClusterName";
           var get_goods_confirm_letter_file_param_data = {};
           get_goods_confirm_letter_file_param_data["cluster_name"] = cluster_list[j];
           var get_goods_confirm_letter_file = ajax_assistant(get_goods_confirm_letter_file_url, get_goods_confirm_letter_file_param_data, false, true, false);
-          console.log(get_goods_confirm_letter_file);
+          //console.log(get_goods_confirm_letter_file);
           if (1 == get_goods_confirm_letter_file.status) {
             var goods_confirm_letter_file_result = JSON.parse(get_goods_confirm_letter_file.result);
-            console.log(goods_confirm_letter_file_result);
+            //console.log(goods_confirm_letter_file_result);
             var goods_confirm_letter_cluster_name = goods_confirm_letter_file_result[0].cluster_name;
             var goods_confirm_letter_suffix = goods_confirm_letter_file_result[0].suffix;
             var file_name = goods_confirm_letter_cluster_name + '.' + goods_confirm_letter_suffix;
@@ -165,7 +165,7 @@ function goodsConfirmLetter(contract_buy_contract_code, goods_confirm_letter_con
        goods_confirm_letter_list += goods_confirm_letter + ";"; 
       }    
     }
-    console.log(goods_confirm_letter_list);
+    //console.log(goods_confirm_letter_list);
     var add_goods_confirm_letter_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=addGoodsConfirmLetter";
     var add_goods_confirm_letter_param_data = {};
     add_goods_confirm_letter_param_data["contract_code"] = this.contract_buy_contract_code;
@@ -173,7 +173,7 @@ function goodsConfirmLetter(contract_buy_contract_code, goods_confirm_letter_con
       add_goods_confirm_letter_param_data["cluster_list"] = goods_confirm_letter_list;
     }
     var goods_confirm_letter_add = ajax_assistant(add_goods_confirm_letter_url, add_goods_confirm_letter_param_data, false, true, false);
-    console.log(goods_confirm_letter_add);
+    //console.log(goods_confirm_letter_add);
     if (1 == goods_confirm_letter_add.status) {
       $("#goods_confirm_letter_add_modal").modal("hide");
       this.goods_confirm_letter_server_data_cover(this.contract_buy_contract_code);
@@ -219,7 +219,7 @@ function goodsConfirmLetter(contract_buy_contract_code, goods_confirm_letter_con
   };
   
   this.goods_confirm_letter_edit_data = function(uuid) {
-    console.log(uuid);
+    //console.log(uuid);
     var goods_confirm_letter_li = $("#goods_confirm_letter_edit_attch ul").children("li");
     var goods_confirm_letter_list = "";
     for (var i = 0; i < goods_confirm_letter_li.length; i++) {
@@ -229,7 +229,7 @@ function goodsConfirmLetter(contract_buy_contract_code, goods_confirm_letter_con
         goods_confirm_letter_list += goods_confirm_letter + ";"; 
       }    
     }
-    console.log(goods_confirm_letter_list);
+    //console.log(goods_confirm_letter_list);
     var edit_goods_confirm_letter_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=modifyGoodsConfirmLetter";
     var edit_goods_confirm_letter_param_data = {};
     edit_goods_confirm_letter_param_data["contract_code"] = this.contract_buy_contract_code;
@@ -238,7 +238,7 @@ function goodsConfirmLetter(contract_buy_contract_code, goods_confirm_letter_con
       edit_goods_confirm_letter_param_data["newClusterList"] = goods_confirm_letter_list;
     }
     var goods_confirm_letter_edit= ajax_assistant(edit_goods_confirm_letter_url, edit_goods_confirm_letter_param_data, false, true, false);
-    console.log(goods_confirm_letter_edit);
+    //console.log(goods_confirm_letter_edit);
     if (1 == goods_confirm_letter_edit.status) {
       $("#goods_confirm_letter_edit_modal").modal("hide");
       this.goods_confirm_letter_server_data_cover(this.contract_buy_contract_code);
@@ -314,7 +314,7 @@ function goodsConfirmLetter(contract_buy_contract_code, goods_confirm_letter_con
     var delete_goods_confirm_letter_param_data = {};
     delete_goods_confirm_letter_param_data["idColumnValue"] = uuid;
     var org_structure_delete_goods_confirm_letter= ajax_assistant(delete_goods_confirm_letter_url, delete_goods_confirm_letter_param_data, false, true, false);
-    console.log(org_structure_delete_goods_confirm_letter);
+    //console.log(org_structure_delete_goods_confirm_letter);
     if (1 == org_structure_delete_goods_confirm_letter.status) {
       $("#goods_confirm_letter_delete_modal").modal("hide");
       this.goods_confirm_letter_server_data_cover(this.contract_buy_contract_code);

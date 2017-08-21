@@ -50,7 +50,7 @@ function PaidRecord(all_paid, sale_contract_code, title_object, paid_record_cont
   };
   
   this.paid_record_clear_raw_data = function() {
-    console.log(this.title_object)
+    //console.log(this.title_object)
     //$("#paid_record_thead").html('');
     $(this.paid_record_content_id).find("#paid_record_box").html('<tr><td colspan="3" align="center">没数据</td></tr>');
     $(this.paid_record_content_id).find("#paid_record_paid span.paid").html(this.title_object.paid_record_name + '&nbsp;[应收货款&nbsp;:&nbsp;0]&nbsp;[已收货款&nbsp;:&nbsp;0]&nbsp;[未收货款&nbsp;:&nbsp;0]');
@@ -88,25 +88,25 @@ function PaidRecord(all_paid, sale_contract_code, title_object, paid_record_cont
     var get_paid_record_param_data = {};
     get_paid_record_param_data["contract_code"] = this.sale_contract_code;
     var paid_record_get= ajax_assistant(get_paid_record_url, get_paid_record_param_data, false, true, false);
-    console.log(paid_record_get);
+    //console.log(paid_record_get);
     if (1 == paid_record_get.status) {
       if (0 == paid_record_get.count) {
         this.paid_record_data = {};
         unreceived = this.all_paid;
       } else {
         var result = JSON.parse(paid_record_get.result);
-        console.log(result);
+        //console.log(result);
         var paid_record_data_arr = new Array();
         for (var i = 0; i < result.length; i++) {
           received_one = Number(result[i].amount);
-          console.log(received)
+          //console.log(received)
           var paid_datetime = result[i].paid_datetime.substring(0,result[i].paid_datetime.indexOf(" "));
           paid_record_data_arr.push({"amount": result[i].amount,"paid_datetime": paid_datetime,"uuid": result[i].uuid,"contract_code": result[i].contract_code});
           received = received + received_one;
         }
         unreceived = this.all_paid - received;
-        console.log(unreceived);
-        console.log(received);
+        //console.log(unreceived);
+        //console.log(received);
         this.paid_record_data = paid_record_data_arr;
       }
     }
@@ -116,32 +116,32 @@ function PaidRecord(all_paid, sale_contract_code, title_object, paid_record_cont
    * 获取收付款记录详情
    */
   this.paid_record_get_record = function(uuid) {
-    console.log(uuid);
+    //console.log(uuid);
     var get_paid_record_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getPaidRecord";
     var get_paid_record_param_data = {};
     get_paid_record_param_data["uuid"] = uuid;
     var paid_record_get= ajax_assistant(get_paid_record_url, get_paid_record_param_data, false, true, false);
-    console.log(paid_record_get);
+    //console.log(paid_record_get);
     if (1 == paid_record_get.status) {
       var result = JSON.parse(paid_record_get.result);
-      console.log(result);
+      //console.log(result);
       var paid_datetime = result[0].paid_datetime.substring(0,result[0].paid_datetime.indexOf(" "));
       current_paid_record_data = {"amount": result[0].amount,"paid_datetime": paid_datetime,"uuid": result[0].uuid,"contract_code": result[0].contract_code};
       var paid_record_file_arr =new Array();
       var cluster_list_all = result[0].cluster_list;
       if (null != cluster_list_all) {
         var cluster_list = result[0].cluster_list.substring(0,result[0].cluster_list.lastIndexOf(";")).split(";");
-        console.log(cluster_list);
+        //console.log(cluster_list);
         var paid_record_file = "";
         for (var j = 0; j < cluster_list.length; j++) {
           var enterprise_management_get_paid_record_file_url = PROJECT_PATH + "lego/lego_storage?servletName=getFileByClusterName";
           var enterprise_management_get_paid_record_file_param_data = {};
           enterprise_management_get_paid_record_file_param_data["cluster_name"] = cluster_list[j];
           var enterprise_management_get_paid_record_file = ajax_assistant(enterprise_management_get_paid_record_file_url, enterprise_management_get_paid_record_file_param_data, false, true, false);
-          console.log(enterprise_management_get_paid_record_file);
+          //console.log(enterprise_management_get_paid_record_file);
           if (1 == enterprise_management_get_paid_record_file.status) {
             var paid_record_file_result = JSON.parse(enterprise_management_get_paid_record_file.result);
-            console.log(paid_record_file_result);
+            //console.log(paid_record_file_result);
             var paid_record_cluster_name = paid_record_file_result[0].cluster_name;
             var paid_record_suffix = paid_record_file_result[0].suffix;
             var file_name = paid_record_cluster_name + '.' + paid_record_suffix;
@@ -216,7 +216,7 @@ function PaidRecord(all_paid, sale_contract_code, title_object, paid_record_cont
         paid_record_list += paid_record + ";"; 
       }    
     }
-    console.log(paid_record_list);
+    //console.log(paid_record_list);
     if ("" == amount) {
       alert("请输入收款金额");
       return;
@@ -239,7 +239,7 @@ function PaidRecord(all_paid, sale_contract_code, title_object, paid_record_cont
       add_paid_record_param_data["cluster_list"] = paid_record_list;
     }
     var paid_record_add = ajax_assistant(add_paid_record_url, add_paid_record_param_data, false, true, false);
-    console.log(paid_record_add);
+    //console.log(paid_record_add);
     if (1 == paid_record_add.status) {
       $("#paid_record_add_modle_prop").modal("hide");
       this.paid_record_server_data_cover();
@@ -306,7 +306,7 @@ function PaidRecord(all_paid, sale_contract_code, title_object, paid_record_cont
   };
   
   this.paid_record_edit_data = function(uuid) {
-    console.log(uuid);
+    //console.log(uuid);
     var amount = $("#paid_record_edit_modal .amount").val();//付款金额
     var paid_datetime = $("#paid_record_edit_modal .paid_datetime").val() + ' 00:00:00';//付款时间
     var paid_record_li = $("#paid_record_edit_attch ul").children("li");
@@ -318,7 +318,7 @@ function PaidRecord(all_paid, sale_contract_code, title_object, paid_record_cont
         paid_record_list += paid_record + ";"; 
       }    
     }
-    console.log(paid_record_list);
+    //console.log(paid_record_list);
     if ("" == amount) {
       alert("请输入收款金额");
       return;
@@ -342,7 +342,7 @@ function PaidRecord(all_paid, sale_contract_code, title_object, paid_record_cont
       edit_paid_record_param_data["newClusterList"] = paid_record_list;
     }
     var paid_record_edit = ajax_assistant(edit_paid_record_url, edit_paid_record_param_data, false, true, false);
-    console.log(paid_record_edit);
+    //console.log(paid_record_edit);
     if (1 == paid_record_edit.status) {
       $("#paid_record_edit_modal").modal("hide");
       this.paid_record_server_data_cover();
@@ -439,7 +439,7 @@ function PaidRecord(all_paid, sale_contract_code, title_object, paid_record_cont
     var delete_paid_record_param_data = {};
     delete_paid_record_param_data["idColumnValue"] = uuid;
     var org_structure_delete_paid_record= ajax_assistant(delete_paid_record_url, delete_paid_record_param_data, false, true, false);
-    console.log(org_structure_delete_paid_record);
+    //console.log(org_structure_delete_paid_record);
     if (1 == org_structure_delete_paid_record.status) {
       $("#paid_record_delete_modal").modal("hide");
       this.paid_record_server_data_cover();

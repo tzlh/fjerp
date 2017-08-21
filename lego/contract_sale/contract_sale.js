@@ -172,7 +172,7 @@ function contract_sale_server_data_cover(contract_type) {
         //物流合同
         add_sale_object_list(contract_logistics_list, contract_sale_result[i].contract_code, new ContractLogistics(contract_sale_result[i].contract_code,"#contract_logistics_content" + contract_sale_result[i].uuid));
         //车船信息
-        add_sale_object_list(vehicle_information_list, contract_sale_result[i].contract_code, new VehicleInformation(contract_sale_result[i].contract_code,"#vehicle_information_content" + contract_sale_result[i].uuid));
+        add_sale_object_list(vehicle_information_list, contract_sale_result[i].contract_code, new VehicleInformation(contract_sale_result[i].contract_code,"#vehicle_information_content" + contract_sale_result[i].uuid, contract_sale_result[i].warehouse_uuid));
         //销售结算函
         add_sale_object_list(settlement_bill_sale_list, contract_sale_result[i].contract_code, new SettlementBillSale(contract_sale_result[i].contract_code, contract_sale_result[i].uuid,"#settlement_bill_sale_content" + contract_sale_result[i].uuid, contract_sale_result[i].type, "2"));
         //发票信息

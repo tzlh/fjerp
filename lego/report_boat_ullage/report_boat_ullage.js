@@ -61,7 +61,7 @@ function reportBoatUllage(vehicle_information_uuid, report_boat_ullage_content_i
         $(this.report_boat_ullage_content_id).find("#report_boat_ullage_list tbody").html(report_boat_ullage_tbody);  
       }
     } else {
-      $(this.report_boat_ullage_content_id).find("#report_boat_ullage_list tbody").html("tr><td colspan='2' align='center'>没数据</td></tr>");
+      $(this.report_boat_ullage_content_id).find("#report_boat_ullage_list tbody").html("<tr><td colspan='2' align='center'>没数据</td></tr>");
     }
   };
   
@@ -73,14 +73,14 @@ function reportBoatUllage(vehicle_information_uuid, report_boat_ullage_content_i
     var get_report_boat_ullage_param_data = {};
     get_report_boat_ullage_param_data["vehicle_information_uuid"] = this.vehicle_information_uuid;
     var report_boat_ullage_get= ajax_assistant(get_report_boat_ullage_url, get_report_boat_ullage_param_data, false, true, false);
-    console.log(report_boat_ullage_get);
+    //console.log(report_boat_ullage_get);
     if (1 == report_boat_ullage_get.status) {
       if (0 == report_boat_ullage_get.count) {
         this.report_boat_ullage_data = {};
         this.count = 0;
       } else {
         var result = JSON.parse(report_boat_ullage_get.result);
-        console.log(result);
+        //console.log(result);
         var report_boat_ullage_data_arr = new Array();
         for (var i = 0; i < result.length; i++) {
           count_one = Number(result[i].quantity);
@@ -96,15 +96,15 @@ function reportBoatUllage(vehicle_information_uuid, report_boat_ullage_content_i
    * 获取船板单详情
    */
   this.report_boat_ullage_get_letter = function(uuid) {
-    console.log(uuid);
+    //console.log(uuid);
     var get_report_boat_ullage_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getBoatUllageReport";
     var get_report_boat_ullage_param_data = {};
     get_report_boat_ullage_param_data["uuid"] = uuid;
     var report_boat_ullage_get= ajax_assistant(get_report_boat_ullage_url, get_report_boat_ullage_param_data, false, true, false);
-    console.log(report_boat_ullage_get);
+    //console.log(report_boat_ullage_get);
     if (1 == report_boat_ullage_get.status) {
       var result = JSON.parse(report_boat_ullage_get.result);
-      console.log(result);
+      //console.log(result);
       this.current_report_boat_ullage_data = {
         "quantity": result[0].quantity,
         "uuid": result[0].uuid,
@@ -114,17 +114,17 @@ function reportBoatUllage(vehicle_information_uuid, report_boat_ullage_content_i
       var cluster_list_all = result[0].cluster_list;
       if (null != cluster_list_all) {
         var cluster_list = result[0].cluster_list.substring(0,result[0].cluster_list.lastIndexOf(";")).split(";");
-        console.log(cluster_list);
+        //console.log(cluster_list);
         var report_boat_ullage_file = "";
         for (var j = 0; j < cluster_list.length; j++) {
           var enterprise_management_get_report_boat_ullage_file_url = PROJECT_PATH + "lego/lego_storage?servletName=getFileByClusterName";
           var enterprise_management_get_report_boat_ullage_file_param_data = {};
           enterprise_management_get_report_boat_ullage_file_param_data["cluster_name"] = cluster_list[j];
           var enterprise_management_get_report_boat_ullage_file = ajax_assistant(enterprise_management_get_report_boat_ullage_file_url, enterprise_management_get_report_boat_ullage_file_param_data, false, true, false);
-          console.log(enterprise_management_get_report_boat_ullage_file);
+          //console.log(enterprise_management_get_report_boat_ullage_file);
           if (1 == enterprise_management_get_report_boat_ullage_file.status) {
             var report_boat_ullage_file_result = JSON.parse(enterprise_management_get_report_boat_ullage_file.result);
-            console.log(report_boat_ullage_file_result);
+            //console.log(report_boat_ullage_file_result);
             var report_boat_ullage_cluster_name = report_boat_ullage_file_result[0].cluster_name;
             var report_boat_ullage_suffix = report_boat_ullage_file_result[0].suffix;
             var file_name = report_boat_ullage_cluster_name + '.' + report_boat_ullage_suffix;
@@ -192,7 +192,7 @@ function reportBoatUllage(vehicle_information_uuid, report_boat_ullage_content_i
        report_boat_ullage_list += report_boat_ullage + ";"; 
       }    
     }
-    console.log(report_boat_ullage_list);
+    //console.log(report_boat_ullage_list);
     if ("" == quantity) {
       alert("请输入数量！");
       return;
@@ -210,7 +210,7 @@ function reportBoatUllage(vehicle_information_uuid, report_boat_ullage_content_i
       add_report_boat_ullage_param_data["cluster_list"] = report_boat_ullage_list;
     }
     var report_boat_ullage_add = ajax_assistant(add_report_boat_ullage_url, add_report_boat_ullage_param_data, false, true, false);
-    console.log(report_boat_ullage_add);
+    //console.log(report_boat_ullage_add);
     if (1 == report_boat_ullage_add.status) {
       $("#report_boat_ullage_add_modal").modal("hide");
       this.report_boat_ullage_clear_raw_data(this.vehicle_information_uuid);
@@ -265,7 +265,7 @@ function reportBoatUllage(vehicle_information_uuid, report_boat_ullage_content_i
   };
   
   this.report_boat_ullage_edit_data = function(uuid) {
-    console.log(uuid);
+    //console.log(uuid);
     var quantity = $("#report_boat_ullage_edit_modal .quantity").val();
     var report_boat_ullage_li = $("#report_boat_ullage_edit_attch ul").children("li");
     var report_boat_ullage_list = "";
@@ -276,7 +276,7 @@ function reportBoatUllage(vehicle_information_uuid, report_boat_ullage_content_i
         report_boat_ullage_list += report_boat_ullage + ";"; 
       }    
     }
-    console.log(report_boat_ullage_list);
+    //console.log(report_boat_ullage_list);
     if ("" == quantity) {
       alert("请输入数量！");
       return;
@@ -295,7 +295,7 @@ function reportBoatUllage(vehicle_information_uuid, report_boat_ullage_content_i
       edit_report_boat_ullage_param_data["newClusterList"] = report_boat_ullage_list;
     }
     var report_boat_ullage_edit= ajax_assistant(edit_report_boat_ullage_url, edit_report_boat_ullage_param_data, false, true, false);
-    console.log(report_boat_ullage_edit);
+    //console.log(report_boat_ullage_edit);
     if (1 == report_boat_ullage_edit.status) {
       $("#report_boat_ullage_edit_modal").modal("hide");
       this.report_boat_ullage_clear_raw_data(this.vehicle_information_uuid);
@@ -380,7 +380,7 @@ function reportBoatUllage(vehicle_information_uuid, report_boat_ullage_content_i
     var delete_report_boat_ullage_param_data = {};
     delete_report_boat_ullage_param_data["idColumnValue"] = uuid;
     var org_structure_delete_report_boat_ullage= ajax_assistant(delete_report_boat_ullage_url, delete_report_boat_ullage_param_data, false, true, false);
-    console.log(org_structure_delete_report_boat_ullage);
+    //console.log(org_structure_delete_report_boat_ullage);
     if (1 == org_structure_delete_report_boat_ullage.status) {
       $("#report_boat_ullage_delete_modal").modal("hide");
       this.report_boat_ullage_clear_raw_data(this.vehicle_information_uuid);

@@ -89,13 +89,13 @@ function godownExit(vehicle_information_uuid, godown_exit_content_id) {
     var get_godown_exit_param_data = {};
     get_godown_exit_param_data["vehicle_information_uuid"] = this.vehicle_information_uuid;
     var godown_exit_get= ajax_assistant(get_godown_exit_url, get_godown_exit_param_data, false, true, false);
-    console.log(godown_exit_get);
+    // console.log(godown_exit_get);
     if (1 == godown_exit_get.status) {
       if (0 == godown_exit_get.count) {
         this.godown_exit_data = {};
       } else {
         var result = JSON.parse(godown_exit_get.result);
-        console.log(result);
+        // console.log(result);
         var godown_exit_data_arr = new Array();
         for (var i = 0; i < result.length; i++) {
           var godown_exit_plan_quantity_count_one = Number(result[i].plan_quantity);
@@ -115,32 +115,32 @@ function godownExit(vehicle_information_uuid, godown_exit_content_id) {
    * 获取出库单详情
    */
   this.godown_exit_get_letter = function(uuid) {
-    console.log(uuid);
+    // console.log(uuid);
     var get_godown_exit_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getGodownExit";
     var get_godown_exit_param_data = {};
     get_godown_exit_param_data["uuid"] = uuid;
     var godown_exit_get= ajax_assistant(get_godown_exit_url, get_godown_exit_param_data, false, true, false);
-    console.log(godown_exit_get);
+    // console.log(godown_exit_get);
     if (1 == godown_exit_get.status) {
       var result = JSON.parse(godown_exit_get.result);
-      console.log(result);
+      // console.log(result);
       var exit_datetime = result[0].exit_datetime.substring(0,result[0].exit_datetime.indexOf(" "));
       this.current_godown_exit_data = {"plan_quantity": result[0].plan_quantity,"actual_quantity": result[0].actual_quantity,"tare_weight": result[0].tare_weight,"gross_weight": result[0].gross_weight,"exit_datetime": exit_datetime,"uuid": result[0].uuid,"vehicle_information_uuid": result[0].vehicle_information_uuid};
       var godown_exit_file_arr = new Array();
       var cluster_list_all = result[0].cluster_list;
       if (null != cluster_list_all) {
         var cluster_list = result[0].cluster_list.substring(0,result[0].cluster_list.lastIndexOf(";")).split(";");
-        console.log(cluster_list);
+        // console.log(cluster_list);
         var godown_exit_file = "";
         for (var j = 0; j < cluster_list.length; j++) {
           var get_godown_exit_file_url = PROJECT_PATH + "lego/lego_storage?servletName=getFileByClusterName";
           var get_godown_exit_file_param_data = {};
           get_godown_exit_file_param_data["cluster_name"] = cluster_list[j];
           var get_godown_exit_file = ajax_assistant(get_godown_exit_file_url, get_godown_exit_file_param_data, false, true, false);
-          console.log(get_godown_exit_file);
+          // console.log(get_godown_exit_file);
           if (1 == get_godown_exit_file.status) {
             var godown_exit_file_result = JSON.parse(get_godown_exit_file.result);
-            console.log(godown_exit_file_result);
+            // console.log(godown_exit_file_result);
             var godown_exit_cluster_name = godown_exit_file_result[0].cluster_name;
             var godown_exit_suffix = godown_exit_file_result[0].suffix;
             var file_name = godown_exit_cluster_name + '.' + godown_exit_suffix;
@@ -279,7 +279,7 @@ function godownExit(vehicle_information_uuid, godown_exit_content_id) {
         return;
       }
     }
-    console.log(godown_exit_list);
+    // console.log(godown_exit_list);
     if ("" == tare_weight) {
       alert("请输入皮重！");
       return;
@@ -314,7 +314,7 @@ function godownExit(vehicle_information_uuid, godown_exit_content_id) {
       add_godown_exit_param_data["cluster_list"] = godown_exit_list;
     }
     var godown_exit_add = ajax_assistant(add_godown_exit_url, add_godown_exit_param_data, false, true, false);
-    console.log(godown_exit_add);
+    // console.log(godown_exit_add);
     if (1 == godown_exit_add.status) {
       $("#godown_exit_add_modal").modal("hide");
       this.godown_exit_clear_raw_data(this.vehicle_information_uuid);
@@ -450,7 +450,7 @@ function godownExit(vehicle_information_uuid, godown_exit_content_id) {
         return;
       }
     }
-    console.log(godown_exit_list);
+    // console.log(godown_exit_list);
     if ("" == tare_weight) {
       alert("请输入皮重！");
       return;
@@ -486,7 +486,7 @@ function godownExit(vehicle_information_uuid, godown_exit_content_id) {
       edit_godown_exit_param_data["newClusterList"] = godown_exit_list;
     }
     var godown_exit_edit = ajax_assistant(edit_godown_exit_url, edit_godown_exit_param_data, false, true, false);
-    console.log(godown_exit_edit);
+    // console.log(godown_exit_edit);
     if (1 == godown_exit_edit.status) {
       $("#godown_exit_edit_modal").modal("hide");
       this.godown_exit_clear_raw_data(this.vehicle_information_uuid);
@@ -621,7 +621,7 @@ function godownExit(vehicle_information_uuid, godown_exit_content_id) {
     delete_godown_exit_param_data["idColumnValue"] = uuid;
     delete_godown_exit_param_data["vehicle_information_uuid"] = this.vehicle_information_uuid;
     var godown_exit_delete_godown_exit= ajax_assistant(delete_godown_exit_url, delete_godown_exit_param_data, false, true, false);
-    console.log(godown_exit_delete_godown_exit);
+    // console.log(godown_exit_delete_godown_exit);
     if (1 == godown_exit_delete_godown_exit.status) {
       $("#godown_exit_delete_modal").modal("hide");
       this.godown_exit_clear_raw_data(this.vehicle_information_uuid);
