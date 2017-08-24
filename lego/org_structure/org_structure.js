@@ -306,7 +306,7 @@ function org_structure_add_enterprise_data_func() {
     alert("请输入企业名称！");
     return;
   } else {
-    if(null == enterprise_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)){
+    if(null == enterprise_name.match(/^.{2,32}$/)){
       alert("企业名称格式错误！");
       return;
     }
@@ -364,7 +364,7 @@ function org_structure_add_department_data_func(parent_uuid) {
     alert("请输入部门名称！");
     return;
   } else {
-    if(null == department_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)){
+    if(null == department_name.match(/^.{2,32}$/)){
       alert("部门名称格式错误！");
       return;
     }
@@ -433,7 +433,7 @@ function org_structure_edit_enterprise_data_func(uuid) {
     alert("请输入企业名称！");
     return;
   } else {
-    if(null == enterprise_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)){
+    if(null == enterprise_name.match(/^.{2,32}$/)){
       alert("企业名称格式错误！");
       return;
     }
@@ -496,7 +496,7 @@ function org_structure_edit_department_data_func(uuid, parent_uuid) {
     alert("请输入部门名称！");
     return;
   } else {
-    if(null == department_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)){
+    if(null == department_name.match(/^.{2,32}$/)){
       alert("部门名称格式错误！");
       return;
     }
