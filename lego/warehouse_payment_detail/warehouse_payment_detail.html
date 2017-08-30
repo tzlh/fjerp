@@ -16,12 +16,14 @@
   <script src = "../../plugin/jquery_timepicker_addon/1.6.3/init.js"></script>
   <script src = "../../js/configure.js" type = "text/javascript" charset = "utf-8"></script>
   <script src = "../../js/toolkit.js" type = "text/javascript" charset = "utf-8"></script>
+  <script src = "../check_login/check_login.js"></script>
   <script src = "warehouse_payment_detail.js" type = "text/javascript" charset = "utf-8"></script>
   <script type = "text/javascript">
   $(document).ready(function() {
-    warehouse_payment_detail_content("#warehouse_payment_detail_content");
+    check_login();
     //日历插件
     widget_datepicker_init();
+    warehouse_payment_detail_content("#warehouse_payment_detail_content");
     // 初始化
     warehouse_payment_detail_clear_raw_data();
     // 库区服务器数据
@@ -57,6 +59,7 @@
       calc_data(new Number(loan_capital), start_sign_datetime, end_sign_datetime);
       // 赋值
       warehouse_payment_detail_fill_variable_data();
+      calc_total_data();
       
     });
   }); 
@@ -64,6 +67,84 @@
   <title></title>
 </head>
 <body>
-  <div class = "row" id = "warehouse_payment_detail_content"></div>
+  <div class = "row" id = "warehouse_payment_detail_content">
+     <div class = "panel panel-default panel-primary">
+       <div class = "panel-heading">搜索条件</div>
+       <div class = "panel-body" style="padding-bottom: 0;">
+         <div class = "row">
+           <div class="col-md-10">
+             <div class="row">
+              <div class = "col-md-6">
+                 <div class="input-group">
+                   <span class="input-group-addon">原始贷款资金</span>
+                   <input type="text" class="form-control" id = "warehouse_payment_detail_loan_capital" value = "91260059.73" aria-label="Amount (to the nearest dollar)">
+                   <span class="input-group-addon">元</span>
+                 </div>
+               </div>
+               <div class = "col-md-6">
+                 <div class="input-group pull-left">
+                   <span class="input-group-addon" id="">选择库区</span>
+                   <select class="form-control" id="warehouse_payment_detail_warehouse">
+                     <option class="">--请选择--</option>
+                     <option value="1">库区1</option>
+                     <option value="2">库区2</option>
+                     <option value="3">库区3</option>
+                   </select>
+                 </div>
+               </div>
+             </div>
+            <div class="row warehouse_payment_detail_mt15">
+              <div class = "col-md-6">
+                 <div class="input-group">
+                   <span class="input-group-addon">开始时间</span>
+                   <input type="text" class="form-control widget_datepicker" id = "warehouse_payment_detail_start_sign_datetime" value = "" aria-label="Amount (to the nearest dollar)">
+                   <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>
+                 </div>
+               </div>
+               <div class = "col-md-6">
+                 <div class="input-group">
+                   <span class="input-group-addon">结束时间</span>
+                   <input type="text" class="form-control widget_datepicker" id = "warehouse_payment_detail_end_sign_datetime" value = "" aria-label="Amount (to the nearest dollar)">
+                   <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>
+                 </div>
+               </div>
+            </div>
+           </div>
+           <div class="col-md-2">
+            <button class="btn btn-primary" type="button" id = "warehouse_payment_detail_search"> 
+               <span class="">搜索</span> 
+             </button> 
+           </div>
+         </div>
+       </div>
+     </div>
+     <div class = "panel panel-default panel-primary">
+       <div class = "panel-heading text-left">明细记录</div>
+       <div class = "panel-body warehouse_payment_detail_pb0">
+         <div class = "col-md-12">
+           <table  class = "table warehouse_payment_detail_mt20" id = "warehouse_payment_detail_list">
+             <thead>
+               <tr>
+                 <th>日期</th>
+                 <th>已收货款</th>
+                 <th>已付货款</th>
+                 <th>余额</th>
+                 <th>利息</th>
+               </tr>
+             </thead>
+             <tbody id = "warehouse_payment_detail_list_box">
+               <tr>
+                 <td>2017-02-02</td>
+                 <td>2000000</td>
+                 <td>2000000</td>
+                 <td>2000000</td>
+                 <td>2000000</td>
+               </tr>
+             </tbody>
+           </table>
+         </div>
+       </div>
+     </div>
+  </div>
 </body>
 </html>

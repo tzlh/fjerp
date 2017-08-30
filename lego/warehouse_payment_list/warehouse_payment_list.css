@@ -17,6 +17,7 @@
 }
 #warehouse_payment_detail_list tbody td{
   text-align: center;
+  vertical-align: middle;
 }
 #warehouse_payment_detail_list thead th{
   text-align: center;

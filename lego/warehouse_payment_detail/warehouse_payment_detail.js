@@ -1,18 +1,22 @@
-/**
+/*
  * @author yangyongxia
  */
-// 自运营企业变量
-var owner_enterprise_uuid_list = null;
+var enterprise_uuid_list = new Array();
 
-// 合同数据变量
-var contact_search_list = null;
+var contract_list = new Array(); 
 
 var warehouse_payment_detail_data = [
-  {"sign_datetime": "2017-02-21", "receipt": 2000000, "payment": 2000000, "capital_occupying": 200000, "interest": 25000},
-  {"sign_datetime": "2017-02-21", "receipt": 2000000, "payment": 2000000, "capital_occupying": 200000, "interest": 25000},
-  {"sign_datetime": "2017-02-21", "receipt": 2000000, "payment": 2000000, "capital_occupying": 200000, "interest": 25000},
-  {"sign_datetime": "2017-02-21", "receipt": 2000000, "payment": 2000000, "capital_occupying": 200000, "interest": 25000},
-];
+  {"sign_datetime": "2017-09-10","payment": 20000, "receipt": 2000,"capital_occupying": 200,"interest": 200},
+  {"sign_datetime": "2017-09-11","payment": 20000, "receipt": 2000,"capital_occupying": 200,"interest": 200},
+  {"sign_datetime": "2017-09-12","payment": 20000, "receipt": 2000,"capital_occupying": 200,"interest": 200},
+  {"sign_datetime": "2017-09-13","payment": 20000, "receipt": 2000,"capital_occupying": 200,"interest": 200},
+  {"sign_datetime": "2017-09-14","payment": 20000, "receipt": 2000,"capital_occupying": 200,"interest": 200},
+  {"sign_datetime": "2017-09-15","payment": 20000, "receipt": 2000,"capital_occupying": 200,"interest": 200},
+  {"sign_datetime": "2017-09-17","payment": 20000, "receipt": 2000,"capital_occupying": 200,"interest": 200},
+  {"sign_datetime": "2017-09-18","payment": 20000, "receipt": 2000,"capital_occupying": 200,"interest": 200},
+  {"sign_datetime": "2017-09-19","payment": 20000, "receipt": 2000,"capital_occupying": 200,"interest": 200},
+  {"sign_datetime": "2017-09-19","payment": 20000, "receipt": 2000,"capital_occupying": 200,"interest": 200},
+]
 
 var  warehouse_payment_detail_work_area_data = {"data": [
   {"work_area_name": "库区1","work_area_uuid": "1"},
@@ -24,9 +28,11 @@ var  warehouse_payment_detail_work_area_data = {"data": [
   {"work_area_name": "库区7","work_area_uuid": "7"}
 ]};
 
+/* *
+ * 初始化
+*/
 function warehouse_payment_detail_clear_raw_data() {
-  $("#warehouse_payment_detail_list thead").html('<tr><td colspan = "5" align = "center">请选择查询条件</td></tr>');
-  $("#warehouse_payment_detail_list_box").html("");
+  $("#warehouse_payment_detail_list_box").html('<tr><td colspan = "5" align = "center">请选择查询条件</td></tr>');
   $("#warehouse_payment_detail_warehouse").html("");
 }
 
@@ -39,169 +45,48 @@ function warehouse_payment_detail_fill_variable_data_warehouse() {
     $("#warehouse_payment_detail_warehouse").html(work_area_select);
   }
 }
+
+/**
+ * 赋值
+*/
 function warehouse_payment_detail_fill_variable_data() {
-  if (isJsonObjectHasData(warehouse_payment_detail_data)) {
-    var content_thead = 
-      '<tr>'+
-        '<th>日期</th>'+
-        '<th>收款</th>'+
-        '<th>付款</th>'+
-        '<th>占用资金</th>'+
-        '<th>资金利息</th>'+
-      '</tr>';
+  if(isJsonObjectHasData(warehouse_payment_detail_data)) { 
     var content = "";
-    for (var i = 0; i < warehouse_payment_detail_data.length; i++){
-      content += 
-        '<tr>'+
-          '<td class = "warehouse_payment_detail_ta_c">' + warehouse_payment_detail_data[i].sign_datetime + '</td>'+
-          '<td>' + warehouse_payment_detail_data[i].receipt + '</td>'+
-          '<td>' + warehouse_payment_detail_data[i].payment + '</td>'+
-          '<td>' + warehouse_payment_detail_data[i].capital_occupying + '</td>'+
-          '<td>' + warehouse_payment_detail_data[i].interest + '</td>'+
-        '</tr>';
-      $("#warehouse_payment_detail_list_box").html(content);
-      $("#warehouse_payment_detail_list thead").html(content_thead);
-    } 
-  } else {
-    $("#warehouse_payment_detail_list_box").html("<tr><td  colspan = '5' align='center'>没数据</td></tr>");
+    for(var i = 0; i < warehouse_payment_detail_data.length; i++) { 
+     content += 
+       '<tr>'+
+       ' <td>' + warehouse_payment_detail_data[i].sign_datetime + '</td>'+
+       ' <td>' + warehouse_payment_detail_data[i].receipt + '</td>'+
+       ' <td>' + warehouse_payment_detail_data[i].payment + '</td>'+
+       ' <td>' + warehouse_payment_detail_data[i].capital_occupying + '</td>'+
+       ' <td>' + warehouse_payment_detail_data[i].interest + '</td>'+
+       '</tr>';
+    }
+    $("#warehouse_payment_detail_list_box").html(content);
   }
 }
 
-/**
- * 获取自运营企业
- */
-function warehouse_payment_detail_get_enterprise() {
-  var get_enterprise_url = PROJECT_PATH + "lego/lego_crm?servletName=getEnterpriseInformation";
-  var get_enterprise_param_data = {};
-  get_enterprise_param_data["type"] = "1";
-  var get_enterprise = ajax_assistant(get_enterprise_url, get_enterprise_param_data, false, true, false);
-  if(1 == get_enterprise.status) {
-    var result = JSON.parse(get_enterprise.result);
-    owner_enterprise_uuid_list = new Array();
-    for (var i = 0; i < result.length; i++) {
-      owner_enterprise_uuid_list.push(result[i].uuid);
-    }
-  } else {
-    alert("企业信息获取失败");
+/* *
+ * 合计
+*/ 
+function calc_total_data() {
+  var payment = 0;
+  var receipt = 0;
+  var interest = 0;
+  for(var i = 0; i < warehouse_payment_detail_data.length; i++) {
+    payment += warehouse_payment_detail_data[i].payment; 
+    receipt += warehouse_payment_detail_data[i].receipt; 
+    interest += warehouse_payment_detail_data[i].interest; 
   }
-}
-
-/**
- * 获取合同
- */
-function warehouse_payment_detail_get_contract(warehouse, start_sign_datetime, end_sign_datetime) {
-  var get_contract_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getContractTrade";
-  var get_contract_param_data = {};
-  get_contract_param_data["warehouse_uuid"] = warehouse;
-  get_contract_param_data["start_sign_datetime"] = start_sign_datetime;
-  get_contract_param_data["end_sign_datetime"] = end_sign_datetime;
-  var get_contract = ajax_assistant(get_contract_url, get_contract_param_data, false, true, false);
-   //console.log(get_contract);
-  if(1 == get_contract.status) {
-    var result = JSON.parse(get_contract.result);
-    contact_search_list = new Array();
-    for (var i = 0; i < result.length; i++) {
-      contact_search_list.push({
-        "uuid": result[i].uuid,
-        "buyer_uuid": result[i].buyer_uuid,
-        "seller_uuid": result[i].seller_uuid,
-        "contract_code": result[i].contract_code,
-        "total": (result[i].price * result[i].quantity),
-        "sign_datetime": result[i].sign_datetime,
-        "type": result[i].type,
-      });
-    }
-    // //console.log(contact_search_list);
-  } else {
-    alert("合同获取失败");
-  }
-}
-
-// 根据uuid获取合同的json对象
-function get_contract_uuid(uuid) {
-    for (var i = 0; i < contact_search_list.length; i++) {
-      if (contact_search_list[i].uuid == uuid) {
-        return contact_search_list[i];
-      }
-    }
-}
-
-/**
- * 计算数据
- */
-function calc_data(loan_capital, start_sign_datetime, end_sign_datetime) {
-  warehouse_payment_detail_data = new Array();
-  // 根据开始时间和结束时间填充json数组中对象的sign_datetime
-  for (var i = new Date(start_sign_datetime); i < new Date(end_sign_datetime); i.setDate(i.getDate() + 1)) {
-    var timestamp = i.getFullYear() + "-" + (i.getMonth() + 1) + "-" + i.getDate();
-    warehouse_payment_detail_data.push({
-      "sign_datetime": timestamp,
-      "receipt": 0,
-      "payment": 0,
-      "capital_occupying": 0,
-      "interest": 0
-    });
-  }
-  // 自营企业的所有合同
-  var owner_enterpirse_contract = new Array();
-  // 找到合同中所有销售方为“自营企业”的数据，填充收款数据receipt
-  for (var i = 0; i < contact_search_list.length; i++) {
-    for (var j = 0; j < owner_enterprise_uuid_list.length; j++) {
-      if (contact_search_list[i].buyer_uuid == owner_enterprise_uuid_list[j]) {
-        owner_enterpirse_contract.push(contact_search_list[i].uuid);
-        break;
-      }
-      if (contact_search_list[i].seller_uuid == owner_enterprise_uuid_list[j]) {
-        owner_enterpirse_contract.push(contact_search_list[i].uuid);
-        break;
-      }
-    }
-  }
-  // 找到自营企业合同数据中，所有销售合同且添加至receipt，所有采购合同且添加至payment
-  for (var i = 0; i < owner_enterpirse_contract.length; i++) {
-    var contract_datetime = new Date(get_contract_uuid(owner_enterpirse_contract[i]).sign_datetime);
-    //console.log(contract_datetime.toLocaleDateString());
-    for (var j = 0; j < warehouse_payment_detail_data.length; j++) {
-      var display_datetime = new Date(warehouse_payment_detail_data[j].sign_datetime);
-      //console.log(display_datetime.toLocaleDateString());
-      if ((display_datetime.getFullYear() == contract_datetime.getFullYear()) && (display_datetime.getMonth() == contract_datetime.getMonth()) && (display_datetime.getDate() == contract_datetime.getDate())) {
-        // 时间节点相同的情况下
-        if (1 == get_contract_uuid(owner_enterpirse_contract[i]).type) {
-          warehouse_payment_detail_data[j]["receipt"] += get_contract_uuid(owner_enterpirse_contract[i]).total;
-        } else if (0 == get_contract_uuid(owner_enterpirse_contract[i]).type) {
-          warehouse_payment_detail_data[j]["payment"] += get_contract_uuid(owner_enterpirse_contract[i]).total;
-        }
-      }
-    }
-  }
-  // 计算“占用资金”和“利息”
-  for (var i = 0; i < warehouse_payment_detail_data.length; i++) {
-    if (0 == i) {
-      warehouse_payment_detail_data[i]["capital_occupying"] = loan_capital;
-    } else {
-      warehouse_payment_detail_data[i]["capital_occupying"] = new Number((warehouse_payment_detail_data[i - 1]["capital_occupying"] + warehouse_payment_detail_data[i]["receipt"] - warehouse_payment_detail_data[i]["payment"]).toFixed(2));
-    }
-    warehouse_payment_detail_data[i]["interest"] = new Number((warehouse_payment_detail_data[i]["capital_occupying"] * 0.1 / 12 / 30).toFixed(2));
-  }
-  // 增加“合计”
-  var receipt_total = 0;
-  var payment_total = 0;
-  var interest_total = 0;
-  for (var i = 0; i < warehouse_payment_detail_data.length; i++) {
-    receipt_total += new Number(warehouse_payment_detail_data[i]["receipt"].toFixed(2));
-    payment_total += new Number(warehouse_payment_detail_data[i]["payment"].toFixed(2));
-    interest_total += new Number(warehouse_payment_detail_data[i]["interest"].toFixed(2));
-  }
-  receipt_total = new Number(receipt_total.toFixed(2));
-  payment_total = new Number(payment_total.toFixed(2));
-  interest_total = new Number(interest_total.toFixed(2));
-  warehouse_payment_detail_data.push({
-      "sign_datetime": "合计",
-      "receipt": receipt_total,
-      "payment": payment_total,
-      "capital_occupying": "",
-      "interest": interest_total
-    });
+  var content = 
+    '<tr>'+
+    ' <td>合计</td>'+
+    ' <td>' + receipt + '</td>'+
+    ' <td>' + payment + '</td>'+
+    ' <td>&nbsp;</td>'+
+    ' <td>' + interest + '</td>'+
+    '</tr>';
+  $("#warehouse_payment_detail_list_box").append(content);
 }
 
 /**
@@ -228,6 +113,133 @@ function warehouse_payment_detail_get_warehouse() {
     alert("获取库区失败");
     return;
   } 
+}
+
+
+/**
+ * 获取自运营企业
+*/
+function warehouse_payment_detail_get_enterprise() {
+  var get_enterprise_url = PROJECT_PATH + "lego/lego_crm?servletName=getEnterpriseInformation";
+  var get_enterprise_param_data = {};
+  get_enterprise_param_data["type"] = "1";
+  var get_enterprise = ajax_assistant(get_enterprise_url, get_enterprise_param_data, false, true, false);
+  if(1 == get_enterprise.status) {
+    var result = JSON.parse(get_enterprise.result);
+    console.log(result);
+    enterprise_uuid_list = new Array();
+    for (var i = 0; i < result.length; i++) {
+      enterprise_uuid_list.push({
+        "uuid": result[i].uuid,
+      });
+    }
+  } else {
+    alert("企业信息获取失败");
+  }
+}
+
+/**
+ * 获取合同
+*/
+function warehouse_payment_detail_get_contract(warehouse_uuid, start_sign_datetime, end_sign_datetime) {
+  var get_contract_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getContractTrade";
+  var get_contract_param_data = {};
+  get_contract_param_data["warehouse_uuid"] = warehouse_uuid;
+  get_contract_param_data["start_sign_datetime"] = start_sign_datetime;
+  get_contract_param_data["end_sign_datetime"] = end_sign_datetime;
+  var get_contract = ajax_assistant(get_contract_url, get_contract_param_data, false, true, false);
+  if(1 == get_contract.status) {
+    var result = JSON.parse(get_contract.result);
+    console.log(result);
+    for (var i = 0; i < result.length; i++) {
+      contract_list.push({
+        "buyer_uuid": result[i].buyer_uuid,
+        "seller_uuid": result[i].seller_uuid,
+        "total": (result[i].price * result[i].quantity),
+        "uuid": result[i].uuid,
+        "type": result[i].type,
+        "sign_datetime": result[i].sign_datetime
+      });
+    }
+  } else {
+    alert("合同获取失败");
+  }
+}
+
+/** 
+ * 根据uuid获取合同信息
+*/
+function warehouse_payment_detail_get_contract_info(uuid) {
+  for (var i = 0; i < contract_list.length; i++) {
+    if (uuid == contract_list[i].uuid) {
+      return contract_list[i];
+    }
+  }
+}
+
+/*
+ * 开始计算数据
+*/
+function calc_data(loan_capital, start_sign_datetime, end_sign_datetime) {
+  warehouse_payment_detail_data = new Array();
+  for (var i = new Date(start_sign_datetime); i < new Date(end_sign_datetime); i.setDate(i.getDate() + 1)) {
+    var sign_datetime = i.getFullYear() + '-' + (i.getMonth() + 1) + '-' + i.getDate();
+    warehouse_payment_detail_data.push({
+      "sign_datetime": sign_datetime,
+      "payment": 0,
+      "receipt": 0,
+      "capital_occupying": 0,
+      "interest": 0           
+    })  
+  }
+  var enterprise_contract = new Array();
+  //获取自营企业合同
+  for (var i = 0; i < contract_list.length; i++) {
+    for (var j = 0; j < enterprise_uuid_list.length; j++) {
+      //采购合同
+      if (contract_list[i].buyer_uuid == enterprise_uuid_list[j].uuid) {
+        enterprise_contract.push({
+         "uuid": contract_list[i].uuid
+        });      
+        break;
+      }
+      if (contract_list[i].seller_uuid == enterprise_uuid_list[j].uuid){
+        enterprise_contract.push({
+         "uuid": contract_list[i].uuid
+        });      
+        break;
+      }
+    } 
+  }
+  console.log(enterprise_contract);
+  for (var i = 0; i < warehouse_payment_detail_data.length; i++) {
+    for (var j = 0; j < enterprise_contract.length; j++) {
+      var sign_datetime = new Date(warehouse_payment_detail_data[i].sign_datetime);
+      var sign_datetime_server = new Date(warehouse_payment_detail_get_contract_info(enterprise_contract[j].uuid).sign_datetime);
+      if (sign_datetime.getFullYear() == sign_datetime_server.getFullYear() && sign_datetime.getMonth()+1 == sign_datetime_server.getMonth()+1 && sign_datetime.getDate() == sign_datetime_server.getDate()) {
+        //采购
+        if (0 == warehouse_payment_detail_get_contract_info(enterprise_contract[j].uuid).type) {
+          warehouse_payment_detail_data[i]["payment"] += warehouse_payment_detail_get_contract_info(enterprise_contract[j].uuid).total;
+          break;
+        }
+        //销售
+        if (1 == warehouse_payment_detail_get_contract_info(enterprise_contract[j].uuid).type) {
+          warehouse_payment_detail_data[i]["receipt"] += warehouse_payment_detail_get_contract_info(enterprise_contract[j].uuid).total;
+          break;
+        }
+      } 
+    }
+  }
+  //计算余额和利息
+  for (var i = 0; i < warehouse_payment_detail_data.length; i++) {
+    if (0 == i) {
+      warehouse_payment_detail_data[i]["capital_occupying"] = loan_capital;
+    } else {
+      warehouse_payment_detail_data[i]["capital_occupying"] = new Number((warehouse_payment_detail_data[i - 1]["capital_occupying"] + warehouse_payment_detail_data[i]["receipt"] - warehouse_payment_detail_data[i]["payment"]).toFixed(2));
+    }
+    warehouse_payment_detail_data[i]["interest"] = new Number((warehouse_payment_detail_data[i]["capital_occupying"] * 0.1 / 12 / 30).toFixed(2));
+  }
+
 }
 
 /**
