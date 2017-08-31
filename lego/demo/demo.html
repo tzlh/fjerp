@@ -13,34 +13,13 @@
     <script src = "../../js/toolkit.js"></script>
     <script src = "demo.js"></script>
     <script>
-class Human {
-
-  constructor(name = "yuanhang") {
-    this.name = name;
-  }
-
-  static kkk() {
-    return "kkkkkkkkkkkkkk";
-  }
-
-  getName() {
-    return this.name;
-  }
-}
-
-class kgf extends Human {
-  constructor(name) {
-    super(name);
-  }
-}
     $(document).ready(function() {
+      console.log(Toolkit.getUuid(true));
+      console.log(Toolkit.getUuid(false));
       // var h1 = new Human();
       // var h2 = new Human("wd");
       // console.log(h1.getName());
       // console.log(Human.kkk());
-      var k = new kgf("孔国法");
-      console.log(k.getName());
-      console.log(kgf.kkk());
       var config = {
           type: 'line',
           data: {

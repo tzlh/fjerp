@@ -1,6 +1,3 @@
-/**
- * @author yuanhang
- */
 "use strict";
 
 class Configure {
@@ -9,6 +6,7 @@ class Configure {
    *        1:返回内网测试服务器项目路径
    *        2:返回阿里云服务器项目路径
    *        其他: 返回null
+   *
    * @return 返回项目路径
    */
   static getProjectPath(code) {
