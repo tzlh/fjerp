@@ -37,10 +37,22 @@ var goods_confirm_letter_list = new Array();
 //   return null;
 // }
 
-function add_sale_object_list(list, contract_code, object) {
+/*function add_sale_object_list(list, contract_code, object) {
   if (null == get_sale_object_list(list, contract_code)) {
     list.push({"contract_code": contract_code, "object": object});
   }
+}*/
+
+function add_sale_object_list(list, contract_code, object) {
+  for (var i = 0; i < list.length; i++) {
+    if (contract_code == list[i].contract_code) {
+      debugger;
+      list.splice(0, i + 1);
+      list.push({"contract_code": contract_code, "object": object});
+      return;
+    }
+  }
+  list.push({"contract_code": contract_code, "object": object});
 }
 
 function get_sale_object_list(list, contract_code) {

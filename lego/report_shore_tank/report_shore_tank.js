@@ -45,7 +45,7 @@ function reportShoreTank(vehicle_information_uuid, report_shore_tank_content_id)
    * 赋值
    */
   this.report_shore_tank_fill_variable_data = function() {
-    $(this.report_shore_tank_content_id).find("#report_shore_tank_paid span.paid").html('商检单&nbsp;[总量&nbsp;:&nbsp;' + count + ']&nbsp;');
+    $(this.report_shore_tank_content_id).find("#report_shore_tank_paid span.paid").html('商检单&nbsp;[总量&nbsp;:&nbsp;' + count.toFixed(2) + ']&nbsp;');
     if (isJsonObjectHasData(this.report_shore_tank_data)) {
       var report_shore_tank_tbody = "";
       for (var i = 0; i < this.report_shore_tank_data.length; i++) {
@@ -283,7 +283,7 @@ function reportShoreTank(vehicle_information_uuid, report_shore_tank_content_id)
       alert("请输入数量！");
       return;
     } else {
-      if (null == quantity.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)) {
+      if (null == quantity.match(/^(\d+)(\.\d+)?$/)) {
         alert("数量格式不正确！");
         return;
       }

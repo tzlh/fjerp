@@ -45,7 +45,7 @@ function reportBoatUllage(vehicle_information_uuid, report_boat_ullage_content_i
    * 赋值
    */
   this.report_boat_ullage_fill_variable_data = function() {
-    $(this.report_boat_ullage_content_id).find("#report_boat_ullage_paid span.paid").html('船板单&nbsp;[总量&nbsp;:&nbsp;' + this.count + ']&nbsp;');
+    $(this.report_boat_ullage_content_id).find("#report_boat_ullage_paid span.paid").html('船板单&nbsp;[总量&nbsp;:&nbsp;' + this.count.toFixed(2) + ']&nbsp;');
     if (isJsonObjectHasData(this.report_boat_ullage_data)) {
       var report_boat_ullage_tbody = "";
       for (var i = 0; i < this.report_boat_ullage_data.length; i++) {
@@ -281,7 +281,7 @@ function reportBoatUllage(vehicle_information_uuid, report_boat_ullage_content_i
       alert("请输入数量！");
       return;
     } else {
-      if (null == quantity.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)) {
+      if (null == quantity.match(/^(\d+)(\.\d+)?$/)) {
         alert("数量格式不正确！");
         return;
       }

@@ -2,11 +2,15 @@
  * @author wangdi
  */
 
+//收付款记录
 var paid_record_list = new Array();
 //物流合同
 var contract_logistics_list = new Array();
+//提货委托函
 var deliver_entrust_letter_list = new Array();
+//入库通知单
 var godown_entry_notify_list = new Array();
+//货物确认函
 var goods_confirm_letter_list = new Array();
 //车船信息
 var vehicle_information_list = new Array();
@@ -20,16 +24,28 @@ var settlement_bill_logistics_list = new Array();
 var logistics_invoice_information_list = new Array();
 
 function add_buy_object_list(list, contract_code, object) {
-  if (null == get_buy_object_list(list, contract_code)) {
-    list.push({"contract_code": contract_code, "object": object});
+  for (var i = 0; i < list.length; i++) {
+    if (contract_code == list[i].contract_code) {
+      debugger;
+      list.splice(0, i + 1);
+      list.push({"contract_code": contract_code, "object": object});
+      return;
+    }
   }
+  list.push({"contract_code": contract_code, "object": object});
 }
+
+//function add_buy_object_list(list, contract_code, object) {
+//if (null == get_buy_object_list(list, contract_code)) {
+//  list.push({"contract_code": contract_code, "object": object});
+//}
+//}
 
 function get_buy_object_list(list, contract_code) {
   for (var i = 0; i < list.length; i++) {
-    if (contract_code == list[i].contract_code) {
-      return list[i]["object"];
-    }
+      if (contract_code == list[i].contract_code) {
+        return list[i]["object"];
+      }
   }
   return null;
 }
@@ -145,7 +161,7 @@ function contract_buy_server_data_cover(contract_type) {
     } else {
       var tmp_arr = new Array();
       var contract_buy_result = JSON.parse(contract_buy_get_contract.result);  
-      //console.log(contract_buy_result);
+      console.log(contract_buy_result);
       for (var i = 0; i < contract_buy_result.length; i++) {
         tmp_arr[i] = {"contract_code":contract_buy_result[i].contract_code, "buyer_uuid":contract_buy_result[i].buyer_uuid, "seller_uuid":contract_buy_result[i].seller_uuid, "product_name":contract_buy_result[i].product_name, "real_name":contract_buy_result[i].real_name, "price":contract_buy_result[i].price, "quantity":contract_buy_result[i].quantity, "deliver_datetime":contract_buy_result[i].deliver_datetime, "warehouse_uuid":contract_buy_result[i].warehouse_uuid, "uuid":contract_buy_result[i].uuid};
         // 收款记录

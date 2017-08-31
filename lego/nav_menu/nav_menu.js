@@ -11,6 +11,8 @@ function nav_menu_output(output_id) {
     '<div class  =  "row nav_row">'+
     '    <div class  =  "col-lg-12 nav_col">'+
     '      <div class = "list-group">'+
+    '        <a class = "list-group-item clearfix active nav_radius">首页<span class = "glyphicon glyphicon-chevron-down pull-right"></span></a>'+
+    '        <a href = "../index/index.html" class = "list-group-item clearfix nav_pl30">库区资金占用明细</a>'+
     '        <a class = "list-group-item clearfix active nav_radius">协同办公<span class = "glyphicon glyphicon-chevron-down pull-right"></span></a>'+
     '        <a href = "../index/org_structure.html" class = "list-group-item clearfix nav_pl30">组织架构管理</a>'+
     '        <a class = "list-group-item clearfix active">CRM<span class = "glyphicon glyphicon-chevron-down pull-right"></span></a>'+
