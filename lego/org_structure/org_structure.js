@@ -161,7 +161,8 @@ function org_structure_get_root_department_data_fill() {
   var root_department_param_data = {};
   root_department_param_data["parent_uuid"] = "00000000000000000000000000000000";
   var org_structure_get_root_departmnt = ajax_assistant(root_department_url, root_department_param_data, false, true, false);
-  ////console.log(org_structure_get_root_departmnt);
+  //console.log(org_structure_get_root_departmnt);
+  //debugger;
   if (1 == org_structure_get_root_departmnt.status) {
     if (0 == org_structure_get_root_departmnt.count) {
       root_department = {};

@@ -7,9 +7,7 @@
   <link rel = "stylesheet" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.css"/>
   <link rel = "stylesheet" href = "../../plugin/jquery_ui/1.12.1/jquery-ui.min.css">
   <link rel = "stylesheet" href = "../../plugin/jquery_timepicker_addon/1.6.3/jquery-ui-timepicker-addon.css" />
-  <link rel = "stylesheet" href = "../nav_menu/nav_menu.css">
-  <link rel = "stylesheet" href = "../header/header.css">
-  <link rel = "stylesheet" href = "../warehouse_payment_detail/warehouse_payment_detail.css"/>
+  <link rel = "stylesheet" href = "warehouse_payment_list.css"/>
   <link rel = "stylesheet" href = "../../css/custom_modal.css"/>
   <script src = "../../plugin/jquery/1.12.4/jquery.min.js" type = "text/javascript" charset = "utf-8"></script>
   <script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.js" type = "text/javascript" charset = "utf-8"></script>
@@ -18,38 +16,22 @@
   <script src = "../../plugin/jquery_timepicker_addon/1.6.3/init.js"></script>
   <script src = "../../js/configure.js" type = "text/javascript" charset = "utf-8"></script>
   <script src = "../../js/toolkit.js" type = "text/javascript" charset = "utf-8"></script>
-  <script src = "../check_login/check_login.js" type = "text/javascript" charset = "utf-8"></script>
-  <script src = "../nav_menu/nav_menu.js"></script>
-  <script src = "../header/header.js"></script>
-  <script src = "../warehouse_payment_detail/warehouse_payment_detail.js" type = "text/javascript" charset = "utf-8"></script>
+  <script src = "../check_login/check_login.js"></script>
+  <script src = "warehouse_payment_list.js" type = "text/javascript" charset = "utf-8"></script>
   <script type = "text/javascript">
   $(document).ready(function() {
     check_login();
-    header_output("#header");
-    $(document).on("click", "#header_edit_password_prop", function() {
-      header_edit_password_func();
-    });
-    //保存密码
-    $(document).on("click", "#header_edit_password_btn", function() {
-      header_edit_password_save_func();
-    });
-    //退出
-    $(document).on("click", "#header_log_out_modle", function() {
-      header_edit_log_out_modle_func();
-    });
-    $(document).on("click", "#header_log_out_btn", function() {
-      header_log_out_data_func();
-    });
-    nav_menu_output("#nav_menu");
-    warehouse_payment_detail_content("#warehouse_payment_detail_content");
     //日历插件
     widget_datepicker_init();
+    warehouse_payment_detail_content("#warehouse_payment_detail_content");
     // 初始化
     warehouse_payment_detail_clear_raw_data();
     // 库区服务器数据
     warehouse_payment_detail_get_warehouse();
     // 库区赋值
     warehouse_payment_detail_fill_variable_data_warehouse();
+      //warehouse_payment_detail_fill_variable_data();
+      //calc_total_data();
     $(document).on("click", "#warehouse_payment_detail_search", function() {
       var loan_capital = $("#warehouse_payment_detail_loan_capital").val();
       var warehouse = $("#warehouse_payment_detail_warehouse").val();
@@ -80,28 +62,14 @@
       // 赋值
       warehouse_payment_detail_fill_variable_data();
       calc_total_data();
+      
+      warehouse_payment_list_table_rowspan("#warehouse_payment_detail_list_box",1)
     });
   }); 
   </script>
-  <style type="text/css">
-    .warehouse_payment_detail_mt0{
-      margin-top: 0!important;
-      margin-right: 0;
-    }
-    .warehouse_payment_detail_mt20{
-      margin-top: 10px;
-      padding-left: 0;
-      padding-right: 0;
-    }
-  </style>
   <title></title>
 </head>
 <body>
-  <div id = "header"></div>
-  <div class = "row warehouse_payment_detail_mt0">
-    <div id = "nav_menu" class = "col-lg-2"></div>
-    <div class = "col-lg-10 warehouse_payment_detail_mt20" id = "warehouse_payment_detail_content"></div>
-  </div>
+  <div class = "row" id = "warehouse_payment_detail_content"></div>
 </body>
 </html>
-
