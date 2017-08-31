@@ -2,12 +2,23 @@
  * @author wangdi
  */
 function WarehouseDetailes() {
+  //储罐明细对象
+  var potDetails = new WarehousePotDetails();
   // 储罐信息
   this.warehouseData = {"data":[
    {"name":"舟山纳海", "put_storage":"1000", "cull_value":"10000", "difference":"-200", "uuid":"133333333333333333333333333333331"},
    {"name":"舟山纳海", "put_storage":"2000", "cull_value":"10000", "difference":"-100", "uuid":"133333333333333333333333333333332"},
    {"name":"舟山纳海", "put_storage":"1000", "cull_value":"10000", "difference":"-200", "uuid":"133333333333333333333333333333333"}]
   }; 
+
+  // 初始化
+  this.initEvent = function() {
+    var currentObj = this;
+    $(".warehouse_detailes_open_btn").click(function() {
+     currentObj.openInfoFunc($(this));
+    });
+  };
+
   //清空数据
   this.clearRawData = function() {
     $("#warehouse_detailes_content_box").html('<tr><td colspan="5" align="center">没数据</td></tr>');
@@ -40,22 +51,22 @@ function WarehouseDetailes() {
             if (0 == potGetContract.count) {
               alert("储罐原料没数据");
             } else {
-                for (var j = 0; j < potMaterialResult.length; j++) {
-                   if (warehouseResult[i].uuid == potMaterialResult[j].pot_uuid) {
-                    var potData = {
-                      "material_uuid":potMaterialResult[j].uuid
-                    } 
-                    var potMaterialSumGetContract = ajax_assistant(sumUrl, potData, false, true, false);
-                    //获取入库值的总和
-                    if ("1" == potMaterialSumGetContract.status) {
-                      if ("0" != potMaterialSumGetContract.count) {
-                         var potMaterialSumResult = JSON.parse(potMaterialSumGetContract.result);
-                         putStorageAll += potMaterialSumResult[0].sum;
-                         checkValueAll += potMaterialResult[j].check_value;
-                      }
+              for (var j = 0; j < potMaterialResult.length; j++) {
+                 if (warehouseResult[i].uuid == potMaterialResult[j].pot_uuid) {
+                  var potData = {
+                    "material_uuid":potMaterialResult[j].uuid
+                  } 
+                  var potMaterialSumGetContract = ajax_assistant(sumUrl, potData, false, true, false);
+                  //获取入库值的总和
+                  if ("1" == potMaterialSumGetContract.status) {
+                    if ("0" != potMaterialSumGetContract.count) {
+                       var potMaterialSumResult = JSON.parse(potMaterialSumGetContract.result);
+                       putStorageAll += potMaterialSumResult[0].sum;
+                       checkValueAll += potMaterialResult[j].check_value;
                     }
                   }
                 }
+              }
             }
           }
           var differenceAll = (checkValueAll - putStorageAll);
@@ -73,10 +84,10 @@ function WarehouseDetailes() {
     if (isJsonObjectHasData(this.warehouseData)) {
      var warehouseDetailesHtml = "";
      for (var i = 0; i < this.warehouseData.data.length; i++) {
-       var name = this.warehouseData.data[i].name
-       var putStorage = this.warehouseData.data[i].put_storage
-       var cullValue = this.warehouseData.data[i].cull_value
-       var difference = this.warehouseData.data[i].difference
+       var name = this.warehouseData.data[i].name;
+       var putStorage = this.warehouseData.data[i].put_storage;
+       var cullValue = this.warehouseData.data[i].cull_value;
+       var difference = this.warehouseData.data[i].difference;
        warehouseDetailesHtml +=
          '<tr class = "warehouse_detailes_tr">'+
            '<td><button type = "button" class = "btn btn-info btn-xs warehouse_detailes_open_btn" warehouse_uuid = "'+ this.warehouseData.data[i].uuid + '"><span class = "glyphicon glyphicon-chevron-down"></span></button></td>'+
@@ -109,16 +120,16 @@ function WarehouseDetailes() {
       obj.find(".glyphicon").removeClass("glyphicon-chevron-up");
       obj.removeClass("active");
       obj.parent().parent().nextUntil(".warehouse_detailes_tr").remove();
-      contract_sales_html = "";
+      warehouseDetailesSubHtml = "";
     } else {
       obj.find(".glyphicon").addClass("glyphicon-chevron-up");
       obj.addClass("active");
       obj.parent().parent().after(warehouseDetailesSubHtml);
     }
-    //tank_breakdown.tank_output("#warehouse_detailes_content" + warehouseDetailesUuid);
-    //$("#warehouse_detailes_content" + warehouseDetailesUuid).find("#tank_add_plus").attr("warehouse_uuid", warehouseDetailesUuid);
-    //tank_breakdown.tank_breakdown_clear_raw_data(warehouseDetailesUuid);
-    //tank_breakdown.tank_breakdown_server_data_cover(warehouseDetailesUuid);
-    //tank_breakdown.tank_breakdown_fill_variable_data(warehouseDetailesUuid);
+    potDetails.warehousePotOutput("#warehouse_detailes_content" + warehouseDetailesUuid);
+    $("#warehouse_detailes_content" + warehouseDetailesUuid).find("#warehouse_pot_add_plus").attr("warehouse_uuid", warehouseDetailesUuid);
+    potDetails.clearRawData(warehouseDetailesUuid);
+    //potDetails.serverDataCover(warehouseDetailesUuid);
+    potDetails.fillVariableData(warehouseDetailesUuid);
   };
 };

@@ -6,21 +6,27 @@
   <meta name = "viewport" content = "width=device-width, initial-scale=1">
   <link rel = "stylesheet" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.css">
   <link rel = "stylesheet" href = "../../css/custom_modal.css">
+  <link rel = "stylesheet" href = "../warehouse_pot_details/warehouse_pot_details.css">
   <link rel = "stylesheet" href = "warehouse_details.css">
   <script src = "../../plugin/jquery/1.12.4/jquery.min.js"></script>
   <script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.js"></script>
   <script src = "../../js/toolkit.js"></script>
   <script src = "../../js/configure.js"></script>
+  <script src = "../warehouse_pot_details/warehouse_pot_details.js"></script>
   <script src = "warehouse_details.js"></script>
   <script>
+    var warehouseDetailes = new WarehouseDetailes();
+    var warehousePotDetails = new WarehousePotDetails();
     $(document).ready(function() {
-      var warehouseDetailes = new WarehouseDetailes();
       warehouseDetailes.clearRawData();
       warehouseDetailes.fillVariableData();
-      $(".warehouse_detailes_open_btn").click(function() {
-       warehouseDetailes.openInfoFunc($(this));
-      });
-    }) 
+      warehouseDetailes.initEvent();
+      //储罐明细
+      warehousePotDetails.clearRawData();
+      warehousePotDetails.fillVariableData();
+      warehousePotDetails.initEvent();
+
+    });
   </script> 
   </head>
 <body>
@@ -65,5 +71,3 @@
   </div>
 </body>
 </html>
-
-

@@ -13,39 +13,12 @@
   <script src = "../../js/configure.js"></script>
   <script src = "warehouse_pot_details.js"></script>
   <script>
+    var warehousePotDetails = new WarehousePotDetails();
     $(document).ready(function() {
-      var warehousePotDetails = new WarehousePotDetails();
       warehousePotDetails.clearRawData();
       warehousePotDetails.fillVariableData();
-      //展开自己按钮
-      $(document).on("click",".warehouse_pot_details_open_btn",function() {
-        warehousePotDetails.openInfoFunc($(this));
-      });
-      //添加模态框
-      $(document).on("click","#warehouse_pot_add_plus",function() {
-        warehousePotDetails.addModle($(this));
-      });
-      //添加数据
-      $(document).on("click","#warehouse_pot_add_modle_prop_btn",function() {
-        warehousePotDetails.addData($(this));
-      });
-      //修改原料名称
-      $(document).on("click",".warehouse_pot_ingredient_icon",function() {
-        warehousePotDetails.editName($(this));
-      });
-      //修改检尺值
-      $(document).on("click",".warehouse_pot_cull_icon",function() {
-        warehousePotDetails.editCull($(this));
-      });
-      //删除模态框
-      $(document).on("click",".warehouse_pot_details_remove",function() {
-        warehousePotDetails.removeModle($(this));
-      });
-      //删除数据
-      $(document).on("click","#warehouse_pot_delete_modle_prop_btn",function() {
-        warehousePotDetails.removeData($(this));
-      });
-    }) 
+      warehousePotDetails.initEvent();
+    }); 
   </script> 
   </head>
 <body>
