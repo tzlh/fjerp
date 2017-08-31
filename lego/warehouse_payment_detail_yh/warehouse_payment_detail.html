@@ -7,7 +7,7 @@
   <link rel = "stylesheet" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.css"/>
   <link rel = "stylesheet" href = "../../plugin/jquery_ui/1.12.1/jquery-ui.min.css">
   <link rel = "stylesheet" href = "../../plugin/jquery_timepicker_addon/1.6.3/jquery-ui-timepicker-addon.css" />
-  <link rel = "stylesheet" href = "warehouse_payment_list.css"/>
+  <link rel = "stylesheet" href = "warehouse_payment_detail.css"/>
   <link rel = "stylesheet" href = "../../css/custom_modal.css"/>
   <script src = "../../plugin/jquery/1.12.4/jquery.min.js" type = "text/javascript" charset = "utf-8"></script>
   <script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.js" type = "text/javascript" charset = "utf-8"></script>
@@ -16,14 +16,12 @@
   <script src = "../../plugin/jquery_timepicker_addon/1.6.3/init.js"></script>
   <script src = "../../js/configure.js" type = "text/javascript" charset = "utf-8"></script>
   <script src = "../../js/toolkit.js" type = "text/javascript" charset = "utf-8"></script>
-  <script src = "../check_login/check_login.js"></script>
-  <script src = "warehouse_payment_list.js" type = "text/javascript" charset = "utf-8"></script>
+  <script src = "warehouse_payment_detail.js" type = "text/javascript" charset = "utf-8"></script>
   <script type = "text/javascript">
   $(document).ready(function() {
-    check_login();
+    warehouse_payment_detail_content("#warehouse_payment_detail_content");
     //日历插件
     widget_datepicker_init();
-    warehouse_payment_detail_content("#warehouse_payment_detail_content");
     // 初始化
     warehouse_payment_detail_clear_raw_data();
     // 库区服务器数据
@@ -59,8 +57,7 @@
       calc_data(new Number(loan_capital), start_sign_datetime, end_sign_datetime);
       // 赋值
       warehouse_payment_detail_fill_variable_data();
-      calc_total_data();
-      warehouse_payment_list_table_rowspan("#warehouse_payment_detail_list_box",1)
+      
     });
   }); 
   </script>

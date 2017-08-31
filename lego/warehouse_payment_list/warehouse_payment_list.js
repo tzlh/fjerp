@@ -48,10 +48,8 @@ function warehouse_payment_detail_fill_variable_data_warehouse() {
 
 function warehouse_payment_detail_fill_variable_data() {
   if (isJsonObjectHasData(warehouse_payment_detail_data)) {
-    warehouse_payment_detail_data.sort(function(a, b) {
-      return new Date(a.sign_datetime) - new Date(b.sign_datetime);
-    });
-    console.log(warehouse_payment_detail_data);
+    
+    //console.log(warehouse_payment_detail_data);
     var content = "";
          for (var i = 0; i < warehouse_payment_detail_data.length; i++) {
             content += 
@@ -66,7 +64,7 @@ function warehouse_payment_detail_fill_variable_data() {
               '<td>' + warehouse_payment_detail_data[i].interest + '</td>'+
             '</tr>';
         }      
-    $("#warehouse_payment_detail_list_box").append(content);
+    $("#warehouse_payment_detail_list_box").html(content);
   } else {
     $("#warehouse_payment_detail_list_box").html("<tr><td  colspan = '8' align='center'>没数据</td></tr>");
   }
@@ -126,7 +124,7 @@ function warehouse_payment_detail_get_warehouse() {
   var get_warehouse_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getWarehouse";
   var get_warehouse_param_data = {};
   var org_structure_get_warehouse = ajax_assistant(get_warehouse_url, get_warehouse_param_data, false, true, false);
-  console.log(org_structure_get_warehouse);
+  //console.log(org_structure_get_warehouse);
   if (1 == org_structure_get_warehouse.status) {
     if (0 == org_structure_get_warehouse.count) {
       warehouse_payment_detail_work_area_data = {};
@@ -145,7 +143,6 @@ function warehouse_payment_detail_get_warehouse() {
   } 
 }
 
-
 /**
  * 获取自运营企业
 */
@@ -156,7 +153,7 @@ function warehouse_payment_detail_get_enterprise() {
   var get_enterprise = ajax_assistant(get_enterprise_url, get_enterprise_param_data, false, true, false);
   if(1 == get_enterprise.status) {
     var result = JSON.parse(get_enterprise.result);
-    console.log(result);
+    //console.log(result);
     for (var i = 0; i < result.length; i++) {
       enterprise_uuid_list.push({
         "uuid": result[i].uuid,
@@ -205,7 +202,7 @@ function warehouse_payment_detail_get_contract(warehouse_uuid, start_sign_dateti
         "count": result[i].quantity
       });
     }
-    console.log(contract_list);
+    //console.log(contract_list);
   } else {
     alert("合同获取失败");
   }
@@ -218,6 +215,20 @@ function get_contract_uuid(uuid) {
         return contract_list[i];
       }
     }
+}
+
+/**
+ * 检出日期
+*/
+function warehouse_payment_detail_checked_data(current_date, warehouse_payment_detail_data) {
+  var current_date = new Date(current_date);
+  for (var i = 0; i < warehouse_payment_detail_data.length; i++) {
+    var sign_datetime_server = new Date(warehouse_payment_detail_data[i].sign_datetime);
+    if (current_date.getFullYear() == sign_datetime_server.getFullYear() && current_date.getMonth() + 1 == sign_datetime_server.getMonth() + 1 && current_date.getDate() == sign_datetime_server.getDate()) {
+      return 1;
+    }
+  }
+  return 0;
 }
 
 /*
@@ -246,11 +257,11 @@ function calc_data(loan_capital, start_sign_datetime, end_sign_datetime) {
       }
     } 
   }
-  console.log(enterprise_contract);
+  //console.log(enterprise_contract);
   // 找到自营企业合同数据中，所有销售合同且添加至receipt，所有采购合同且添加至payment
   for (var i = 0; i < enterprise_contract.length; i++) {
     var sign_datetime_data = new Date(get_contract_uuid(enterprise_contract[i].uuid).sign_datetime);
-    console.log(sign_datetime_data);
+   // console.log(sign_datetime_data);
     var sign_datetime = sign_datetime_data.getFullYear() + '-' + (sign_datetime_data.getMonth() + 1) + '-' +sign_datetime_data.getDate(); 
     if (1 == get_contract_uuid(enterprise_contract[i].uuid).type) {
       var obj = {
@@ -274,38 +285,30 @@ function calc_data(loan_capital, start_sign_datetime, end_sign_datetime) {
       warehouse_payment_detail_data.push(obj);
     }
   }
-var content = "";
   for (var i = new Date(start_sign_datetime); i < new Date(end_sign_datetime); i.setDate(i.getDate() + 1)) {
-    for (var j = 0; j < warehouse_payment_detail_data.length; j++) {
-      var sign_datetime = i.getFullYear() + '-' + (i.getMonth() + 1) + '-' + i.getDate();
-      var sign_datetime_server = new Date(warehouse_payment_detail_data[j].sign_datetime);
-      debugger;
-      if (i.getFullYear() == sign_datetime_server.getFullYear() && i.getMonth()+1 == sign_datetime_server.getMonth()+1 && i.getDate() == sign_datetime_server.getDate()) {
-        break;
+      var current_date = i.getFullYear() + '-' + (i.getMonth() + 1) + '-' + i.getDate();
+      if (1 == warehouse_payment_detail_checked_data(current_date, warehouse_payment_detail_data)) {
+        continue;
       } else {
-         
-        content += 
-            '<tr>'+
-              '<td>' + sign_datetime + '</td>'+
-              '<td>&nbsp;</td>'+
-              '<td>&nbsp;</td>'+
-              '<td>0</td>'+
-              '<td>0</td>'+
-              '<td>0</td>'+
-              '<td>0</td>'+
-              '<td>0</td>'+
-            '</tr>';
-        }      
-        
-    }  
+        warehouse_payment_detail_data.push({
+          "sign_datetime": current_date, 
+          "short_name": "",
+          "product_name": "",
+          "count": 0,
+          "receipt": 0,
+          "payment": 0,
+        })
+      }  
   }
-$("#warehouse_payment_detail_list_box").append(content);
-
-     //计算余额和利息
+  warehouse_payment_detail_data.sort(function(a, b) {
+      return new Date(a.sign_datetime) - new Date(b.sign_datetime);
+  });
+ //计算余额和利息
   for (var i = 0; i < warehouse_payment_detail_data.length; i++) {
     if (0 == i) {
       warehouse_payment_detail_data[i]["capital_occupying"] = loan_capital;
     } else {
+      debugger;
       warehouse_payment_detail_data[i]["capital_occupying"] = new Number((warehouse_payment_detail_data[i - 1]["capital_occupying"] + warehouse_payment_detail_data[i]["receipt"] - warehouse_payment_detail_data[i]["payment"]).toFixed(2));
     }
     warehouse_payment_detail_data[i]["interest"] = new Number((warehouse_payment_detail_data[i]["capital_occupying"] * 0.1 / 12 / 30).toFixed(2));
@@ -404,5 +407,3 @@ function warehouse_payment_detail_content(output_id) {
 '      </div>';
   $(output_id).html(content);
 }
-
- 
