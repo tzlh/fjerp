@@ -55,7 +55,7 @@ function WarehouseDetailes() {
                  if (warehouseResult[i].uuid == potMaterialResult[j].pot_uuid) {
                   var potData = {
                     "material_uuid":potMaterialResult[j].uuid
-                  } 
+                  }; 
                   var potMaterialSumGetContract = ajax_assistant(sumUrl, potData, false, true, false);
                   //获取入库值的总和
                   if ("1" == potMaterialSumGetContract.status) {
@@ -128,6 +128,7 @@ function WarehouseDetailes() {
     }
     potDetails.warehousePotOutput("#warehouse_detailes_content" + warehouseDetailesUuid);
     $("#warehouse_detailes_content" + warehouseDetailesUuid).find("#warehouse_pot_add_plus").attr("warehouse_uuid", warehouseDetailesUuid);
+    $("#warehouse_detailes_content" + warehouseDetailesUuid).find(".warehouse_details_uuid").attr("warehouse_uuid", warehouseDetailesUuid);
     potDetails.clearRawData(warehouseDetailesUuid);
     //potDetails.serverDataCover(warehouseDetailesUuid);
     potDetails.fillVariableData(warehouseDetailesUuid);

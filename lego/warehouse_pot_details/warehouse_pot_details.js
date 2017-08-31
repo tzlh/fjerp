@@ -3,7 +3,7 @@
  */
 function WarehousePotDetails() {
   //原料记录的对象
-  //var materialDetails = new MaterialDetails();
+  //var materialDetails = new MaterialDetails(2, 2);
   // 储罐信息
   this.potDetailsData = {"data":[
    {"warehouse_uuid":"133333333333333333333333333333331", "ingredient_name":"原料a", "put_storage":"1000", "cull_value":"10000", "difference":"-200", "uuid":"00000000000000000000000000000001"},
@@ -13,17 +13,18 @@ function WarehousePotDetails() {
 
   //清空数据
   this.clearRawData = function(warehouseUuid) {
-    $("#warehouse_detailes_content" + warehouseUuid).find("#warehouse_pot_details_content_box").html('<tr><td colspan="6" align="center">没数据</td></tr>');
+    $("#warehouse_detailes_content" + warehouseUuid).find("#warehouse_pot_details_content_box").html('<tr><td colspan = "6" align = "center">没数据</td></tr>');
+    //$("#warehouse_pot_details_content_box").html('<tr><td colspan = "6" align = "center">没数据</td></tr>');
   };
 
   //服务器数据覆盖
-  this.serverDataCover =function(warehouseUuid) {
+  this.serverDataCover  = function(warehouseUuid) {
     //获取所有原料的入库值总和
     var potMaterialSumUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=getWarehousePotMaterialRecordSum";
     //获取原料明细
     var warehousePotData = {
       "pot_uuid":warehouseUuid 
-    }
+    };
     var warehousePotDetailsUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=getWarehousePotMaterial";
     var warehousePotDetailsGetContract = ajax_assistant(warehousePotDetailsUrl, warehousePotData, false, true, false);
     this.potDetailsData = {};
@@ -34,7 +35,7 @@ function WarehousePotDetails() {
         for (var i = 0; i < warehousePotDetailsResult.length; i++) {
           var potiData = {
             "material_uuid":warehousePotDetailsResult[i].uuid
-          } 
+          };
           var potMaterialSumGetContract = ajax_assistant(potMaterialSumUrl, potiData, false, true, false);
           var potMaterialSumResult = JSON.parse(potMaterialSumGetContract.result);
           console.log(potMaterialSumResult);
@@ -60,26 +61,27 @@ function WarehousePotDetails() {
          '<tr class = "warehouse_pot_details_tr">'+
            '<td width = "10%"><button type = "button" class = "btn btn-info btn-xs warehouse_pot_details_open_btn" warehouse_uuid = "'+ this.potDetailsData.data[i].warehouse_uuid + '"  uuid = "' + this.potDetailsData.data[i].uuid + '"><span class = "glyphicon glyphicon-chevron-down"></span></button></td>'+
            '<td width = "20%" style = "text-align: center;">'+
-             '<div class="input-group">'+
-               '<input type="text" class="form-control warehouse_pot_ingredient_val" value = "' + this.potDetailsData.data[i].ingredient_name + '">'+
-               '<span class="input-group-addon warehouse_pot_ingredient_icon" warehouse_uuid = "'+ this.potDetailsData.data[i].warehouse_uuid +'" uuid = "' +  this.potDetailsData.data[i].uuid + '"><span class = "glyphicon glyphicon-floppy-disk"></span></span>'+
+             '<div class = "input-group">'+
+               '<input type = "text" class = "form-control warehouse_pot_ingredient_val" value = "' + this.potDetailsData.data[i].ingredient_name + '">'+
+               '<span class = "input-group-addon warehouse_pot_ingredient_icon" warehouse_uuid = "'+ this.potDetailsData.data[i].warehouse_uuid +'" uuid = "' +  this.potDetailsData.data[i].uuid + '"><span class = "glyphicon glyphicon-floppy-disk"></span></span>'+
              '</div>'+
            '</td>'+
            '<td width = "20%" style = "text-align: center;">' + this.potDetailsData.data[i].put_storage + '</td>'+
            '<td width = "20%" style = "text-align: center;">'+
-           '   <div class="input-group">'+
-           '     <input type="text" class="form-control warehouse_pot_cull_value" value = "' + this.potDetailsData.data[i].cull_value + '">'+
-           '     <span class="input-group-addon warehouse_pot_cull_icon" warehouse_uuid = "'+ this.potDetailsData.data[i].warehouse_uuid +'" uuid = "' +  this.potDetailsData.data[i].uuid + '"><span class = "glyphicon glyphicon-floppy-disk"></span></span>'+
+           '   <div class = "input-group">'+
+           '     <input type = "text" class = "form-control warehouse_pot_cull_value" value = "' + this.potDetailsData.data[i].cull_value + '">'+
+           '     <span class = "input-group-addon warehouse_pot_cull_icon" warehouse_uuid = "'+ this.potDetailsData.data[i].warehouse_uuid +'" uuid = "' +  this.potDetailsData.data[i].uuid + '"><span class = "glyphicon glyphicon-floppy-disk"></span></span>'+
            '   </div>'+
            ' </td>'+
            '<td width = "20%" style = "text-align: center;">' + this.potDetailsData.data[i].difference + '</td>'+
            '<td width = "10%"><span class = "glyphicon glyphicon-remove warehouse_pot_details_remove" warehouse_uuid = "'+ this.potDetailsData.data[i].warehouse_uuid +'" uuid = "' + this.potDetailsData.data[i].uuid + '"></span></td>'+
          '</tr>';
      }
-      
-      $("#warehouse_detailes_content" + warehouseUuid).find("#warehouse_pot_details_content_box").html('<tr><td colspan="6" align="center">没数据</td></tr>');
+      $("#warehouse_detailes_content" + warehouseUuid).find("#warehouse_pot_details_content_box").html(warehousePotDetailsHtml);
+      //$("#warehouse_pot_details_content_box").html(warehousePotDetailsHtml);
     } else {
-      $("#warehouse_detailes_content" + warehouseUuid).find("#warehouse_pot_details_content_box").html('<tr><td colspan="6" align="center">没数据</td></tr>');
+      $("#warehouse_detailes_content" + warehouseUuid).find("#warehouse_pot_details_content_box").html('<tr><td colspan = "6" align = "center">没数据</td></tr>');
+      //$("#warehouse_pot_details_content_box").html('<tr><td colspan = "6" align = "center">没数据</td></tr>');
     }
   };
   //初始化事件
@@ -138,12 +140,13 @@ function WarehousePotDetails() {
       obj.addClass("active");
       obj.parent().parent().after(warehousePotDetailsSubHtml);
     }
-//    materialDetails.material_output("#warehouse_pot_details_content" + warehousePotDetailsUuid);
-//    $("#warehouse_pot_details_content" + warehousePotDetailsUuid).find("#material_breakdown_plus").attr("warehouse_pot_uuid", warehousePotDetailsUuid);
- //   $("#warehouse_pot_details_content" + warehousePotDetailsUuid).find("#material_pages").attr("warehouse_pot_uuid", warehousePotDetailsUuid);
- //   materialDetails.material_breakdown_clear_raw_data(warehousePotDetailsUuid);
- //   materialDetails.material_breakdown_server_data_cover(warehousePotDetailsUuid);
- //   materialDetails.material_breakdown_fill_variable_data(warehousePotDetailsUuid);
+    materialDetails.materialOutput("#warehouse_pot_details_content" + warehousePotDetailsUuid);
+    $("#warehouse_pot_details_content" + warehousePotDetailsUuid).find("#material_details_plus").attr("warehouse_pot_uuid", warehousePotDetailsUuid);
+    $("#warehouse_pot_details_content" + warehousePotDetailsUuid).find(".pot_uuid").attr("warehouse_pot_uuid", warehousePotDetailsUuid);
+    $("#warehouse_pot_details_content" + warehousePotDetailsUuid).find("#material_pages").attr("warehouse_pot_uuid", warehousePotDetailsUuid);
+    materialDetails.clearRawData(warehousePotDetailsUuid);
+    //materialDetails.serverDataCover(warehousePotDetailsUuid);
+    materialDetails.fillVariableData(warehousePotDetailsUuid);
   };
 
   //添加模态框
@@ -158,16 +161,16 @@ function WarehousePotDetails() {
                 '<h4 class = "modal-title">添加原料名称</h4>'+
               '</div>'+
               '<div class = "modal-body nopadding-bottom">'+
-                 '<div class="form-group has-feedback">'+
-                    '<div class="input-group">'+
-                       '<span class="input-group-addon">原料名称</span>'+
-                       '<input type="text" class="form-control warehouse_pot_material_name">'+
+                 '<div class = "form-group has-feedback">'+
+                    '<div class = "input-group">'+
+                       '<span class = "input-group-addon">原料名称</span>'+
+                       '<input type = "text" class = "form-control warehouse_pot_material_name">'+
                      '</div>'+
                   '</div>'+
-                 '<div class="form-group has-feedback">'+
-                    '<div class="input-group">'+
-                       '<span class="input-group-addon">检尺值</span>'+
-                       '<input type="text" class="form-control warehouse_pot_material_check_value">'+
+                 '<div class = "form-group has-feedback">'+
+                    '<div class = "input-group">'+
+                       '<span class = "input-group-addon">检尺值</span>'+
+                       '<input type = "text" class = "form-control warehouse_pot_material_check_value">'+
                      '</div>'+
                   '</div>'+
               '</div>'+
@@ -202,7 +205,7 @@ function WarehousePotDetails() {
        "pot_uuid":warehouseUuid,
        "name":warehousePotMaterialName,
        "check_value":warehousePotMaterialCheckValue
-    }
+    };
     console.log(warehouseUuid)
     //var detailsAddUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=addWarehousePotMaterial";
     //var detailsAddGetContract = ajax_assistant(detailsAddUrl, warehousePotData, false, true, false);
@@ -222,13 +225,13 @@ function WarehousePotDetails() {
         $(this).remove();
       });
     } else {
-      alert("添加储罐明细失败")
+      alert("添加储罐明细失败");
     }
   };
 
   //修改原料名称
   this.editName = function(obj) {
-    var warehouseUuid = obj.attr("warehouse_uuid"); 
+    var warehouseUuid = obj.parent().parent().parent().parent().parent().attr("warehouse_uuid"); 
     var uuid = obj.attr("uuid");
     var warehousePotMaterialName = obj.siblings(".warehouse_pot_ingredient_val").val();
     if(null == warehousePotMaterialName.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{1,32}$/)) {
@@ -238,7 +241,7 @@ function WarehousePotDetails() {
     var data = {
       "uuid":uuid,
       "name":warehousePotMaterialName
-    } 
+    }; 
     //var detailsEditNameDataUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=modifyWarehousePotMaterial";
     //var editNameDeleteDataGet = ajax_assistant(detailsEditNameDataUrl, data, false, true, false);
     //if ("1" == editNameDeleteDataGet.status) {
@@ -251,16 +254,16 @@ function WarehousePotDetails() {
         {"warehouse_uuid":"133333333333333333333333333333331", "ingredient_name":"原料c", "put_storage":"1000", "cull_value":"10000", "difference":"-200", "uuid":"00000000000000000000000000000003"}]
        }; 
       this.fillVariableData(warehouseUuid);
-      alert("修改原料名称成功")
+      alert("修改原料名称成功");
     } else {
-      alert("修改原料名称失败")
+      alert("修改原料名称失败");
     }
   };
 
   //修改检尺值
   this.editCull = function(obj) {
     var uuid = obj.attr("uuid");
-    var warehouseUuid = obj.attr("warehouse_uuid");
+    var warehouseUuid = obj.parent().parent().parent().parent().parent().attr("warehouse_uuid");
     var warehousePotEditCull = obj.siblings(".warehouse_pot_cull_value").val();
     if (null == warehousePotEditCull.match(/^[0-9]+\.{0,1}[0-9]{0,4}$/)) {
       alert("请输入正确的检尺值！");
@@ -269,7 +272,7 @@ function WarehousePotDetails() {
     var data = {
       "uuid":uuid,
       "check_value":warehousePotEditCull
-    }
+    };
     //var detailsEditCullDataUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=modifyWarehousePotMaterial";
     //var detailsEditCullDeleteDataGet = ajax_assistant(detailsEditCullDataUrl, data, false, true, false);
     //if ("1" == detailsEditCullDeleteDataGet.status) {
@@ -291,7 +294,7 @@ function WarehousePotDetails() {
   //删除按钮
   this.removeModle = function(obj) {
     var warehousePotUuid = obj.attr("uuid");
-    var warehouseUuid = obj.attr("warehouse_uuid");
+    var warehouseUuid = obj.parent().parent().parent().parent().attr("warehouse_uuid");
     var warehousePotDeleteHtml = 
         '<div class = "modal fade custom_modal" id = "warehouse_pot_delete_modle_prop" tabindex = "-1" role = "dialog">'+
           '<div class = "modal-dialog modal-sm" role = "document">'+
@@ -332,7 +335,7 @@ function WarehousePotDetails() {
       // 更新页面数据
       this.clearRawData(warehouseUuid);
       //this.serverDataCover(warehouseUuid);
-       this.potDetailsData = {"data":[
+      this.potDetailsData = {"data":[
         {"warehouse_uuid":"133333333333333333333333333333331", "ingredient_name":"原料b", "put_storage":"7777777000", "cull_value":"10000", "difference":"-200", "uuid":"00000000000000000000000000000002"},
         {"warehouse_uuid":"133333333333333333333333333333331", "ingredient_name":"原料c", "put_storage":"1000", "cull_value":"10000", "difference":"-200", "uuid":"00000000000000000000000000000003"}]
        }; 
@@ -348,9 +351,9 @@ function WarehousePotDetails() {
   this.warehousePotOutput = function(contentBoxId) {
     var content = 
      '<div class="panel panel-primary ">'+
-     '  <div class="panel-heading clearfix">储罐明细<span class = "glyphicon glyphicon-plus pull-right" id = "warehouse_pot_add_plus"></span></div>'+
-     '  <div class="panel-body">'+
-     '    <table class="table">'+
+     '  <div class = "panel-heading clearfix">储罐明细<span class = "glyphicon glyphicon-plus pull-right" id  =  "warehouse_pot_add_plus"></span></div>'+
+     '  <div class = "panel-body">'+
+     '    <table class = "table warehouse_details_uuid">'+
      '      <thead>'+
      '        <tr>'+
      '          <th>#</th>'+
@@ -363,53 +366,53 @@ function WarehousePotDetails() {
      '      </thead>'+
      '      <tbody id = "warehouse_pot_details_content_box">'+
      '        <tr>'+
-     '          <td width = "10%"><button type = "button" class = "btn btn-info btn-xs"><span class = "glyphicon glyphicon-chevron-down"></span></button></td>'+
+     '          <td width = "10%"><button type = "button" class = "btn btn-info btn-xs warehouse_pot_details_open_btn"><span class = "glyphicon glyphicon-chevron-down"></span></button></td>'+
      '          <td width = "20%" style = "text-align: center;">'+
      '            <div class="input-group">'+
-     '              <input type="text" class="form-control" value = "原料a">'+
-     '              <span class="input-group-addon warehouse_pot_ingredient_icon"><span class = "glyphicon glyphicon-floppy-disk"></span></span>'+
+     '              <input type = "text" class = "form-control" value = "原料a">'+
+     '              <span class = "input-group-addon warehouse_pot_ingredient_icon"><span class = "glyphicon glyphicon-floppy-disk"></span></span>'+
      '            </div>'+
      '          </td>'+
-     '          <td>100</td>'+
+     '          <td width = "20%" style = "text-align: center;">100</td>'+
      '          <td width = "20%" style = "text-align: center;">'+
-     '            <div class="input-group">'+
-     '              <input type="text" class="form-control" value = "原料a">'+
-     '              <span class="input-group-addon warehouse_pot_cull_icon"><span class = "glyphicon glyphicon-floppy-disk"></span></span>'+
+     '            <div class = "input-group">'+
+     '              <input type = "text" class = "form-control" value = "原料a">'+
+     '              <span class = "input-group-addon warehouse_pot_cull_icon"><span class = "glyphicon glyphicon-floppy-disk"></span></span>'+
      '            </div>'+
      '          </td>'+
      '          <td width = "20%" style = "text-align: center;">-200</td>'+
      '          <td width = "10%" style = "text-align: center;"><span class = "glyphicon glyphicon-remove"></span></td>'+
      '        </tr>'+
      '        <tr>'+
-     '          <td width = "10%"><button type = "button" class = "btn btn-info btn-xs"><span class = "glyphicon glyphicon-chevron-down"></span></button></td>'+
+     '          <td width = "10%"><button type = "button" class = "btn btn-info btn-xs warehouse_pot_details_open_btn"><span class = "glyphicon glyphicon-chevron-down"></span></button></td>'+
      '          <td width = "20%" style = "text-align: center;">'+
-     '            <div class="input-group">'+
-     '              <input type="text" class="form-control" value = "原料b" >'+
-     '              <span class="input-group-addon warehouse_pot_ingredient_icon"><span class = "glyphicon glyphicon-floppy-disk"></span></span>'+
+     '            <div class = "input-group">'+
+     '              <input type = "text" class = "form-control" value = "原料b" >'+
+     '              <span class = "input-group-addon warehouse_pot_ingredient_icon"><span class = "glyphicon glyphicon-floppy-disk"></span></span>'+
      '            </div>          </td>'+
-     '          <td width = "20%" style = "text-align: center;">3000</td>'+
+     '          <td width = "20%" style = "text-align: center;">113000</td>'+
      '          <td width = "20%" style = "text-align: center;">'+
-     '            <div class="input-group">'+
-     '              <input type="text" class="form-control" value = "原料a">'+
-     '              <span class="input-group-addon warehouse_pot_cull_icon"><span class = "glyphicon glyphicon-floppy-disk"></span></span>'+
+     '            <div class = "input-group">'+
+     '              <input type = "text" class = "form-control" value = "原料a">'+
+     '              <span class = "input-group-addon warehouse_pot_cull_icon"><span class = "glyphicon glyphicon-floppy-disk"></span></span>'+
      '            </div>'+
      '          </td>'+
      '          <td width = "20%" style = "text-align: center;">-200</td>'+
      '          <td width = "10%"><span class = "glyphicon glyphicon-remove"></span></td>'+
      '        </tr>'+
      '        <tr>'+
-     '          <td width = "10%"><button type = "button" class = "btn btn-info btn-xs"><span class = "glyphicon glyphicon-chevron-down"></span></button></td>'+
+     '          <td width = "10%"><button type = "button" class = "btn btn-info btn-xs warehouse_pot_details_open_btn"><span class = "glyphicon glyphicon-chevron-down"></span></button></td>'+
      '          <td width = "20%" style = "text-align: center;">'+
-     '            <div class="input-group">'+
-     '              <input type="text" class="form-control" value = "原料a" >'+
-     '              <span class="input-group-addon warehouse_pot_ingredient_icon"><span class = "glyphicon glyphicon-floppy-disk"></span></span>'+
+     '            <div class = "input-group">'+
+     '              <input type = "text" class = "form-control" value = "原料a" >'+
+     '              <span class = "input-group-addon warehouse_pot_ingredient_icon"><span class = "glyphicon glyphicon-floppy-disk"></span></span>'+
      '            </div>'+
      '          </td>'+
      '          <td width = "20%" style = "text-align: center;">3000</td>'+
      '          <td width = "20%" style = "text-align: center;" width = "300">'+
-     '            <div class="input-group">'+
-     '              <input type="text" class="form-control" value = "原料a">'+
-     '              <span class="input-group-addon warehouse_pot_cull_icon"><span class = "glyphicon glyphicon-floppy-disk"></span></span>'+
+     '            <div class = "input-group">'+
+     '              <input type = "text" class = "form-control" value = "原料a">'+
+     '              <span class = "input-group-addon warehouse_pot_cull_icon"><span class = "glyphicon glyphicon-floppy-disk"></span></span>'+
      '            </div>'+
      '          </td>'+
      '          <td width = "20%" style = "text-align: center;">-200</td>'+

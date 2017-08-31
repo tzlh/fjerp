@@ -9,15 +9,13 @@ function MaterialDetails(rows, showRows) {
   this.materialCondition = {};
   // 原料数据 
   this.materialDetailsData = {"data":[
-    {"tank_uuid":"00000000000000000000000000000001", "warehouse_uuid":"133333333333333333333333333333331", "put_time":"2017-08-03 00:00:00", "put_storage":"1000", "uuid":"11111111111"},
-    {"tank_uuid":"00000000000000000000000000000001", "warehouse_uuid":"133333333333333333333333333333331", "put_time":"2017-08-03 00:00:00", "put_storage":"1000", "uuid":"11111111112"},
-    {"tank_uuid":"00000000000000000000000000000001", "warehouse_uuid":"133333333333333333333333333333331", "put_time":"2017-08-03 00:00:00", "put_storage":"1000", "uuid":"11111111113"}
+    {"tank_uuid":"00000000000000000000000000000001", "put_time":"2017-08-03 00:00:00", "put_storage":"1000", "uuid":"11111111111"},
+    {"tank_uuid":"00000000000000000000000000000001", "put_time":"2017-08-03 00:00:00", "put_storage":"1000", "uuid":"11111111112"},
+    {"tank_uuid":"00000000000000000000000000000001", "put_time":"2017-08-03 00:00:00", "put_storage":"1000", "uuid":"11111111113"}
   ]}; 
-
   //清空数据
   this.clearRawData = function(potUuid) {
-   $("#material_details_content_box").html('<tr><td colspan="4" align="center">没数据</td></tr>');
-   //$("#tank_breakdown_content" + potUuid).find("#material_details_content_box").html('<tr><td colspan="4" align="center">没数据</td></tr>');
+   $("#warehouse_pot_details_content" + potUuid).find("#material_details_content_box").html('<tr><td colspan = "4" align = "center">没数据</td></tr>');
   };
   //数据库数据覆盖
   this.serverDataCover = function(potUuid) {
@@ -76,12 +74,12 @@ function MaterialDetails(rows, showRows) {
            '<td>' + i + '</td>'+
            '<td>' + materialDetailsPutTime + '</td>'+
            '<td>' + this.materialDetailsData.data[i].put_storage + '</td>'+
-           '<td><span class = "glyphicon glyphicon-remove material_details_remove" tank_uuid = "' + this.materialDetailsData.data[i].tank_uuid + '" uuid = "' + this.materialDetailsData.data[i].uuid + '"></span></td>'+
+           '<td><span class = "glyphicon glyphicon-remove material_details_remove" uuid = "' + this.materialDetailsData.data[i].uuid + '"></span></td>'+
          '</tr>';
      }
-      $("#material_details_content_box").html(materialDetailsHtml);
+      $("#warehouse_pot_details_content" + potUuid).find("#material_details_content_box").html(materialDetailsHtml);
     } else {
-      $("#material_details_content_box").html('<tr><td colspan="4" align="center">没数据</td></tr>');
+      $("#warehouse_pot_details_content" + potUuid).find("#material_details_content_box").html('<tr><td colspan = "4" align = "center">没数据</td></tr>');
     }
   };
   //初始化事件
@@ -116,7 +114,7 @@ function MaterialDetails(rows, showRows) {
 
   //添加模态框
   this.addModle = function(obj) {
-    var potDetailsUuid = obj.attr("tank_uuid");
+    var potDetailsUuid = obj.attr("warehouse_pot_uuid");
     var mateialAddHtml = 
       `<div class = "modal fade custom_modal" id = "material_add_modle_prop" tabindex = "-1" role = "dialog">
         <div class = "modal-dialog modal-sm" role = "document">
@@ -133,15 +131,15 @@ function MaterialDetails(rows, showRows) {
                </div>
                <span class = "glyphicon glyphicon-calendar form-control-feedback" ></span>
              </div>
-                <div class="form-group has-feedback">
-                   <div class="input-group">
-                     <span class="input-group-addon">入库值</span>
-                     <input type="text" class="form-control material_details_put_val">
+                <div class = "form-group has-feedback">
+                   <div class = "input-group">
+                     <span class = "input-group-addon">入库值</span>
+                     <input type = "text" class = "form-control material_details_put_val">
                    </div>
                 </div>
             </div>
             <div class = "modal-footer noborder nopadding-top" style = "text-align: center;">
-              <button type = "button" class = "btn btn-primary" id = "material_add_modle_prop_btn"  tank_uuid = "${potDetailsUuid}">添加</button>
+              <button type = "button" class = "btn btn-primary" id = "material_add_modle_prop_btn"  warehouse_pot_uuid = "${potDetailsUuid}">添加</button>
               <button type = "button" class = "btn btn-default" data-dismiss = "modal">取消</button>
             </div>
           </div>
@@ -186,7 +184,7 @@ function MaterialDetails(rows, showRows) {
 
   //添加数据
   this.addData = function(obj) {
-    var potDetailsUuid = obj.attr("tank_uuid");
+    var potDetailsUuid = obj.attr("warehouse_pot_uuid");
     var materialDetailsTime = obj.parents("#material_add_modle_prop").find(".material_details_time").val();
     if (0 < materialDetailsTime.length) {
       materialDetailsTime += ' 00:00:00';
@@ -214,7 +212,6 @@ function MaterialDetails(rows, showRows) {
       // 更新页面数据
       this.clearRawData(potDetailsUuid);
       //this.serverDataCover(potDetailsUuid);
-      
       this.materialDetailsData = {"data":[
         {"tank_uuid":"00000000000000000000000000000001", "warehouse_uuid":"133333333333333333333333333333331", "put_time":"2017-08-03 00:00:00", "put_storage":"1000", "uuid":"11111111111"},
         {"tank_uuid":"00000000000000000000000000000001", "warehouse_uuid":"133333333333333333333333333333331", "put_time":"2017-08-03 00:00:00", "put_storage":"1000", "uuid":"11111111111"},
@@ -232,7 +229,7 @@ function MaterialDetails(rows, showRows) {
   //删除按钮
   this.removeModle = function(obj) {
     var materialUuid = obj.attr("uuid");
-    var potDetailsUuid = obj.attr("tank_uuid");
+    var potDetailsUuid = obj.parent().parent().parent().parent().attr("warehouse_pot_uuid");
     var materialDeleteHtml = 
         '<div class = "modal fade custom_modal" id = "material_delete_modle_prop" tabindex = "-1" role = "dialog">'+
           '<div class = "modal-dialog modal-sm" role = "documeint">'+
@@ -243,7 +240,7 @@ function MaterialDetails(rows, showRows) {
               '</div>'+
               '<div class = "modal-body nopadding-bottom"  style = "text-align: center;">确认要删除吗？</div>'+
               '<div class = "modal-footer noborder nopadding-top" style = "text-align: center;">'+
-                '<button type = "button" class = "btn btn-danger" id = "material_delete_modle_prop_btn" tank_uuid = "' + potDetailsUuid + '" uuid = "' + materialUuid + '">删除</button>'+
+                '<button type = "button" class = "btn btn-danger" id = "material_delete_modle_prop_btn" warehouse_pot_uuid = "' + potDetailsUuid + '" uuid = "' + materialUuid + '">删除</button>'+
                 '<button type = "button" class = "btn btn-default" data-dismiss = "modal">取消</button>'+
               '</div>'+
             '</div>'+
@@ -259,7 +256,7 @@ function MaterialDetails(rows, showRows) {
   //删除数据
   this.removeData = function(obj) {
     var uuid = obj.attr("uuid");
-    var potDetailsUuid = obj.attr("tank_uuid");
+    var potDetailsUuid = obj.attr("warehouse_pot_uuid");
     var data = {
       "uuid":uuid
     };
@@ -291,7 +288,7 @@ function MaterialDetails(rows, showRows) {
      '<div class="panel panel-primary ">'+
      '  <div class="panel-heading clearfix">原料明细<span class = "glyphicon glyphicon-plus pull-right" id = "material_details_plus"></span></div>'+
      '  <div class="panel-body">'+
-     '    <table class="table">'+
+     '    <table class="table pot_uuid">'+
      '      <thead>'+
      '        <tr>'+
      '          <th>#</th>'+
@@ -322,9 +319,9 @@ function MaterialDetails(rows, showRows) {
      '    </table>'+
      '  </div>'+
      '  <div id = "material_pages" class = " clearfix">'+
-     '    <nav aria-label="Page navigation" style="text-align: right;">'+
-     '      <ul class="pagination">'+
-     '        <li class="active"><span href="#">1</span></li>'+
+     '    <nav aria-label = "Page navigation" style = "text-align: right;">'+
+     '      <ul class = "pagination">'+
+     '        <li class = "active"><span href = "#">1</span></li>'+
      '      </ul>'+
      '    </nav>'+
      '  </div>'
