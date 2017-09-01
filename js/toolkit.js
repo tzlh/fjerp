@@ -115,6 +115,51 @@ class Toolkit {
     }
     return false;
   }
+
+  /**
+   * 生成bootstrap确认对话框
+   *
+   * @param outputId 输出id，默认为body。
+   * @param title 对话框标题
+   * @param message 对话框消息
+   * @param cancelBtnText 取消按钮文本
+   * @param confirmBtnText 确认按钮文本
+   * @param confirmBtnEvent 确认按钮事件
+   */
+  static generateBootstrapConfimDialog(outputId = "body", title, message, cancelBtnText = "Cancel", confirmBtnText = "OK", confirmBtnEvent) {
+    let confirmBtnId = "_" + Toolkit.getUuid(true);
+    let dialogLogoutConfirmId = "_" + Toolkit.getUuid(true);
+    let btnCode = "";
+    if (null == confirmBtnText) {
+      btnCode = `<button type = "button" class = "btn btn-default" data-dismiss = "modal">${cancelBtnText}</button>`;
+    } else {
+      btnCode = 
+        `<button type = "button" class = "btn btn-danger" id = "${confirmBtnId}">${confirmBtnText}</button>
+        <button type = "button" class = "btn btn-default" data-dismiss = "modal">${cancelBtnText}</button>`;
+    }
+    let code =
+      `<div class = "modal fade custom_modal" id = "${dialogLogoutConfirmId}" tabindex = "-1" role = "dialog" aria-labelledby = "myModalLabel" aria-hidden = "false">
+        <div class = "modal-dialog modal-sm">
+          <div class = "modal-content">
+            <div class = "modal-header bg-primary">
+              <button type = "button" class = "close" data-dismiss = "modal" aria-label = "Close"><span aria-hidden = "true">&times;</span></button>
+              <h4 class = "modal-title">${title}</h4>
+            </div>
+            <div class = "modal-body nopadding-bottom text-center">
+              <h4>${message}</h4>
+            </div>
+            <div class = "modal-footer text-center">${btnCode}</div>
+          </div>
+        </div>
+      </div>`;
+    $(outputId).append(code);
+    // 绑定确认按钮的事件
+    $(document).on("click", `#${confirmBtnId}`, confirmBtnEvent);
+    $(`#${dialogLogoutConfirmId}`).modal("show");
+    $(`#${dialogLogoutConfirmId}`).on("hidden.bs.modal", function(e) {
+      $(this).remove();
+    });
+  }
   
   /**
    * 生成bootstrap分页控件

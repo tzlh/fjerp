@@ -45,15 +45,13 @@ class Header {
     });
     // 登出列表按钮事件绑定
     $(document).on("click", `#${this.listLogoutId}`, function() {
-      currentObject.outputLogoutConfirmDialog();
+      Toolkit.generateBootstrapConfimDialog(this.dialogOutputId, "退出确认", "确认要退出吗？", "取消", "退出", function() {
+        UserStatus.userLogout(currentObject.redirect);
+      });
     });
     // 修改密码按钮事件绑定
     $(document).on("click", `#${this.buttonModifyPasswordId}`, function() {
       currentObject.modifyPassword();
-    });
-    // 登出按钮事件绑定
-    $(document).on("click", `#${this.buttonLogoutId}`, function() {
-      UserStatus.userLogout(currentObject.redirect);
     });
   }
 
@@ -89,35 +87,6 @@ class Header {
     $(this.dialogOutputId).append(code);
     $(`#${this.dialogModifyPasswordId}`).modal("show");
     $(`#${this.dialogModifyPasswordId}`).on("hidden.bs.modal", function(e) {
-      $(this).remove();
-    });
-  }
-
-  /**
-   * 输出登出确认对话框
-   */
-  outputLogoutConfirmDialog() {
-    let code =
-      `<div class = "modal fade custom_modal" id = "${this.dialogLogoutConfirmId}" tabindex = "-1" role = "dialog" aria-labelledby = "myModalLabel" aria-hidden = "false">
-        <div class = "modal-dialog modal-sm">
-          <div class = "modal-content">
-            <div class = "modal-header bg-primary">
-              <button type = "button" class = "close" data-dismiss = "modal" aria-label = "Close"><span aria-hidden = "true">&times;</span></button>
-              <h4 class = "modal-title">退出确认</h4>
-            </div>
-            <div class = "modal-body nopadding-bottom text-center">
-                  <h4>确认要退出吗？</h4>
-            </div>
-            <div class = "modal-footer text-center">
-              <button type = "button" class = "btn btn-danger" id = "${this.buttonLogoutId}">退出</button>
-              <button type = "button" class = "btn btn-default" data-dismiss = "modal">取消</button>
-            </div>
-          </div>
-        </div>
-      </div>`;
-    $(this.dialogOutputId).append(code);
-    $(`#${this.dialogLogoutConfirmId}`).modal("show");
-    $(`#${this.dialogLogoutConfirmId}`).on("hidden.bs.modal", function(e) {
       $(this).remove();
     });
   }

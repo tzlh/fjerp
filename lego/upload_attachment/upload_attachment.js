@@ -5,9 +5,48 @@ class UploadAttachment {
    * 构造函数
    *
    * @param outputId 传入输出的元素id
+   * @param type 0: 查看 1: 可编辑
    */
-  constructor(outputId) {
+  constructor(outputId, type) {
     this.outputId = outputId;
+    this.type = type;
+    // 按钮-添加附件的类
+    this.buttonAttachmentAddCls = "_" + Toolkit.getUuid(true);
+    // 按钮-左查看附件的类
+    this.buttonLeftSlideCls = "_" + Toolkit.getUuid(true);
+    // 按钮-右查看附件的类
+    this.buttonRightSlideCls = "_" + Toolkit.getUuid(true);
+    // 按钮-附件的类
+    this.buttonAttachmentCls = "_" + Toolkit.getUuid(true);
+    // 输入-选择文件的类
+    this.inputChooseFileCls = "_" + Toolkit.getUuid(true);
+    // 链接-附件的类
+    this.linkAttachmentCls = "_" + Toolkit.getUuid(true);
+    // 层-显示附件的类
+    this.divAttachmentDisplay = "_" + Toolkit.getUuid(true);
+    // 层-显示内容的类
+    this.divContentDisplay = "_" + Toolkit.getUuid(true);
+    // 区域-显示附件的类
+    this.areaAttachmentDisplay = "_" + Toolkit.getUuid(true);
+  }
+
+  /**
+   * 加载样式
+   */
+  loadCss() {
+    $(`.${this.buttonLeftSlideCls}`).addClass("upload_attachment_btn_left");
+    $(`.${this.buttonRightSlideCls}`).addClass("upload_attachment_btn_right");
+    $(`.${this.buttonAttachmentCls}`).addClass("upload_attachment_btn");
+    $(`.${this.inputChooseFileCls}`).addClass("upload_attachment_file_choose");
+    $(`.${this.divAttachmentDisplay}`).addClass("upload_attachment_box");
+    $(`.${this.divContentDisplay}`).addClass("upload_attachment_content");
+    $(`.${this.areaAttachmentDisplay}`).addClass("upload_attachment_area");
+    $(`.${this.divContentDisplay} ul`).addClass("upload_attachment_content_ul");
+    $(`.${this.divContentDisplay} ul li`).addClass("upload_attachment_content_ul_li");
+    $(`.${this.divContentDisplay} ul li a`).addClass("upload_attachment_content_ul_li_a");
+    $(`.${this.divContentDisplay} ul li a img`).addClass("upload_attachment_content_ul_li_a_img");
+    $(`.${this.buttonAttachmentAddCls} > img`).addClass("upload_attachment_add-img");
+    $(`.${this.linkAttachmentCls} > button`).addClass("upload_attachment_file-button");
   }
 
   /**
@@ -106,12 +145,13 @@ class UploadAttachment {
    * 绑定上传附件按钮事件
    */
   buttonEventBind() {
+    let currentObject = this;
     // 模拟打开“文件选择”对话框事件
-    $(this.outputId).find(".upload_attachment_add").click(function() {
-      $(this.outputId).find(".upload_attachment_file_choose").trigger("click");
+    $(document).on("click", `.${this.buttonAttachmentAddCls}`, function() {
+      $(document).find(`.${currentObject.inputChooseFileCls}`).trigger("click");
     });
     // 选择文件后的内容改变事件
-    $(document).on("change", `${this.outputId} .upload_attachment_file_choose`, function() {
+    $(document).on("change", `${this.outputId} .${this.inputChooseFileCls}`, function() {
       for (let i = 0; i < $(this)[0].files.length; i++) {
         let formData = new FormData();
         formData.append("file", $(this)[0].files[i]);
@@ -119,154 +159,106 @@ class UploadAttachment {
         if (1 == result.status) {
           // 上传成功
           result = JSON.parse(result.result);
-          let imgSrc = getDisplayImageSrc(result.file_name);
-          $(this.outputId).find("ul").append(
+          let imgSrc = currentObject.getDisplayImageSrc(result.file_name);
+          $(currentObject.outputId).find("ul").append(
             `<li>
-              <a class = "upload_attachment_file" data-cluster = "${result.cluster_name}" data-url = "${Configure.getProjectPath(2)}upload/${result.file_name}">
+              <a class = "${currentObject.linkAttachmentCls}" data-cluster = "${result.cluster_name}" data-url = "${Configure.getProjectPath(2)}upload/${result.file_name}">
                 <button class="btn btn-danger"><span class="glyphicon glyphicon-remove  btn-danger"></span></button>
                 <img src = "${imgSrc}">
               </a>
             </li>`
           );
+          currentObject.loadCss();
         } else {
           alert(`[${$(this)[0].files[i].name}]上传失败`)
           return;
         }
       }
-      $(this.outputId).find(".upload_attachment_file_choose").val("");
+      $(currentObject.outputId).find(`.${currentObject.inputChooseFileCls}`).val("");
       // 绑定新页面打开附件事件
-      $(this.outputId).find(".upload_attachment_file").unbind("click");
-      $(this.outputId).find(".upload_attachment_file").click(function() {
+      $(currentObject.outputId).find(`.${currentObject.linkAttachmentCls}`).unbind("click");
+      $(currentObject.outputId).find(`.${currentObject.linkAttachmentCls}`).click(function() {
         window.open($(this).attr("data-url"));
       });
       // 绑定删除附件按钮事件
-      $(this.outputId).find(".upload_attachment_file button").unbind("click");
-      $(this.outputId).find(".upload_attachment_file button").click(function() {
+      $(currentObject.outputId).find(`.${currentObject.linkAttachmentCls} button`).unbind("click");
+      $(currentObject.outputId).find(`.${currentObject.linkAttachmentCls} button`).click(function() {
         $(this).parent().parent().remove();
       });
     });
     // 绑定左滚动按钮事件
-    $(this.outputId).find(".upload_attachment_btn_left").click(function() {
-      let leftValue = parseInt($(this.outputId).find(".upload_attachment_box").css("left"));
-      let step = leftValue + $(this.outputId).find("a").width();
+    $(currentObject.outputId).find(`.${currentObject.buttonLeftSlideCls}`).click(function() {
+      let leftValue = parseInt($(currentObject.outputId).find(`.${currentObject.divAttachmentDisplay}`).css("left"));
+      let step = leftValue + $(currentObject.outputId).find("a").width();
       if (0 <= step) {
         step = 0;
       }
-      $(this.outputId).find(".upload_attachment_box").css("left", step);
+      $(currentObject.outputId).find(`.${currentObject.divAttachmentDisplay}`).css("left", step);
     });
     // 绑定右滚动按钮事件
-    $(this.outputId).find(".upload_attachment_btn_right").click(function() {
-      let liList = $(this.outputId).find("ul").children("li");
-      let leftValue = parseInt($(this.outputId).find(".upload_attachment_box").css("left"));
-      let step = leftValue - $(this.outputId).find("a").width();
-      if ($(this.outputId).find("a").width() * liList.length - $(this.outputId).find("a").width() > Math.abs(step)) {
-        $(this.outputId).find(".upload_attachment_box").css("left", step);
+    $(currentObject.outputId).find(`.${currentObject.buttonRightSlideCls}`).click(function() {
+      let liList = $(currentObject.outputId).find("ul").children("li");
+      let leftValue = parseInt($(currentObject.outputId).find(`.${currentObject.divAttachmentDisplay}`).css("left"));
+      let step = leftValue - $(currentObject.outputId).find("a").width();
+      if ($(currentObject.outputId).find("a").width() * liList.length - $(currentObject.outputId).find("a").width() > Math.abs(step)) {
+        $(currentObject.outputId).find(`.${currentObject.divAttachmentDisplay}`).css("left", step);
       }
     });
   }
 
   /**
-   * 输出上传附件（查看）
-   *
-   * @param fileData 文件数据的json对象。需要一个key：file_name。file_name: 文件上传后的文件名，比如：a29cs8d82ka29cs8d82ka29cs8d82k22.png
-   */
-  outputPreview(fileData) {
-    let data = "<ul>";
-    for (let i = 0; i < fileData.length; i++) {
-      let dataCluster = fileData[i].file_name.substring(0, fileData[i].file_name.indexOf("."));
-      let imgSrc = this.getDisplayImageSrc(fileData[i].file_name);
-      data +=
-        `<li>
-          <a class = "upload_attachment_file" data-cluster = "${dataCluster}" data-url = "${Configure.getProjectPath(2)}upload/${fileData[i].file_name}">
-            <img src = "${imgSrc}">
-          </a>
-        </li>`;
-    }
-    data += '</ul>';
-    let code = 
-      `<div class = "upload_attachment_area">
-        <div class = "upload_attachment_btn upload_attachment_btn_left"><span class = "glyphicon glyphicon-chevron-left"></span></div>
-        <div class = "upload_attachment_content">
-          <input class = "upload_attachment_file_choose" type = "file" multiple = "multiple" accept = "image/png, aplication/zip, text/plain, application/pdf, accept=application/rtf, application/msword, application/msexcel, image/jpeg, image/jpeg, image/jpeg, image/jp2, image/gif" />
-          <div class = "upload_attachment_box">${data}</div>
-        </div>
-        <div class = "upload_attachment_btn upload_attachment_btn_right"><span class = "glyphicon glyphicon-chevron-right"></span></div>
-      </div>`;
-    $(this.outputId).html(code);
-    // 绑定新页面打开附件事件
-    $(this.outputId).find(".upload_attachment_file").unbind("click");
-    $(this.outputId).find(".upload_attachment_file").click(function() {
-      window.open($(this).attr("data-url"));
-    });
-    // 绑定左右滚动按钮事件
-    $(this.outputId).find(".upload_attachment_btn_left").click(function() {
-      let leftValue = parseInt($(this.outputId).find(".upload_attachment_box").css("left"));
-      let step = leftValue + $(this.outputId).find("a").width();
-      if (0 <= step) {
-        step = 0;
-      }
-      $(this.outputId).find(".upload_attachment_box").css("left", step);
-    });
-    $(this.outputId).find(".upload_attachment_btn_right").click(function() {
-      let liList = $(this.outputId).find("ul").children("li");
-      let leftValue = parseInt($(this.outputId).find(".upload_attachment_box").css("left"));
-      let step = leftValue - $(this.outputId).find("a").width();
-      if ($(this.outputId).find("a").width() * liList.length - $(this.outputId).find("a").width() > Math.abs(step)) {
-        $(this.outputId).find(".upload_attachment_box").css("left", step);
-      }
-    });
-  }
-
-  /**
-   * 输出上传附件（编辑）
+   * 输出上传附件
    *
    * @param fileData 文件数据的json对象。需要一个key：file_name。
    */
-  outputEdit(fileData) {
+  output(fileData) {
     let data = "";
+    let addBtnCode = "";
+    let removeBtnCode = "";
+    if (1 == this.type) {
+      addBtnCode = `<li><a class = "${this.buttonAttachmentAddCls}"><img src = "../../img/add_attachment.png"></a></li>`;
+      removeBtnCode = `<button class="btn btn-danger"><span class="glyphicon glyphicon-remove  btn-danger"></span></button>`;
+    }
     if (null != fileData) {
       for (let i = 0; i < fileData.length; i++) {
         let dataCluster = fileData[i].file_name.substring(0, fileData[i].file_name.indexOf("."));
         let imgSrc = this.getDisplayImageSrc(fileData[i].file_name);
         data += 
           `<li>
-            <a class = "upload_attachment_file" data-cluster = "${dataCluster}" data-url = "${Configure.getProjectPath(2)}upload/${fileData[i].file_name}">
-              <button class="btn btn-danger"><span class="glyphicon glyphicon-remove  btn-danger"></span></button>
+            <a class = "${this.linkAttachmentCls}" data-cluster = "${dataCluster}" data-url = "${Configure.getProjectPath(2)}upload/${fileData[i].file_name}">
+              ${removeBtnCode}
               <img src = "${imgSrc}">
             </a>
           </li>`;
       }
     }
     let code = 
-      `<div class = "upload_attachment_area">
-        <div class = "upload_attachment_btn upload_attachment_btn_left"><span class = "glyphicon glyphicon-chevron-left"></span></div>
-        <div class = "upload_attachment_content">
-          <input class = "upload_attachment_file_choose" type = "file" multiple = "multiple" accept = "image/png, aplication/zip, text/plain, application/pdf,  image/jpeg, image/jpeg, image/jpeg, image/jp2, image/gif" />
-          <div class = "upload_attachment_box">
+      `<div class = "${this.areaAttachmentDisplay}">
+        <div class = "${this.buttonAttachmentCls} ${this.buttonLeftSlideCls}"><span class = "glyphicon glyphicon-chevron-left"></span></div>
+        <div class = "${this.divContentDisplay}">
+          <input class = "${this.inputChooseFileCls}" type = "file" multiple = "multiple" accept = "image/png, aplication/zip, text/plain, application/pdf,  image/jpeg, image/jpeg, image/jpeg, image/jp2, image/gif" />
+          <div class = "${this.divAttachmentDisplay}">
             <ul>
-              <li>
-                <a class = "upload_attachment_add">
-                  <img src = "../../img/add_attachment.png">
-                </a>
-              </li>
+              ${addBtnCode}
               ${data}
             </ul>
           </div>
         </div>
-        <div class = "upload_attachment_btn upload_attachment_btn_right"><span class = "glyphicon glyphicon-chevron-right"></span></div>
+        <div class = "${this.buttonAttachmentCls} ${this.buttonRightSlideCls}"><span class = "glyphicon glyphicon-chevron-right"></span></div>
       </div>`;
     $(this.outputId).html(code);
     // 绑定新页面打开附件事件
-    $(this.outputId).find(".upload_attachment_file").unbind("click");
-    $(this.outputId).find(".upload_attachment_file").click(function() {
+    $(this.outputId).find(`.${this.linkAttachmentCls}`).unbind("click");
+    $(this.outputId).find(`.${this.linkAttachmentCls}`).click(function() {
       window.open($(this).attr("data-url"));
     });
     // 绑定删除附件按钮事件
-    $(this.outputId).find(".upload_attachment_file button").unbind("click");
-    $(this.outputId).find(".upload_attachment_file button").click(function() {
+    $(this.outputId).find(`.${this.linkAttachmentCls} button`).unbind("click");
+    $(this.outputId).find(`.${this.linkAttachmentCls} button`).click(function() {
       $(this).parent().parent().remove();
     });
     this.buttonEventBind(this.outputId);
+    this.loadCss();
   }
 
   /**

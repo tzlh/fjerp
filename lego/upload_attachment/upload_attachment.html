@@ -12,8 +12,8 @@
 <script>
   $(document).ready(function() {
     // 生成对象
-    let previewAreaUa = new UploadAttachment("#preview_area");
-    let editAreaUa = new UploadAttachment("#edit_area");
+    let previewAreaUa = new UploadAttachment("#preview_area", 0);
+    let editAreaUa = new UploadAttachment("#edit_area", 1);
     // demo数据
     let demoData = [
       {"file_name": "00d064c120a7486190f1a9bb8d115f2b.jpg"},
@@ -26,14 +26,14 @@
       {"file_name": "1ea46f7e5f694ba88c9f3da362e42067.jpg"}
     ];
     // 预览示例
-    previewAreaUa.outputPreview(demoData);
-    let previewClusterData = previewAreaUa.getClusterArray();
+    previewAreaUa.output(demoData);
+    // let previewClusterData = previewAreaUa.getClusterArray();
     // 编辑示例
-    editAreaUa.outputEdit(demoData);
-    // 获取数据示例
-    for (var i = 0; i < clusterData.length; i++) {
-      console.log(clusterData[i].cluster);
-    }
+    editAreaUa.output(demoData);
+    // // 获取数据示例
+    // for (var i = 0; i < clusterData.length; i++) {
+    //   console.log(clusterData[i].cluster);
+    // }
   });
 </script>
 <title>demo</title>
