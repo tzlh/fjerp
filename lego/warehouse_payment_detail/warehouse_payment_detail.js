@@ -84,7 +84,7 @@ function calc_total_data() {
     ' <td>' + receipt + '</td>'+
     ' <td>' + payment + '</td>'+
     ' <td>&nbsp;</td>'+
-    ' <td>' + interest + '</td>'+
+    ' <td>' + interest.toFixed(2) + '</td>'+
     '</tr>';
   $("#warehouse_payment_detail_list_box").append(content);
 }
