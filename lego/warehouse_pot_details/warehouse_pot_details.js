@@ -2,8 +2,10 @@
  * @author wangdi
  */
 function WarehousePotDetails() {
+  //检尺值总和
+  this.cull_val_total = 0;
   //原料记录的对象
-  //var materialDetails = new MaterialDetails(2, 2);
+  var materialDetails = new MaterialDetails(2, 2);
   // 储罐信息
   this.potDetailsData = {"data":[
    {"warehouse_uuid":"133333333333333333333333333333331", "ingredient_name":"原料a", "put_storage":"1000", "cull_value":"10000", "difference":"-200", "uuid":"00000000000000000000000000000001"},
@@ -14,7 +16,6 @@ function WarehousePotDetails() {
   //清空数据
   this.clearRawData = function(warehouseUuid) {
     $("#warehouse_detailes_content" + warehouseUuid).find("#warehouse_pot_details_content_box").html('<tr><td colspan = "6" align = "center">没数据</td></tr>');
-    //$("#warehouse_pot_details_content_box").html('<tr><td colspan = "6" align = "center">没数据</td></tr>');
   };
 
   //服务器数据覆盖
@@ -56,6 +57,7 @@ function WarehousePotDetails() {
   this.fillVariableData = function(warehouseUuid) {
     if (isJsonObjectHasData(this.potDetailsData)) {
      var warehousePotDetailsHtml = "";
+     this.cull_val_total = 0;
      for (var i = 0; i < this.potDetailsData.data.length; i++) {
        warehousePotDetailsHtml +=
          '<tr class = "warehouse_pot_details_tr">'+
@@ -66,7 +68,7 @@ function WarehousePotDetails() {
                '<span class = "input-group-addon warehouse_pot_ingredient_icon" warehouse_uuid = "'+ this.potDetailsData.data[i].warehouse_uuid +'" uuid = "' +  this.potDetailsData.data[i].uuid + '"><span class = "glyphicon glyphicon-floppy-disk"></span></span>'+
              '</div>'+
            '</td>'+
-           '<td width = "20%" style = "text-align: center;">' + this.potDetailsData.data[i].put_storage + '</td>'+
+           '<td class = "put_val_number" width = "20%" style = "text-align: center;">' + this.potDetailsData.data[i].put_storage + '</td>'+
            '<td width = "20%" style = "text-align: center;">'+
            '   <div class = "input-group">'+
            '     <input type = "text" class = "form-control warehouse_pot_cull_value" value = "' + this.potDetailsData.data[i].cull_value + '">'+
@@ -76,12 +78,11 @@ function WarehousePotDetails() {
            '<td width = "20%" style = "text-align: center;">' + this.potDetailsData.data[i].difference + '</td>'+
            '<td width = "10%"><span class = "glyphicon glyphicon-remove warehouse_pot_details_remove" warehouse_uuid = "'+ this.potDetailsData.data[i].warehouse_uuid +'" uuid = "' + this.potDetailsData.data[i].uuid + '"></span></td>'+
          '</tr>';
+       this.cull_val_total += Number(this.potDetailsData.data[i].cull_value);
      }
       $("#warehouse_detailes_content" + warehouseUuid).find("#warehouse_pot_details_content_box").html(warehousePotDetailsHtml);
-      //$("#warehouse_pot_details_content_box").html(warehousePotDetailsHtml);
     } else {
       $("#warehouse_detailes_content" + warehouseUuid).find("#warehouse_pot_details_content_box").html('<tr><td colspan = "6" align = "center">没数据</td></tr>');
-      //$("#warehouse_pot_details_content_box").html('<tr><td colspan = "6" align = "center">没数据</td></tr>');
     }
   };
   //初始化事件
@@ -120,6 +121,7 @@ function WarehousePotDetails() {
   //展开库区明细
   this.openInfoFunc = function(obj) {
     var warehousePotDetailsUuid = obj.attr("uuid");
+    var warehouseUuid = obj.attr("warehouse_uuid");
     var warehousePotDetailsSubHtml =
       '<tr class = "warehouse_pot_details_sub_all">'+
         '<td colspan="11">'+
@@ -142,10 +144,12 @@ function WarehousePotDetails() {
     }
     materialDetails.materialOutput("#warehouse_pot_details_content" + warehousePotDetailsUuid);
     $("#warehouse_pot_details_content" + warehousePotDetailsUuid).find("#material_details_plus").attr("warehouse_pot_uuid", warehousePotDetailsUuid);
+    $("#warehouse_pot_details_content" + warehousePotDetailsUuid).find("#material_details_plus").attr("warehouse_uuid", warehouseUuid);
     $("#warehouse_pot_details_content" + warehousePotDetailsUuid).find(".pot_uuid").attr("warehouse_pot_uuid", warehousePotDetailsUuid);
+    $("#warehouse_pot_details_content" + warehousePotDetailsUuid).find(".pot_uuid").attr("warehouse_uuid", warehouseUuid);
     $("#warehouse_pot_details_content" + warehousePotDetailsUuid).find("#material_pages").attr("warehouse_pot_uuid", warehousePotDetailsUuid);
     materialDetails.clearRawData(warehousePotDetailsUuid);
-    //materialDetails.serverDataCover(warehousePotDetailsUuid);
+    materialDetails.serverDataCover(warehousePotDetailsUuid);
     materialDetails.fillVariableData(warehousePotDetailsUuid);
   };
 
@@ -207,19 +211,13 @@ function WarehousePotDetails() {
        "check_value":warehousePotMaterialCheckValue
     };
     console.log(warehouseUuid)
-    //var detailsAddUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=addWarehousePotMaterial";
-    //var detailsAddGetContract = ajax_assistant(detailsAddUrl, warehousePotData, false, true, false);
-    //if ("1" == detailsAddGetContract.status) {
-    if ("abc" == warehousePotMaterialName) {
+    var detailsAddUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=addWarehousePotMaterial";
+    var detailsAddGetContract = ajax_assistant(detailsAddUrl, warehousePotData, false, true, false);
+    if ("1" == detailsAddGetContract.status) {
       this.clearRawData(warehouseUuid);
-      //this.serverDataCover(warehouseUuid);
-      this.potDetailsData = {"data":[
-       {"warehouse_uuid":"133333333333333333333333333333331", "ingredient_name":"原料a", "put_storage":"1000", "cull_value":"10000", "difference":"-200", "uuid":"00000000000000000000000000000001"},
-       {"warehouse_uuid":"133333333333333333333333333333331", "ingredient_name":"原料a", "put_storage":"1000", "cull_value":"10000", "difference":"-200", "uuid":"00000000000000000000000000000001"},
-       {"warehouse_uuid":"133333333333333333333333333333331", "ingredient_name":"原料b", "put_storage":"7777777000", "cull_value":"10000", "difference":"-200", "uuid":"00000000000000000000000000000002"},
-       {"warehouse_uuid":"133333333333333333333333333333331", "ingredient_name":"原料c", "put_storage":"1000", "cull_value":"10000", "difference":"-200", "uuid":"00000000000000000000000000000003"}]
-      }; 
+      this.serverDataCover(warehouseUuid);
       this.fillVariableData(warehouseUuid);
+      $("#warehouse_detailes_content" + warehouseUuid ).parent().parent().parent().parent().prev().find(".warehouse_cull_val").html(Number(this.cull_val_total).toFixed(2));
       $("#warehouse_pot_add_modle_prop").modal("hide");
       $("#warehouse_pot_add_modle_prop").on("hidden.bs.modal", function(e) {
         $(this).remove();
@@ -242,17 +240,11 @@ function WarehousePotDetails() {
       "uuid":uuid,
       "name":warehousePotMaterialName
     }; 
-    //var detailsEditNameDataUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=modifyWarehousePotMaterial";
-    //var editNameDeleteDataGet = ajax_assistant(detailsEditNameDataUrl, data, false, true, false);
-    //if ("1" == editNameDeleteDataGet.status) {
-      if ("abc" == warehousePotMaterialName) {
+    var detailsEditNameDataUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=modifyWarehousePotMaterial";
+    var editNameDeleteDataGet = ajax_assistant(detailsEditNameDataUrl, data, false, true, false);
+    if ("1" == editNameDeleteDataGet.status) {
       this.clearRawData(warehouseUuid);
-      //this.serverDataCover(warehouseUuid);
-      this.potDetailsData = {"data":[
-        {"warehouse_uuid":"133333333333333333333333333333331", "ingredient_name":"原料aaaaaaa", "put_storage":"1000", "cull_value":"10000", "difference":"-200", "uuid":"00000000000000000000000000000001"},
-        {"warehouse_uuid":"133333333333333333333333333333331", "ingredient_name":"原料b", "put_storage":"7777777000", "cull_value":"10000", "difference":"-200", "uuid":"00000000000000000000000000000002"},
-        {"warehouse_uuid":"133333333333333333333333333333331", "ingredient_name":"原料c", "put_storage":"1000", "cull_value":"10000", "difference":"-200", "uuid":"00000000000000000000000000000003"}]
-       }; 
+      this.serverDataCover(warehouseUuid);
       this.fillVariableData(warehouseUuid);
       alert("修改原料名称成功");
     } else {
@@ -273,19 +265,14 @@ function WarehousePotDetails() {
       "uuid":uuid,
       "check_value":warehousePotEditCull
     };
-    //var detailsEditCullDataUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=modifyWarehousePotMaterial";
-    //var detailsEditCullDeleteDataGet = ajax_assistant(detailsEditCullDataUrl, data, false, true, false);
-    //if ("1" == detailsEditCullDeleteDataGet.status) {
-    if ("123" == warehousePotEditCull) {
+    var detailsEditCullDataUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=modifyWarehousePotMaterial";
+    var detailsEditCullDeleteDataGet = ajax_assistant(detailsEditCullDataUrl, data, false, true, false);
+    if ("1" == detailsEditCullDeleteDataGet.status) {
       alert("修改检尺值成功");
       this.clearRawData(warehouseUuid);
-      //this.serverDataCover(warehouseUuid);
-      this.potDetailsData = {"data":[
-        {"warehouse_uuid":"133333333333333333333333333333331", "ingredient_name":"原料a", "put_storage":"1000", "cull_value":"1888888", "difference":"-200", "uuid":"00000000000000000000000000000001"},
-        {"warehouse_uuid":"133333333333333333333333333333331", "ingredient_name":"原料b", "put_storage":"7777777000", "cull_value":"10000", "difference":"-200", "uuid":"00000000000000000000000000000002"},
-        {"warehouse_uuid":"133333333333333333333333333333331", "ingredient_name":"原料c", "put_storage":"1000", "cull_value":"10000", "difference":"-200", "uuid":"00000000000000000000000000000003"}]
-       }; 
+      this.serverDataCover(warehouseUuid);
       this.fillVariableData(warehouseUuid);
+      $("#warehouse_detailes_content" + warehouseUuid ).parent().parent().parent().parent().prev().find(".warehouse_cull_val").html(Number(this.cull_val_total).toFixed(2));
     } else {
       alert("修改检尺值失败");
     }
@@ -326,20 +313,16 @@ function WarehousePotDetails() {
       "uuid":uuid
     };
     //接口数据
-    //var detailsDeleteDataUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=removeWarehousePotMaterial";
-    //var detailsDeleteDataGet = ajax_assistant(detailsDeleteDataUrl, data, false, true, false);
-    //if ("1" != detailsDeleteDataGet.status){
-    if ("00000000000000000000000000000001" != uuid) {
+    var detailsDeleteDataUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=removeWarehousePotMaterial";
+    var detailsDeleteDataGet = ajax_assistant(detailsDeleteDataUrl, data, false, true, false);
+    if ("1" != detailsDeleteDataGet.status){
       alert("删除储罐失败");
     } else {  
       // 更新页面数据
       this.clearRawData(warehouseUuid);
-      //this.serverDataCover(warehouseUuid);
-      this.potDetailsData = {"data":[
-        {"warehouse_uuid":"133333333333333333333333333333331", "ingredient_name":"原料b", "put_storage":"7777777000", "cull_value":"10000", "difference":"-200", "uuid":"00000000000000000000000000000002"},
-        {"warehouse_uuid":"133333333333333333333333333333331", "ingredient_name":"原料c", "put_storage":"1000", "cull_value":"10000", "difference":"-200", "uuid":"00000000000000000000000000000003"}]
-       }; 
+      this.serverDataCover(warehouseUuid);
       this.fillVariableData(warehouseUuid);
+      $("#warehouse_detailes_content" + warehouseUuid ).parent().parent().parent().parent().prev().find(".warehouse_cull_val").html(Number(this.cull_val_total).toFixed(2));
       $("#warehouse_pot_delete_modle_prop").modal("hide");
       $("#warehouse_pot_delete_modle_prop").on("hidden.bs.modal", function(e) {
         $(this).remove();

@@ -92,8 +92,8 @@ function WarehouseDetailes() {
          '<tr class = "warehouse_detailes_tr">'+
            '<td><button type = "button" class = "btn btn-info btn-xs warehouse_detailes_open_btn" warehouse_uuid = "'+ this.warehouseData.data[i].uuid + '"><span class = "glyphicon glyphicon-chevron-down"></span></button></td>'+
            '<td>' + name + '</td>'+
-           '<td>' + Number(putStorage).toFixed(2) + '</td>'+
-           '<td>' + Number(cullValue).toFixed(2) + '</td>'+
+           '<td class = warehouse_put_storage>' + Number(putStorage).toFixed(2) + '</td>'+
+           '<td class = "warehouse_cull_val">' + Number(cullValue).toFixed(2) + '</td>'+
            '<td>' + Number(difference).toFixed(2) + '</td>'+
          '</tr>';
      }
@@ -130,7 +130,7 @@ function WarehouseDetailes() {
     $("#warehouse_detailes_content" + warehouseDetailesUuid).find("#warehouse_pot_add_plus").attr("warehouse_uuid", warehouseDetailesUuid);
     $("#warehouse_detailes_content" + warehouseDetailesUuid).find(".warehouse_details_uuid").attr("warehouse_uuid", warehouseDetailesUuid);
     potDetails.clearRawData(warehouseDetailesUuid);
-    //potDetails.serverDataCover(warehouseDetailesUuid);
+    potDetails.serverDataCover(warehouseDetailesUuid);
     potDetails.fillVariableData(warehouseDetailesUuid);
   };
 };
