@@ -260,7 +260,7 @@ function SettlementBillBuy(trade_contract_code, trade_contract_code_uuid, settle
     var amount_corresponding = obj.parents(".modal-body").find(".amount_corresponding_a").val();
     if (0 < volume_corresponding.length && 0 < price_corresponding.length && 0 < amount_corresponding.length && !isNaN(volume_corresponding) && !isNaN(price_corresponding) && !isNaN(amount_corresponding)) {
       obj.parents(".modal-body").find(".total_price").val((volume_corresponding*price_corresponding).toFixed(2));
-      obj.parents(".modal-body").find(".return_money_should").val((volume_corresponding*price_corresponding-amount_corresponding).toFixed(2));
+      obj.parents(".modal-body").find(".return_money_should").val(Math.abs((volume_corresponding * price_corresponding - amount_corresponding)).toFixed(2));
     } else if (0 < volume_corresponding.length && 0 < price_corresponding.length && 0 >= amount_corresponding.length && !isNaN(volume_corresponding) && !isNaN(price_corresponding)) {
       obj.parents(".modal-body").find(".total_price").val((volume_corresponding*price_corresponding).toFixed(2));
       obj.parents(".modal-body").find(".return_money_should").val("");
