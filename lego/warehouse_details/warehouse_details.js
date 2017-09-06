@@ -41,7 +41,7 @@ function WarehouseDetailes() {
       } else {
         var tmpArr = new Array();
         var warehouseResult = JSON.parse(warehouseGetContract.result);  
-        console.log(warehouseResult);
+        //console.log(warehouseResult);
         for (var i = 0; i < warehouseResult.length; i++) {
           var putStorageAll = 0;
           var checkValueAll = 0;
@@ -49,7 +49,7 @@ function WarehouseDetailes() {
           if (1 == potGetContract.status) {
             var potMaterialResult = JSON.parse(potGetContract.result);
             if (0 == potGetContract.count) {
-              alert("储罐原料没数据");
+              //alert("储罐原料没数据");
             } else {
               for (var j = 0; j < potMaterialResult.length; j++) {
                  if (warehouseResult[i].uuid == potMaterialResult[j].pot_uuid) {
@@ -94,7 +94,7 @@ function WarehouseDetailes() {
            '<td>' + name + '</td>'+
            '<td class = warehouse_put_storage>' + Number(putStorage).toFixed(2) + '</td>'+
            '<td class = "warehouse_cull_val">' + Number(cullValue).toFixed(2) + '</td>'+
-           '<td>' + Number(difference).toFixed(2) + '</td>'+
+           '<td class = "warehouse_difference_val">' + Number(difference).toFixed(2) + '</td>'+
          '</tr>';
      }
       $("#warehouse_detailes_content_box").html(warehouseDetailesHtml);
@@ -133,4 +133,48 @@ function WarehouseDetailes() {
     potDetails.serverDataCover(warehouseDetailesUuid);
     potDetails.fillVariableData(warehouseDetailesUuid);
   };
+  //输出文本
+  this.outPutWarehouseDetaileContent = function(contentBox) {
+    var content = 
+      `<div class="panel panel-primary">
+        <div class="panel-heading">库区明细</div>
+        <div class="panel-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>储罐名称</th>
+                <th>入库值</th>
+                <th>检尺值</th>
+                <th>差值</th>
+              </tr>
+            </thead>
+            <tbody id = "warehouse_detailes_content_box">
+              <tr>
+                <td><button type = "button" class = "btn btn-info btn-xs"><span class = "glyphicon glyphicon-chevron-down"></span></button></td>
+                <td>3000</td>
+                <td>3000</td>
+                <td>3000</td>
+                <td>-200</td>
+              </tr>
+              <tr>
+                <td><button type = "button" class = "btn btn-info btn-xs"><span class = "glyphicon glyphicon-chevron-down"></span></button></td>
+                <td>3000</td>
+                <td>3000</td>
+                <td>3000</td>
+                <td>-200</td>
+              </tr>
+              <tr>
+                <td><button type = "button" class = "btn btn-info btn-xs"><span class = "glyphicon glyphicon-chevron-down"></span></button></td>
+                <td>3000</td>
+                <td>3000</td>
+                <td>3000</td>
+                <td>-200</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>`;
+    $(contentBox).html(content);
+  }
 };

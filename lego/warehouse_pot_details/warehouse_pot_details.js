@@ -5,7 +5,7 @@ function WarehousePotDetails() {
   //检尺值总和
   this.cull_val_total = 0;
   //原料记录的对象
-  var materialDetails = new MaterialDetails(2, 2);
+  var materialDetails = new MaterialDetails();
   // 储罐信息
   this.potDetailsData = {"data":[
    {"warehouse_uuid":"133333333333333333333333333333331", "ingredient_name":"原料a", "put_storage":"1000", "cull_value":"10000", "difference":"-200", "uuid":"00000000000000000000000000000001"},
@@ -39,7 +39,7 @@ function WarehousePotDetails() {
           };
           var potMaterialSumGetContract = ajax_assistant(potMaterialSumUrl, potiData, false, true, false);
           var potMaterialSumResult = JSON.parse(potMaterialSumGetContract.result);
-          console.log(potMaterialSumResult);
+          //console.log(potMaterialSumResult);
           var checkValueAll = warehousePotDetailsResult[i].check_value;  
           var difference_c = checkValueAll - potMaterialSumResult[0].sum;
           tmpArr[i] = {"warehouse_uuid":warehousePotDetailsResult[i].pot_uuid, "ingredient_name":warehousePotDetailsResult[i].name,  "put_storage":potMaterialSumResult[0].sum, "cull_value":checkValueAll, "difference":difference_c, "uuid":warehousePotDetailsResult[i].uuid};
@@ -63,6 +63,7 @@ function WarehousePotDetails() {
          '<tr class = "warehouse_pot_details_tr">'+
            '<td width = "10%"><button type = "button" class = "btn btn-info btn-xs warehouse_pot_details_open_btn" warehouse_uuid = "'+ this.potDetailsData.data[i].warehouse_uuid + '"  uuid = "' + this.potDetailsData.data[i].uuid + '"><span class = "glyphicon glyphicon-chevron-down"></span></button></td>'+
            '<td width = "20%" style = "text-align: center;">'+
+             '<input type = "hidden" class = "warehouse_pot_ingredient_val_hidden" value = "' + this.potDetailsData.data[i].ingredient_name + '">'+
              '<div class = "input-group">'+
                '<input type = "text" class = "form-control warehouse_pot_ingredient_val" value = "' + this.potDetailsData.data[i].ingredient_name + '">'+
                '<span class = "input-group-addon warehouse_pot_ingredient_icon" warehouse_uuid = "'+ this.potDetailsData.data[i].warehouse_uuid +'" uuid = "' +  this.potDetailsData.data[i].uuid + '"><span class = "glyphicon glyphicon-floppy-disk"></span></span>'+
@@ -75,13 +76,14 @@ function WarehousePotDetails() {
            '     <span class = "input-group-addon warehouse_pot_cull_icon" warehouse_uuid = "'+ this.potDetailsData.data[i].warehouse_uuid +'" uuid = "' +  this.potDetailsData.data[i].uuid + '"><span class = "glyphicon glyphicon-floppy-disk"></span></span>'+
            '   </div>'+
            ' </td>'+
-           '<td width = "20%" style = "text-align: center;">' + this.potDetailsData.data[i].difference + '</td>'+
+           '<td width = "20%" style = "text-align: center;" class = "warehouse_pot_difference_val">' + this.potDetailsData.data[i].difference + '</td>'+
            '<td width = "10%"><span class = "glyphicon glyphicon-remove warehouse_pot_details_remove" warehouse_uuid = "'+ this.potDetailsData.data[i].warehouse_uuid +'" uuid = "' + this.potDetailsData.data[i].uuid + '"></span></td>'+
          '</tr>';
        this.cull_val_total += Number(this.potDetailsData.data[i].cull_value);
      }
       $("#warehouse_detailes_content" + warehouseUuid).find("#warehouse_pot_details_content_box").html(warehousePotDetailsHtml);
     } else {
+      this.cull_val_total = 0;
       $("#warehouse_detailes_content" + warehouseUuid).find("#warehouse_pot_details_content_box").html('<tr><td colspan = "6" align = "center">没数据</td></tr>');
     }
   };
@@ -210,7 +212,19 @@ function WarehousePotDetails() {
        "name":warehousePotMaterialName,
        "check_value":warehousePotMaterialCheckValue
     };
-    console.log(warehouseUuid)
+    var checkWarehousePotName = {
+       "pot_uuid":warehouseUuid,
+       "name":warehousePotMaterialName,
+    };
+    //判断原料名称是否存在
+    var detailsUrlNameExist = PROJECT_PATH + "lego/lego_fjTrade?servletName=checkWarehousePotMaterialNameExist";
+    var detailsAddGetContractNameExist = ajax_assistant(detailsUrlNameExist, checkWarehousePotName, false, true, false);
+    //console.log(detailsAddGetContractNameExist)
+    if("1" != detailsAddGetContractNameExist.status) {
+      alert("该原料名称已存在！");
+      return;
+    }
+    //添加原料
     var detailsAddUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=addWarehousePotMaterial";
     var detailsAddGetContract = ajax_assistant(detailsAddUrl, warehousePotData, false, true, false);
     if ("1" == detailsAddGetContract.status) {
@@ -218,6 +232,10 @@ function WarehousePotDetails() {
       this.serverDataCover(warehouseUuid);
       this.fillVariableData(warehouseUuid);
       $("#warehouse_detailes_content" + warehouseUuid ).parent().parent().parent().parent().prev().find(".warehouse_cull_val").html(Number(this.cull_val_total).toFixed(2));
+      //差值变化
+      var difference = Number($("#warehouse_detailes_content" + warehouseUuid ).parent().parent().parent().parent().prev().find(".warehouse_cull_val").html()) - Number($("#warehouse_detailes_content" + warehouseUuid ).parent().parent().parent().parent().prev().find(".warehouse_put_storage").html());
+      $("#warehouse_detailes_content" + warehouseUuid ).parent().parent().parent().parent().prev().find(".warehouse_difference_val").html(Number(difference).toFixed(2));
+
       $("#warehouse_pot_add_modle_prop").modal("hide");
       $("#warehouse_pot_add_modle_prop").on("hidden.bs.modal", function(e) {
         $(this).remove();
@@ -240,6 +258,20 @@ function WarehousePotDetails() {
       "uuid":uuid,
       "name":warehousePotMaterialName
     }; 
+    var checkWarehousePotName = {
+      "pot_uuid":warehouseUuid,
+      "name":warehousePotMaterialName
+    };
+    //判断原料名称是否存在
+    var detailsUrlNameExist = PROJECT_PATH + "lego/lego_fjTrade?servletName=checkWarehousePotMaterialNameExist";
+    var detailsAddGetContractNameExist = ajax_assistant(detailsUrlNameExist, checkWarehousePotName, false, true, false);
+    //console.log(detailsAddGetContractNameExist)
+    if("1" != detailsAddGetContractNameExist.status) {
+      alert("该原料名称已存在,修改失败！");
+      var hidden_val =  obj.parent().siblings(".warehouse_pot_ingredient_val_hidden").val();
+      obj.siblings(".warehouse_pot_ingredient_val").val(hidden_val);
+      return;
+    }
     var detailsEditNameDataUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=modifyWarehousePotMaterial";
     var editNameDeleteDataGet = ajax_assistant(detailsEditNameDataUrl, data, false, true, false);
     if ("1" == editNameDeleteDataGet.status) {
@@ -273,6 +305,9 @@ function WarehousePotDetails() {
       this.serverDataCover(warehouseUuid);
       this.fillVariableData(warehouseUuid);
       $("#warehouse_detailes_content" + warehouseUuid ).parent().parent().parent().parent().prev().find(".warehouse_cull_val").html(Number(this.cull_val_total).toFixed(2));
+      //差值变化
+      var difference = Number($("#warehouse_detailes_content" + warehouseUuid ).parent().parent().parent().parent().prev().find(".warehouse_cull_val").html()) - Number($("#warehouse_detailes_content" + warehouseUuid ).parent().parent().parent().parent().prev().find(".warehouse_put_storage").html());
+      $("#warehouse_detailes_content" + warehouseUuid ).parent().parent().parent().parent().prev().find(".warehouse_difference_val").html(Number(difference).toFixed(2));
     } else {
       alert("修改检尺值失败");
     }
@@ -323,6 +358,10 @@ function WarehousePotDetails() {
       this.serverDataCover(warehouseUuid);
       this.fillVariableData(warehouseUuid);
       $("#warehouse_detailes_content" + warehouseUuid ).parent().parent().parent().parent().prev().find(".warehouse_cull_val").html(Number(this.cull_val_total).toFixed(2));
+      //差值变化
+      var difference = Number($("#warehouse_detailes_content" + warehouseUuid ).parent().parent().parent().parent().prev().find(".warehouse_cull_val").html()) - Number($("#warehouse_detailes_content" + warehouseUuid ).parent().parent().parent().parent().prev().find(".warehouse_put_storage").html());
+      $("#warehouse_detailes_content" + warehouseUuid ).parent().parent().parent().parent().prev().find(".warehouse_difference_val").html(Number(difference).toFixed(2));
+
       $("#warehouse_pot_delete_modle_prop").modal("hide");
       $("#warehouse_pot_delete_modle_prop").on("hidden.bs.modal", function(e) {
         $(this).remove();

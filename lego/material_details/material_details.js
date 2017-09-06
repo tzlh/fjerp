@@ -42,7 +42,7 @@ function MaterialDetails() {
     //获取储罐原料记录
     var potUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=getWarehousePotMaterialRecord";
     var getContract = ajax_assistant(potUrl, this.materialCondition, false, true, false);
-    console.log(getContract);
+    //console.log(getContract);
     this.materialDetailsData = {};
     if (1 == getContract.status) {
       if (0 == getContract.count) {
@@ -50,7 +50,7 @@ function MaterialDetails() {
       } else {
         var tmpAll = new Array();
         var materialDetailsGetResult = JSON.parse(getContract.result);  
-        console.log(materialDetailsGetResult);
+        //console.log(materialDetailsGetResult);
         for (var i = 0; i < materialDetailsGetResult.length; i++) {
           tmpAll[i] = {"tank_uuid":materialDetailsGetResult[i].material_uuid, "put_time":materialDetailsGetResult[i].entry_datetime, "put_storage":materialDetailsGetResult[i].entry_value, "uuid":materialDetailsGetResult[i].uuid};
         }
@@ -181,7 +181,7 @@ function MaterialDetails() {
     };
     var materialDetailsAddUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=addWarehousePotMaterialRecord";
     var materialDetailsAddGetContract = ajax_assistant(materialDetailsAddUrl, material_data, false, true, false);
-    console.log(materialDetailsAddGetContract)
+    //console.log(materialDetailsAddGetContract)
     if ("1" != materialDetailsAddGetContract.status) {
       alert("添加原料失败");
     } else {  
@@ -202,6 +202,9 @@ function MaterialDetails() {
       }
       //储罐的入库值
       $("#warehouse_pot_details_content" + potDetailsUuid).parent().parent().parent().parent().prev().find(".put_val_number").html(putPotStorageAll);
+      //差值
+      var warehousePotDifference = Number($("#warehouse_pot_details_content" + potDetailsUuid).parent().parent().parent().parent().prev().find(".warehouse_pot_cull_value").val()) - Number($("#warehouse_pot_details_content" + potDetailsUuid).parent().parent().parent().parent().prev().find(".put_val_number").html());
+      $("#warehouse_pot_details_content" + potDetailsUuid).parent().parent().parent().parent().prev().find(".warehouse_pot_difference_val").html(warehousePotDifference);
       //仓库的入库值
       //获取所有原料的入库值总和
       var potMaterialSumUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=getWarehousePotMaterialRecordSum";
@@ -222,7 +225,7 @@ function MaterialDetails() {
             };
             var potMaterialSumGetContract = ajax_assistant(potMaterialSumUrl, potiData, false, true, false);
             var potMaterialSumResult = JSON.parse(potMaterialSumGetContract.result);
-            console.log(potMaterialSumResult);
+            //console.log(potMaterialSumResult);
             put_stroactAll += Number(potMaterialSumResult[0].sum);
           }
         } 
@@ -230,6 +233,11 @@ function MaterialDetails() {
         alert("获取原料明细失败");
       }
       $("#warehouse_detailes_content" + warehouseUuid ).parent().parent().parent().parent().prev().find(".warehouse_put_storage").html(put_stroactAll);
+      //差值
+      var warehouseDifference = Number($("#warehouse_detailes_content" + warehouseUuid).parent().parent().parent().parent().prev().find(".warehouse_cull_val").html()) - Number($("#warehouse_detailes_content" + warehouseUuid).parent().parent().parent().parent().prev().find(".warehouse_put_storage").html());
+console.log($("#warehouse_detailes_content" + warehouseUuid).parent().parent().parent().parent().prev().find(".warehouse_cull_val").html())
+console.log($("#warehouse_detailes_content" + warehouseUuid).parent().parent().parent().parent().prev().find(".warehouse_put_storage").html());
+      $("#warehouse_detailes_content" + warehouseUuid).parent().parent().parent().parent().prev().find(".warehouse_difference_val").html(Number(warehouseDifference).toFixed(2));
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       $("#material_add_modle_prop").modal("hide");
       $("#material_add_modle_prop").on("hidden.bs.modal", function(e) {
@@ -283,7 +291,7 @@ function MaterialDetails() {
       this.clearRawData(potDetailsUuid);
       this.serverDataCover(potDetailsUuid);
       this.fillVariableData(potDetailsUuid);
-      console.log(this.putPotStorage);
+      //console.log(this.putPotStorage);
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       var material_all_data = {
         "material_uuid": potDetailsUuid
@@ -297,6 +305,9 @@ function MaterialDetails() {
       }
       //储罐的入库值
       $("#warehouse_pot_details_content" + potDetailsUuid).parent().parent().parent().parent().prev().find(".put_val_number").html(putPotStorageAll);
+      //差值
+      var warehousePotDifference = Number($("#warehouse_pot_details_content" + potDetailsUuid).parent().parent().parent().parent().prev().find(".warehouse_pot_cull_value").val()) - Number($("#warehouse_pot_details_content" + potDetailsUuid).parent().parent().parent().parent().prev().find(".put_val_number").html());
+      $("#warehouse_pot_details_content" + potDetailsUuid).parent().parent().parent().parent().prev().find(".warehouse_pot_difference_val").html(warehousePotDifference);
       //仓库的入库值
       //获取所有原料的入库值总和
       var potMaterialSumUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=getWarehousePotMaterialRecordSum";
@@ -317,7 +328,7 @@ function MaterialDetails() {
             };
             var potMaterialSumGetContract = ajax_assistant(potMaterialSumUrl, potiData, false, true, false);
             var potMaterialSumResult = JSON.parse(potMaterialSumGetContract.result);
-            console.log(potMaterialSumResult);
+            //console.log(potMaterialSumResult);
             put_stroactAll += Number(potMaterialSumResult[0].sum);
           }
         } 
@@ -325,6 +336,9 @@ function MaterialDetails() {
         alert("获取原料明细失败");
       }
       $("#warehouse_detailes_content" + warehouseUuid ).parent().parent().parent().parent().prev().find(".warehouse_put_storage").html(put_stroactAll);
+      //差值
+      var warehouseDifference = Number($("#warehouse_detailes_content" + warehouseUuid).parent().parent().parent().parent().prev().find(".warehouse_cull_val").html()) - Number($("#warehouse_detailes_content" + warehouseUuid).parent().parent().parent().parent().prev().find(".warehouse_put_storage").html());
+      $("#warehouse_detailes_content" + warehouseUuid).parent().parent().parent().parent().prev().find(".warehouse_difference_val").html(Number(warehouseDifference).toFixed(2));
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       $("#material_delete_modle_prop").modal("hide");
       $("#material_delete_modle_prop").on("hidden.bs.modal", function(e) {
