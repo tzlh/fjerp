@@ -407,3 +407,4 @@ function warehouse_payment_detail_content(output_id) {
 '      </div>';
   $(output_id).html(content);
 }
+
