@@ -86,7 +86,7 @@ function org_structure_fill_variable_data() {
       content = 
         '<ul class = "list-group">'+
           '<li class = "list-group-item org_structure_lh40 cuuid_' + root_department.data[i].uuid + '">'+
-            '<p class = "oli clearfix bg-primary" style="margin-top: 2px;">'+
+            '<p class = "oli clearfix bg-primary" style="margin-top: 2px;border-top-left-radius:4px;border-top-right-radius:4px;">'+
               '<span class = "glyphicon glyphicon-menu-hamburger pull-left mr20" aria-hidden = "true"></span>'+
               '<span>' + root_department.data[i].name + '</span>'+
               '<span class="glyphicon glyphicon-remove pull-right org_structure_department_delete" data-uuid = "' + root_department.data[i].uuid + '" title="删除部门" aria-hidden="true"></span>'+
@@ -108,7 +108,7 @@ function org_structure_fill_variable_data() {
             '<li class="list-group-item org_structure_lh40 cuuid_' + position_data.data[i].uuid + '">'+
               '<p class="oli clearfix" style="margin-top:2px;padding-left: 45px;">'+
                 '<span class="glyphicon glyphicon-menu-hamburger pull-left mr20" aria-hidden="true"></span>'+
-                '<span>' + position_data.data[i].position_name + '</span>'+
+                '<span class = "text-danger" style = "font-weight:bold;">' + position_data.data[i].position_name + '</span>'+
                 '<span class="glyphicon glyphicon-remove pull-right org_structure_position_delete" data-uuid = "' + position_data.data[i].uuid + '" title="删除岗位" aria-hidden="true"></span>'+
                 '<span class="glyphicon glyphicon-pencil pull-right mr20 org_structure_position_edit" data-name = "' + position_data.data[i].position_name + '" data-uuid = "' + position_data.data[i].uuid + '"  data-parent_uuid = "' + position_data.data[i].department_uuid + '" title="修改岗位" aria-hidden="true"></span>'+
                 '<span class="glyphicon glyphicon-user pull-right mr20 org_structure_employee_add" data-uuid = "' + position_data.data[i].uuid + '" title="添加员工" aria-hidden="true"></span>'+
@@ -893,7 +893,7 @@ function org_structure_add_employee_func(position_uuid) {
     '</div>'+
     '<script>'+
     '  $("input").iCheck({'+
-    '    radioClass: "iradio_square-blue"'+
+    '    radioClass: "iradio_flat-blue"'+
     '  });'+
     '</script>';
   $("body").append(org_structure_add_employee);
@@ -1441,6 +1441,7 @@ function org_structure_output(output_id) {
 '              </ul>'+
 '            </li>'+
 '          </ul>'+
-'        </div>';
+'        </div>'+
+'        <div class = "footer bg-primary" style = "height: 40px;border-bottom-left-radius:4px;border-bottom-right-radius:4px;"></div>';
     $(output_id).html(content);
 }

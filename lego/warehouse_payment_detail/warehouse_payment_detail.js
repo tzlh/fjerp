@@ -299,7 +299,7 @@ function warehouse_payment_detail_content(output_id) {
 '        </div>'+
 '      </div>'+
 '      <div class = "panel panel-default panel-primary">'+
-'        <div class = "panel-heading text-left">明细记录</div>'+
+'        <div class = "panel-heading text-left">汇总记录</div>'+
 '        <div class = "panel-body warehouse_payment_detail_pb0">'+
 '          <div class = "col-md-12">'+
 '            <table  class = "table warehouse_payment_detail_mt20" id = "warehouse_payment_detail_list">'+
