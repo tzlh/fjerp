@@ -362,3 +362,4 @@ function goodsConfirmLetter(contract_buy_contract_code, goods_confirm_letter_con
     $(this.goods_confirm_letter_content_id).html(content);
   };
 }
+
