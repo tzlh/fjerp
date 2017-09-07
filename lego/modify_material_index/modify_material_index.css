@@ -1,0 +1,23 @@
+#modify_material_index_content {
+  margin: 0;
+}
+#modify_material_index_content thead {
+  background: #aeaeae;
+}
+#modify_material_index_content .modify_material_index_pd0{
+  padding: 0;
+}
+#modify_material_index_content table th, #modify_material_index_content table td {
+  text-align: center;
+  border-right: 1px solid #ddd;
+  line-height: 36px;
+}
+#modify_material_index_content table {
+  margin-bottom: 0;
+}
+#modify_material_index_content table .form-group {
+  margin: 0;
+}
+#modify_material_index_content table tr td:nth-child(1) {
+  background: #f2f2f2;
+}

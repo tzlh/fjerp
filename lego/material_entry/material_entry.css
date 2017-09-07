@@ -1,0 +1,26 @@
+#material_entry_content {
+  margin: 0;
+}
+#material_entry_content thead {
+  background: #aeaeae;
+}
+#material_entry_content .material_entry_pd0{
+  padding: 0;
+}
+#material_entry_content table th, #material_entry_content table td {
+  text-align: center;
+  border-right: 1px solid #ddd;
+  line-height: 36px;
+}
+#material_entry_content table {
+  margin-bottom: 0;
+}
+#material_entry_content table .form-group {
+  margin: 0;
+}
+.material_entry_mt20 {
+  margin-top: 20px;
+}
+#material_entry_content table tr td:nth-child(1) {
+  background: #f2f2f2;
+}
