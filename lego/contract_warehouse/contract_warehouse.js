@@ -785,20 +785,7 @@ function contract_warehouse_output(output_id) {
     '    <div class = "panel-heading clearfix">查询储罐租赁合同<span class = "glyphicon glyphicon-plus pull-right" id = "contract_warehouse_plus"></span></div>'+
     '    <div class = "container-fluid">'+
     '      <div class = "row contract_warehouse_mt20">'+
-    '          <div class = "col-lg-2">'+
-    '            <div class = "form-inline">'+
-    '              <div class = "form-group">'+
-    '                <div class = "input-group">'+
-    '                  <div class = "input-group-addon">合同编号</div>'+
-    '                  <input type = "text" class = "form-control" id = "contract_warehouse_search_input">'+
-    '                  <span class = "input-group-btn" id = "contract_warehouse_search_btn" is_click = "0">'+
-    '                    <button class = "btn btn-primary" type = "button"><span class = "glyphicon glyphicon-search"></span></button>'+
-    '                  </span>'+
-    '                </div>'+
-    '              </div>'+
-    '            </div>'+
-    '          </div>'+
-    '          <div class = "col-lg-2">'+
+    '          <div class = "col-lg-3">'+
     '            <div class = "input-group">'+
     '              <div class = "input-group-addon">出租方</div>'+
     '                <select class = "form-control" id = "contract_warehouse_lessor" value = "">'+
@@ -808,7 +795,7 @@ function contract_warehouse_output(output_id) {
     '                </select>'+
     '            </div>'+
     '          </div>'+
-    '          <div class = "col-lg-2">'+
+    '          <div class = "col-lg-3">'+
     '            <div class = "input-group">'+
     '              <div class = "input-group-addon">承租方</div>'+
     '                <select class = "form-control" value = "" id = "contract_warehouse_leaser">'+
@@ -818,37 +805,40 @@ function contract_warehouse_output(output_id) {
     '                </select>'+
     '              </div>'+
     '          </div>'+
-    '          <div class = "col-lg-6 clearfix">'+
-    '            <div class = "row">'+
-    '              <div class = "col-lg-5">'+
-    '                <div class = "input-group">'+
-    '                  <div class = "form-group has-feedback">'+
-    '                    <div class = "input-group">'+
-    '                      <span class = "input-group-addon">租赁时间（起）</span>'+
-    '                      <input  type = "text" class = "form-control widget_datepicker" id = "contract_warehouse_start"  value = "">'+
-    '                    </div>'+
-    '                    <span class = "glyphicon glyphicon-calendar form-control-feedback" aria-hidden = "true"></span>'+
-    '                  </div>'+
-    '                </div>'+
+    '          <div class = "col-lg-3">'+
+    '            <div class = "form-group has-feedback">'+
+    '              <div class = "input-group">'+
+    '                <span class = "input-group-addon">起租时间</span>'+
+    '                <input  type = "text" class = "form-control widget_datepicker" id = "contract_warehouse_start"  value = "">'+
     '              </div>'+
-    '              <div class = "col-lg-5">'+
-    '                <div class = "input-group">'+
-    '                    <div class = "form-group has-feedback">'+
-    '                    <div class = "input-group">'+
-    '                      <span class = "input-group-addon">租赁时间（止）</span>'+
-    '                      <input type = "text" class = "form-control widget_datepicker" id = "contract_warehouse_end" value = "" >'+
-    '                    </div>'+
-    '                    <span class = "glyphicon glyphicon-calendar form-control-feedback" aria-hidden = "true"></span>'+
-    '                  </div>'+
-    '                </div>'+
+    '              <span class = "glyphicon glyphicon-calendar form-control-feedback" aria-hidden = "true"></span>'+
+    '            </div>'+
+    '          </div>'+
+    '          <div class = "col-lg-3">'+
+    '            <div class = "form-group has-feedback">'+
+    '              <div class = "input-group">'+
+    '                <span class = "input-group-addon">止租时间</span>'+
+    '                <input type = "text" class = "form-control widget_datepicker" id = "contract_warehouse_end" value = "" >'+
     '              </div>'+
-    '              <div class = "col-lg-2">'+
-    '                <button type = "button" class = "btn btn-primary" id = "contract_warehouse_fuzzy" is_click = "0">搜索</button>'+
-    '              </div>'+
+    '              <span class = "glyphicon glyphicon-calendar form-control-feedback" aria-hidden = "true"></span>'+
     '            </div>'+
     '          </div>'+
     '        </div>'+
-    '        <div class = "row">'+
+    '        <div class = "row contract_warehouse_mt20">'+
+    '          <div class = "col-lg-9">'+
+    '            <div class = "input-group">'+
+    '              <div class = "input-group-addon">合同编号</div>'+
+    '              <input type = "text" class = "form-control" id = "contract_warehouse_search_input">'+
+    '              <span class = "input-group-btn" id = "contract_warehouse_search_btn" is_click = "0">'+
+    '                <button class = "btn btn-primary" type = "button"><span class = "glyphicon glyphicon-search"></span></button>'+
+    '              </span>'+
+    '            </div>'+
+    '          </div>'+
+    '          <div class = "col-lg-3">'+
+    '            <button type = "button" class = "btn btn-primary" style = "width:100%" id = "contract_warehouse_fuzzy" is_click = "0">搜索</button>'+
+    '          </div>'+
+    '        </div>'+
+    '        <div class = "row contract_warehouse_mt20">'+
     '          <div class = "col-lg-12">'+
     '            <table cellpadding = "0" cellspacing = "0" border = "0" width = "100%" class = "table" style = "border-bottom: 1px solid #ddd;">'+
     '              <thead>'+
