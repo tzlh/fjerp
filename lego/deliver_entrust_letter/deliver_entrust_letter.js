@@ -153,17 +153,11 @@ function deliverEntrustLetter(contract_buy_contract_code, deliver_entrust_letter
   '                   </form>'+
   '                 </div>'+
   '                 <div class = "col-md-6">'+
-  '                   <form>'+
-  '                     <div class = "form-group">'+
-  '                       <label for = "">提货时间</label>'+
-  '                       <div class = "input-group">'+
-  '                         <input type = "text" class = "widget_datepicker form-control deliver_datetime" aria-label = "Amount (to the nearest dollar)">'+
-  '                         <span class = "input-group-addon">'+
-  '                           <span class = "glyphicon glyphicon-calendar"></span>'+
-  '                         </span>'+
-  '                       </div>'+
-  '                     </div>'+
-  '                   </form>'+
+  '                   <div class="form-group has-feedback">'+
+  '                     <label>提货时间</label>'+
+  '                     <input type="text" class="widget_datepicker form-control deliver_datetime">'+
+  '                     <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>'+
+  '                   </div>'+
   '                 </div>'+
   '                 <div class = "col-md-12">'+
   '                   <label class = "">提货委托函附件</label>'+
@@ -255,17 +249,11 @@ function deliverEntrustLetter(contract_buy_contract_code, deliver_entrust_letter
   '                   </form>'+
   '                 </div>'+
   '                 <div class = "col-md-6">'+
-  '                   <form>'+
-  '                     <div class = "form-group">'+
-  '                       <label for = "">提货时间</label>'+
-  '                       <div class = "input-group">'+
-  '                         <input type = "text" class = "widget_datepicker form-control start_deliver_datetime" value = "' + this.current_deliver_entrust_letter_data.deliver_datetime + '" aria-label = "Amount (to the nearest dollar)">'+
-  '                         <span class = "input-group-addon">'+
-  '                           <span class = "glyphicon glyphicon-calendar"></span>'+
-  '                         </span>'+
-  '                       </div>'+
-  '                     </div>'+
-  '                   </form>'+
+  '                   <div class="form-group has-feedback">'+
+  '                     <label>提货时间</label>'+
+  '                     <input type="text" class="widget_datepicker form-control start_deliver_datetime" value = "' + this.current_deliver_entrust_letter_data.deliver_datetime + '">'+
+  '                     <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>'+
+  '                   </div>'+
   '                 </div>'+
   '                 <div class = "col-md-12">'+
   '                   <label class = "">提货委托函附件</label>'+
