@@ -322,7 +322,7 @@ function contract_buy_add_modle_func() {
                 '</div>'+
                 '<div class = "col-md-4">'+
                   '<div class = "form-group">'+
-                    '<label for = "">标记</label>'+
+                    '<label for = "">品类</label>'+
                     '<input type = "text" class = "form-control contract_buy_real_name" value = ""/>'+
                   '</div>'+
                 '</div>'+
@@ -478,7 +478,7 @@ function contract_buy_add_data_func(obj, contract_buy_type) {
     return;
   }
   if(null == contract_buy_real_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{1,32}$/)) {
-    alert("请输入正确的标记！");
+    alert("请输入正确的品类！");
     return;
   }
   if(null == contract_buy_price.match(/^[0-9]+\.{0,1}[0-9]{0,4}$/)) {
@@ -724,7 +724,7 @@ function contract_buy_edit_modle_func(obj, contract_type) {
               '</div>'+
               '<div class = "col-md-4">'+
                 '<div class = "form-group">'+
-                  '<label for = "">标记</label>'+
+                  '<label for = "">品类</label>'+
                   '<input type = "text" class = "form-control contract_buy_real_name" value = "' + contract_buy_real_name + '"/>'+
                 '</div>'+
               '</div>'+
@@ -884,7 +884,7 @@ function contract_buy_edit_data_func(obj, contract_type) {
     return;
   }
   if(null == contract_buy_real_name.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{1,32}$/)) {
-    alert("请输入正确的标记！");
+    alert("请输入正确的品类！");
     return;
   }
   if(null == contract_buy_price.match(/^[0-9]+\.{0,1}[0-9]{0,4}$/)) {
@@ -1179,7 +1179,7 @@ function contract_buy_info_modle_func(obj, contract_type) {
               '</div>'+
               '<div class = "col-md-4">'+
                 '<div class = "form-group">'+
-                  '<label for = "">标记</label>'+
+                  '<label for = "">品类</label>'+
                   '<input type = "text" class = "form-control contract_buy_real_name" value = "' + contract_buy_real_name + '" disabled="disabled"/>'+
                 '</div>'+
               '</div>'+
@@ -1325,7 +1325,7 @@ function contract_buy_search_fuzzy_btn_func() {
   }
   if ("" != contract_buy_search_real_name_fuzzy) {
     if(null == contract_buy_search_real_name_fuzzy.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{2,32}$/)) {
-      alert("请输入正确的标记！");
+      alert("请输入正确的品类！");
       return;
     }
   }

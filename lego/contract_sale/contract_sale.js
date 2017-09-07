@@ -1424,7 +1424,7 @@ function contract_sale_output(output_id) {
   '          </div>'+
   '          <div class = "col-lg-2">'+
   '            <div class = "input-group">'+
-  '              <span class = "input-group-addon">品类</span>'+
+  '              <span class = "input-group-addon">标记</span>'+
   '              <input type = "text" class = "form-control" id = "contract_sale_search_real_name_fuzzy">'+
   '            </div>'+
   '          </div>'+
@@ -1537,7 +1537,7 @@ function contract_sale_output(output_id) {
   '                  <th>购买方</th>'+
   '                  <th>销售方</th>'+
   '                  <th>名称</th>'+
-  '                  <th>品类</th>'+
+  '                  <th>标记</th>'+
   '                  <th>单价</th>'+
   '                  <th>数量（吨）</th>'+
   '                  <th>合计</th>'+
