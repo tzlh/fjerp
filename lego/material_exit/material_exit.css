@@ -1,0 +1,9 @@
+#material_exit_content {
+  margin: 0;
+}
+.material_exit_mt20 {
+  margin-top: 20px;
+}
+#material_exit_content .btn-center{
+  text-align: center;
+}
