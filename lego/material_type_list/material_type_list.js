@@ -2,21 +2,24 @@
  * @author wangdi
  */
 "use strict"; 
-//类别列表
-  let materialListData = {
-    "data":[
-      {"material_name":"舟山纳海", "uuid":"001"},
-      {"material_name":"零点库区", "uuid":"002"},
-      {"material_name":"泰州锦华", "uuid":"003"}]
-  };
-// 类别子集
-  let materialListSubData = {
-  "data":[
-      {"material_sub_name":"芳烃", "uuid":"101", "material_uuid":"001"},
-      {"material_sub_name":"异构", "uuid":"102", "material_uuid":"001"},
-      {"material_sub_name":"轻油", "uuid":"103", "material_uuid":"002"}]
-  };
 class MaterialListObj {
+  constructor() {
+    //类别列表
+    this.materialListData = {
+      "data":[
+        {"material_name":"舟山纳海", "uuid":"001"},
+        {"material_name":"零点库区", "uuid":"002"},
+        {"material_name":"泰州锦华", "uuid":"003"}]
+    };
+    // 类别子集
+    this.materialListSubData = {
+    "data":[
+        {"material_sub_name":"芳烃", "uuid":"101", "material_uuid":"001"},
+        {"material_sub_name":"异构", "uuid":"102", "material_uuid":"001"},
+        {"material_sub_name":"轻油", "uuid":"103", "material_uuid":"002"}]
+    };
+  }
+
   //清空数据
   clearRawData() {
     $("#material_type_list_box").html("");
@@ -26,20 +29,20 @@ class MaterialListObj {
   fillVariableData() {
     //查询列表
     let materialListHtml = "";
-    if(isJsonObjectHasData(materialListData)) {
-      for (let i = 0; i < materialListData.data.length; i++) {
+    if(isJsonObjectHasData(this.materialListData)) {
+      for (let i = 0; i < this.materialListData.data.length; i++) {
         materialListHtml+=
           `<div>
-            <p href = "#" class = "list-group-item clearfix material_type_list_pl30 material_type_list_bgddd">${materialListData.data[i].material_name}<span class = "glyphicon glyphicon-plus pull-right material_type_list_colorfff add_material_plus"></span></p>
-            <div id = "material_type_list${materialListData.data[i].uuid}"></div>
+            <p href = "#" class = "list-group-item clearfix material_type_list_pl30 material_type_list_bgddd">${this.materialListData.data[i].material_name}<span class = "glyphicon glyphicon-plus pull-right material_type_list_colorfff add_material_plus"></span></p>
+            <div id = "material_type_list${this.materialListData.data[i].uuid}"></div>
           </div>`;
       }
     }
     $("#material_type_list_box").html(materialListHtml);
     //查询列表子集
-    if(isJsonObjectHasData(materialListSubData)) {
-      for (let i = 0; i < materialListSubData.data.length; i++) {
-        $("#material_type_list" + materialListSubData.data[i].material_uuid).append(`<p href = "#" class = "list-group-item clearfix material_type_list_pl30">${materialListSubData.data[i].material_sub_name}<span class = "glyphicon glyphicon-remove pull-right material_type_list_ml15 delete_material_event" uuid = "${materialListSubData.data[i].uuid}"></span><span class = "glyphicon glyphicon-pencil pull-right material_type_list_ml15 material_edit_event" uuid = "${materialListSubData.data[i].uuid}"></span></p>`);
+    if(isJsonObjectHasData(this.materialListSubData)) {
+      for (let i = 0; i < this.materialListSubData.data.length; i++) {
+        $("#material_type_list" + this.materialListSubData.data[i].material_uuid).append(`<p href = "#" class = "list-group-item clearfix material_type_list_pl30">${this.materialListSubData.data[i].material_sub_name}<span class = "glyphicon glyphicon-remove pull-right material_type_list_ml15 delete_material_event" uuid = "${this.materialListSubData.data[i].uuid}"></span><span class = "glyphicon glyphicon-pencil pull-right material_type_list_ml15 material_edit_event" uuid = "${this.materialListSubData.data[i].uuid}"></span></p>`);
       }
     }
   }
@@ -123,7 +126,7 @@ class MaterialListObj {
     // 更新页面数据
       this.clearRawData();
       //serverDataCover();
-      materialListSubData = {
+      this.materialListSubData = {
         "data":[
             {"material_sub_name":"芳烃", "uuid":"101", "material_uuid":"001"},
             {"material_sub_name":"芳烃1", "uuid":"101", "material_uuid":"001"},
@@ -202,7 +205,7 @@ class MaterialListObj {
     // 更新页面数据
       this.clearRawData();
       //this.serverDataCover();
-      materialListSubData = {
+      this.materialListSubData = {
         "data":[
             {"material_sub_name":"abc", "uuid":"101", "material_uuid":"001"},
             {"material_sub_name":"异构", "uuid":"102", "material_uuid":"001"},
@@ -257,7 +260,7 @@ class MaterialListObj {
     // 更新页面数据
       this.clearRawData();
       //this.serverDataCover();
-      materialListSubData = {
+      this.materialListSubData = {
         "data":[
             {"material_sub_name":"异构", "uuid":"102", "material_uuid":"001"},
             {"material_sub_name":"轻油", "uuid":"103", "material_uuid":"002"}]
@@ -273,8 +276,8 @@ class MaterialListObj {
 
 //服务器数据
 //function serverDataCover() {
-//  materialListData = {};
-//  materialListSubData = {};
+//  this.materialListData = {};
+//  this.materialListSubData = {};
 //  //获取仓库
 //  let warehouse_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getWarehouse";
 //  let warehouse_get_warehouse = ajax_assistant(warehouse_url, "", false, true, false);
@@ -284,7 +287,7 @@ class MaterialListObj {
 ////console.log(ajax_assistant);
 //  if (1 == warehouse_get_warehouse.status) {
 //    if (0 == warehouse_get_warehouse.count) {
-//      materialListData = {};
+//      this.materialListData = {};
 //    } else {
 //      let tmp_arr = new Array();
 //      let result = JSON.parse(warehouse_get_warehouse.result);    
@@ -292,7 +295,7 @@ class MaterialListObj {
 //        // name id uuid
 //        tmp_arr[i] = {"material_name":result[i].name, "uuid":result[i].uuid};
 //      }
-//      materialListData["data"] = tmp_arr;
+//      this.materialListData["data"] = tmp_arr;
 //    }
 //    
 //  } else {
@@ -301,7 +304,7 @@ class MaterialListObj {
 //  //储罐
 //  if (1 == warehouse_pot_get_warehouse.status) {
 //    if (0 == warehouse_pot_get_warehouse.count) {
-//      materialListSubData = {};
+//      this.materialListSubData = {};
 //    } else {
 //      let tmp_arr_pot = new Array();
 //      let result_pot = JSON.parse(warehouse_pot_get_warehouse.result);  
@@ -310,7 +313,7 @@ class MaterialListObj {
 //        // name id uuid
 //        tmp_arr_pot[i] = {"storage_tank_name":result_pot[i].name, "uuid":result_pot[i].uuid, "type":result_pot[i].type, "uuid":result_pot[i].uuid, "effective_capacity":result_pot[i].effective_capacity, "charge_capacity":result_pot[i].charge_capacity};
 //      }
-//      materialListSubData["data"] = tmp_arr_pot;
+//      this.materialListSubData["data"] = tmp_arr_pot;
 //    }
 //    
 //  } else {
