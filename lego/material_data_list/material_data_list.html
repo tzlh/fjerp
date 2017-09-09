@@ -14,11 +14,13 @@
   <script src = "material_data_list.js"></script>
   <script>
     let materialDataList = new MaterialDataListObj();
-    $(document).ready(function() {      
+    $(document).ready(function() { 
+      //加载静态页面
+      //materialDataList.outPutMaterialContent("#material_data_list_area");   
       //清空原始数据
       materialDataList.clearRawData();
       //服务器数据
-      //materialDataList.serverDataCover();
+      materialDataList.serverDataCover();
       //加载数据
       materialDataList.fillVariableData();
     });
@@ -32,48 +34,54 @@
       <p href = "#" class = "list-group-item clearfix active">数据汇总</p>
       <div id="material_data_list_box">
         <div>
-          <p href = "#" class = "list-group-item clearfix material_data_list_pl30 material_data_list_bgddd">舟山纳海</p>
+          <p class = "list-group-item clearfix material_data_list_pl30 material_data_list_bgddd">舟山纳海</p>
           <div>
             <table class = "table table-bordered">
               <tbody>
                 <tr>
-                  <td>芳烃</td>
-                  <td>300吨</td>
-                  <td>30%</td>
+                  <td width = "40%">芳烃</td>
+                  <td width = "20%">300吨</td>
+                  <td width = "20%">￥200</td>
+                  <td width = "20%">30%</td>
                 </tr>
                 <tr>
-                  <td>芳烃</td>
-                  <td>300吨</td>
-                  <td>30%</td>
+                  <td width = "40%">芳烃</td>
+                  <td width = "20%">300吨</td>
+                  <td width = "20%">￥200</td>
+                  <td width = "20%">30%</td>
                 </tr>
                 <tr>
-                  <td>芳烃</td>
-                  <td>300吨</td>
-                  <td>30%</td>
+                  <td width = "40%">芳烃</td>
+                  <td width = "20%">300吨</td>
+                  <td width = "20%">￥200</td>
+                  <td width = "20%">30%</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
         <div>
-          <p href = "#" class = "list-group-item clearfix material_data_list_pl30 material_data_list_bgddd">舟山纳海</p>
+          <p class = "list-group-item clearfix material_data_list_pl30 material_data_list_bgddd">舟山纳海</p>
           <div>
             <table class = "table table-bordered">
               <tbody>
                 <tr>
-                  <td>芳烃</td>
-                  <td>400吨</td>
-                  <td>30%</td>
+                  <td width = "40%">芳烃</td>
+                  <td width = "20%">300吨</td>
+                  <td width = "20%">￥200</td>
+                  <td width = "20%">30%</td>
                 </tr>
                 <tr>
-                  <td>芳烃</td>
-                  <td>400吨</td>
-                  <td>30%</td>
+                  <td width = "40%">芳烃</td>
+                  <td width = "20%">300吨</td>
+                  <td width = "20%">￥200</td>
+                  <td width = "20%">30%</td>
                 </tr>
                 <tr>
-                  <td>芳烃</td>
-                  <td>400吨</td>
-                  <td>30%</td>
+                  <td width = "40%">芳烃</td>
+                  <td width = "20%">300吨</td>
+                  <td width = "20%">￥200</td>
+                  <td width = "20%">30%</td>
                 </tr>
               </tbody>
             </table>

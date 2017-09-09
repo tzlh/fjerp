@@ -14,11 +14,13 @@
   <script src = "material_type_list.js"></script>
   <script>
     let materialList = new MaterialListObj();
-    $(document).ready(function() {      
+    $(document).ready(function() {
+      //加载静态页面
+      //materialList.outPutTypeList("#material_type_list_area");
       //清空原始数据
       materialList.clearRawData();
       //服务器数据
-      //materialList.serverDataCover();
+      materialList.serverDataCover();
       //加载数据
       materialList.fillVariableData();
       //事件
