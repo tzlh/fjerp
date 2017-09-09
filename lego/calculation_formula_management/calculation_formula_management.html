@@ -19,94 +19,42 @@
     <script src = "../check_login/check_login.js"></script>
     <script src = "calculation_formula_management.js" type = "text/javascript" charset = "utf-8"></script>
 	</head>
+  <script>
+    $(document).ready(function() {
+      //生成对象
+      let calculationAreaDisplay = new calculationFormulaManagement("#calculation_formula_management_content");
+      calculationAreaDisplay.output();
+      calculationAreaDisplay.clearRawData();
+      $(document).on("click", "#caclulation_formula_add_button", function() {
+        calculationAreaDisplay.formulaAddDisplay();
+      });
+      calculationAreaDisplay.serverDataCover();
+      calculationAreaDisplay.fillVariableData();
+      $(document).on("click", "#addFormula", function() {
+        calculationAreaDisplay.formulaAdd();
+      });
+      $(document).on("click", ".modifyFormulaName", function() {
+        let uuid = $(this).data("uuid");
+        let name = $(this).siblings("input").val();
+        calculationAreaDisplay.modifyFormulaName(uuid, name);
+      });
+      $(document).on("click", ".modifyFormulaContent", function() {
+        let uuid = $(this).data("uuid");
+        let content = $(this).siblings("input").val();
+        calculationAreaDisplay.modifyFormulaContent(uuid, content);
+      });
+      $(document).on("click", ".deleteFormula", function() {
+        let uuid = $(this).data("uuid");
+        calculationAreaDisplay.deleteFormulaModal(uuid);
+      });
+      $(document).on("click", ".removeFormulaButton", function() {
+        let uuid = $(this).data("uuid");
+        calculationAreaDisplay.deleteFormula(uuid);
+      });
+
+    })
+  </script>
 	<body>
-    <div class = "row" id = "calculation_formula_management_content">
-      <div class = "panel panel-default panel-primary">
-        <div class = "panel-heading text-left clearfix">
-          <h3 class = "panel-title pull-left">计算公式管理</h3>
-          <span class = "glyphicon glyphicon-plus pull-right"></span>
-        </div>
-          <div class = "panel-body table-responsive modify_material_index_pd0">
-            <div class = "">
-            <div class = "row calculation_formula_management_mt20">
-              <div class = "col-md-3">
-                <div class="input-group">
-                  <input type="text" class="form-control" value = "加权平均">
-                  <span class="input-group-addon"><button class = "btn btn-primary"><span class = "glyphicon glyphicon-floppy-disk"></span></button></span>
-                </div>
-              </div>
-              <div class = "col-md-8">
-                <div class="input-group">
-                  <input type="text" class="form-control" value = "(${a}*${b})*123">
-                  <span class="input-group-addon"><button class = "btn btn-primary"><span class = "glyphicon glyphicon-floppy-disk"></span></button></span>
-                </div>
-              </div>
-              <div class = "col-md-1">
-                <button class = "btn btn-danger">
-                  <span class = "glyphicon glyphicon-remove"></span>
-                </button>
-              </div>
-            </div>
-            <div class = "row calculation_formula_management_mt20">
-              <div class = "col-md-3">
-                <div class="input-group">
-                  <input type="text" class="form-control" value = "加权平均">
-                  <span class="input-group-addon"><button class = "btn btn-primary"><span class = "glyphicon glyphicon-floppy-disk"></span></button></span>
-                </div>
-              </div>
-              <div class = "col-md-8">
-                <div class="input-group">
-                  <input type="text" class="form-control" value = "(${a}*${b})*123">
-                  <span class="input-group-addon"><button class = "btn btn-primary"><span class = "glyphicon glyphicon-floppy-disk"></span></button></span>
-                </div>
-              </div>
-              <div class = "col-md-1">
-                <button class = "btn btn-danger">
-                  <span class = "glyphicon glyphicon-remove"></span>
-                </button>
-              </div>
-            </div>
-            <div class = "row calculation_formula_management_mt20">
-              <div class = "col-md-3">
-                <div class="input-group">
-                  <input type="text" class="form-control" value = "加权平均">
-                  <span class="input-group-addon"><button class = "btn btn-primary"><span class = "glyphicon glyphicon-floppy-disk"></span></button></span>
-                </div>
-              </div>
-              <div class = "col-md-8">
-                <div class="input-group">
-                  <input type="text" class="form-control" value = "(${a}*${b})*123">
-                  <span class="input-group-addon"><button class = "btn btn-primary"><span class = "glyphicon glyphicon-floppy-disk"></span></button></span>
-                </div>
-              </div>
-              <div class = "col-md-1">
-                <button class = "btn btn-danger">
-                  <span class = "glyphicon glyphicon-remove"></span>
-                </button>
-              </div>
-            </div>
-            <div class = "">
-              <div class = "row calculation_formula_management_mt20">
-                <div class = "col-md-3">
-                  <div class="form-group">
-                    <input type="text" class="form-control" value = "">
-                  </div>
-                </div>
-                <div class = "col-md-8">
-                  <div class="form-group">
-                    <input type="text" class="form-control" value = "">
-                  </div>
-                </div>
-                <div class = "col-md-1">
-                  <button class = "btn btn-primary">
-                    <span class = "glyphicon glyphicon-floppy-saved"></span>
-                  </button>
-                </div>
-              </div>
-            </div> 
-          </div>
-        </div>
-      </div>
-    </div>
+    <div class = "row" id = "calculation_formula_management_content"></div>
 	</body>
 </html>
