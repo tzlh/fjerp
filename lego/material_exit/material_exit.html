@@ -18,12 +18,25 @@
     <script src = "../../js/toolkit.js" type = "text/javascript" charset = "utf-8"></script>
     <script src = "../check_login/check_login.js"></script>
     <script src = "material_exit.js" type = "text/javascript" charset = "utf-8"></script>
+    <script>
+      let materialExit = new MaterialExit();
+      $(document).ready(function() {
+        //清空原始数据
+        //materialExit.clearRawData();
+        //服务器数据
+        materialExit.serverDataCover();
+        //加载数据
+        materialExit.fillVariableData();
+        //事件初始化
+        materialExit.initEvent(); 
+      });
+    </script>
 	</head>
 	<body>
     <div class = "row" id = "material_exit_content">
       <div class = "panel panel-default panel-primary">
         <div class = "panel-heading">原料出库</div>
-        <div class = "panel-body" style="padding-bottom: 0;">
+        <div class = "panel-body" id = "material_exit_box" style="padding-bottom: 0;">
           <div class = "row">
             <div class = "col-md-12">
               <div class = "input-group pull-left">
@@ -51,9 +64,18 @@
           <div class = "row material_exit_mt20">
             <div class = "col-md-12">
               <div class = "input-group pull-left">
-                <span class = "input-group-addon">原料数量</span>
+                <span class = "input-group-addon">出库数量</span>
                 <input type="text" class="form-control">
                 <span class = "input-group-addon">吨</span>
+              </div>
+            </div>
+          </div>
+          <div class = "row material_exit_mt20">
+            <div class = "col-md-12">
+              <div class = "input-group pull-left">
+                <span class = "input-group-addon">合计价格</span>
+                <input type="text" class="form-control">
+                <span class = "input-group-addon">元</span>
               </div>
             </div>
           </div>

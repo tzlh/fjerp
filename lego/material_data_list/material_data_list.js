@@ -51,7 +51,7 @@ class MaterialDataListObj {
                       let percentage = 0;
                       if("" != this.materialDataListSubData.data[j].weight || "0" != this.materialDataListSubData.data[j].weight) {
                         weight = this.materialDataListSubData.data[j].weight;
-                        percentage = ((this.materialDataListSubData.data[j].weight) / weightAll).toFixed(2);
+                        percentage = ((this.materialDataListSubData.data[j].weight) / weightAll * 100).toFixed(2);
                       }
                       if("" != this.materialDataListSubData.data[j].price) {
                         price = this.materialDataListSubData.data[j].price;
@@ -113,7 +113,17 @@ class MaterialDataListObj {
         let tmpArr = new Array();
         let result = JSON.parse(warehouseTypeGet.result);    
         for (let i = 0; i < result.length; i++) {
-          tmpArr[i] = {"material_sub_name":result[i].name, "weight":"2", "price":"", "uuid":result[i].uuid};
+          tmpArr[i] = {"material_sub_name":result[i].name, "uuid":result[i].uuid};
+          if (null == result[i].quantity) {
+            tmpArr[i]["weight"] = "0";
+          } else {
+            tmpArr[i]["weight"] = result[i].quantity; 
+          }
+          if (null == result[i].amount) {
+            tmpArr[i]["price"] = "0";
+          } else {
+            tmpArr[i]["price"] = result[i].amount; 
+          } 
           if("1" == potGet.status) {
             let potResult = JSON.parse(potGet.result);
             for(let j = 0; j < potResult.length; j++) {
