@@ -1,0 +1,20 @@
+#index_variable_table_content {
+  margin: 0;
+}
+#index_variable_table_content table {
+  border: 1px solid #ddd;
+}
+#index_variable_table_content table td {
+  border-right: 1px solid #ddd;
+  text-align: center;
+  line-height: 36px;
+}
+#index_variable_table_content table .form-group {
+  margin: 0;
+}
+#index_variable_table_content table tr td:nth-child(1) {
+  background: #f2f2f2;
+}
+#index_variable_table_content table .index_variable_table_bg {
+  background: #6666cc!important;
+}

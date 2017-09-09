@@ -212,17 +212,11 @@ function godownEntry(vehicle_information_uuid, godown_entry_content_id, warehous
   '             <div class = "modal-body">'+
   '               <div class = "row">'+
   '                 <div class = "col-md-12">'+
-  '                   <form>'+
-  '                     <div class = "form-group">'+
-  '                       <label for = "">入库日期</label>'+
-  '                       <div class = "input-group">'+
-  '                         <input type = "text" class = "widget_datepicker form-control entry_datetime" aria-label = "Amount (to the nearest dollar)">'+
-  '                         <span class = "input-group-addon">'+
-  '                           <span class = "glyphicon glyphicon-calendar"></span>'+
-  '                         </span>'+
-  '                       </div>'+
-  '                     </div>'+
-  '                   </form>'+
+  '                   <div class="form-group has-feedback">'+
+  '                     <label>入库日期</label>'+
+  '                     <input type="text" class="widget_datepicker form-control entry_datetime">'+
+  '                     <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>'+
+  '                   </div>'+
   '                 </div>'+
   '                 <div class = "col-md-6">'+
   '                   <form>'+
@@ -384,17 +378,11 @@ function godownEntry(vehicle_information_uuid, godown_entry_content_id, warehous
   '             <div class = "modal-body">'+
   '               <div class = "row">'+
   '                 <div class = "col-md-12">'+
-  '                   <form>'+
-  '                     <div class = "form-group">'+
-  '                       <label for = "">入库日期</label>'+
-  '                       <div class = "input-group">'+
-  '                         <input type = "text" class = "widget_datepicker form-control entry_datetime" value = "' + this.current_godown_entry_data.entry_datetime + '" aria-label = "Amount (to the nearest dollar)">'+
-  '                         <span class = "input-group-addon">'+
-  '                           <span class = "glyphicon glyphicon-calendar"></span>'+
-  '                         </span>'+
-  '                       </div>'+
-  '                     </div>'+
-  '                   </form>'+
+  '                   <div class="form-group has-feedback">'+
+  '                     <label>入库日期</label>'+
+  '                     <input type="text" class="widget_datepicker form-control entry_datetime" value = "' + this.current_godown_entry_data.entry_datetime + '">'+
+  '                     <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>'+
+  '                   </div>'+
   '                 </div>'+
   '                 <div class = "col-md-6">'+
   '                   <form>'+

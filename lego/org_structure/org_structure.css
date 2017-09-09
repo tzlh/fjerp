@@ -41,3 +41,7 @@
 #org_structure_edit_employee .sex span{
   margin: 0 15px;
 }
+#org_structure_list {
+  border-left:1px solid #2E6DA4;
+  border-right: 1px solid #2E6DA4;
+}

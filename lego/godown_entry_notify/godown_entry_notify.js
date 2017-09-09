@@ -220,30 +220,18 @@ function godownEntryNotify(contract_buy_contract_code, godown_entry_notify_conte
   '                   </form>'+
   '                 </div>'+
   '                 <div class = "col-md-6">'+
-  '                   <form>'+
-  '                     <div class = "form-group">'+
-  '                       <label for = "">卸货开始时间</label>'+
-  '                       <div class = "input-group">'+
-  '                         <input type = "text" class = "widget_datepicker form-control start_datetime" aria-label = "Amount (to the nearest dollar)">'+
-  '                         <span class = "input-group-addon">'+
-  '                           <span class = "glyphicon glyphicon-calendar"></span>'+
-  '                         </span>'+
-  '                       </div>'+
-  '                     </div>'+
-  '                   </form>'+
+  '                   <div class="form-group has-feedback">'+
+  '                     <label>卸货开始时间</label>'+
+  '                     <input type="text" class="widget_datepicker form-control start_datetime">'+
+  '                     <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>'+
+  '                   </div>'+
   '                 </div>'+
   '                 <div class = "col-md-6">'+
-  '                   <form>'+
-  '                     <div class = "form-group">'+
-  '                       <label for = "">卸货结束时间</label>'+
-  '                       <div class = "input-group">'+
-  '                         <input type = "text" class = "widget_datepicker form-control end_datetime" aria-label = "Amount (to the nearest dollar)">'+
-  '                         <span class = "input-group-addon">'+
-  '                           <span class = "glyphicon glyphicon-calendar"></span>'+
-  '                         </span>'+
-  '                       </div>'+
-  '                     </div>'+
-  '                   </form>'+
+  '                   <div class="form-group has-feedback">'+
+  '                     <label>卸货结束时间</label>'+
+  '                     <input type="text" class="widget_datepicker form-control end_datetime">'+
+  '                     <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>'+
+  '                   </div>'+
   '                 </div>'+
   '                 <div class="col-md-12">'+
   '                   <form>'+
@@ -386,30 +374,18 @@ function godownEntryNotify(contract_buy_contract_code, godown_entry_notify_conte
   '                   </form>'+
   '                 </div>'+
   '                 <div class = "col-md-6">'+
-  '                   <form>'+
-  '                     <div class = "form-group">'+
-  '                       <label for = "">卸货开始时间</label>'+
-  '                       <div class = "input-group">'+
-  '                         <input type = "text" class = "widget_datepicker form-control start_datetime" value = "' + this.current_godown_entry_notify_data.start_datetime + '" aria-label = "Amount (to the nearest dollar)">'+
-  '                         <span class = "input-group-addon">'+
-  '                           <span class = "glyphicon glyphicon-calendar"></span>'+
-  '                         </span>'+
-  '                       </div>'+
-  '                     </div>'+
-  '                   </form>'+
+  '                   <div class="form-group has-feedback">'+
+  '                     <label>卸货开始时间</label>'+
+  '                     <input type="text" class="widget_datepicker form-control start_datetime" value = "' + this.current_godown_entry_notify_data.start_datetime + '">'+
+  '                     <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>'+
+  '                   </div>'+
   '                 </div>'+
   '                 <div class = "col-md-6">'+
-  '                   <form>'+
-  '                     <div class = "form-group">'+
-  '                       <label for = "">卸货结束时间</label>'+
-  '                       <div class = "input-group">'+
-  '                         <input type = "text" class = "widget_datepicker form-control end_datetime" value = "' + this.current_godown_entry_notify_data.end_datetime + '" aria-label = "Amount (to the nearest dollar)">'+
-  '                         <span class = "input-group-addon">'+
-  '                           <span class = "glyphicon glyphicon-calendar"></span>'+
-  '                         </span>'+
-  '                       </div>'+
-  '                     </div>'+
-  '                   </form>'+
+  '                   <div class="form-group has-feedback">'+
+  '                     <label>卸货结束时间</label>'+
+  '                     <input type="text" class="widget_datepicker form-control end_datetime" value = "' + this.current_godown_entry_notify_data.end_datetime + '">'+
+  '                     <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>'+
+  '                   </div>'+
   '                 </div>'+
   '                 <div class="col-md-12">'+
   '                   <form>'+

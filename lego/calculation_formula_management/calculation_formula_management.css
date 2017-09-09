@@ -1,0 +1,20 @@
+#calculation_formula_management_content .primary {
+  background: #337ab7;
+  color: #fff;
+}
+.calculation_formula_management_mt20 {
+  margin-bottom: 20px;
+}
+#calculation_formula_management_content .panel-body {
+  padding-bottom: 0;
+}
+#calculation_formula_management_content {
+  margin: 0;
+}
+#calculation_formula_management_content input {
+  text-align: center;
+}
+#calculation_formula_management_content .input-group-addon {
+  padding:0;
+  border: 0;
+}

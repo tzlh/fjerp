@@ -213,17 +213,11 @@ function godownExit(vehicle_information_uuid, godown_exit_content_id) {
   '                   </form>'+
   '                 </div>'+
   '                 <div class = "col-md-12">'+
-  '                   <form>'+
-  '                     <div class = "form-group">'+
-  '                       <label for = "">出库日期</label>'+
-  '                       <div class = "input-group">'+
-  '                         <input type = "text" class = "widget_datepicker form-control exit_datetime" aria-label = "Amount (to the nearest dollar)">'+
-  '                         <span class = "input-group-addon">'+
-  '                           <span class = "glyphicon glyphicon-calendar"></span>'+
-  '                         </span>'+
-  '                       </div>'+
-  '                     </div>'+
-  '                   </form>'+
+  '                   <div class="form-group has-feedback">'+
+  '                     <label>出库日期</label>'+
+  '                     <input type="text" class="widget_datepicker form-control exit_datetime">'+
+  '                     <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>'+
+  '                   </div>'+
   '                 </div>'+
   '                 <div class = "col-md-12">'+
   '                   <label class = "">出库单附件</label>'+
@@ -385,14 +379,10 @@ function godownExit(vehicle_information_uuid, godown_exit_content_id) {
   '                 </div>'+
   '                 <div class = "col-md-12">'+
   '                   <form>'+
-  '                     <div class = "form-group">'+
+  '                     <div class = "form-group has-feedback">'+
   '                       <label for = "">出库日期</label>'+
-  '                       <div class = "input-group">'+
-  '                         <input type = "text" class = "widget_datepicker form-control exit_datetime" value = "' + this.current_godown_exit_data.exit_datetime + '" aria-label = "Amount (to the nearest dollar)">'+
-  '                         <span class = "input-group-addon">'+
-  '                           <span class = "glyphicon glyphicon-calendar"></span>'+
-  '                         </span>'+
-  '                       </div>'+
+  '                       <input type = "text" class = "widget_datepicker form-control exit_datetime" value = "' + this.current_godown_exit_data.exit_datetime + '">'+
+  '                       <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>'+
   '                     </div>'+
   '                   </form>'+
   '                 </div>'+

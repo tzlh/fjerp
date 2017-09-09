@@ -183,7 +183,7 @@ function PaidRecord(all_paid, sale_contract_code, title_object, paid_record_cont
                   '</div>'+
                 '</div>'+
                 '<div class = "col-md-12">'+
-                  '<label class = "margin15">采购合同附件</label>'+
+                  '<label class = "margin15">银行回执单附件</label>'+
                   '<div class = "panel panel-default" id = "paid_record_add_modle_attch">'+
                   '</div>'+
                 '</div>'+
@@ -285,7 +285,7 @@ function PaidRecord(all_paid, sale_contract_code, title_object, paid_record_cont
   '                   </form>'+
   '                 </div>'+
   '                 <div class = "col-md-12">'+
-  '                   <label class = "">收付款记录附件</label>'+
+  '                   <label class = "">银行回执单附件</label>'+
   '                   <div class = "panel panel-default" id = "paid_record_edit_attch"></div>'+
   '                 </div>'+
   '               </div>'+
