@@ -27,7 +27,6 @@ class calculationFormulaManagement {
    * 构造函数
    *
    * @param outputId 传入输出的元素id
-   * @param type 0: 查看 1: 可编辑
    */
   constructor(outputId) {
     this.outputId = outputId;
@@ -172,11 +171,12 @@ class calculationFormulaManagement {
     let checkFormulNameUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=checkWarehousePotMaterialCalculationFormulaNameExist";
     let checkFormulNameParam = {
       "name": name,
+      "uuid": "00000000000000000000000000000000"
     };
     let checkFormulNameData = ajax_assistant(checkFormulNameUrl, checkFormulNameParam, false, true, false);
     console.log(checkFormulNameData);
     if (1 != checkFormulNameData.status) {
-      alert("该公式已存在");
+      alert("该公式名称已存在");
       return;
     }
     //添加公式
@@ -190,7 +190,9 @@ class calculationFormulaManagement {
     if (1 == addFormulaData.status) {
       this.serverDataCover();
       this.fillVariableData();
-      $(`#${this.areaFormulaAddDisplay}`).remove();
+      $(`#${this.areaFormulaAddDisplay}`).children().remove();
+    } else {
+      alert("添加失败");
     }
   }
 
@@ -198,8 +200,6 @@ class calculationFormulaManagement {
    * 修改公式名称
    */
   modifyFormulaName(uuid, name) {
-    uuid = uuid;
-    name = name;
     if ("" == name) {
       alert("请输入公式名称");
       return;
@@ -213,11 +213,12 @@ class calculationFormulaManagement {
     let checkFormulNameUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=checkWarehousePotMaterialCalculationFormulaNameExist";
     let checkFormulNameParam = {
       "name": name,
+      "uuid": uuid
     };
     let checkFormulNameData = ajax_assistant(checkFormulNameUrl, checkFormulNameParam, false, true, false);
     console.log(checkFormulNameData);
     if (1 != checkFormulNameData.status) {
-      alert("该公式已存在");
+      alert("该公式名称已存在");
       return;
     }
     //修改公式名称
@@ -232,6 +233,8 @@ class calculationFormulaManagement {
       this.serverDataCover();
       this.fillVariableData();
       alert("修改成功");
+    } else {
+      alert("修改失败");
     }
   }
 
@@ -239,8 +242,6 @@ class calculationFormulaManagement {
    * 修改公式内容
    */
   modifyFormulaContent(uuid, content) {
-    uuid = uuid;
-    content = content;
     if ("" == content) {
       alert("请输入公式名称");
       return;
@@ -261,6 +262,9 @@ class calculationFormulaManagement {
     if (1 == modifyFormulaData.status) {
       this.serverDataCover();
       this.fillVariableData();
+      alert("修改成功");
+    } else {
+      alert("修改失败");
     }
   }
   
@@ -306,6 +310,8 @@ class calculationFormulaManagement {
       $("#calculation_formula_management_delete_modal").modal("hide");
       this.serverDataCover();
       this.fillVariableData();
+    } else {
+      alert("删除失败");
     }
   }
 
