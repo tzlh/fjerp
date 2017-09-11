@@ -74,7 +74,11 @@ class calculationFormulaManagement {
              <div class = "col-md-3">
                <div class="input-group">
                  <input type="text" class="form-control" value = "${this.formulaData[i].formulaName}">
-                 <span class="input-group-addon modifyFormulaName" data-uuid = "${this.formulaData[i].uuid}"><button class = "btn btn-primary"><span class = "glyphicon glyphicon-floppy-disk"></span></button></span>
+                 <span class="input-group-btn modifyFormulaName" id="" data-uuid = "${this.formulaData[i].uuid}">
+                      <button class="btn btn-primary" type="button">
+                        <span class="glyphicon glyphicon-floppy-disk"></span>
+                      </button>
+                    </span>
                </div>
              </div>
              <div class = "col-md-7 cfContent">
@@ -416,13 +420,21 @@ class calculationFormulaManagement {
                 <div class = "col-md-3">
                   <div class="input-group">
                     <input type="text" class="form-control" value = "加权平均">
-                    <span class="input-group-addon"><button class = "btn btn-primary"><span class = "glyphicon glyphicon-floppy-disk"></span></button></span>
+                    <span class="input-group-btn" id="enterprise_management_search_name">
+                      <button class="btn btn-primary" type="button">
+                        <span class="glyphicon glyphicon-floppy-disk"></span>
+                      </button>
+                    </span>
                   </div>
                 </div>
                 <div class = "col-md-8">
                   <div class="input-group">
                     <input type="text" class="form-control" value = "">
-                    <span class="input-group-addon"><button class = "btn btn-primary"><span class = "glyphicon glyphicon-floppy-disk"></span></button></span>
+                    <span class="input-group-btn" id="enterprise_management_search_name">
+                      <button class="btn btn-primary" type="button">
+                        <span class="glyphicon glyphicon-floppy-disk"></span>
+                      </button>
+                    </span>
                   </div>
                 </div>
                 <div class = "col-md-1">
@@ -436,7 +448,11 @@ class calculationFormulaManagement {
                 <div class = "col-md-3">
                   <div class="input-group">
                     <input type="text" class="form-control" value = "加权平均">
-                    <span class="input-group-addon"><button class = "btn btn-primary"><span class = "glyphicon glyphicon-floppy-disk"></span></button></span>
+                    <span class="input-group-btn" id="enterprise_management_search_name">
+                      <button class="btn btn-primary" type="button">
+                        <span class="glyphicon glyphicon-floppy-disk"></span>
+                      </button>
+                    </span>
                   </div>
                 </div>
                 <div class = "col-md-7">

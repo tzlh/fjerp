@@ -59,6 +59,35 @@
           return;
         }
       });
+      $(document).on("blur", ".cfContent input", function() {
+        let entryValue = $(this).parents("td").siblings(".entryValue").find("input").val();
+        if ("" == entryValue) {
+          alert("请输入此入库值");
+          $(this).val("");
+          return;
+        } else {
+          if(null == entryValue.match(/^(\d+)(\.\d+)?$/)) {
+            alert("此入库值格式不正确");
+            $(this).val("");
+            return;
+          }
+        }
+        let content = $(this).val();
+        $(this).parents("td").siblings(".cfContent").find("input").val(content);
+        //计算结果值
+        let cfContent = materialTransferArea.replaceCfContent(content);
+        console.log(cfContent);
+        try {
+          let result = eval(cfContent);
+          console.log(result);
+        $(this).parents("td").siblings(".endValue").find("input").val(result);
+        } catch (e) {
+          alert("公式错误");
+          $(this).val("");
+          $(this).parents("td").siblings(".cfContent").find("input").val("");
+          return;
+        }
+      });
       $(document).on("change", ".E_d_t", function() {
         let content = $(this).val();
         for(var i = 0; i < $(".E_end_d_t option").length; i++){
