@@ -14,7 +14,21 @@
     <script src = "demo.js"></script>
     <script>
     $(document).ready(function() {
-    alert(eval("2 + 2"));
+      var d_a = 100;
+      var d_b = 200;
+      var d_c = 300;
+      var content = "(${d_a} + ${d_b} + ${d_c}) / 3 + ${d_b}";
+      content = content.replace(/\$\{d_a\}/g, d_a);
+      content = content.replace(/\$\{d_b\}/g, d_b);
+      content = content.replace(/\$\{d_c\}/g, d_c);
+      console.log(content);
+      try {
+        var result = eval(content);
+        console.log(result);
+      } catch(e) {
+        alert("公式错误");
+      }
+    // alert(eval("2 + 2"));
     // var config = {
     //     type: 'line',
     //     data: {
