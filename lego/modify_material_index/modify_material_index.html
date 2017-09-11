@@ -26,24 +26,29 @@
       modifyMaterialIndexArea.clearRawData();
       modifyMaterialIndexArea.getWarehouse();
       modifyMaterialIndexArea.fillWarehouseData();
-      $(document).on("focus", "#selectWarehousePotId", function() {
-        let warehouse_uuid = $("#selectWarehouseId").val();
-        if ("" == warehouse_uuid) {
-          return;
-        }
-        modifyMaterialIndexArea.getWarehousePot(warehouse_uuid);
-        modifyMaterialIndexArea.fillWarehousePotData();
-      });
       $(document).on("change", "#selectWarehouseId", function() {
         $("selectWarehousePotId").val("");
         let warehouse_uuid = $("#selectWarehouseId").val();
         if ("" == warehouse_uuid) {
+          alert("请选择库区");
           return;
         }
         modifyMaterialIndexArea.getWarehousePot(warehouse_uuid);
         modifyMaterialIndexArea.fillWarehousePotData(); 
+        modifyMaterialIndexArea.getWarehousePot(warehouse_uuid);
+        modifyMaterialIndexArea.fillWarehousePotData();
       });
       $(document).on("click", "#searchBtn", function() {
+        let warehouse_uuid = $("#selectWarehouseId").val();
+        let pot_uuid = $("#selectWarehousePotId").val();
+        if ("" == warehouse_uuid) {
+          alert("请选择库区");
+          return;
+        }
+        if ("" == pot_uuid) {
+          alert("请选择储罐");
+          return;
+        }
         modifyMaterialIndexArea.getWarehousePotMaterialIndex();  
         modifyMaterialIndexArea.fillVariableData();
       })

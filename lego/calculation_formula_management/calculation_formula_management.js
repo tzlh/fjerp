@@ -77,13 +77,16 @@ class calculationFormulaManagement {
                  <span class="input-group-addon modifyFormulaName" data-uuid = "${this.formulaData[i].uuid}"><button class = "btn btn-primary"><span class = "glyphicon glyphicon-floppy-disk"></span></button></span>
                </div>
              </div>
-             <div class = "col-md-8">
-               <div class="input-group">
+             <div class = "col-md-7 cfContent">
                  <input type="text" class="form-control" value = "${this.formulaData[i].formulaContent}">
-                 <span class="input-group-addon modifyFormulaContent" data-uuid = "${this.formulaData[i].uuid}"><button class = "btn btn-primary"><span class = "glyphicon glyphicon-floppy-disk"></span></button></span>
-               </div>
              </div>
-             <div class = "col-md-1">
+             <div class = "col-md-2">
+               <button class = "btn btn-success checkFormula"style = "margin-right: 15px;">
+                 <span class = "glyphicon glyphicon-ok"></span>
+               </button>
+               <button class = "btn btn-primary modifyFormulaContent" data-uuid = "${this.formulaData[i].uuid}" style = "margin-right: 15px;">
+                 <span class = "glyphicon glyphicon-floppy-disk"></span>
+               </button>
                <button class = "btn btn-danger deleteFormula" data-uuid = "${this.formulaData[i].uuid}">
                  <span class = "glyphicon glyphicon-remove"></span>
                </button>
@@ -129,12 +132,15 @@ class calculationFormulaManagement {
              <input type="text" class="form-control" id = "${this.addFormulaName}" value = "">
            </div>
          </div>
-         <div class = "col-md-8">
+         <div class = "col-md-7 cfContent">
            <div class="form-group">
              <input type="text" class="form-control" id = "${this.addFormulaContent}"value = "">
            </div>
          </div>
-         <div class = "col-md-1">
+         <div class = "col-md-2">
+           <button class = "btn btn-success checkFormula" style = "margin-right: 15px;">
+             <span class = "glyphicon glyphicon-ok"></span>
+           </button>
            <button class = "btn btn-primary" id = "addFormula">
              <span class = "glyphicon glyphicon-floppy-saved"></span>
            </button>
@@ -269,6 +275,85 @@ class calculationFormulaManagement {
   }
   
   /**
+   * 公式替换
+   */
+  replaceCfContent(cfContent) {
+    cfContent = cfContent.replace(/\$\{R_d_20_t\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_r_o_n\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_h_r_m\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_l_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_i_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_m_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_d_r_10_e_t\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_d_r_50_e_t\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_d_r_90_e_t\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_f_b_p\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_r_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_v_p\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_s_w_g\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_u_g\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_o_s\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_s_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_d_t\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_m_s_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_c_c_3_h_50_t\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_w_s_ph\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_m_i_w\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_b_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_a_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_t_a\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_a_a\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_o_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_carbinol\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_d_v\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_d_p_i\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_ethanol\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_silicon\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_methylaniline\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_formal\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_d_s\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_s_b_a\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_c_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_d_20_t\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_r_o_n\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_h_r_m\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_l_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_i_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_m_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_d_r_10_e_t\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_d_r_50_e_t\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_d_r_90_e_t\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_f_b_p\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_r_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_v_p\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_s_w_g\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_u_g\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_o_s\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_s_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_d_t\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_m_s_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_c_c_3_h_50_t\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_w_s_ph\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_m_i_w\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_b_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_a_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_t_a\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_a_a\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_o_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_carbinol\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_d_v\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_d_p_i\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_ethanol\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_silicon\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_methylaniline\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_formal\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_d_s\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_s_b_a\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_c_l\}/g, 100);
+    return cfContent;
+  } 
+
+  /**
    * 删除提示
    */
   deleteFormulaModal(uuid) {
@@ -345,6 +430,7 @@ class calculationFormulaManagement {
                     <span class = "glyphicon glyphicon-remove"></span>
                   </button>
                 </div>
+
               </div>
               <div class = "row calculation_formula_management_mt20">
                 <div class = "col-md-3">
@@ -353,14 +439,17 @@ class calculationFormulaManagement {
                     <span class="input-group-addon"><button class = "btn btn-primary"><span class = "glyphicon glyphicon-floppy-disk"></span></button></span>
                   </div>
                 </div>
-                <div class = "col-md-8">
-                  <div class="input-group">
-                    <input type="text" class="form-control" value = "">
-                    <span class="input-group-addon"><button class = "btn btn-primary"><span class = "glyphicon glyphicon-floppy-disk"></span></button></span>
-                  </div>
+                <div class = "col-md-7">
+                  <input type="text" class="form-control">
                 </div>
-                <div class = "col-md-1">
-                  <button class = "btn btn-danger">
+                <div class = "col-md-2">
+                  <button class = "btn btn-success ">
+                    <span class = "glyphicon glyphicon-ok"></span>
+                  </button>
+                  <button class = "btn btn-primary modifyFormulaContent">
+                    <span class = "glyphicon glyphicon-floppy-disk"></span>
+                  </button>
+                  <button class = "btn btn-danger deleteFormula">
                     <span class = "glyphicon glyphicon-remove"></span>
                   </button>
                 </div>
@@ -372,14 +461,17 @@ class calculationFormulaManagement {
                     <span class="input-group-addon"><button class = "btn btn-primary"><span class = "glyphicon glyphicon-floppy-disk"></span></button></span>
                   </div>
                 </div>
-                <div class = "col-md-8">
-                  <div class="input-group">
-                    <input type="text" class="form-control" value = "">
-                    <span class="input-group-addon"><button class = "btn btn-primary"><span class = "glyphicon glyphicon-floppy-disk"></span></button></span>
-                  </div>
+                <div class = "col-md-7">
+                  <input type="text" class="form-control">
                 </div>
-                <div class = "col-md-1">
-                  <button class = "btn btn-danger">
+                <div class = "col-md-2">
+                  <button class = "btn btn-success " style = "margin-right: 15px;">
+                    <span class = "glyphicon glyphicon-ok"></span>
+                  </button>
+                  <button class = "btn btn-primary modifyFormulaContent" style = "margin-right: 15px;">
+                    <span class = "glyphicon glyphicon-floppy-disk"></span>
+                  </button>
+                  <button class = "btn btn-danger deleteFormula">
                     <span class = "glyphicon glyphicon-remove"></span>
                   </button>
                 </div>

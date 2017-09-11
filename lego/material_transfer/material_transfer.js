@@ -910,11 +910,11 @@ class materialTransfer {
     addMaterialIndexParam["s_b_a"] = s_b_a;
     addMaterialIndexParam["c_l"] = c_l;
     if ("" == quantity) {
-      alert("数量结果值不能为空");
+      alert("原料数量不能为空");
       return;
     } else {
       if(null == quantity.match(/^(\d+)(\.\d+)?$/)) {
-        alert("数量的结果值格式错误");
+        alert("原料数量格式错误");
         return;
       }
     }
@@ -1248,7 +1248,8 @@ class materialTransfer {
    * 修改原料指标
    */
   modifyMaterialIndex() {
-    let pot_uuid = $("#selectWarehousePotId").val();
+    debugger;
+    let pot_uuid = $("#selectWarehousePotIdEntry").val();
     let uuid = $("#modifyMaterialEntryBtn button").attr("uuid");
     let quantity = $("#quantity").val();
     let d_20_t = $("#d_20_t").val();
@@ -1327,11 +1328,11 @@ class materialTransfer {
     modifyMaterialIndexParam["s_b_a"] = s_b_a;
     modifyMaterialIndexParam["c_l"] = c_l;
     if ("" == quantity) {
-      alert("数量结果值不能为空");
+      alert("原料数量不能为空");
       return;
     } else {
       if(null == quantity.match(/^(\d+)(\.\d+)?$/)) {
-        alert("数量的结果值格式错误");
+        alert("原料数量格式错误");
         return;
       }
     }
@@ -1710,7 +1711,7 @@ class materialTransfer {
             <div class = "col-md-4">
               <div class = "input-group pull-left">
                 <span class = "input-group-addon">原料数量</span>
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" id = "quantity">
                 <span class = "input-group-addon">吨</span>
               </div>
             </div>
@@ -1754,7 +1755,7 @@ class materialTransfer {
                     <td id = "Exit_R_r_o_n">93.5</td>
                   </tr>
                   <tr>
-                    <td>抗爆指数（RON+MOn）/2</td>
+                    <td>抗爆指数（RON+MON）/2</td>
                     <td id = "Exit_R_h_r_m">0</td>
                     </td>
                   </tr>
@@ -1967,7 +1968,7 @@ class materialTransfer {
                     </td>
                   </tr>
                   <tr>
-                    <td>抗爆指数（RON+MOn）/2</td>
+                    <td>抗爆指数（RON+MON）/2</td>
                     <td id = "R_h_r_m">0</td>
                     <td class = "entryValue">
                       <div class="form-group">

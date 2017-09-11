@@ -307,12 +307,7 @@ class materialEntry {
   /**
    * 获取储罐
    */
-  getWarehousePot() {
-    let warehouse_uuid = $("#selectWarehouseId").val();
-    if("" == warehouse_uuid) {
-      alert("请选择原料类别");
-      return;
-    }
+  getWarehousePot(warehouse_uuid) {
     let get_warehouse_pot_url = PROJECT_PATH + "lego/lego_fjTrade?servletName=getWarehousePot";
     let get_warehouse_pot_param_data = {};
     get_warehouse_pot_param_data["warehouse_uuid"] = warehouse_uuid;
@@ -339,12 +334,7 @@ class materialEntry {
   /**
    * 获取原料类别
    */
-  getMaterialCategory() {
-    let warehouse_uuid = $("#selectWarehouseId").val();
-    if("" == warehouse_uuid) {
-      alert("请选择原料类别");
-      return;
-    }
+  getMaterialCategory(warehouse_uuid) {
     let getMaterialCategoryUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=getWarehousePotMaterialType";
     let getMaterialCategoryParam = {};
     getMaterialCategoryParam["warehouse_uuid"] = warehouse_uuid;
@@ -363,7 +353,7 @@ class materialEntry {
         this.materialCategoryData = materialCategoryArr;
       }
     } else {
-      alert("获取类别失败");
+      alert("获取原料类别失败");
       return;
     } 
   }
@@ -371,12 +361,7 @@ class materialEntry {
   /**
    * 根据uuid获取原料类别的数量和金额
    */
-  getMaterialCategoryByUuid() {
-    let warehouse_uuid = $("#selectWarehouseId").val();
-    if("" == warehouse_uuid) {
-      alert("请选择原料类别");
-      return;
-    }
+  getMaterialCategoryByUuid(warehouse_uuid) {
     let uuid = $("#materialCategoryId").val();
     if("" == uuid) {
       alert("请选择原料类别");
@@ -400,20 +385,9 @@ class materialEntry {
   /**
    * 修改原料类别
    */
-  modifyWarehousePotMaterialType() {
-    debugger;
-    let warehouse_uuid = $("#selectWarehouseId").val();
-    let quantity = new Number($("#quantity").val()) + this.materialCategoryData.quantity;
-    let uuid = $("#materialCategoryId").val();
-    let amount = new Number($("#amount").val()) + this.materialCategoryData.amount;
-    if("" == warehouse_uuid) {
-      alert("请选择原料类别");
-      return;
-    }
-    if("" == uuid) {
-      alert("请选择原料类别");
-      return;
-    }
+  modifyWarehousePotMaterialType(warehouse_uuid, uuid) {
+    let quantity = $("#quantity").val();
+    let amount = $("#amount").val();
     if("" == quantity) {
       alert("请输入原料数量");
       return;
@@ -432,6 +406,8 @@ class materialEntry {
         return;
       }
     }
+    let quantityAll = new Number(quantity) + this.materialCategoryData.quantity;
+    let amountAll = new Number(amount) + this.materialCategoryData.amount;
     let modifyWarehousePotMaterialTypeUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=modifyWarehousePotMaterialType";
     let modifyWarehousePotMaterialTypeParam = {};
     modifyWarehousePotMaterialTypeParam["warehouse_uuid"] = warehouse_uuid;
@@ -442,9 +418,6 @@ class materialEntry {
     console.log(modifyWarehousePotMaterialTypeData);
     if (1 == modifyWarehousePotMaterialTypeData.status) {
       alert("修改原料类别成功");
-    $("#quantity").val("");
-    $("#materialCategoryId").val("");
-    $("#amount").val("");
     } else {
       alert("修改原料类别失败");
       return;
@@ -474,8 +447,7 @@ class materialEntry {
   /**
    * 获取原料指标
    */
-  getWarehousePotMaterialIndex() {
-    let pot_uuid = $("#selectWarehousePotId").val();
+  getWarehousePotMaterialIndex(pot_uuid) {
     let getWarehousePotMaterialIndexUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=getWarehousePotMaterialIndex";
     let getWarehousePotMaterialIndexParam = {};
     getWarehousePotMaterialIndexParam["pot_uuid"] = pot_uuid;
@@ -557,10 +529,14 @@ class materialEntry {
         }
       }
     } else {
-      alert("获取原料失败");
+      alert("获取数据指标失败");
       return;
     }
   }
+
+  /**
+   * 公式替换
+   */
   replaceCfContent(cfContent) {
     //原始值
     let R_d_20_t = $("#R_d_20_t").html();
@@ -793,11 +769,11 @@ class materialEntry {
     addMaterialIndexParam["s_b_a"] = s_b_a;
     addMaterialIndexParam["c_l"] = c_l;
     if ("" == quantity) {
-      alert("数量结果值不能为空");
+      alert("原料数量不能为空");
       return;
     } else {
       if(null == quantity.match(/^(\d+)(\.\d+)?$/)) {
-        alert("数量的结果值格式错误");
+        alert("原料数量的格式错误");
         return;
       }
     }
@@ -1124,6 +1100,12 @@ class materialEntry {
       this.fillMaterialCategoryData();
       this.getWarehousePotMaterialIndex()
       this.fillVariableData(); 
+      $("#quantity").val("");
+      $("#materialCategoryId").val("");
+      $("#amount").val("");
+      alert("原料指标修改成功");
+    } else {
+      alert("原料指标修改失败");
     }
   }
 
@@ -1210,11 +1192,11 @@ class materialEntry {
     modifyMaterialIndexParam["s_b_a"] = s_b_a;
     modifyMaterialIndexParam["c_l"] = c_l;
     if ("" == quantity) {
-      alert("数量结果值不能为空");
+      alert("原料数量不能为空");
       return;
     } else {
       if(null == quantity.match(/^(\d+)(\.\d+)?$/)) {
-        alert("数量的结果值格式错误");
+        alert("原料数量格式错误");
         return;
       }
     }
@@ -1544,9 +1526,12 @@ class materialEntry {
       $("tbody tr td:nth-child(4) select").val("");
       $("tbody tr td:nth-child(5) input").val("");
       $("tbody tr td:nth-child(6) input").val("");
-      alert("修改成功");
+      $("#quantity").val("");
+      $("#materialCategoryId").val("");
+      $("#amount").val("");
+      alert("原料指标修改成功");
     } else {
-      alert("修改失败");
+      alert("原料指标修改失败");
     }
   }
   /**
@@ -1695,7 +1680,7 @@ class materialEntry {
                  </td>
                </tr>
                <tr>
-                 <td>抗爆指数（RON+MOn）/2</td>
+                 <td>抗爆指数（RON+MON）/2</td>
                  <td id = "R_h_r_m">0</td>
                  <td class = "entryValue">
                    <div class="form-group">

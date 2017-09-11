@@ -77,32 +77,109 @@
         }
       });
       materialEntryArea.getWarehouse();
-      $(document).on("focus", "#selectWarehousePotId", function() {
-        materialEntryArea.getWarehousePot();
-        materialEntryArea.fillWarehousePotData();
-      });
       $(document).on("change", "#selectWarehouseId", function() {
         $("selectWarehousePotId").val("");
-        materialEntryArea.getWarehousePot();
+        let warehouse_uuid = $("#selectWarehouseId").val();
+        materialEntryArea.getWarehousePot(warehouse_uuid);
         materialEntryArea.fillWarehousePotData(); 
       });
       $(document).on("click", "#searchBtn", function() {
         $("materialCategoryId").val("");
-        materialEntryArea.getMaterialCategory();
+        let warehouse_uuid = $("#selectWarehouseId").val();
+        let pot_uuid = $("#selectWarehousePotId").val();
+        if ("" == warehouse_uuid) {
+          alert("请选择库区");
+          return;
+        }
+        if ("" == pot_uuid) {
+          alert("请选择储罐");
+          return;
+        } 
+        materialEntryArea.getMaterialCategory(warehouse_uuid);
         materialEntryArea.fillMaterialCategoryData();
-        materialEntryArea.getWarehousePotMaterialIndex()
+        materialEntryArea.getWarehousePotMaterialIndex(pot_uuid);
         materialEntryArea.fillVariableData();
       });
       materialEntryArea.fillWarehouseData();
       $(document).on("click", "#addMaterialEntryBtn button", function() {
-        materialEntryArea.getMaterialCategoryByUuid();
+        let warehouse_uuid = $("#selectWarehouseId").val();
+        let pot_uuid = $("#selectWarehousePotId").val();
+        let category_uuid = $("#materialCategoryId").val();
+        if ("" == warehouse_uuid) {
+          alert("请选择库区");
+          return;
+        }
+        if ("" == pot_uuid) {
+          alert("请选择储罐");
+          return;
+        } 
+        if ("" == category_uuid) {
+          alert("请选择原料类别");
+          return;
+        }
+        let quantity = $("#quantity").val();
+        let amount = $("#amount").val();
+        if("" == quantity) {
+          alert("请输入原料数量");
+          return;
+        } else {
+          if(null == quantity.match(/^(\d+)(\.\d+)?$/)) {
+            alert("原料数量格式错误");
+            return;
+          }
+        }
+        if("" == amount) {
+          alert("请输入原料价格");
+          return;
+        } else {
+          if(null == amount.match(/^(\d+)(\.\d+)?$/)) {
+            alert("原料价格格式错误");
+            return;
+          }
+        }
+        materialEntryArea.getMaterialCategoryByUuid(warehouse_uuid);
+        materialEntryArea.modifyWarehousePotMaterialType(warehouse_uuid, category_uuid);
         materialEntryArea.addWarehousePotMaterialIndex();   
-        materialEntryArea.modifyWarehousePotMaterialType();
       });
       $(document).on("click", "#modifyMaterialEntryBtn button", function() {
-        materialEntryArea.getMaterialCategoryByUuid();
+        let warehouse_uuid = $("#selectWarehouseId").val();
+        let pot_uuid = $("#selectWarehousePotId").val();
+        let category_uuid = $("#materialCategoryId").val();
+        if ("" == warehouse_uuid) {
+          alert("请选择库区");
+          return;
+        }
+        if ("" == pot_uuid) {
+          alert("请选择储罐");
+          return;
+        } 
+        if ("" == category_uuid) {
+          alert("请选择原料类别");
+          return;
+        }
+        let quantity = $("#quantity").val();
+        let amount = $("#amount").val();
+        if("" == quantity) {
+          alert("原料数量不能为空");
+          return;
+        } else {
+          if(null == quantity.match(/^(\d+)(\.\d+)?$/)) {
+            alert("原料数量格式错误");
+            return;
+          }
+        }
+        if("" == amount) {
+          alert("原料价格不能为空");
+          return;
+        } else {
+          if(null == amount.match(/^(\d+)(\.\d+)?$/)) {
+            alert("原料价格格式错误");
+            return;
+          }
+        }
+        materialEntryArea.getMaterialCategoryByUuid(warehouse_uuid);
+        materialEntryArea.modifyWarehousePotMaterialType(warehouse_uuid, category_uuid);
         materialEntryArea.modifyMaterialIndex();   
-        materialEntryArea.modifyWarehousePotMaterialType();
       });
     })
   </script>

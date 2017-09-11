@@ -916,7 +916,7 @@ class modifyMaterialIndex {
                 </td>
               </tr>
               <tr>
-                <td>抗爆指数（RON+MOn）/2</td>
+                <td>抗爆指数（RON+MON）/2</td>
                 <td id = "R_h_r_m">0</td>
                 <td>
                   <div class="form-group">
