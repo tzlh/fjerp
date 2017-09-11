@@ -126,7 +126,7 @@ class MaterialExit {
           tmpArr[i] = {"warehouse_name":result[i].name, "uuid":result[i].uuid};
         }
         this.warehouseData["data"] = tmpArr;
-        console.log(tmpArr)
+        //console.log(tmpArr)
       }
     } else {
       alert("仓库数据获取失败");
@@ -142,7 +142,7 @@ class MaterialExit {
           tmpArr[i] = {"pot_name":result[i].name, "warehouse_uuid":result[i].warehouse_uuid, "uuid":result[i].uuid};
         }
         this.potData["data"] = tmpArr;
-        console.log(tmpArr)
+        //console.log(tmpArr)
       }
     } else {
       alert("储罐数据获取失败");
@@ -154,12 +154,12 @@ class MaterialExit {
       } else {
         let tmpArr = new Array();
         let result = JSON.parse(typeGet.result); 
-        console.log(result);
+        //console.log(result);
         for (let i = 0; i < result.length; i++) {
           tmpArr[i] = {"type_name":result[i].name, "warehouse_uuid":result[i].warehouse_uuid, "uuid":result[i].uuid};
         }
         this.typeData["data"] = tmpArr;
-        console.log(tmpArr)
+        //console.log(tmpArr)
       }
     } else {
       alert("类别数据获取失败");
@@ -181,7 +181,7 @@ class MaterialExit {
           tmpArr[i] = {"pot_name":result[i].name, "warehouse_uuid":result[i].warehouse_uuid, "uuid":result[i].uuid};
         }
         this.potData["data"] = tmpArr;
-        console.log(tmpArr)
+        //console.log(tmpArr)
       }
     } else {
       alert("储罐数据获取失败");
@@ -198,12 +198,12 @@ class MaterialExit {
       } else {
         let tmpArr = new Array();
         let result = JSON.parse(typeGet.result); 
-        console.log(result);
+        //console.log(result);
         for (let i = 0; i < result.length; i++) {
           tmpArr[i] = {"type_name":result[i].name, "warehouse_uuid":result[i].warehouse_uuid, "uuid":result[i].uuid};
         }
         this.typeData["data"] = tmpArr;
-        console.log(tmpArr)
+        //console.log(tmpArr)
       }
     } else {
       alert("类别数据获取失败");
@@ -227,7 +227,7 @@ class MaterialExit {
   //仓库发生改变
   warehouseChangeFunc(obj) {
     let warehouseUuid = obj.val();
-    console.log(warehouseUuid)
+    //console.log(warehouseUuid)
     if ("0" != warehouseUuid) {
       let potData = {
         "warehouse_uuid":warehouseUuid
@@ -295,8 +295,8 @@ class MaterialExit {
           amount = 0;
           quantity = 0;
         }
-        console.log(quantity);
-        console.log(unitPrice);
+        //console.log(quantity);
+        //console.log(unitPrice);
         $("#unit_price_type").attr("quantity", quantity);
         $("#unit_price_type").val(unitPrice);
       }
@@ -323,6 +323,10 @@ class MaterialExit {
       alert("请输入出库数量");
       return;
     }
+    if ("0" == $("#exit_quantity_all").val()) {
+      alert("出库数量不能为0");
+      return;
+    }
     let warehouseUuid = $(".warehouse_change").val();
     let typeUuid = $("#type_change").val();
     let unitPrice = $("#unit_price_type").val();
@@ -330,7 +334,7 @@ class MaterialExit {
     let quantity = $("#unit_price_type").attr("quantity");
     let quantityData = Number(quantity) - Number(quantityVal);
     let amountData = Number(quantityData) * Number(unitPrice);
-
+    let offOn = 0; 
     //原料类别
     let typeData = {
       "uuid":typeUuid,
@@ -340,11 +344,11 @@ class MaterialExit {
     };
     let exitUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=modifyWarehousePotMaterialType";
     let exitGet = ajax_assistant(exitUrl, typeData, false, true, false);
-    console.log(exitGet)
+    //console.log(exitGet)
     if ("1" == exitGet.status) {
-      alert("原料类别修改成功");
+      offOn = 0;
     } else {
-      alert("原料类别修改失败");
+      offOn = 1;
     }
     //原料指标
     let potUuid = $("#pot_change").val();
@@ -373,11 +377,16 @@ class MaterialExit {
     //修改指标的
     let indexEditUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=modifyWarehousePotMaterialIndex";
     let indexEditGet = ajax_assistant(indexEditUrl, materialData, false, true, false);
-    console.log(indexEditGet)
+    //console.log(indexEditGet)
     if ("1" == indexEditGet.status) {
-      alert("原料指标修改成功");
+      offOn = 0;
     } else {
-      alert("原料指标修改失败");
+      offOn = 1;
+    }
+    if ("0" == offOn) {
+      alert("出库成功");
+    } else {
+      alert("出库失败");
     }
   }
 
