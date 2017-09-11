@@ -103,8 +103,8 @@ class MaterialListObj {
     //获取储罐原料类别
     let warehouseTypeUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=getWarehousePotMaterialType";
     let warehouseTypeGet = ajax_assistant(warehouseTypeUrl, "", false, true, false);
-    console.log(warehouseGet)
-    console.log(warehouseTypeGet);
+    //console.log(warehouseGet)
+    //console.log(warehouseTypeGet);
     //仓库
     if ("1" == warehouseGet.status) {
       if ("0" == warehouseGet.count) {
@@ -116,7 +116,7 @@ class MaterialListObj {
           tmpArr[i] = {"material_name":result[i].name, "uuid":result[i].uuid};
         }
         this.materialListData["data"] = tmpArr;
-        console.log(tmpArr)
+        //console.log(tmpArr)
       }
     } else {
       alert("仓库数据获取失败");
@@ -132,7 +132,7 @@ class MaterialListObj {
           tmpArr[i] = {"material_sub_name":result[i].name, "material_uuid":result[i].warehouse_uuid, "quantity":result[i].quantity, "amount":result[i].amount, "uuid":result[i].uuid};
         }
         this.materialListSubData["data"] = tmpArr;
-        console.log(tmpArr)
+        //console.log(tmpArr)
       }
     } else {
       alert("储罐原料类别数据获取失败");
@@ -229,7 +229,7 @@ class MaterialListObj {
     // 调用后台添加接口
     let materialAddUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=addWarehousePotMaterialType";
     let materialAddGet = ajax_assistant(materialAddUrl, materialAddData, false, true, false);
-    console.log(materialAddGet)
+    //console.log(materialAddGet)
     if ("1" != materialAddGet.status) {
       alert("添加类别名称失败");
     } else {
@@ -249,7 +249,7 @@ class MaterialListObj {
     let materialUuid = obj.attr("uuid");
     let warehouseUuid = obj.attr("warehouse_uuid");
     let materialName = obj.siblings(".material_name_val").val();
-    console.log(materialName)
+    //console.log(materialName)
     if(null == materialName.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{1,32}$/)){
       alert("请输入正确的类别名称");
       return;
@@ -278,7 +278,7 @@ class MaterialListObj {
     // 调用后台添加接口
     let editUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=modifyWarehousePotMaterialType";
     let editGet = ajax_assistant(editUrl, editData, false, true, false);
-    console.log(editGet);
+    //console.log(editGet);
     if ("1" != editGet.status) {
       alert("修改类别名称失败");
       obj.siblings(".material_name_val").val(materialHiddenName);
@@ -310,7 +310,7 @@ class MaterialListObj {
     let editUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=modifyWarehousePotMaterialType";
     let editGet = ajax_assistant(editUrl, editData, false, true, false);
     let materialHiddenQuantity = obj.siblings(".material_quantity_val_hidden").val();
-    console.log(editGet);
+    //console.log(editGet);
     if ("1" != editGet.status) {
       alert("修改类别数量失败");
       obj.siblings(".material_quantity_val").val(materialHiddenQuantity);
@@ -342,7 +342,7 @@ class MaterialListObj {
     let editGet = ajax_assistant(editUrl, editData, false, true, false);
     let materialHiddenAmount = obj.siblings(".material_amount_val_hidden").val();
 
-    console.log(editGet);
+    //console.log(editGet);
     if ("1" != editGet.status) {
       alert("修改类别金额失败");
       obj.siblings(".material_quantity_val").val(materialHiddenQuantity);
