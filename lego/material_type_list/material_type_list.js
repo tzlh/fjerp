@@ -14,9 +14,9 @@ class MaterialListObj {
     // 类别子集
     this.materialListSubData = {
     "data":[
-        {"material_sub_name":"芳烃", "uuid":"101", "material_uuid":"001"},
-        {"material_sub_name":"异构", "uuid":"102", "material_uuid":"001"},
-        {"material_sub_name":"轻油", "uuid":"103", "material_uuid":"002"}]
+        {"material_sub_name":"芳烃", "uuid":"101", "material_uuid":"001", "quantity":"1000", "amount":"100"},
+        {"material_sub_name":"异构", "uuid":"102", "material_uuid":"001", "quantity":"1000", "amount":"100"},
+        {"material_sub_name":"轻油", "uuid":"103", "material_uuid":"002", "quantity":"1000", "amount":"100"}]
     };
   }
 
@@ -31,10 +31,11 @@ class MaterialListObj {
     let materialListHtml = "";
     if(isJsonObjectHasData(this.materialListData)) {
       for (let i = 0; i < this.materialListData.data.length; i++) {
-        materialListHtml+=
+        materialListHtml +=
           `<div>
             <p href = "#" class = "list-group-item clearfix material_type_list_pl30 material_type_list_bgddd">${this.materialListData.data[i].material_name}<span class = "glyphicon glyphicon-plus pull-right material_type_list_colorfff add_material_plus" warehouse_uuid = "${this.materialListData.data[i].uuid}"></span></p>
-            <div id = "material_type_list${this.materialListData.data[i].uuid}"></div>
+            <div id = "material_type_list${this.materialListData.data[i].uuid}">
+            </div>
           </div>`;
       }
     }
@@ -42,7 +43,52 @@ class MaterialListObj {
     //查询列表子集
     if (isJsonObjectHasData(this.materialListSubData)) {
       for (let i = 0; i < this.materialListSubData.data.length; i++) {
-        $("#material_type_list" + this.materialListSubData.data[i].material_uuid).append(`<p href = "#" class = "list-group-item clearfix material_type_list_pl30">${this.materialListSubData.data[i].material_sub_name}<span class = "glyphicon glyphicon-remove pull-right material_type_list_ml15 delete_material_event" uuid = "${this.materialListSubData.data[i].uuid}"></span><span class = "glyphicon glyphicon-pencil pull-right material_type_list_ml15 material_edit_event" uuid = "${this.materialListSubData.data[i].uuid}"></span></p>`);
+        $("#material_type_list" + this.materialListSubData.data[i].material_uuid).append(`
+          <div class = "row material_type_list_row">
+            <table collspan = "0" rowspan = "0" width = "100%">
+              <tbody>
+                <tr>
+                  <td width = "30%">
+                    <div class="form-group material_type_b">
+                      <div class="input-group">
+                        <div class="input-group-addon">类别名称</div>
+                        <input type="hidden" class="material_name_val_hidden" value = "${this.materialListSubData.data[i].material_sub_name}">
+
+                        <input type="text" class="form-control material_name_val" value = "${this.materialListSubData.data[i].material_sub_name}">
+                        <div class="input-group-addon material_bg_primary mareial_edit_name" uuid = "${this.materialListSubData.data[i].uuid}" warehouse_uuid = "${this.materialListSubData.data[i].material_uuid}"><span class = "glyphicon glyphicon-floppy-disk"></span></div>
+                      </div>
+                    </div>
+                  </td>
+                  <td width = "30%">
+                    <div class="form-group material_type_b">
+                      <div class="input-group">
+                        <div class="input-group-addon">数量</div>
+
+                        <input type="hidden" class="material_quantity_val_hidden" value = "${this.materialListSubData.data[i].quantity}">
+                        <input type="text" class="form-control material_quantity_val" value = "${this.materialListSubData.data[i].quantity}">
+                        <div class="input-group-addon material_bg_primary mareial_edit_quantity" uuid = "${this.materialListSubData.data[i].uuid}" warehouse_uuid = "${this.materialListSubData.data[i].material_uuid}"><span class = "glyphicon glyphicon-floppy-disk"></span></div>
+                      </div>
+                    </div>
+                  </td>
+                  <td width = "30%"> 
+                    <div class="form-group material_type_b">
+                      <div class="input-group">
+                        <div class="input-group-addon">金额</div>
+                        <input type="hidden" class="material_amount_val_hidden" value = "${this.materialListSubData.data[i].amount}">
+                        <input type="text" class="form-control material_amount_val" value = "${this.materialListSubData.data[i].amount}">
+                        <div class="input-group-addon material_bg_primary mareial_edit_amount" uuid = "${this.materialListSubData.data[i].uuid}" warehouse_uuid = "${this.materialListSubData.data[i].material_uuid}"><span class = "glyphicon glyphicon-floppy-disk"></span></div>
+                      </div>
+                    </div>
+                  </td>
+                  <td width = "10%">
+                    <button class = "btn btn-danger material_type_list_delet_data" uuid = "${this.materialListSubData.data[i].uuid}">
+                      <span class = "glyphicon glyphicon-remove"></span>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>`);
       }
     }
   }
@@ -57,14 +103,11 @@ class MaterialListObj {
     //获取储罐原料类别
     let warehouseTypeUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=getWarehousePotMaterialType";
     let warehouseTypeGet = ajax_assistant(warehouseTypeUrl, "", false, true, false);
-    //获取储罐
-    let potUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=getWarehousePot";
-    let potGet = ajax_assistant(potUrl, "", false, true, false);
     console.log(warehouseGet)
     console.log(warehouseTypeGet);
     //仓库
-    if (1 == warehouseGet.status) {
-      if (0 == warehouseGet.count) {
+    if ("1" == warehouseGet.status) {
+      if ("0" == warehouseGet.count) {
         this.materialListData = {};
       } else {
         let tmpArr = new Array();
@@ -80,23 +123,13 @@ class MaterialListObj {
     }
     //获取储罐原料类别
     if ("1" == warehouseTypeGet.status) {
-      if (0 == warehouseTypeGet.count) {
+      if ("0" == warehouseTypeGet.count) {
         this.materialListSubData = {};
       } else {
         let tmpArr = new Array();
-        let result = JSON.parse(warehouseTypeGet.result);    
+        let result = JSON.parse(warehouseTypeGet.result); 
         for (let i = 0; i < result.length; i++) {
-          tmpArr[i] = {"material_sub_name":result[i].name, "uuid":result[i].uuid};
-          if ("1" == potGet.status) {
-            let potResult = JSON.parse(potGet.result);
-            for (let j = 0; j < potResult.length; j++) {
-              if (potResult[j].uuid == result[i].pot_uuid) {
-                tmpArr[i]["material_uuid"] = potResult[j].warehouse_uuid; 
-              }
-            }
-          } else {
-            alert("获取储罐失败！");
-          }
+          tmpArr[i] = {"material_sub_name":result[i].name, "material_uuid":result[i].warehouse_uuid, "quantity":result[i].quantity, "amount":result[i].amount, "uuid":result[i].uuid};
         }
         this.materialListSubData["data"] = tmpArr;
         console.log(tmpArr)
@@ -117,20 +150,24 @@ class MaterialListObj {
     $(document).on("click", ".material_type_list_prop_data", function() {
       currentObj.addData($(this));
     });
-    //修改弹框
-    $(document).on("click", ".material_edit_event", function() {
-      currentObj.editModal($(this));
+    //修改名称
+    $(document).on("click", ".mareial_edit_name", function() {
+      currentObj.editName($(this));
     });
-    //修改数据
-    $(document).on("click", ".material_type_list_prop_edit_data", function() {
-      currentObj.editData($(this));
+    //修改数量
+    $(document).on("click", ".mareial_edit_quantity", function() {
+      currentObj.editQuantity($(this));
+    });
+    //修改金额
+    $(document).on("click", ".mareial_edit_amount", function() {
+      currentObj.editAmount($(this));
     });
     //删除
-    $(document).on("click", ".delete_material_event", function() {
+    $(document).on("click", ".material_type_list_delet_data", function() {
       currentObj.deleteModal($(this));
     });
     //删除数据
-    $(document).on("click", ".material_type_list_delet_data", function() {
+    $(document).on("click", ".material_delet_btn", function() {
       currentObj.deleteData($(this));
     });
   }
@@ -138,21 +175,6 @@ class MaterialListObj {
   //添加类别列表
   addModal(obj) {
     let warehouseUuid = obj.attr("warehouse_uuid");
-    //获取该仓库的储罐
-    let potData = {
-      "warehouse_uuid":warehouseUuid
-    };
-    let potUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=getWarehousePot";
-    let potGet = ajax_assistant(potUrl, potData, false, true, false);
-    let potHtml = `<option value = "">--请选择--</option>`;
-    if ("1" == potGet.status) {
-      let potResult = JSON.parse(potGet.result);
-      for (let i = 0; i < potResult.length; i++) {
-        potHtml += `<option value = "${potResult[i].uuid}">${potResult[i].name}</option>`;
-      }
-    } else {
-      alert("获取储罐失败！");
-    }
     //弹框文本
     let materialHtml  =  
       `<div class = "modal fade custom_modal custom_modal" id = "material_type_list_prop" tabindex = "-1" role = "dialog" aria-labelledby = "myModalLabel">
@@ -164,17 +186,12 @@ class MaterialListObj {
             </div>
             <div class = "modal-body nopadding-bottom">
               <div class = "form-group">
-                <label>选择储罐</label>
-                <select class = "form-control pot_name" value = "">${potHtml}
-                </select>
-              </div>
-              <div class = "form-group">
                 <label>类别名称</label>
                 <input type = "text" class = "form-control material_list_name" value = "">
               </div>
             </div>
             <div class = "modal-footer" style = "text-align: center;">
-              <button type = "button" class = "btn btn-primary material_type_list_prop_data">添加</button>
+              <button type = "button" class = "btn btn-primary material_type_list_prop_data" warehouse_uuid = "${warehouseUuid}">添加</button>
               <button type = "button" class = "btn btn-default"  data-dismiss="modal">取消</button>
             </div>
           </div>
@@ -189,7 +206,7 @@ class MaterialListObj {
 
   //添加数据
   addData(obj) {
-    let potUuid = obj.parents("#material_type_list_prop").find(".pot_name").val();
+    let warehouseUuid = obj.attr("warehouse_uuid");
     let materialListName = obj.parents("#material_type_list_prop").find(".material_list_name").val();
     if(null == materialListName.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{1,32}$/)) {
       alert("请输入正确的类别名称");
@@ -206,14 +223,14 @@ class MaterialListObj {
       return;
     }
     let materialAddData = {
-      "pot_uuid":potUuid,
+      "warehouse_uuid":warehouseUuid,
       "name":materialListName
     };
     // 调用后台添加接口
     let materialAddUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=addWarehousePotMaterialType";
     let materialAddGet = ajax_assistant(materialAddUrl, materialAddData, false, true, false);
     console.log(materialAddGet)
-    if (1 != materialAddGet.status) {
+    if ("1" != materialAddGet.status) {
       alert("添加类别名称失败");
     } else {
       //更新页面数据
@@ -228,77 +245,11 @@ class MaterialListObj {
   }
 
   //修改类别列表
-  editModal(obj) {
+  editName(obj) {
     let materialUuid = obj.attr("uuid");
-    //获取类别
-    let data = {
-      "uuid":materialUuid
-    };
-    let materialName = "";
-    let potCheckUuid = "";
-    let editUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=getWarehousePotMaterialType";
-    let editGet = ajax_assistant(editUrl, data, false, true, false);
-    if(1 == editGet.status){
-      let reslutJson = JSON.parse(editGet.result);
-      materialName = reslutJson[0].name;
-      potCheckUuid = reslutJson[0].pot_uuid;
-    } else {
-      alert("获取储罐原料类别失败！");
-    }
-    //获取储罐
-    let potUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=getWarehousePot";
-    let potGet = ajax_assistant(potUrl, "", false, true, false);
-    let potHtml = "";
-    if("1" == potGet.status) {
-      let potResult = JSON.parse(potGet.result);
-      for(let i = 0; i < potResult.length; i++) {
-        if (potCheckUuid == potResult[i].uuid) {
-          potHtml += `<option value = "${potResult[i].uuid}">${potResult[i].name}</option>`;
- 
-        }
-      }
-    } else {
-      alert("获取储罐失败！");
-    }
-
-    let materialHtml = 
-     `<div class = "modal fade custom_modal" id = "material_type_list_prop_edit" tabindex = "-1" role = "dialog" aria-labelledby = "myModalLabel">
-      <div class = "modal-dialog modal-sm" role = "document">
-        <div class = "modal-content">
-          <div class = "modal-header bg-primary">
-            <button type = "button" class = "close"data-dismiss = "modal" aria-label = "Close"><span aria-hidden = "true">&times;</span></button>
-            <h4 class = "modal-title" id = "myModalLabel">修改类别</h4>
-          </div>
-          <div class = "modal-body nopadding-bottom">
-            <div class = "form-group">
-              <label>选择储罐</label>
-              <select class = "form-control pot_name" value = "" disabled = "disabled">${potHtml}
-              </select>
-            </div>
-            <div class = "form-group">
-              <label>类别名称</label>
-              <input type="hidden" class = "name_hidden" value="${materialName}">
-              <input type = "text" class = "form-control material_list_name" value = "${materialName}">
-            </div>
-          </div>
-          <div class = "modal-footer" style = "text-align: center;">
-            <button type = "button" class = "btn btn-warning material_type_list_prop_edit_data" uuid = "${materialUuid}">修改</button>
-            <button type = "button" class = "btn btn-default" data-dismiss = "modal">取消</button>
-          </div>
-        </div>
-      </div>
-     </div>`;
-    $("body").append(materialHtml);
-    $("#material_type_list_prop_edit").modal("show");
-    $("#material_type_list_prop_edit").on("hidden.bs.modal", function (e) {
-      $(this).remove();
-    });
-  }
-
-  //修改数据
-  editData(obj) {
-    let materialUuid = obj.attr("uuid");
-    let materialName = obj.parents("#material_type_list_prop_edit").find(".material_list_name").val();
+    let warehouseUuid = obj.attr("warehouse_uuid");
+    let materialName = obj.siblings(".material_name_val").val();
+    console.log(materialName)
     if(null == materialName.match(/^[\u4e00-\u9fffa0-9a-zA-Z]{1,32}$/)){
       alert("请输入正确的类别名称");
       return;
@@ -309,16 +260,18 @@ class MaterialListObj {
     };
     let materialCheckUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=checkWarehousePotMaterialType";
     let materialCheckGet = ajax_assistant(materialCheckUrl, materialCheckData, false, true, false);
-    let vleHidden = obj.parents("#material_type_list_prop_edit").find(".name_hidden").val();
+    let materialHiddenName = obj.siblings(".material_name_val_hidden").val();
     if("1" != materialCheckGet.status) {
-      console.log(vleHidden);
-      console.log(materialName);
-      if (vleHidden != materialName) {
+      if (materialHiddenName != materialName) {
         alert("改类别名已存在！");
+        obj.siblings(".material_name_val").val(materialHiddenName);
         return;
       }
     }
+    materialName = obj.siblings(".material_name_val").val();
+    //修改类别
     let editData = {
+      "warehouse_uuid":warehouseUuid,
       "uuid":materialUuid,
       "name":materialName
     };
@@ -328,16 +281,78 @@ class MaterialListObj {
     console.log(editGet);
     if ("1" != editGet.status) {
       alert("修改类别名称失败");
+      obj.siblings(".material_name_val").val(materialHiddenName);
     } else {    
       //更新页面数据
       this.clearRawData();
       this.serverDataCover();
       this.fillVariableData();
-      $("#material_type_list_prop_edit").modal("hide");
-      $("#material_type_list_prop_edit").on("hidden.bs.modal", function (e) {
-        $(this).remove();
-      });
-    }    
+      alert("修改类别成功");
+    } 
+  }
+
+  //修改数据
+  editQuantity(obj) {
+    let materialUuid = obj.attr("uuid");
+    let warehouseUuid = obj.attr("warehouse_uuid");
+    let materialQuantity = obj.siblings(".material_quantity_val").val();
+    if(null == materialQuantity.match(/^[0-9]+\.{0,1}[0-9]{0,4}$/)){
+      alert("请输入正确的数量");
+      return;
+    };
+    //修改类别
+    let editData = {
+      "warehouse_uuid":warehouseUuid,
+      "uuid":materialUuid,
+      "quantity":materialQuantity
+    };
+    // 调用后台添加接口
+    let editUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=modifyWarehousePotMaterialType";
+    let editGet = ajax_assistant(editUrl, editData, false, true, false);
+    let materialHiddenQuantity = obj.siblings(".material_quantity_val_hidden").val();
+    console.log(editGet);
+    if ("1" != editGet.status) {
+      alert("修改类别数量失败");
+      obj.siblings(".material_quantity_val").val(materialHiddenQuantity);
+    } else {    
+      //更新页面数据
+      this.clearRawData();
+      this.serverDataCover();
+      this.fillVariableData();
+      alert("修改类别数量成功");
+    }   
+  }
+  //修改金额
+  editAmount(obj) {
+    let materialUuid = obj.attr("uuid");
+    let warehouseUuid = obj.attr("warehouse_uuid");
+    let materialAmount = obj.siblings(".material_amount_val").val();
+    if(null == materialAmount.match(/^[0-9]+\.{0,1}[0-9]{0,4}$/)){
+      alert("请输入正确的金额");
+      return;
+    };
+    //修改类别
+    let editData = {
+      "warehouse_uuid":warehouseUuid,
+      "uuid":materialUuid,
+      "amount":materialAmount
+    };
+    // 调用后台添加接口
+    let editUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=modifyWarehousePotMaterialType";
+    let editGet = ajax_assistant(editUrl, editData, false, true, false);
+    let materialHiddenAmount = obj.siblings(".material_amount_val_hidden").val();
+
+    console.log(editGet);
+    if ("1" != editGet.status) {
+      alert("修改类别金额失败");
+      obj.siblings(".material_quantity_val").val(materialHiddenQuantity);
+    } else {    
+      //更新页面数据
+      this.clearRawData();
+      this.serverDataCover();
+      this.fillVariableData();
+      alert("修改类别金额成功");
+    }   
   }
 
   //删除
@@ -353,7 +368,7 @@ class MaterialListObj {
             </div>
             <div class = "modal-body text-center nopadding-bottom material_type_list_center">确定要删除类别吗？</div>
             <div class = "modal-footer" style = "text-align: center;">
-              <button type = "button" class = "btn btn-danger material_type_list_delet_data" uuid = "${uuid}">删除</button>
+              <button type = "button" class = "btn btn-danger material_delet_btn" uuid = "${uuid}">删除</button>
               <button type = "button" class = "btn btn-default" data-dismiss = "modal">取消</button>
             </div>
           </div>
@@ -398,18 +413,88 @@ class MaterialListObj {
              <div id="material_type_list_box">
                <div>
                  <p href = "#" class = "list-group-item clearfix material_type_list_pl30 material_type_list_bgddd">舟山纳海<span class = "glyphicon glyphicon-plus pull-right material_type_list_colorfff"></span></p>
-                 <div>
-                   <p href = "#" class = "list-group-item clearfix material_type_list_pl30">芳烃<span class = "glyphicon glyphicon-remove pull-right material_type_list_ml15"></span><span class = "glyphicon glyphicon-pencil pull-right material_type_list_ml15"></span></p>
-                   <p href = "#" class = "list-group-item clearfix material_type_list_pl30">异构<span class = "glyphicon glyphicon-remove pull-right material_type_list_ml15"></span><span class = "glyphicon glyphicon-pencil pull-right material_type_list_ml15"></span></p>
-                   <p href = "#" class = "list-group-item clearfix material_type_list_pl30">轻油<span class = "glyphicon glyphicon-remove pull-right material_type_list_ml15"></span><span class = "glyphicon glyphicon-pencil pull-right material_type_list_ml15"></span></p>
+                 <div class = "row material_type_list_row">
+                   <table collspan = "0" rowspan = "0" width = "100%">
+                     <tbody>
+                       <tr>
+                         <td width = "30%">
+                           <div class="form-group material_type_b">
+                             <div class="input-group">
+                               <div class="input-group-addon">类别名称</div>
+                               <input type="text" class="form-control" value = "芳烃">
+                               <div class="input-group-addon material_bg_primary"><span class = "glyphicon glyphicon-floppy-disk"></span></div>
+                             </div>
+                           </div>
+                         </td>
+                         <td width = "30%">
+                           <div class="form-group material_type_b">
+                             <div class="input-group">
+                               <div class="input-group-addon">数量</div>
+                               <input type="text" class="form-control" value = "200">
+                               <div class="input-group-addon material_bg_primary"><span class = "glyphicon glyphicon-floppy-disk"></span></div>
+                             </div>
+                           </div>
+                         </td>
+                         <td width = "30%"> 
+                           <div class="form-group material_type_b">
+                             <div class="input-group">
+                               <div class="input-group-addon">金额</div>
+                               <input type="text" class="form-control" value = "1000">
+                               <div class="input-group-addon material_bg_primary"><span class = "glyphicon glyphicon-floppy-disk"></span></div>
+                             </div>
+                           </div>
+                         </td>
+                         <td width = "10%">
+                           <button class = "btn btn-danger">
+                             <span class = "glyphicon glyphicon-remove"></span>
+                           </button>
+                         </td>
+                       </tr>
+                     </tbody>
+                   </table>
                  </div>
                </div>
                <div>
                  <p href = "#" class = "list-group-item clearfix material_type_list_pl30 material_type_list_bgddd">舟山纳海<span class = "glyphicon glyphicon-plus pull-right material_type_list_colorfff"></span></p>
-                 <div>
-                   <p href = "#" class = "list-group-item clearfix material_type_list_pl30">芳烃<span class = "glyphicon glyphicon-remove pull-right material_type_list_ml15"></span><span class = "glyphicon glyphicon-pencil pull-right material_type_list_ml15"></span></p>
-                   <p href = "#" class = "list-group-item clearfix material_type_list_pl30">异构<span class = "glyphicon glyphicon-remove pull-right material_type_list_ml15"></span><span class = "glyphicon glyphicon-pencil pull-right material_type_list_ml15"></span></p>
-                   <p href = "#" class = "list-group-item clearfix material_type_list_pl30">轻油<span class = "glyphicon glyphicon-remove pull-right material_type_list_ml15"></span><span class = "glyphicon glyphicon-pencil pull-right material_type_list_ml15"></span></p>
+                 <div class = "row material_type_list_row">
+                   <table collspan = "0" rowspan = "0" width = "100%">
+                     <tbody>
+                       <tr>
+                         <td width = "30%">
+                           <div class="form-group material_type_b">
+                             <div class="input-group">
+                               <div class="input-group-addon">类别名称</div>
+                               <input type="text" class="form-control" value = "芳烃">
+                               <div class="input-group-addon material_bg_primary"><span class = "glyphicon glyphicon-floppy-disk"></span></div>
+                             </div>
+                           </div>
+                         </td>
+                         <td width = "30%">
+                           <div class="form-group material_type_b">
+                             <div class="input-group">
+                               <div class="input-group-addon">数量</div>
+                               <input type="text" class="form-control" value = "200">
+                               <div class="input-group-addon material_bg_primary"><span class = "glyphicon glyphicon-floppy-disk"></span></div>
+                             </div>
+                           </div>
+                         </td>
+                         <td width = "30%"> 
+                           <div class="form-group material_type_b">
+                             <div class="input-group">
+                               <div class="input-group-addon">金额</div>
+                               <input type="text" class="form-control" value = "1000">
+                               <div class="input-group-addon material_bg_primary"><span class = "glyphicon glyphicon-floppy-disk"></span></div>
+                             </div>
+                           </div>
+                         </td>
+                         <td width = "10%">
+                           <button class = "btn btn-danger">
+                             <span class = "glyphicon glyphicon-remove"></span>
+                           </button>
+                         </td>
+                       </tr>
+                     </tbody>
+                   </table>
                  </div>
                </div>
              </div>

@@ -29,7 +29,7 @@ class MaterialDataListObj {
   fillVariableData() {
     //查询列表
     let materialDataListHtml = "";
-    if(isJsonObjectHasData(this.materialDataListData)) {
+    if (isJsonObjectHasData(this.materialDataListData)) {
       for (let i = 0; i < this.materialDataListData.data.length; i++) {
         let weightAll = 0;
         materialDataListHtml +=
@@ -38,22 +38,25 @@ class MaterialDataListObj {
             <div id = "material_data_list">
               <table class = "table table-bordered">
                 <tbody id = "material_body_content" class = "pot_content_body">`;
-                if(isJsonObjectHasData(this.materialDataListSubData)) {
+                if (isJsonObjectHasData(this.materialDataListSubData)) {
                   for (let j = 0; j < this.materialDataListSubData.data.length; j++) {
-                    if(this.materialDataListData.data[i].uuid == this.materialDataListSubData.data[j].material_uuid) {
+                    if (this.materialDataListData.data[i].uuid == this.materialDataListSubData.data[j].material_uuid) {
                       weightAll += Number(this.materialDataListSubData.data[j].weight);
                     }
                   }
                   for (let j = 0; j < this.materialDataListSubData.data.length; j++) {
-                    if(this.materialDataListData.data[i].uuid == this.materialDataListSubData.data[j].material_uuid) {
+                    if (this.materialDataListData.data[i].uuid == this.materialDataListSubData.data[j].material_uuid) {
                       let weight = 0;
                       let price = 0;
                       let percentage = 0;
-                      if("" != this.materialDataListSubData.data[j].weight || "0" != this.materialDataListSubData.data[j].weight) {
+                      if ("" != this.materialDataListSubData.data[j].weight && "0" != this.materialDataListSubData.data[j].weight) {
                         weight = this.materialDataListSubData.data[j].weight;
                         percentage = ((this.materialDataListSubData.data[j].weight) / weightAll * 100).toFixed(2);
                       }
-                      if("" != this.materialDataListSubData.data[j].price) {
+                      if ("0" == this.materialDataListSubData.data[j].weight) {
+                        percentage = 0;
+                      }
+                      if ("" != this.materialDataListSubData.data[j].price) {
                         price = this.materialDataListSubData.data[j].price;
                       }
                       materialDataListHtml += 
@@ -87,9 +90,6 @@ class MaterialDataListObj {
     //获取储罐原料类别
     let warehouseTypeUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=getWarehousePotMaterialType";
     let warehouseTypeGet = ajax_assistant(warehouseTypeUrl, "", false, true, false);
-    //获取储罐
-    let potUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=getWarehousePot";
-    let potGet = ajax_assistant(potUrl, "", false, true, false);
     //仓库
     if ("1" == warehouseGet.status) {
       if ("0" == warehouseGet.count) {
@@ -113,7 +113,7 @@ class MaterialDataListObj {
         let tmpArr = new Array();
         let result = JSON.parse(warehouseTypeGet.result);    
         for (let i = 0; i < result.length; i++) {
-          tmpArr[i] = {"material_sub_name":result[i].name, "uuid":result[i].uuid};
+          tmpArr[i] = {"material_sub_name":result[i].name, "material_uuid":result[i].warehouse_uuid, "uuid":result[i].uuid};
           if (null == result[i].quantity) {
             tmpArr[i]["weight"] = "0";
           } else {
@@ -124,16 +124,6 @@ class MaterialDataListObj {
           } else {
             tmpArr[i]["price"] = result[i].amount; 
           } 
-          if("1" == potGet.status) {
-            let potResult = JSON.parse(potGet.result);
-            for(let j = 0; j < potResult.length; j++) {
-              if (potResult[j].uuid == result[i].pot_uuid) {
-                tmpArr[i]["material_uuid"] = potResult[j].warehouse_uuid; 
-              }
-            }
-          } else {
-            alert("获取储罐失败！");
-          }
         }
         this.materialDataListSubData["data"] = tmpArr;
       }
