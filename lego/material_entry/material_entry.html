@@ -19,1026 +19,171 @@
     <script src = "../check_login/check_login.js"></script>
     <script src = "material_entry.js" type = "text/javascript" charset = "utf-8"></script>
 	</head>
+  <script>
+    $(document).ready(function() {
+      //生成对象
+      let materialEntryArea = new materialEntry("#material_entry_content");
+      materialEntryArea.output();
+      materialEntryArea.clearRawData();
+      // 获取公式
+      materialEntryArea.getFormula();
+      // 公式赋值
+      materialEntryArea.fillFormulaData();
+      $(document).on("change", ".cfName", function() {
+        let entryValue = $(this).parents("td").siblings(".entryValue").find("input").val();
+        if ("" == entryValue) {
+          alert("请输入此入库值");
+          $(this).val("");
+          return;
+        } else {
+          if(null == entryValue.match(/^(\d+)(\.\d+)?$/)) {
+            alert("此入库值格式不正确");
+            $(this).val("");
+            return;
+          }
+        }
+        let content = $(this).val();
+        $(this).parents("td").siblings(".cfContent").find("input").val(content);
+        //计算结果值
+        let cfContent = materialEntryArea.replaceCfContent(content);
+        console.log(cfContent);
+        try {
+          let result = eval(cfContent);
+          console.log(result);
+        $(this).parents("td").siblings(".endValue").find("input").val(result);
+        } catch (e) {
+          alert("公式错误");
+          $(this).val("");
+          $(this).parents("td").siblings(".cfContent").find("input").val("");
+          return;
+        }
+      });
+      $(document).on("change", ".E_d_t", function() {
+        let content = $(this).val();
+        for(var i = 0; i < $(".E_end_d_t option").length; i++){
+          if($(".E_end_d_t  option").eq(i).val() == content) {
+            $(".E_end_d_t option").eq(i).prop('selected','selected');
+            break;
+          }
+        }
+      });
+      $(document).on("change", ".E_c_c_3_h_50_t", function() {
+        let content = $(this).val();
+        for(var i = 0; i < $(".E_end_c_c_3_h_50_t option").length; i++){
+          if($(".E_end_c_c_3_h_50_t  option").eq(i).val() == content) {
+            $(".E_end_c_c_3_h_50_t option").eq(i).prop('selected','selected');
+            break;
+          }
+        }
+      });
+      materialEntryArea.getWarehouse();
+      $(document).on("change", "#selectWarehouseId", function() {
+        $("selectWarehousePotId").val("");
+        let warehouse_uuid = $("#selectWarehouseId").val();
+        materialEntryArea.getWarehousePot(warehouse_uuid);
+        materialEntryArea.fillWarehousePotData(); 
+      });
+      $(document).on("click", "#searchBtn", function() {
+        $("materialCategoryId").val("");
+        let warehouse_uuid = $("#selectWarehouseId").val();
+        let pot_uuid = $("#selectWarehousePotId").val();
+        if ("" == warehouse_uuid) {
+          alert("请选择库区");
+          return;
+        }
+        if ("" == pot_uuid) {
+          alert("请选择储罐");
+          return;
+        } 
+        materialEntryArea.getMaterialCategory(warehouse_uuid);
+        materialEntryArea.fillMaterialCategoryData();
+        materialEntryArea.getWarehousePotMaterialIndex(pot_uuid);
+        materialEntryArea.fillVariableData();
+      });
+      materialEntryArea.fillWarehouseData();
+      $(document).on("click", "#addMaterialEntryBtn button", function() {
+        let warehouse_uuid = $("#selectWarehouseId").val();
+        let pot_uuid = $("#selectWarehousePotId").val();
+        let category_uuid = $("#materialCategoryId").val();
+        if ("" == warehouse_uuid) {
+          alert("请选择库区");
+          return;
+        }
+        if ("" == pot_uuid) {
+          alert("请选择储罐");
+          return;
+        } 
+        if ("" == category_uuid) {
+          alert("请选择原料类别");
+          return;
+        }
+        let quantity = $("#quantity").val();
+        let amount = $("#amount").val();
+        if("" == quantity) {
+          alert("请输入原料数量");
+          return;
+        } else {
+          if(null == quantity.match(/^(\d+)(\.\d+)?$/)) {
+            alert("原料数量格式错误");
+            return;
+          }
+        }
+        if("" == amount) {
+          alert("请输入原料价格");
+          return;
+        } else {
+          if(null == amount.match(/^(\d+)(\.\d+)?$/)) {
+            alert("原料价格格式错误");
+            return;
+          }
+        }
+        materialEntryArea.getMaterialCategoryByUuid(warehouse_uuid);
+        materialEntryArea.modifyWarehousePotMaterialType(warehouse_uuid, category_uuid);
+        materialEntryArea.addWarehousePotMaterialIndex();   
+      });
+      $(document).on("click", "#modifyMaterialEntryBtn button", function() {
+        let warehouse_uuid = $("#selectWarehouseId").val();
+        let pot_uuid = $("#selectWarehousePotId").val();
+        let category_uuid = $("#materialCategoryId").val();
+        if ("" == warehouse_uuid) {
+          alert("请选择库区");
+          return;
+        }
+        if ("" == pot_uuid) {
+          alert("请选择储罐");
+          return;
+        } 
+        if ("" == category_uuid) {
+          alert("请选择原料类别");
+          return;
+        }
+        let quantity = $("#quantity").val();
+        let amount = $("#amount").val();
+        if("" == quantity) {
+          alert("原料数量不能为空");
+          return;
+        } else {
+          if(null == quantity.match(/^(\d+)(\.\d+)?$/)) {
+            alert("原料数量格式错误");
+            return;
+          }
+        }
+        if("" == amount) {
+          alert("原料价格不能为空");
+          return;
+        } else {
+          if(null == amount.match(/^(\d+)(\.\d+)?$/)) {
+            alert("原料价格格式错误");
+            return;
+          }
+        }
+        materialEntryArea.getMaterialCategoryByUuid(warehouse_uuid);
+        materialEntryArea.modifyWarehousePotMaterialType(warehouse_uuid, category_uuid);
+        materialEntryArea.modifyMaterialIndex();   
+      });
+    })
+  </script>
 	<body>
-    <div class = "row" id = "material_entry_content">
-      <div class = "panel panel-default panel-primary">
-        <div class = "panel-heading">原料入库</div>
-        <div class = "panel-body" style="padding-bottom: 0;">
-          <div class = "row">
-            <div class = "col-md-4">
-              <div class = "input-group pull-left">
-                <span class = "input-group-addon">库区</span>
-                <select class = "form-control">
-                  <option class = "">--请选择--</option>
-                  <option value = "1">舟山纳海</option>
-                  <option value = "2">泰州锦华</option>
-                </select>
-              </div>
-            </div>
-            <div class = "col-md-4">
-              <div class = "input-group pull-left">
-                <span class = "input-group-addon">储罐</span>
-                <select class = "form-control">
-                  <option class = "">--请选择--</option>
-                  <option value = "1">A01</option>
-                  <option value = "2">A02</option>
-                </select>
-              </div>
-            </div>
-            <div class = "col-md-4">
-              <div class = "input-group pull-left">
-                <span class = "input-group-addon">原料类别</span>
-                <select class = "form-control">
-                  <option class = "">--请选择--</option>
-                  <option value = "1">原油</option>
-                  <option value = "2">原油</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class = "row material_entry_mt20">
-            <div class = "col-md-4">
-              <div class = "input-group pull-left">
-                <span class = "input-group-addon">原料数量</span>
-                <input type="text" class="form-control">
-                <span class = "input-group-addon">吨</span>
-              </div>
-            </div>
-            <div class = "col-md-4">
-              <div class = "input-group pull-left">
-                <span class = "input-group-addon">原料价格</span>
-                <input type="text" class="form-control">
-                <span class = "input-group-addon">元</span>
-              </div>
-            </div>
-            <div class = "col-md-4">
-              <div class = "form-group">
-                <button type = "button" class = "btn btn-primary" style = "width: 100px;">入库</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class = "panel panel-default panel-primary">
-        <div class = "panel-heading text-left">【E01】指标数据</div>
-        <div class = "panel-body table-responsive material_entry_pd0">
-          <table  class = "table contact_management_mt20" id = "">
-            <thead>
-              <tr>
-                <th>指标名称</th>
-                <th>原始值</th>
-                <th>入库值</th>
-                <th>公式名称</th>
-                <th>公式内容</th>
-                <th>结果值</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>20℃密度</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td> 
-                
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>研究法辛烷值</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td> 
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>抗爆指数（RON+MOn）/2</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td> 
-                
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>铅含量</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td> 
-                
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>铁含量</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td> 
-                
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>锰含量</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td> 
-                
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>馏程10%蒸发温度</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td> 
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>馏程50%蒸发温度</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td> 
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>馏程90%蒸发温度</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>终馏点</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>残留量</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>蒸汽压</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>溶剂洗胶质</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>未洗胶质</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>诱导期（氧化安定性）</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>硫含量</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>博士实验</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>硫醇硫含量</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>铜片腐蚀（3h，50℃）</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>水溶性酸或碱</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>机械杂质和水</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>苯含量</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>芳烃含量</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>总烯烃</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>烯烃+芳烃</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>氧含量</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>甲醇</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>二烯值</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>驾驶性能指数</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>乙醇</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>硅</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>甲基苯胺</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>甲缩醛</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>硫酸二甲酯</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>乙酸仲丁酯</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>氯含量</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <select class = "form-control">
-                    <option class = "">--请选择--</option>
-                    <option value = "1">公式一</option>
-                    <option value = "2">公式二</option>
-                  </select>
-                </td>
-               <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+    <div class = "row" id = "material_entry_content"></div>
 	</body>
 </html>

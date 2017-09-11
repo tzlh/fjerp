@@ -27,7 +27,6 @@ class calculationFormulaManagement {
    * 构造函数
    *
    * @param outputId 传入输出的元素id
-   * @param type 0: 查看 1: 可编辑
    */
   constructor(outputId) {
     this.outputId = outputId;
@@ -78,13 +77,16 @@ class calculationFormulaManagement {
                  <span class="input-group-addon modifyFormulaName" data-uuid = "${this.formulaData[i].uuid}"><button class = "btn btn-primary"><span class = "glyphicon glyphicon-floppy-disk"></span></button></span>
                </div>
              </div>
-             <div class = "col-md-8">
-               <div class="input-group">
+             <div class = "col-md-7 cfContent">
                  <input type="text" class="form-control" value = "${this.formulaData[i].formulaContent}">
-                 <span class="input-group-addon modifyFormulaContent" data-uuid = "${this.formulaData[i].uuid}"><button class = "btn btn-primary"><span class = "glyphicon glyphicon-floppy-disk"></span></button></span>
-               </div>
              </div>
-             <div class = "col-md-1">
+             <div class = "col-md-2">
+               <button class = "btn btn-success checkFormula"style = "margin-right: 15px;">
+                 <span class = "glyphicon glyphicon-ok"></span>
+               </button>
+               <button class = "btn btn-primary modifyFormulaContent" data-uuid = "${this.formulaData[i].uuid}" style = "margin-right: 15px;">
+                 <span class = "glyphicon glyphicon-floppy-disk"></span>
+               </button>
                <button class = "btn btn-danger deleteFormula" data-uuid = "${this.formulaData[i].uuid}">
                  <span class = "glyphicon glyphicon-remove"></span>
                </button>
@@ -93,7 +95,7 @@ class calculationFormulaManagement {
       }
       $(`#${this.areaFormulaDisplay}`).html(formulaContent);
     } else {
-      $(`#${this.areaFormulaDisplay}`).append("没有公式");
+      $(`#${this.areaFormulaDisplay}`).html("");
     }
   }
   
@@ -130,12 +132,15 @@ class calculationFormulaManagement {
              <input type="text" class="form-control" id = "${this.addFormulaName}" value = "">
            </div>
          </div>
-         <div class = "col-md-8">
+         <div class = "col-md-7 cfContent">
            <div class="form-group">
              <input type="text" class="form-control" id = "${this.addFormulaContent}"value = "">
            </div>
          </div>
-         <div class = "col-md-1">
+         <div class = "col-md-2">
+           <button class = "btn btn-success checkFormula" style = "margin-right: 15px;">
+             <span class = "glyphicon glyphicon-ok"></span>
+           </button>
            <button class = "btn btn-primary" id = "addFormula">
              <span class = "glyphicon glyphicon-floppy-saved"></span>
            </button>
@@ -172,11 +177,12 @@ class calculationFormulaManagement {
     let checkFormulNameUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=checkWarehousePotMaterialCalculationFormulaNameExist";
     let checkFormulNameParam = {
       "name": name,
+      "uuid": "00000000000000000000000000000000"
     };
     let checkFormulNameData = ajax_assistant(checkFormulNameUrl, checkFormulNameParam, false, true, false);
     console.log(checkFormulNameData);
     if (1 != checkFormulNameData.status) {
-      alert("该公式已存在");
+      alert("该公式名称已存在");
       return;
     }
     //添加公式
@@ -190,7 +196,9 @@ class calculationFormulaManagement {
     if (1 == addFormulaData.status) {
       this.serverDataCover();
       this.fillVariableData();
-      $(`#${this.areaFormulaAddDisplay}`).remove();
+      $(`#${this.areaFormulaAddDisplay}`).children().remove();
+    } else {
+      alert("添加失败");
     }
   }
 
@@ -198,8 +206,6 @@ class calculationFormulaManagement {
    * 修改公式名称
    */
   modifyFormulaName(uuid, name) {
-    uuid = uuid;
-    name = name;
     if ("" == name) {
       alert("请输入公式名称");
       return;
@@ -213,11 +219,12 @@ class calculationFormulaManagement {
     let checkFormulNameUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=checkWarehousePotMaterialCalculationFormulaNameExist";
     let checkFormulNameParam = {
       "name": name,
+      "uuid": uuid
     };
     let checkFormulNameData = ajax_assistant(checkFormulNameUrl, checkFormulNameParam, false, true, false);
     console.log(checkFormulNameData);
     if (1 != checkFormulNameData.status) {
-      alert("该公式已存在");
+      alert("该公式名称已存在");
       return;
     }
     //修改公式名称
@@ -232,6 +239,8 @@ class calculationFormulaManagement {
       this.serverDataCover();
       this.fillVariableData();
       alert("修改成功");
+    } else {
+      alert("修改失败");
     }
   }
 
@@ -239,8 +248,6 @@ class calculationFormulaManagement {
    * 修改公式内容
    */
   modifyFormulaContent(uuid, content) {
-    uuid = uuid;
-    content = content;
     if ("" == content) {
       alert("请输入公式名称");
       return;
@@ -261,9 +268,91 @@ class calculationFormulaManagement {
     if (1 == modifyFormulaData.status) {
       this.serverDataCover();
       this.fillVariableData();
+      alert("修改成功");
+    } else {
+      alert("修改失败");
     }
   }
   
+  /**
+   * 公式替换
+   */
+  replaceCfContent(cfContent) {
+    cfContent = cfContent.replace(/\$\{R_d_20_t\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_r_o_n\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_h_r_m\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_l_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_i_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_m_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_d_r_10_e_t\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_d_r_50_e_t\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_d_r_90_e_t\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_f_b_p\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_r_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_v_p\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_s_w_g\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_u_g\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_o_s\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_s_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_d_t\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_m_s_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_c_c_3_h_50_t\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_w_s_ph\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_m_i_w\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_b_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_a_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_t_a\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_a_a\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_o_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_carbinol\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_d_v\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_d_p_i\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_ethanol\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_silicon\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_methylaniline\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_formal\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_d_s\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_s_b_a\}/g, 100);
+    cfContent = cfContent.replace(/\$\{R_c_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_d_20_t\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_r_o_n\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_h_r_m\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_l_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_i_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_m_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_d_r_10_e_t\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_d_r_50_e_t\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_d_r_90_e_t\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_f_b_p\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_r_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_v_p\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_s_w_g\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_u_g\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_o_s\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_s_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_d_t\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_m_s_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_c_c_3_h_50_t\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_w_s_ph\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_m_i_w\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_b_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_a_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_t_a\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_a_a\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_o_l\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_carbinol\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_d_v\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_d_p_i\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_ethanol\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_silicon\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_methylaniline\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_formal\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_d_s\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_s_b_a\}/g, 100);
+    cfContent = cfContent.replace(/\$\{E_c_l\}/g, 100);
+    return cfContent;
+  } 
+
   /**
    * 删除提示
    */
@@ -306,6 +395,8 @@ class calculationFormulaManagement {
       $("#calculation_formula_management_delete_modal").modal("hide");
       this.serverDataCover();
       this.fillVariableData();
+    } else {
+      alert("删除失败");
     }
   }
 
@@ -339,6 +430,7 @@ class calculationFormulaManagement {
                     <span class = "glyphicon glyphicon-remove"></span>
                   </button>
                 </div>
+
               </div>
               <div class = "row calculation_formula_management_mt20">
                 <div class = "col-md-3">
@@ -347,14 +439,17 @@ class calculationFormulaManagement {
                     <span class="input-group-addon"><button class = "btn btn-primary"><span class = "glyphicon glyphicon-floppy-disk"></span></button></span>
                   </div>
                 </div>
-                <div class = "col-md-8">
-                  <div class="input-group">
-                    <input type="text" class="form-control" value = "">
-                    <span class="input-group-addon"><button class = "btn btn-primary"><span class = "glyphicon glyphicon-floppy-disk"></span></button></span>
-                  </div>
+                <div class = "col-md-7">
+                  <input type="text" class="form-control">
                 </div>
-                <div class = "col-md-1">
-                  <button class = "btn btn-danger">
+                <div class = "col-md-2">
+                  <button class = "btn btn-success ">
+                    <span class = "glyphicon glyphicon-ok"></span>
+                  </button>
+                  <button class = "btn btn-primary modifyFormulaContent">
+                    <span class = "glyphicon glyphicon-floppy-disk"></span>
+                  </button>
+                  <button class = "btn btn-danger deleteFormula">
                     <span class = "glyphicon glyphicon-remove"></span>
                   </button>
                 </div>
@@ -366,14 +461,17 @@ class calculationFormulaManagement {
                     <span class="input-group-addon"><button class = "btn btn-primary"><span class = "glyphicon glyphicon-floppy-disk"></span></button></span>
                   </div>
                 </div>
-                <div class = "col-md-8">
-                  <div class="input-group">
-                    <input type="text" class="form-control" value = "">
-                    <span class="input-group-addon"><button class = "btn btn-primary"><span class = "glyphicon glyphicon-floppy-disk"></span></button></span>
-                  </div>
+                <div class = "col-md-7">
+                  <input type="text" class="form-control">
                 </div>
-                <div class = "col-md-1">
-                  <button class = "btn btn-danger">
+                <div class = "col-md-2">
+                  <button class = "btn btn-success " style = "margin-right: 15px;">
+                    <span class = "glyphicon glyphicon-ok"></span>
+                  </button>
+                  <button class = "btn btn-primary modifyFormulaContent" style = "margin-right: 15px;">
+                    <span class = "glyphicon glyphicon-floppy-disk"></span>
+                  </button>
+                  <button class = "btn btn-danger deleteFormula">
                     <span class = "glyphicon glyphicon-remove"></span>
                   </button>
                 </div>

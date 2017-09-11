@@ -1,0 +1,26 @@
+#material_transfer_content {
+  margin: 0;
+}
+#material_transfer_content thead {
+  background: #aeaeae;
+}
+#material_transfer_content .material_transfer_pd0{
+  padding: 0;
+}
+#material_transfer_content table th, #material_transfer_content table td {
+  text-align: center;
+  border-right: 1px solid #ddd;
+  line-height: 36px;
+}
+#material_transfer_content table {
+  margin-bottom: 0;
+}
+#material_transfer_content table .form-group {
+  margin: 0;
+}
+.material_transfer_mt20 {
+  margin-top: 20px;
+}
+#material_transfer_content table tr td:nth-child(1) {
+  background: #f2f2f2;
+}
