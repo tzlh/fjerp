@@ -92,7 +92,7 @@ class calculationFormulaManagement {
       }
       $(`#${this.areaFormulaDisplay}`).html(formulaContent);
     } else {
-      $(`#${this.areaFormulaDisplay}`).append("没有公式");
+      $(`#${this.areaFormulaDisplay}`).html("");
     }
   }
   

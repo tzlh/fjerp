@@ -19,385 +19,43 @@
     <script src = "../check_login/check_login.js"></script>
     <script src = "modify_material_index.js" type = "text/javascript" charset = "utf-8"></script>
 	</head>
+  <script>
+    $(document).ready(function() {
+      let modifyMaterialIndexArea = new modifyMaterialIndex("#modify_material_index_content");
+      modifyMaterialIndexArea.output();
+      modifyMaterialIndexArea.clearRawData();
+      modifyMaterialIndexArea.getWarehouse();
+      modifyMaterialIndexArea.fillWarehouseData();
+      $(document).on("focus", "#selectWarehousePotId", function() {
+        let warehouse_uuid = $("#selectWarehouseId").val();
+        if ("" == warehouse_uuid) {
+          return;
+        }
+        modifyMaterialIndexArea.getWarehousePot(warehouse_uuid);
+        modifyMaterialIndexArea.fillWarehousePotData();
+      });
+      $(document).on("change", "#selectWarehouseId", function() {
+        $("selectWarehousePotId").val("");
+        let warehouse_uuid = $("#selectWarehouseId").val();
+        if ("" == warehouse_uuid) {
+          return;
+        }
+        modifyMaterialIndexArea.getWarehousePot(warehouse_uuid);
+        modifyMaterialIndexArea.fillWarehousePotData(); 
+      });
+      $(document).on("click", "#searchBtn", function() {
+        modifyMaterialIndexArea.getWarehousePotMaterialIndex();  
+        modifyMaterialIndexArea.fillVariableData();
+      })
+      $(document).on("click", "#modifyBtn", function() {
+        modifyMaterialIndexArea.modifyMaterialIndex();  
+        modifyMaterialIndexArea.getWarehousePotMaterialIndex();  
+        modifyMaterialIndexArea.fillVariableData();
+      })
+
+    });
+  </script>
 	<body>
-    <div class = "row" id = "modify_material_index_content">
-      <div class = "panel panel-default panel-primary">
-        <div class = "panel-heading">修改原料指标</div>
-        <div class = "panel-body" style="padding-bottom: 0;">
-          <div class = "row">
-            <div class = "col-md-4">
-              <div class = "input-group pull-left">
-                <span class = "input-group-addon">库区</span>
-                <select class = "form-control">
-                  <option class = "">--请选择--</option>
-                  <option value = "1">舟山纳海</option>
-                  <option value = "2">泰州锦华</option>
-                </select>
-              </div>
-            </div>
-            <div class = "col-md-4">
-              <div class = "input-group pull-left">
-                <span class = "input-group-addon">储罐</span>
-                <select class = "form-control">
-                  <option class = "">--请选择--</option>
-                  <option value = "1">A01</option>
-                  <option value = "2">A02</option>
-                </select>
-              </div>
-            </div>
-            <div class = "col-md-1">
-              <div class = "form-group">
-                <button type = "button" class = "btn btn-primary" style = "width: 100px;">查找</button>
-              </div>
-            </div>
-            <div class = "col-md-1">
-              <div class = "form-group">
-                <button type = "button" class = "btn btn-warning" style = "width: 100px;">修改</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class = "panel panel-default panel-primary">
-        <div class = "panel-heading text-left">【E01】指标数据</div>
-        <div class = "panel-body table-responsive modify_material_index_pd0">
-          <table  class = "table contact_management_mt20" id = "">
-            <thead>
-              <tr>
-                <th>指标名称</th>
-                <th>原始值</th>
-                <th>结果值</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>20℃密度</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>研究法辛烷值</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>抗爆指数（RON+MOn）/2</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>铅含量</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>铁含量</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>锰含量</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>馏程10%蒸发温度</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>馏程50%蒸发温度</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>馏程90%蒸发温度</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>终馏点</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>残留量</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>蒸汽压</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>溶剂洗胶质</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>未洗胶质</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>诱导期（氧化安定性）</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>硫含量</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>博士实验</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>硫醇硫含量</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>铜片腐蚀（3h，50℃）</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>水溶性酸或碱</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>机械杂质和水</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>苯含量</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>芳烃含量</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>总烯烃</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>烯烃+芳烃</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>氧含量</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>甲醇</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>二烯值</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>驾驶性能指数</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>乙醇</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>硅</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>甲基苯胺</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>甲缩醛</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>硫酸二甲酯</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>乙酸仲丁酯</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>氯含量</td>
-                <td></td>
-                <td>
-                  <div class="form-group">
-                    <input type="text" class="form-control">
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+    <div class = "row" id = "modify_material_index_content"></div>
 	</body>
 </html>

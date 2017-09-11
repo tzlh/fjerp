@@ -12,6 +12,9 @@
   border-right: 1px solid #ddd;
   line-height: 36px;
 }
+//      #modify_material_index_content table input{
+//        text-align: center;
+//      }
 #modify_material_index_content table {
   margin-bottom: 0;
 }
