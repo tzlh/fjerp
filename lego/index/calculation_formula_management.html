@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv = "Content-Type" content = "text/html; charset=utf-8">
+    <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
+    <meta name = "viewport" content = "width=device-width, initial-scale=1">
+    <link rel = "stylesheet" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.css"/>
+    <link rel = "stylesheet" href = "../../plugin/jquery_ui/1.12.1/jquery-ui.min.css">
+    <link rel = "stylesheet" href = "../../plugin/jquery_timepicker_addon/1.6.3/jquery-ui-timepicker-addon.css" />
+    <link rel = "stylesheet" href = "../nav_menu/nav_menu_production_management.css">
+    <link rel = "stylesheet" href = "../header/header.css">
+    <link rel = "stylesheet" href = "../calculation_formula_management/calculation_formula_management.css"/>
+    <link rel = "stylesheet" href = "../../css/custom_modal.css"/>
+    <script src = "../../plugin/jquery/1.12.4/jquery.min.js" type = "text/javascript" charset = "utf-8"></script>
+    <script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.js" type = "text/javascript" charset = "utf-8"></script>
+    <script src = "../../plugin/jquery_ui/1.12.1/jquery-ui.min.js"></script>
+    <script src = "../../plugin/jquery_timepicker_addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>  
+    <script src = "../../plugin/jquery_timepicker_addon/1.6.3/init.js"></script>
+    <script src = "../../js/configure.js" type = "text/javascript" charset = "utf-8"></script>
+    <script src = "../../js/toolkit.js" type = "text/javascript" charset = "utf-8"></script>
+    <script src = "../check_login/check_login.js"></script>
+    <script src = "../nav_menu/nav_menu_production_management.js"></script>
+    <script src = "../header/header.js"></script>
+    <script src = "../calculation_formula_management/calculation_formula_management.js" type = "text/javascript" charset = "utf-8"></script>
+	</head>
+  <script>
+    $(document).ready(function() {
+      check_login();
+      header_output("#header");
+      nav_menu_production_management_output("#nav_menu_production_management_content");
+      //生成对象
+      let calculationAreaDisplay = new calculationFormulaManagement("#calculation_formula_management_content");
+      calculationAreaDisplay.output();
+      calculationAreaDisplay.clearRawData();
+      $(document).on("click", "#caclulation_formula_add_button", function() {
+        calculationAreaDisplay.formulaAddDisplay();
+      });
+      calculationAreaDisplay.serverDataCover();
+      calculationAreaDisplay.fillVariableData();
+      $(document).on("click", "#addFormula", function() {
+        let content = $(this).parent().siblings(".cfContent").find("input").val();
+        if("" == content) {
+          alert("请输入公式");
+          return;
+        }
+        debugger;
+        let cfContent = calculationAreaDisplay.replaceCfContent(content);
+        try {
+          let result = eval(cfContent);
+          alert("公式正确");
+        } catch(e) {
+          alert("公式错误");
+          return;
+        }
+        calculationAreaDisplay.formulaAdd();
+      });
+      $(document).on("click", ".modifyFormulaName", function() {
+        let uuid = $(this).data("uuid");
+        let name = $(this).siblings("input").val();
+        calculationAreaDisplay.modifyFormulaName(uuid, name);
+      });
+      $(document).on("click", ".modifyFormulaContent", function() {
+        let content = $(this).parent().siblings(".cfContent").find("input").val();
+        if("" == content) {
+          alert("请输入公式");
+          return;
+        }
+        let cfContent = calculationAreaDisplay.replaceCfContent(content);
+        try {
+          let result = eval(cfContent);
+          alert("公式正确");
+        } catch(e) {
+          alert("公式错误");
+          return;
+        }
+        let uuid = $(this).data("uuid");
+        calculationAreaDisplay.modifyFormulaContent(uuid, content);
+      });
+      $(document).on("click", ".deleteFormula", function() {
+        let uuid = $(this).data("uuid");
+        calculationAreaDisplay.deleteFormulaModal(uuid);
+      });
+      $(document).on("click", ".removeFormulaButton", function() {
+        let uuid = $(this).data("uuid");
+        calculationAreaDisplay.deleteFormula(uuid);
+      });
+      // 公式校验
+      $(document).on("click", ".checkFormula", function() {
+        let content = $(this).parent().siblings(".cfContent").find("input").val();
+        if("" == content) {
+          alert("请输入公式");
+          return;
+        }
+        debugger;
+        let cfContent = calculationAreaDisplay.replaceCfContent(content);
+        try {
+          let result = eval(cfContent);
+          alert("公式正确");
+        } catch(e) {
+          alert("公式错误");
+          return;
+        }
+      });
+
+    })
+  </script>
+  <style type="text/css">
+    .warehouse_payment_detail_mt0{
+      margin-top: 0!important;
+      margin-right: 0;
+    }
+    .warehouse_payment_detail_mt20{
+      margin-top: 10px !important;
+      padding-left: 0;
+      padding-right: 0;
+    }
+  </style>
+	<body>
+  <div id = "header"></div>
+  <div class = "row warehouse_payment_detail_mt0">
+    <div id = "nav_menu_production_management_content" class = "col-lg-2"></div>
+    <div class = "col-lg-10 warehouse_payment_detail_mt20" id = "calculation_formula_management_content"></div>
+  </div>
+	</body>
+</html>

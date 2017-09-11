@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv = "Content-Type" content = "text/html; charset=utf-8">
+    <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
+    <meta name = "viewport" content = "width=device-width, initial-scale=1">
+    <link rel = "stylesheet" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.css"/>
+    <link rel = "stylesheet" href = "../../plugin/jquery_ui/1.12.1/jquery-ui.min.css">
+    <link rel = "stylesheet" href = "../../plugin/jquery_timepicker_addon/1.6.3/jquery-ui-timepicker-addon.css" />
+    <link rel = "stylesheet" href = "../modify_material_index/modify_material_index.css"/>
+    <link rel = "stylesheet" href = "../../css/custom_modal.css"/>
+    <script src = "../../plugin/jquery/1.12.4/jquery.min.js" type = "text/javascript" charset = "utf-8"></script>
+    <script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.js" type = "text/javascript" charset = "utf-8"></script>
+    <script src = "../../plugin/jquery_ui/1.12.1/jquery-ui.min.js"></script>
+    <script src = "../../plugin/jquery_timepicker_addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>  
+    <script src = "../../plugin/jquery_timepicker_addon/1.6.3/init.js"></script>
+    <script src = "../../js/configure.js" type = "text/javascript" charset = "utf-8"></script>
+    <script src = "../../js/toolkit.js" type = "text/javascript" charset = "utf-8"></script>
+    <script src = "../check_login/check_login.js"></script>
+    <script src = "../modify_material_index/modify_material_index.js" type = "text/javascript" charset = "utf-8"></script>
+	</head>
+  <script>
+    $(document).ready(function() {
+      let modifyMaterialIndexArea = new modifyMaterialIndex("#modify_material_index_content");
+      modifyMaterialIndexArea.output();
+      modifyMaterialIndexArea.clearRawData();
+      modifyMaterialIndexArea.getWarehouse();
+      modifyMaterialIndexArea.fillWarehouseData();
+      $(document).on("change", "#selectWarehouseId", function() {
+        $("selectWarehousePotId").val("");
+        let warehouse_uuid = $("#selectWarehouseId").val();
+        if ("" == warehouse_uuid) {
+          alert("请选择库区");
+          return;
+        }
+        modifyMaterialIndexArea.getWarehousePot(warehouse_uuid);
+        modifyMaterialIndexArea.fillWarehousePotData(); 
+        modifyMaterialIndexArea.getWarehousePot(warehouse_uuid);
+        modifyMaterialIndexArea.fillWarehousePotData();
+      });
+      $(document).on("click", "#searchBtn", function() {
+        let warehouse_uuid = $("#selectWarehouseId").val();
+        let pot_uuid = $("#selectWarehousePotId").val();
+        if ("" == warehouse_uuid) {
+          alert("请选择库区");
+          return;
+        }
+        if ("" == pot_uuid) {
+          alert("请选择储罐");
+          return;
+        }
+        modifyMaterialIndexArea.getWarehousePotMaterialIndex();  
+        modifyMaterialIndexArea.fillVariableData();
+      })
+      $(document).on("click", "#modifyBtn", function() {
+        modifyMaterialIndexArea.modifyMaterialIndex();  
+        modifyMaterialIndexArea.getWarehousePotMaterialIndex();  
+        modifyMaterialIndexArea.fillVariableData();
+      })
+
+    });
+  </script>
+	<body>
+    <div class = "row" id = "modify_material_index_content"></div>
+	</body>
+</html>

@@ -16,7 +16,7 @@ function nav_menu_production_management_output(output_id) {
     '        <a href = "../index/material_type_list.html" class = "list-group-item clearfix nav_pl45 ">类别列表</a>'+
     '        <a class = "list-group-item clearfix nav_pl30 nav_bgddd">计算公式<span class = "glyphicon glyphicon-chevron-down pull-right nav_colorfff"></span></a>'+
     '        <a href = "../index/index_variable_table.html" target = "_blank"  class = "list-group-item clearfix nav_pl45">指标参数变量对照表</a>'+
-    '        <a href = "../index/calculation_formula_management.html" target = "_blank"  class = "list-group-item clearfix nav_pl45">计算公式管理</a>'+
+    '        <a href = "../index/calculation_formula_management.html" class = "list-group-item clearfix nav_pl45">计算公式管理</a>'+
     '        <a class = "list-group-item clearfix nav_pl30 nav_bgddd">生产数据管理<span class = "glyphicon glyphicon-chevron-down pull-right nav_colorfff"></span></a>'+
     '        <a href = "../index/material_entry.html" target = "_blank"  class = "list-group-item clearfix nav_pl45">原料入库</a>'+
     '        <a href = "../index/material_exit.html" class = "list-group-item clearfix nav_pl45">原料出库</a>'+
