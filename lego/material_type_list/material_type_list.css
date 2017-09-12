@@ -1,0 +1,16 @@
+/**
+ * @author wangdi
+ */
+
+.material_type_list_bgddd{background: #bbb;}
+.material_type_list_pl30{padding-left: 30px;}
+.material_type_list_colorfff{color: #fff;}
+.material_type_list_row{margin: 0 !important;border-bottom:1px solid #ddd}
+.material_type_list_col{padding-left:0 ;padding-right: 0;}
+.material_type_list_mr15{margin-right: 15px;}
+.material_type_list_border_radiue{border-radius: 0 !important;}
+.material_type_list_center{text-align: center;}
+#material_type_list_box p.list-group-item{border-radius:0}
+.material_type_b{margin-top:15px;padding:0 15px;}
+.material_bg_primary{background-color: #337ab7;color:#fff}
+#material_type_list_box{border-left:#337ab7 1px solid}

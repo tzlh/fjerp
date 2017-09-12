@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv = "Content-Type" content = "text/html; charset=utf-8">
+  <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
+  <meta name = "viewport" content = "width=device-width, initial-scale=1">
+  <link rel = "stylesheet" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.css"/>
+  <link rel = "stylesheet" href = "../../plugin/jquery_ui/1.12.1/jquery-ui.min.css">
+  <link rel = "stylesheet" href = "../nav_menu/nav_menu_production_management.css">
+  <link rel = "stylesheet" href = "../header/header.css">
+  <link rel = "stylesheet" href = "../material_type_list/material_type_list.css">
+  <link rel = "stylesheet" href = "../../css/custom_modal.css"/>
+  <script src = "../../plugin/jquery/1.12.4/jquery.min.js" type = "text/javascript" charset = "utf-8"></script>
+  <script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.js" type = "text/javascript" charset = "utf-8"></script>
+  <script src = "../../js/configure.js" type = "text/javascript" charset = "utf-8"></script>
+  <script src = "../../js/toolkit.js" type = "text/javascript" charset = "utf-8"></script>
+  <script src = "../check_login/check_login.js" type = "text/javascript" charset = "utf-8"></script>
+  <script src = "../nav_menu/nav_menu_production_management.js"></script>
+  <script src = "../header/header.js"></script>
+  <script src = "../material_type_list/material_type_list.js"></script>
+  <script>
+    let materialList = new MaterialListObj();
+    $(document).ready(function() {
+      check_login();
+      header_output("#header");
+      nav_menu_production_management_output("#nav_menu_production_management_content");
+      //加载静态页面
+      materialList.outPutTypeList("#material_type_list_area");
+      //清空原始数据
+      materialList.clearRawData();
+      //服务器数据
+      materialList.serverDataCover();
+      //加载数据
+      materialList.fillVariableData();
+      //事件
+      materialList.initEvent();
+    });
+  </script>
+  <style type="text/css">
+    .warehouse_payment_detail_mt0{
+      margin-top: 0!important;
+      margin-right: 0;
+    }
+    .warehouse_payment_detail_mt20{
+      margin-top: 10px;
+      padding-left: 0;
+      padding-right: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id = "header"></div>
+  <div class = "row warehouse_payment_detail_mt0">
+    <div id = "nav_menu_production_management_content" class = "col-lg-2"></div>
+    <div class = "col-lg-10 warehouse_payment_detail_mt20" id = "material_type_list_area"></div>
+  </div>
+</body>
+</html>

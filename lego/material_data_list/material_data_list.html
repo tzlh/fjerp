@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv = "Content-Type" content = "text/html; charset=utf-8">
+  <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
+  <meta name = "viewport" content = "width=device-width, initial-scale=1">
+  <link rel = "stylesheet" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.css">
+  <link rel = "stylesheet" href = "../../css/custom_modal.css">
+  <link rel = "stylesheet" href = "material_data_list.css">
+  <script src = "../../plugin/jquery/1.12.4/jquery.min.js"></script>
+  <script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.js"></script>
+  <script src = "../../js/toolkit.js"></script>
+  <script src = "../../js/configure.js"></script>
+  <script src = "material_data_list.js"></script>
+  <script>
+    let materialDataList = new MaterialDataListObj();
+    $(document).ready(function() { 
+      //加载静态页面
+      //materialDataList.outPutMaterialContent("#material_data_list_area");   
+      //清空原始数据
+      materialDataList.clearRawData();
+      //服务器数据
+      materialDataList.serverDataCover();
+      //加载数据
+      materialDataList.fillVariableData();
+    });
+  </script>
+</head>
+<body>
+<!--<div id = "material_data_list_area"></div>-->
+<div class = "row material_data_list_row">
+  <div class = "col-lg-12 material_data_list_col">
+    <div class = "list-group">
+      <p href = "#" class = "list-group-item clearfix active">数据汇总</p>
+      <div id="material_data_list_box">
+        <div>
+          <p class = "list-group-item clearfix material_data_list_pl30 material_data_list_bgddd">舟山纳海</p>
+          <div>
+            <table class = "table table-bordered">
+              <tbody>
+                <tr>
+                  <td width = "40%">芳烃</td>
+                  <td width = "20%">300吨</td>
+                  <td width = "20%">￥200</td>
+                  <td width = "20%">30%</td>
+                </tr>
+                <tr>
+                  <td width = "40%">芳烃</td>
+                  <td width = "20%">300吨</td>
+                  <td width = "20%">￥200</td>
+                  <td width = "20%">30%</td>
+                </tr>
+                <tr>
+                  <td width = "40%">芳烃</td>
+                  <td width = "20%">300吨</td>
+                  <td width = "20%">￥200</td>
+                  <td width = "20%">30%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          <p class = "list-group-item clearfix material_data_list_pl30 material_data_list_bgddd">舟山纳海</p>
+          <div>
+            <table class = "table table-bordered">
+              <tbody>
+                <tr>
+                  <td width = "40%">芳烃</td>
+                  <td width = "20%">300吨</td>
+                  <td width = "20%">￥200</td>
+                  <td width = "20%">30%</td>
+                </tr>
+                <tr>
+                  <td width = "40%">芳烃</td>
+                  <td width = "20%">300吨</td>
+                  <td width = "20%">￥200</td>
+                  <td width = "20%">30%</td>
+                </tr>
+                <tr>
+                  <td width = "40%">芳烃</td>
+                  <td width = "20%">300吨</td>
+                  <td width = "20%">￥200</td>
+                  <td width = "20%">30%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <p class="list-group-item active text-center">&nbsp;</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

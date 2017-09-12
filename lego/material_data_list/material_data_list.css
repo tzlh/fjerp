@@ -1,0 +1,13 @@
+/**
+ * @author wangdi
+ */
+
+.material_data_list_bgddd{background: #bbb;}
+.material_data_list_pl30{padding-left: 30px;}
+.material_data_list_colorfff{color: #fff;}
+.material_data_list_row{margin: 0 !important;}
+.material_data_list_col{padding-left:0 ;padding-right: 0;}
+.material_data_list_border_radiue{border-radius: 0 !important;}
+.material_data_list_center{text-align: center;}
+#material_data_list_box p.list-group-item{border-radius:0}
+#material_data_list_box .table{margin-bottom:0;text-align: center;}

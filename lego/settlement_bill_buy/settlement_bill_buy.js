@@ -199,7 +199,7 @@ function SettlementBillBuy(trade_contract_code, trade_contract_code_uuid, settle
                       '<label for = "">合计价格</label>'+
                       '<div class = " input-group">'+
                         '<input type = "text" class = "form-control total_price" disabled = "disabled">'+
-                        '<span class = "input-group-addon">吨</span>'+
+                        '<span class = "input-group-addon">元</span>'+
                       '</div>'+
                     '</div>'+
                   '</div>'+
@@ -517,7 +517,7 @@ function SettlementBillBuy(trade_contract_code, trade_contract_code_uuid, settle
                       '<label for = "">合计价格</label>'+
                       '<div class = " input-group">'+
                         '<input type = "text" class = "form-control total_price" disabled = "disabled" value = "' + settlement_bill_buy_all_price + '">'+
-                        '<span class = "input-group-addon">吨</span>'+
+                        '<span class = "input-group-addon">元</span>'+
                       '</div>'+
                     '</div>'+
                   '</div>'+
@@ -856,7 +856,7 @@ function SettlementBillBuy(trade_contract_code, trade_contract_code_uuid, settle
                       '<label for = "">合计价格</label>'+
                       '<div class = " input-group">'+
                         '<input type = "text" class = "form-control total_price" disabled = "disabled" value = "' + settlement_bill_buy_all_price + '">'+
-                        '<span class = "input-group-addon">吨</span>'+
+                        '<span class = "input-group-addon">元</span>'+
                       '</div>'+
                     '</div>'+
                   '</div>'+

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv = "Content-Type" content = "text/html; charset=utf-8">
+    <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
+    <meta name = "viewport" content = "width=device-width, initial-scale=1">
+    <link rel = "stylesheet" href = "../../plugin/bootstrap/3.3.7/css/bootstrap.css"/>
+    <link rel = "stylesheet" href = "../../plugin/jquery_ui/1.12.1/jquery-ui.min.css">
+    <link rel = "stylesheet" href = "../../plugin/jquery_timepicker_addon/1.6.3/jquery-ui-timepicker-addon.css" />
+    <link rel = "stylesheet" href = "../material_transfer/material_transfer.css"/>
+    <link rel = "stylesheet" href = "../../css/custom_modal.css"/>
+    <script src = "../../plugin/jquery/1.12.4/jquery.min.js" type = "text/javascript" charset = "utf-8"></script>
+    <script src = "../../plugin/bootstrap/3.3.7/js/bootstrap.js" type = "text/javascript" charset = "utf-8"></script>
+    <script src = "../../plugin/jquery_ui/1.12.1/jquery-ui.min.js"></script>
+    <script src = "../../plugin/jquery_timepicker_addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>  
+    <script src = "../../plugin/jquery_timepicker_addon/1.6.3/init.js"></script>
+    <script src = "../../js/configure.js" type = "text/javascript" charset = "utf-8"></script>
+    <script src = "../../js/toolkit.js" type = "text/javascript" charset = "utf-8"></script>
+    <script src = "../check_login/check_login.js"></script>
+    <script src = "../material_transfer/material_transfer.js" type = "text/javascript" charset = "utf-8"></script>
+	</head>
+  <script>
+    $(document).ready(function() {
+      //生成对象
+      let materialTransferArea = new materialTransfer("#material_transfer_content");
+      materialTransferArea.output();
+      materialTransferArea.clearRawData();
+      //materialTransferArea.fillVariableData()
+      // 获取公式
+      materialTransferArea.getFormula();
+      // 公式赋值
+      materialTransferArea.fillFormulaData();
+      $(document).on("change", ".cfName", function() {
+        let entryValue = $(this).parents("td").siblings(".entryValue").find("input").val();
+        if ("" == entryValue) {
+          alert("请输入此入库值");
+          $(this).val("");
+          return;
+        } else {
+          if(null == entryValue.match(/^(\d+)(\.\d+)?$/)) {
+            alert("此入库值格式不正确");
+            $(this).val("");
+            return;
+          }
+        }
+        let content = $(this).val();
+        $(this).parents("td").siblings(".cfContent").find("input").val(content);
+        //计算结果值
+        let cfContent = materialTransferArea.replaceCfContent(content);
+        console.log(cfContent);
+        try {
+          let result = eval(cfContent);
+          console.log(result);
+        $(this).parents("td").siblings(".endValue").find("input").val(result);
+        } catch (e) {
+          alert("公式错误");
+          $(this).val("");
+          $(this).parents("td").siblings(".cfContent").find("input").val("");
+          return;
+        }
+      });
+      $(document).on("change", ".E_d_t", function() {
+        let content = $(this).val();
+        for(var i = 0; i < $(".E_end_d_t option").length; i++){
+          if($(".E_end_d_t  option").eq(i).val() == content) {
+            $(".E_end_d_t option").eq(i).prop('selected','selected');
+            break;
+          }
+        }
+      });
+      $(document).on("change", ".E_c_c_3_h_50_t", function() {
+        let content = $(this).val();
+        for(var i = 0; i < $(".E_end_c_c_3_h_50_t option").length; i++){
+          if($(".E_end_c_c_3_h_50_t  option").eq(i).val() == content) {
+            $(".E_end_c_c_3_h_50_t option").eq(i).prop('selected','selected');
+            break;
+          }
+        }
+      });
+      materialTransferArea.getWarehouse();
+      $(document).on("focus", "#selectWarehousePotId", function() {
+        let warehouse_uuid = $("#selectWarehouseId").val();
+        if ("" == warehouse_uuid) {
+          return;
+        }
+        materialTransferArea.getWarehousePot(warehouse_uuid);
+        materialTransferArea.fillWarehousePotData();
+      });
+      $(document).on("change", "#selectWarehouseId", function() {
+        $("selectWarehousePotId").val("");
+        let warehouse_uuid = $("#selectWarehouseId").val();
+        if ("" == warehouse_uuid) {
+          return;
+        }
+        materialTransferArea.getWarehousePot(warehouse_uuid);
+        materialTransferArea.fillWarehousePotData(); 
+      });
+      $(document).on("click", "#searchBtn", function() {
+        $("materialCategoryId").val("");
+        let warehouse_uuid = $("#selectWarehouseId").val();
+        let warehouse_pot_uuid_exit = $("#selectWarehousePotIdExit").val();
+        let warehouse_pot_uuid_entry = $("#selectWarehousePotIdEntry").val();
+        if ("" == warehouse_uuid) {
+          alert("请选择库区");
+          return;
+        }
+        if ("" == warehouse_pot_uuid_exit) {
+          alert("请选择导出罐");
+          return;
+        }
+        if ("" == warehouse_pot_uuid_entry) {
+          alert("请选择导入罐");
+          return;
+        }
+        materialTransferArea.fillMaterialCategoryData();
+        materialTransferArea.getWarehousePotMaterialIndexExit();
+        materialTransferArea.getWarehousePotMaterialIndexEntry();
+        materialTransferArea.fillVariableData();
+      });
+      materialTransferArea.fillWarehouseData();
+      $(document).on("click", "#addMaterialEntryBtn button", function() {
+        materialTransferArea.addWarehousePotMaterialIndex();   
+      });
+      $(document).on("click", "#modifyMaterialEntryBtn button", function() {
+        materialTransferArea.modifyMaterialIndex();   
+      });
+    })
+  </script>
+	<body>
+    <div class = "row" id = "material_transfer_content"></div>
+	</body>
+</html>

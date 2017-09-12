@@ -83,7 +83,7 @@ function warehouse_management_fill_variable_data() {
     for (var i = 0; i < warehouse_data.data.length; i++) {
       warehouse_html+=
         '<div>'+
-          '<p href = "#" class = "list-group-item clearfix warehouse_management_pl30 warehouse_management_bgddd warehouse_management_border_radiue" warehouse_uuid = '+ warehouse_data.data[i].warehouse_uuid +'>' + warehouse_data.data[i].warehouse_name + 
+          '<p class = "list-group-item clearfix warehouse_management_pl30 warehouse_management_bgddd warehouse_management_border_radiue warehouse_management_b warehouse_managemen_tborder_none" warehouse_uuid = '+ warehouse_data.data[i].warehouse_uuid +'>' + warehouse_data.data[i].warehouse_name + 
             '<span class = "glyphicon glyphicon-remove pull-right warehouse_management_ml15 warehouse_management_colorfff warehouse_management_remove" uuid="'+ warehouse_data.data[i].warehouse_uuid +'"></span>'+
             '<span class = "glyphicon glyphicon-pencil pull-right warehouse_management_ml15 warehouse_management_colorfff warehouse_management_edit_pencil" uuid="'+ warehouse_data.data[i].warehouse_uuid +'"></span>'+
             '<span class = "glyphicon glyphicon-plus pull-right warehouse_management_colorfff warehouse_management_add_tank" uuid = "' + warehouse_data.data[i].warehouse_uuid+'"></span>'+
@@ -91,19 +91,20 @@ function warehouse_management_fill_variable_data() {
           '<div id = "warehouse_management' + warehouse_data.data[i].warehouse_uuid + '"></div>'+
         '</div>';
     }
+    //warehouse_html += '<p class="list-group-item active text-center">&nbsp;</p>';
   }
   $("#warehouse_management_box").html(warehouse_html);
   //查询储罐
   if(isJsonObjectHasData(warehouse_pot_data)) {
     for (var i = 0; i < warehouse_pot_data.data.length; i++) {
       if (1 == warehouse_pot_data.data[i].type) {
-        $("#warehouse_management" + warehouse_pot_data.data[i].warehouse_uuid).append('<p href = "#" class = "list-group-item clearfix warehouse_management_pl30 warehouse_management_border_radiue">'+
+        $("#warehouse_management" + warehouse_pot_data.data[i].warehouse_uuid).append('<p href = "#" class = "list-group-item clearfix warehouse_management_pl30 warehouse_management_border_radiue warehouse_managemen_tborder_none">'+
                             '<span class = "glyphicon glyphicon-cd  warehouse_management_mr15"></span>' + warehouse_pot_data.data[i].storage_tank_name +
                             '<span class = "glyphicon glyphicon-remove pull-right warehouse_management_ml15 warehouse_management_tank_remove" uuid="' + warehouse_pot_data.data[i].uuid + '"></span>'+
                             '<span class = "glyphicon glyphicon-pencil pull-right warehouse_management_ml15 warehouse_management_tank_pencil" uuid = "' + warehouse_pot_data.data[i].uuid + '"></span>'+
                             '</p>');
       } else {
-        $("#warehouse_management" + warehouse_pot_data.data[i].warehouse_uuid).append('<p href = "#" class = "list-group-item clearfix warehouse_management_pl30 warehouse_management_border_radiue">'+
+        $("#warehouse_management" + warehouse_pot_data.data[i].warehouse_uuid).append('<p href = "#" class = "list-group-item clearfix warehouse_management_pl30 warehouse_management_border_radiue warehouse_managemen_tborder_none">'+
                             '<span class = "glyphicon glyphicon-record  warehouse_management_mr15"></span>' + warehouse_pot_data.data[i].storage_tank_name +
                             '<span class = "glyphicon glyphicon-remove pull-right warehouse_management_ml15 warehouse_management_tank_remove" uuid="' + warehouse_pot_data.data[i].uuid + '"></span>'+
                             '<span class = "glyphicon glyphicon-pencil pull-right warehouse_management_ml15 warehouse_management_tank_pencil" uuid = "' + warehouse_pot_data.data[i].uuid + '"></span>'+
@@ -583,7 +584,7 @@ function warehouse_management_output(output_id) {
     '<div class = "row warehouse_management_row">'+
     '    <div class = "col-lg-12 warehouse_management_col">'+
     '      <div class = "list-group">'+
-    '        <p href = "#" class = "list-group-item clearfix active warehouse_management_radius">库区管理<span class = "glyphicon glyphicon-plus pull-right " id = "warehouse_management_plus"></span></p>'+
+    '        <p href = "#" class = "list-group-item clearfix active">库区管理<span class = "glyphicon glyphicon-plus pull-right " id = "warehouse_management_plus"></span></p>'+
     '        <div id="warehouse_management_box">'+
     '          <div>'+
     '            <p href = "#" class = "list-group-item clearfix warehouse_management_pl30 warehouse_management_bgddd">舟山纳海<span class = "glyphicon glyphicon-remove pull-right warehouse_management_ml15 warehouse_management_colorfff"></span><span class = "glyphicon glyphicon-pencil pull-right warehouse_management_ml15 warehouse_management_colorfff"></span><span class = "glyphicon glyphicon-plus pull-right warehouse_management_colorfff"></span></p>'+
@@ -604,6 +605,7 @@ function warehouse_management_output(output_id) {
     '            </div>'+
     '          </div>'+
     '        </div>'+
+    '        <p class="list-group-item active text-center">&nbsp;</p>'+
     '      </div>'+
     '    </div>'+
     '  </div>';

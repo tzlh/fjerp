@@ -1402,40 +1402,28 @@ function contract_sale_output(output_id) {
   '    <div class = "panel-body">'+
   '      <div class = "container-fluid">'+
   '        <div class = "row">'+
-  '          <div class = "col-lg-2">'+
+  '          <div class = "col-lg-3">'+
   '            <div class = "input-group">'+
   '              <div class = "input-group-addon">购买方</div>'+
   '              <select class = "form-control" id = "contract_sale_buyer" value = "">'+
   '              </select>'+
   '            </div>'+
   '          </div>'+
-  '          <div class = "col-lg-2">'+
+  '          <div class = "col-lg-3">'+
   '            <div class = "input-group">'+
   '              <div class = "input-group-addon">销售方</div>'+
   '              <select class = "form-control" id = "contract_sale_saller" value = "">'+
   '              </select>'+
   '            </div>'+
   '          </div>'+
-  '          <div class = "col-lg-2">'+
-  '            <div class = "input-group">'+
-  '              <span class = "input-group-addon">名称</span>'+
-  '              <input type = "text" class = "form-control" id = "contract_sale_search_product_name_fuzzy">'+
-  '            </div>'+
-  '          </div>'+
-  '          <div class = "col-lg-2">'+
-  '            <div class = "input-group">'+
-  '              <span class = "input-group-addon">品类</span>'+
-  '              <input type = "text" class = "form-control" id = "contract_sale_search_real_name_fuzzy">'+
-  '            </div>'+
-  '          </div>'+
-  '          <div class = "col-lg-2">'+
+  '          <div class = "col-lg-3">'+
   '            <div class = "input-group">'+
   '              <span class = "input-group-addon" >来源库区</span>'+
   '              <select class = "form-control" value = "" id = "contract_sale_search_warehouse_uuid">'+
   '              </select>'+
   '             </div>'+
   '          </div>'+
-  '          <div class = "col-lg-2">'+
+  '          <div class = "col-lg-3">'+
   '            <div class = "input-group">'+
   '              <span class = "input-group-addon">发票状态</span>'+
   '              <select class = "form-control" value = "" id = "contract_sale_invoice">'+
@@ -1445,9 +1433,23 @@ function contract_sale_output(output_id) {
   '              </select>'+
   '            </div>'+
   '          </div>'+
+
+
   '        </div>'+
   '        <div class = "row contract_sale_mt20">'+
-  '          <div class = "col-lg-2">'+
+  '          <div class = "col-lg-3">'+
+  '            <div class = "input-group">'+
+  '              <span class = "input-group-addon">名称</span>'+
+  '              <input type = "text" class = "form-control" id = "contract_sale_search_product_name_fuzzy">'+
+  '            </div>'+
+  '          </div>'+
+  '          <div class = "col-lg-3">'+
+  '            <div class = "input-group">'+
+  '              <span class = "input-group-addon">标记</span>'+
+  '              <input type = "text" class = "form-control" id = "contract_sale_search_real_name_fuzzy">'+
+  '            </div>'+
+  '          </div>'+
+  '          <div class = "col-lg-3">'+
   '            <div class = "form-group has-feedback">'+
   '              <div class = "input-group">'+
   '                <span class = "input-group-addon">签署时间（起）</span>'+
@@ -1456,7 +1458,7 @@ function contract_sale_output(output_id) {
   '              <span class = "glyphicon glyphicon-calendar form-control-feedback" ></span>'+
   '            </div>'+
   '          </div>'+
-  '          <div class = "col-lg-2">'+
+  '          <div class = "col-lg-3">'+
   '            <div class = "form-group has-feedback">'+
   '              <div class = "input-group">'+
   '                <span class = "input-group-addon">签署时间（止）</span>'+
@@ -1465,12 +1467,9 @@ function contract_sale_output(output_id) {
   '              <span class = "glyphicon glyphicon-calendar form-control-feedback" ></span>'+
   '            </div>'+
   '          </div>'+
-  '          <div class = "col-lg-2" id = "contract_sale_search_fuzzy_btn">'+
-  '            <div class = "input-group">'+
-  '              <button type = "button" class = "btn btn-primary">搜索</button>'+
-  '            </div>'+
-  '          </div>'+
-  '          <div class = "col-lg-6">'+
+  '        </div>'+
+  '        <div class = "row">'+
+  '          <div class = "col-lg-9">'+
   '            <div class = "input-group">'+
   '              <div class = "input-group-addon">合同编号</div>'+
   '              <input type = "text" class = "form-control" id = "contract_sale_search_input">'+
@@ -1479,8 +1478,13 @@ function contract_sale_output(output_id) {
   '              </span>'+
   '            </div>'+
   '          </div>'+
+  '          <div class = "col-lg-3" id = "contract_sale_search_fuzzy_btn">'+
+  '            <div class = "input-group" style = "width:100%">'+
+  '              <button type = "button" class = "btn btn-primary" style = "width:100%">搜索</button>'+
+  '            </div>'+
+  '          </div>'+
   '        </div>'+
-  '        <div class = "row">'+
+  '        <div class = "row contract_sale_mt20">'+
   '          <div class = "col-lg-12">'+
   '            <div class = "panel panel-primary">'+
   '              <div class = "panel-heading">数据显示筛选</div>'+
@@ -1537,7 +1541,7 @@ function contract_sale_output(output_id) {
   '                  <th>购买方</th>'+
   '                  <th>销售方</th>'+
   '                  <th>名称</th>'+
-  '                  <th>品类</th>'+
+  '                  <th>标记</th>'+
   '                  <th>单价</th>'+
   '                  <th>数量（吨）</th>'+
   '                  <th>合计</th>'+
