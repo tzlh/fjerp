@@ -327,12 +327,19 @@ class MaterialExit {
       alert("出库数量不能为0");
       return;
     }
-    let warehouseUuid = $(".warehouse_change").val();
-    let typeUuid = $("#type_change").val();
-    let unitPrice = $("#unit_price_type").val();
     let quantityVal = $("#exit_quantity_all").val();
     let quantity = $("#unit_price_type").attr("quantity");
     let quantityData = Number(quantity) - Number(quantityVal);
+    if (0 > quantityData) {
+      alert("出库数量已超出总数量，请重新输入出库数量！");
+      return;
+    }
+    let warehouseUuid = $(".warehouse_change").val();
+    let typeUuid = $("#type_change").val();
+    let unitPrice = $("#unit_price_type").val();
+    quantityVal = $("#exit_quantity_all").val();
+    quantity = $("#unit_price_type").attr("quantity");
+    quantityData = Number(quantity) - Number(quantityVal);
     let amountData = Number(quantityData) * Number(unitPrice);
     let offOn = 0; 
     //原料类别
@@ -360,28 +367,34 @@ class MaterialExit {
     //获取指标的uuid
     let indexUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=getWarehousePotMaterialIndex";
     let indexGet = ajax_assistant(indexUrl, getData, false, true, false);
+    console.log(indexGet)
     if ("1" == indexGet.status) {
-      let result = JSON.parse(indexGet.result);
-      indexUuid = result[0].uuid;
-      indxQuantity = result[0].quantity;
+      if ("0" == indexGet.count) {
+        alert("该储罐下还未添加原料指标,请先添加原料指标！");
+        return;
+      } else {
+        let result = JSON.parse(indexGet.result);
+        indexUuid = result[0].uuid;
+        indxQuantity = result[0].quantity; 
+        let indexQuantityData = Number(indxQuantity) - Number(quantityVal);
+        let materialData = {
+          "uuid":indexUuid,
+          "pot_uuid":potUuid,
+          "quantity":indexQuantityData
+        };
+        //修改指标的
+        let indexEditUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=modifyWarehousePotMaterialIndex";
+        let indexEditGet = ajax_assistant(indexEditUrl, materialData, false, true, false);
+        //console.log(indexEditGet)
+        if ("1" == indexEditGet.status) {
+          offOn = 0;
+        } else {
+          offOn = 1;
+        }
+      }
     } else {
       alert("指标获取失败");
       return;
-    }
-    let indexQuantityData = Number(indxQuantity) - Number(quantityVal);
-    let materialData = {
-      "uuid":indexUuid,
-      "pot_uuid":potUuid,
-      "quantity":indexQuantityData
-    };
-    //修改指标的
-    let indexEditUrl = PROJECT_PATH + "lego/lego_fjTrade?servletName=modifyWarehousePotMaterialIndex";
-    let indexEditGet = ajax_assistant(indexEditUrl, materialData, false, true, false);
-    //console.log(indexEditGet)
-    if ("1" == indexEditGet.status) {
-      offOn = 0;
-    } else {
-      offOn = 1;
     }
     if ("0" == offOn) {
       alert("出库成功");
