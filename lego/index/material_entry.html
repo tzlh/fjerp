@@ -17,10 +17,12 @@
     <script src = "../../js/configure.js" type = "text/javascript" charset = "utf-8"></script>
     <script src = "../../js/toolkit.js" type = "text/javascript" charset = "utf-8"></script>
     <script src = "../check_login/check_login.js"></script>
+    <script src = "../check_login/check_login.js"></script>
     <script src = "../material_entry/material_entry.js" type = "text/javascript" charset = "utf-8"></script>
 	</head>
   <script>
     $(document).ready(function() {
+      check_login();
       //生成对象
       let materialEntryArea = new materialEntry("#material_entry_content");
       materialEntryArea.output();
@@ -39,6 +41,40 @@
           if(null == entryValue.match(/^(\d+)(\.\d+)?$/)) {
             alert("此入库值格式不正确");
             $(this).val("");
+            return;
+          }
+        }
+        let content = $(this).val();
+        $(this).parents("td").siblings(".cfContent").find("input").val(content);
+        //计算结果值
+        let cfContent = materialEntryArea.replaceCfContent(content);
+        console.log(cfContent);
+        try {
+          let result = eval(cfContent);
+          console.log(result);
+        $(this).parents("td").siblings(".endValue").find("input").val(result);
+        } catch (e) {
+          alert("公式错误");
+          $(this).val("");
+          $(this).parents("td").siblings(".cfContent").find("input").val("");
+          return;
+        }
+      });
+      $(document).on("change", ".E_d_t", function() {
+        let content = $(this).val();
+        for(var i = 0; i < $(".E_end_d_t option").length; i++){
+          if($(".E_end_d_t  option").eq(i).val() == content) {
+            $(".E_end_d_t option").eq(i).prop('selected','selected');
+            break;
+          }
+        }
+      });
+      $(document).on("blur", ".cfContent input", function() {
+        let entryValue = $(this).parents("td").siblings(".entryValue").find("input").val();
+        if ("" == entryValue) {
+          return;
+        } else {
+          if(null == entryValue.match(/^(\d+)(\.\d+)?$/)) {
             return;
           }
         }

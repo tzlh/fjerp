@@ -62,13 +62,9 @@
       $(document).on("blur", ".cfContent input", function() {
         let entryValue = $(this).parents("td").siblings(".entryValue").find("input").val();
         if ("" == entryValue) {
-          alert("请输入此入库值");
-          $(this).val("");
           return;
         } else {
           if(null == entryValue.match(/^(\d+)(\.\d+)?$/)) {
-            alert("此入库值格式不正确");
-            $(this).val("");
             return;
           }
         }
